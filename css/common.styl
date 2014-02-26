@@ -1,0 +1,53 @@
+MAIN_FONT_FAMILY = 'Open Sans', sans-serif
+
+SITE_WIDTH = 80%
+
+
+h1, h2, h3, h4, h5, h6, p, .zootorial-dialog
+  margin 0px
+  -webkit-font-smoothing antialiased
+
+#_STANDARD_BUTTON
+  border: 1px solid
+  border-radius: 0.3em
+  display: inline-block
+  margin: 0 0.2em
+  padding: 0.4em 1.6em
+  &:active
+    transform: translateY(1px)
+    box-shadow: none
+  &:hover
+    opacity 0.95
+
+#_HOME_BUTTON
+  @extends #_STANDARD_BUTTON
+  height 30px
+  line-height 30px
+  font-size 14px
+
+#_TOGGLE_BUTTON
+  @extends #_STANDARD_BUTTON
+
+  border-right-width: 0
+  border-radius: 0
+  margin: 0
+
+  &:first-child
+    border-radius: 0.3em 0 0 0.3em
+
+  &:last-child
+    border-radius: 0 0.3em 0.3em 0
+    border-right-width: 1px
+
+  &.selected
+    box-shadow: 0 0 1.5em inset
+
+// Manual griddage
+// Set something like {float: left; margin-right: unit(GUTTER_WIDTH, 'px'); width: columns(4);}
+COLUMNS = 16
+COLUMN_WIDTH = 40
+GUTTER_WIDTH = 20
+GRID_WIDTH = ((COLUMN_WIDTH + GUTTER_WIDTH) * COLUMNS) - GUTTER_WIDTH
+
+columns(cols)
+  unit(((cols * (COLUMN_WIDTH / GRID_WIDTH)) + ((cols - 1) * (GUTTER_WIDTH / GRID_WIDTH))) * 100, '%')

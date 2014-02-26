@@ -1,0 +1,80 @@
+.site-navigation
+  background-color #000
+  color: #fff
+  font-weight: 300
+  overflow: hidden
+
+  .content-container
+    width SITE_WIDTH
+    margin-top: 20px
+    line-height 65px
+    text-align: right
+
+  .temp_logo
+    color: white
+    text-align: left
+
+  .logo
+    float left
+    width 200px
+    height 65px
+    transform-origin -5%
+    text-transform: uppercase
+
+  .links
+    .link
+      text-align: center
+      width: 60px
+      height: 40px
+
+    display inline-block
+    a
+      font-size 12px
+      display: inline-block
+      padding: 0 10px
+      position: relative
+      &.active
+        background: rgb(252,69,65)
+        font-weight bold
+
+      &:after
+        background: transparent
+        content: ""
+        height: 4px
+        left: 0
+        margin-top: -4px
+        position: absolute
+        top: 67%
+        width: 100%
+
+      &:hover
+        background: rgb(181,76,79)
+        top: 100%
+
+      // &:hover:after
+      //   height 4px
+      //   background: #5e5e5e
+      //   top: 100%
+
+      // &.active:after
+      //   background: rgb(252,69,65)
+      //   top: 100%
+      //   transition: .2s
+
+.zooniverse-top-bar
+  background: transparent
+  font-weight: 300
+  margin-right: unit((100 - SITE_WIDTH) / 2, '%')
+  color #757575
+  svg
+    g
+      fill #757575
+
+  .corner
+    display: none
+
+  .current-user-name
+    font-weight: inherit
+
+  .avatar img
+    border-radius: 50%
