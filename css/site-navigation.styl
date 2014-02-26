@@ -3,14 +3,22 @@
   color: #fff
   font-weight: 300
   overflow: hidden
+  height: auto
+  padding: 10px
+  margin-left: 75px
+  margin-right: 75px
 
   .content-container
     width SITE_WIDTH
     margin-top: 20px
-    line-height 65px
+    margin-left: 75px
+    // line-height 65px
     text-align: right
 
   .temp_logo
+    // margin: auto
+    float: left
+    text-transform: uppercase
     color: white
     text-align: left
 
@@ -22,50 +30,52 @@
     text-transform: uppercase
 
   .links
-    .link
-      text-align: center
-      width: 60px
-      height: 40px
-
-    display inline-block
+    display: block
+    text-align: center
+    margin: auto
     a
       font-size 12px
-      display: inline-block
-      padding: 0 10px
+      padding: 5px 5px
       position: relative
+      border: solid thin transparent
+
       &.active
         background: rgb(252,69,65)
         font-weight bold
+        border: solid thin transparent
 
       &:after
         background: transparent
-        content: ""
-        height: 4px
-        left: 0
-        margin-top: -4px
-        position: absolute
-        top: 67%
-        width: 100%
+        border: solid thin transparent
+
 
       &:hover
-        background: rgb(181,76,79)
+        border: solid thin rgb(252,69,65)
         top: 100%
+        transition: 0.2s
 
-      // &:hover:after
-      //   height 4px
-      //   background: #5e5e5e
-      //   top: 100%
+      &:hover:after
+        height 4px
+        background: #5e5e5e
+        top: 100%
+        border: solid thin transparent
 
-      // &.active:after
-      //   background: rgb(252,69,65)
-      //   top: 100%
-      //   transition: .2s
+
+      &.active:after
+        background: rgb(252,69,65)
+        // top: 100%
+        transition: .4s
+        border: solid thin transparent
+
+    .link
+      width: 60px
+      height: 40px
+
 
 .zooniverse-top-bar
   background: transparent
   font-weight: 300
-  margin-right: unit((100 - SITE_WIDTH) / 2, '%')
-  color #757575
+  // margin-right: unit((100 - SITE_WIDTH) / 2, '%')
   svg
     g
       fill #757575
@@ -78,3 +88,9 @@
 
   .avatar img
     border-radius: 50%
+
+.zooniverse-footer
+  display: inline-block
+  color: rgb(216,230,232)
+  background-color: black
+

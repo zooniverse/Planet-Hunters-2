@@ -1,13 +1,10 @@
 <% translate = require 't7e' %>
-
-<div class="content-container">
-  
+<div>
   <div class="temp_logo">
     <h1>
       <a href="#/">PLANET HUNTERS 2</a>
     </h1>
   </div>
-
   <div class="links">
     <%- translate 'a', 'siteNavigation.classify',  href: '#/classify',  class: 'link' %>
     <%- translate 'a', 'siteNavigation.science',   href: '#/science',   class: 'link' %>
@@ -19,15 +16,14 @@
   </div>
 </div>
 
-<div class="for-home-page">
+<!-- <div class="for-home-page">
   <div class="content-block">
     <%- translate 'h1', 'home.header.title' %>
     <%- translate 'p', 'home.header.content' %>
-
     <p class="action">
       <%- translate 'a.call-to-action', 'home.header.start', href: '#/classify' %>
       <%- translate 'a.learn-more', 'home.header.learnMore', href: '#/' %>
     </p>
   </div>
-</div>
+</div> -->
 
