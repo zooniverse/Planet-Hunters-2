@@ -1,7 +1,7 @@
-zooniverse-web-app-template
+Planet Hunters 2
 ===========================
 
-A basic template to get started.
+A revamp of the original Planet Hunters built on the basic [web-app-template](https://github.com/saschaishikawa/zooniverse-web-app-template)
 
 ### What's inside?
 * why [Zooniverse library](http://www.github.com/zooniverse/Zooniverse), of course
