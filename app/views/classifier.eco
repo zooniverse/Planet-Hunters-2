@@ -20,8 +20,10 @@
 			</div>
 
 			<div id="marks-container"><!-- marks go here --></div>
-
 			<div id="points"></div>
+
+			<!-- <button id="no-transits" class="no-transits" id="tutorial">No Transits</button> -->
+
 		</div>
 	</div>
 </div>
