@@ -2,13 +2,39 @@
   color: inherit
 
   #subject-container
+    width: 1140px
 
     .subject-header
       padding-bottom: 45px
       h3
         color: white
 
+    #graph
+      float: left
+
     #tools
-      background-color: rgb(50,50,50)
-      width: 60px
+      width: 50px
       height: 420px
+      padding: 5px
+      float: left
+      background-color: rgb(50,50,50)
+
+      h3
+        font-style: italic
+        font-size: 0.9em
+
+      .tool-button
+        padding: 5px
+        margin: 5px 0px 5px 0px
+        text-align: center
+        font-size: 0.75em
+        height: 60px
+        width: 50px
+        border: 1px solid
+        border-radius: 0.3em
+        // display: inline-block
+        &:active
+          transform: translateY(1px)
+          box-shadow: none
+        &:hover
+          opacity 0.95
