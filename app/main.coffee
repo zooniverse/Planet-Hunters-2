@@ -1,5 +1,5 @@
 $ = window.jQuery
-$.noConflict()
+# jQuery.noConflict()  //REMEMBER ME!!!!!!
 
 # language manager
 t7e = require 't7e'
