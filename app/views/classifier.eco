@@ -6,11 +6,11 @@
 				<p>If so, highlight it on the graph!</p>
 			</div>
 
-			<div>
-				<canvas id="graph" width="1000" height="400" style="border: 1px solid #5e5e5e; background:rgba(13, 21, 24, .75);"></canvas>
-				<div id="scale"></div>
+			<div id="graph-container">
+				<canvas id="graph" width="1000" height="420" style="border: 1px solid #5e5e5e; background:rgba(13, 21, 24, .75);"></canvas>
+				<!-- <div id="scale"></div> -->
 			</div>
-		
+
 			<div id="tools">
 				<h3>TOOLS</h3>
 				<button class="tool-button" id="toggle-zoom">Zoom</button>
