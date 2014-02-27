@@ -5,8 +5,10 @@
 				<h3>Do you see a transit?</h3>
 				<p>If so, highlight it on the graph!</p>
 			</div>
-			<div class="marking-surface">
-			</div>
+			<canvas id="graph" width="1000" height="400" style="border: 1px solid #5e5e5e; background:rgba(13, 21, 24, .9);"></canvas>
+			<div id="marks-container"><!-- marks go here --></div>
+			<button id="toggle-zoom" style="display:block; margin:20px;">toggle zoom</button>
+			<div id="points"></div>
 		</div>
 	</div>
 </div>
