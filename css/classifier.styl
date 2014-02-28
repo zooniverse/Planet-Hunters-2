@@ -56,7 +56,6 @@
 
       #scale-slider
         width: 1000px
-        // height: 15px
         padding-top: auto
         padding-bottom: auto
 
@@ -64,41 +63,38 @@
       .faux-range-input
         width 1000px
         height 20px
-        // margin-left 25px
         vertical-align middle
         background black //#25b4c5
         cursor ew-resize
         cursor -webkit-grab
+        top 0px
 
         &:before
-          // content: "12345678"
-          // position absolute
-          // margin -18px 0 0 38px
+          content: "1.2.3.4.5.6."
+          margin 0px
           font-size 12px
           top: 0
-          // width: 100%
-          // z-index 5
-          // letter-spacing 79px
+          letter-spacing 79px
 
         .faux-range-track
           width 744px // (1000-256px)
 
         .faux-range-thumb
+          margin -1px 0 0 -8px
           background rgba(50,50,50,0.75) //#1b7a85
           outline none
           border 1px solid #5e5e5e
           width 256px
-          // height 18px
+          height 20px
           border-radius 4px
-          // top 45%
+          top 0px
 
           &:before
             // content: "III"
             color #2fa5b9
             position absolute
-            margin -18px 0 0 38px
+            margin 0px
             font-size 12px
-            top: 0
             width: 100%
             z-index 5
 
