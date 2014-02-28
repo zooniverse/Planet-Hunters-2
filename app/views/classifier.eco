@@ -8,16 +8,18 @@
 
 			<div id="graph-container">
 				<canvas id="graph" width="1000" height="420" style="border: 1px solid #5e5e5e; background:rgba(13, 21, 24, .75);"></canvas>
-				<!-- <div id="scale"></div> -->
+				<div id="tools">
+					<h3>TOOLS</h3>
+					<button class="tool-button" id="toggle-zoom">Zoom</button>
+					<button class="tool-button" id="favorite">+Fav</button>
+					<button class="tool-button" id="help">Help</button>
+					<button class="tool-button" id="tutorial">Tutorial</button>
+				</div>
+				<div id="scale">
+					<input id="scale-slider" type="range"/>
+				</div>
 			</div>
 
-			<div id="tools">
-				<h3>TOOLS</h3>
-				<button class="tool-button" id="toggle-zoom">Zoom</button>
-				<button class="tool-button" id="favorite">+Fav</button>
-				<button class="tool-button" id="help">Help</button>
-				<button class="tool-button" id="tutorial">Tutorial</button>
-			</div>
 
 			<div id="marks-container"><!-- marks go here --></div>
 			<div id="points"></div>
