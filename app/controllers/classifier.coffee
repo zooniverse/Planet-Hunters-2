@@ -1,4 +1,6 @@
 BaseController = require 'zooniverse/controllers/base-controller'
+FauxRangeInput = require 'faux-range-input'
+
 $ = window.jQuery
 require '../lib/sample-data'
 
@@ -10,6 +12,8 @@ class Classifier extends BaseController
 
   constructor: ->
     super
+
+    @scaleSlider = new FauxRangeInput('#scale-slider')
 
     @canvas = @el.find('#graph')[0]
     @zoomBtn = @el.find('#toggle-zoom')[0]
