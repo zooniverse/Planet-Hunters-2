@@ -8,3 +8,9 @@
 		</div>
 	</div>
 </div>
+
+<!-- PLANET TIME -->
+<div class="planet-container"></div>
+<div class="moon-container"></div>
+<div class="content-block-background"></div>
+<div class="content-block-overlay"></div>
