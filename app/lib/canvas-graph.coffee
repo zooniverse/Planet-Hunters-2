@@ -98,6 +98,7 @@ class Marks
 
 class Mark
   MIN_WIDTH = 10
+  MAX_WIDTH = 150
 
   constructor: (e, @canvasGraph) ->
     #TODO: make an active state
@@ -128,10 +129,12 @@ class Mark
     markLeftX = Math.min @startingPoint, e.x
     markRightX = Math.max @startingPoint, e.x
 
-    @element.style.left = (Math.min markLeftX, markRightX) + "px"
-    @element.style.width = (Math.max (Math.abs markRightX - markLeftX), MIN_WIDTH) + "px"
+    width = (Math.min (Math.max (Math.abs markRightX - markLeftX), MIN_WIDTH), MAX_WIDTH)
 
-    @save(markLeftX, markRightX)
+    @element.style.left = (Math.min markLeftX, markRightX) + "px"
+    @element.style.width = width + "px"
+
+    @save(markLeftX, markLeftX+width)
 
   move: (e) ->
     leftXPos = (e.x-@pointerOffset)
