@@ -148,19 +148,21 @@ class Mark
     @dataXMax = @canvasGraph.toDataXCoord(@canvasXMax)
 
   updateCursor: (e) ->
-    if ((Math.abs e.layerX - (@domXMax-@domXMin)) < 10) || e.layerX < 10
-      @element.style.cursor = "ew-resize"
-    else if e.layerY < 15
+    if e.layerY < 15
       @element.style.cursor = "pointer"
+    else if ((Math.abs e.layerX - (@domXMax-@domXMin)) < 10) || e.layerX < 10
+      @element.style.cursor = "ew-resize"
     else
       @element.style.cursor = "move"
 
   onMouseMove: (e) ->
+    e.preventDefault()
     @draw(e) if @dragging
     @move(e) if @moving
     @updateCursor(e) if @hovering
 
   onMouseDown: (e) ->
+    e.preventDefault()
     if (Math.abs e.layerX - (@domXMax-@domXMin)) < 10
       @startingPoint = @domXMin
       @dragging = true
@@ -172,6 +174,7 @@ class Mark
       @pointerOffset = (e.x-@domXMin)
 
   onMouseUp: (e) ->
+    e.preventDefault()
     if @dragging
       @canvasGraph.marks.add(@)
       document.getElementById('points').innerHTML += "x1: #{@dataXMin}, x2: #{@dataXMax}</br>"
