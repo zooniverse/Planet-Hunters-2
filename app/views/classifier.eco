@@ -10,10 +10,22 @@
 				<canvas id="graph" width="1000" height="420" style="border: 1px solid #5e5e5e; background:rgba(13, 21, 24, .75);"></canvas>
 				<div id="tools">
 					<h3>TOOLS</h3>
-					<button class="tool-button" id="toggle-zoom">Zoom</button>
-					<button class="tool-button" id="favorite">+Fav</button>
-					<button class="tool-button" id="help">Help</button>
-					<button class="tool-button" id="tutorial">Tutorial</button>
+					<button class="tool-button" id="toggle-zoom">
+						<img src="images/icons/toolbar-zoomplus.png"/>
+						Zoom
+					</button>
+					<button class="tool-button" id="favorite">
+						<img src="images/icons/toolbar-fav-empty.png"/>
+						+Fav
+					</button>
+					<button class="tool-button" id="help">
+						<img src="images/icons/toolbar-question-mark.png"/>
+						Help
+					</button>
+					<button class="tool-button" id="tutorial">
+						<img src="images/icons/toolbar-cursor.png"/>
+						Tutorial
+					</button>
 				</div>
 				<div id="scale">
 					<input id="scale-slider" type="range" min="0" max="35" step="1.0" data-ticks="true"/>
