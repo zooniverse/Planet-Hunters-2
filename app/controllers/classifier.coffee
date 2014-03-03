@@ -10,6 +10,13 @@ class Classifier extends BaseController
   className: 'classifier'
   template: require '../views/classifier'
 
+  elements:
+    '#toggle-zoom'      : 'toggleZoom'
+
+  events:
+    'click button[id="toggle-zoom"]' : 'onToggleZoom'
+    'click button[id="toggle-fav"]'  : 'onToggleFav'
+  
   constructor: ->
     super
 
@@ -28,5 +35,12 @@ class Classifier extends BaseController
   onClickZoom: ->
     @zoomed = !@zoomed
     if @zoomed then @canvasState.plotZoomedPoints(5,20) else @canvasState.rescale()
+
+  onToggleZoom: ->
+    console.log 'zoom toggled!'
+
+  onToggleFav: ->
+    console.log 'fav toggled!'
+
 
 module.exports = Classifier

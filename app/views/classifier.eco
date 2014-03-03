@@ -14,7 +14,7 @@
 						<img src="images/icons/toolbar-zoomplus.png"/>
 						Zoom
 					</button>
-					<button class="tool-button" id="favorite">
+					<button class="tool-button" id="toggle-fav">
 						<img src="images/icons/toolbar-fav-empty.png"/>
 						+Fav
 					</button>
