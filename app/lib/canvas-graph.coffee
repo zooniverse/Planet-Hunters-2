@@ -97,6 +97,8 @@ class Marks
     @all = []
 
 class Mark
+  MIN_WIDTH = 10
+
   constructor: (e, @canvasGraph) ->
     #TODO: make an active state
     @canvas = @canvasGraph.canvas
@@ -112,7 +114,7 @@ class Mark
     @element.style.border =  '2px solid red'
     @element.style.borderTop =  '13px solid red'
 
-    @startingPoint = e.x
+    @startingPoint = e.x - MIN_WIDTH
     @dragging = false
 
     @element.addEventListener 'mouseover', (e) => @hovering = true
@@ -127,7 +129,7 @@ class Mark
     markRightX = Math.max @startingPoint, e.x
 
     @element.style.left = (Math.min markLeftX, markRightX) + "px"
-    @element.style.width = (Math.abs markRightX - markLeftX) + "px"
+    @element.style.width = (Math.max (Math.abs markRightX - markLeftX), MIN_WIDTH) + "px"
 
     @save(markLeftX, markRightX)
 
@@ -168,10 +170,10 @@ class Mark
     e.preventDefault()
     if (Math.abs e.layerX - (@domXMax-@domXMin)) < 10
       @startingPoint = @domXMin
-      @dragging = true
+      @resizing = true
     else if e.layerX < 10
       @startingPoint = @domXMax
-      @dragging = true
+      @resizing = true
     else if e.layerY > 15
       @moving = true
       @pointerOffset = (e.x-@domXMin)
