@@ -22,12 +22,13 @@ class CanvasGraph
       @mark.dragging = true
       @mark.draw(e)
 
-    canvas.addEventListener 'mousemove', (e) =>
+    canvas.addEventListener 'mousemove', (e) => 
       e.preventDefault()
-      @mark.draw(e) if @mark?.dragging
-      @mark.move(e) if @mark?.moving
-      @mark.resize(e) if @mark?.resizing
-      @mark.updateCursor(e) if @mark?.hovering
+      @mark?.onMouseMove(e)
+
+    canvas.addEventListener 'mouseup', (e) => 
+      e.preventDefault()
+      @mark?.onMouseUp(e)
 
   drawAxes: ->
     #draws non-scaled axes
@@ -85,6 +86,8 @@ class Marks
 
   add: (mark) -> @all.push(mark)
 
+  update: (mark) -> @all[@all.indexOf(mark)] = mark
+
   remove: (mark) ->
     @all.splice(@all.indexOf(mark), 1)
     document.getElementById('marks-container').removeChild(mark.element)
@@ -96,7 +99,6 @@ class Marks
 class Mark
   constructor: (e, @canvasGraph) ->
     #TODO: make an active state
-
     @canvas = @canvasGraph.canvas
 
     @element = document.createElement('div')
@@ -114,6 +116,7 @@ class Mark
     @dragging = false
 
     @element.addEventListener 'mouseover', (e) => @hovering = true
+    @element.addEventListener 'mouseout', (e) => @hovering = false
     @element.addEventListener 'mousedown', (e) => @onMouseDown(e)
     @element.addEventListener 'mousemove', (e) => @onMouseMove(e)
     @element.addEventListener 'mouseup', (e) => @onMouseUp(e)
@@ -125,7 +128,6 @@ class Mark
 
     @element.style.left = (Math.min markLeftX, markRightX) + "px"
     @element.style.width = (Math.abs markRightX - markLeftX) + "px"
-    # @element.style.webkitTransform = "rotate(-2deg)" #whoa
 
     @save(markLeftX, markRightX)
 
@@ -159,6 +161,7 @@ class Mark
     e.preventDefault()
     @draw(e) if @dragging
     @move(e) if @moving
+    @draw(e) if @resizing
     @updateCursor(e) if @hovering
 
   onMouseDown: (e) ->
@@ -175,13 +178,9 @@ class Mark
 
   onMouseUp: (e) ->
     e.preventDefault()
-    if @dragging
-      @canvasGraph.marks.add(@)
-      document.getElementById('points').innerHTML += "x1: #{@dataXMin}, x2: #{@dataXMax}</br>"
-      console.log "Marks", @canvasGraph.marks
-      @dragging = false
-    else if @moving
-      @save(@domXMin, @domXMax)
-      @moving = false
+    @dragging = false
+    @moving = false
+    @resizing = false
+    if (@ in @canvasGraph.marks.all) then @canvasGraph.marks.update(@) else @canvasGraph.marks.add(@)
 
 module?.exports = CanvasGraph: CanvasGraph, Marks: Marks, Mark: Mark
