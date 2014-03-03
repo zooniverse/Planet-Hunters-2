@@ -20,13 +20,13 @@ class Classifier extends BaseController
     @marksContainer = @el.find('#marks-container')[0]
     @zoomBtn = @el.find('#toggle-zoom')[0]
 
-    @canvaState = new CanvasGraph(@canvas, light_curve_data)
-    @canvaState.plotPoints()
+    @canvasState = new CanvasGraph(@canvas, light_curve_data)
+    @canvasState.plotPoints()
 
     @zoomBtn.addEventListener 'click', (e) => @onClickZoom()
 
   onClickZoom: ->
     @zoomed = !@zoomed
-    if @zoomed then @canvaState.plotZoomedPoints(5,20) else @canvaState.rescale()
+    if @zoomed then @canvasState.plotZoomedPoints(5,20) else @canvasState.rescale()
 
 module.exports = Classifier

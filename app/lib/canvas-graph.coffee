@@ -16,29 +16,15 @@ class CanvasGraph
     # @mirrorVertically()
 
     canvas.addEventListener 'mousedown', (e) =>
-      @dragging = true
+      e.preventDefault()
       @mark = new Mark(e, @)
       @marks.create(@mark)
+      @mark.dragging = true
       @mark.draw(e)
 
     canvas.addEventListener 'mousemove', (e) =>
-      @mark.draw(e) if @dragging
-        
-    canvas.addEventListener 'mouseup', (e) =>
-      @dragging = false
-      @marks.add(@mark)
-
-      document.getElementById('points').innerHTML += "x1: #{@mark.dataXMin}, x2: #{@mark.dataXMax}</br>"
-      console.log @marks
-
-      # console.log e.x-@getBoundingClientRect().left, e.y-@getBoundingClientRect().top
-
-    # zoomBtn = document.getElementById('toggle-zoom')
-    # zoomBtn.addEventListener 'click', (e) =>
-    #   @zoomed = !@zoomed
-    #   if @zoomed then canvasState.plotZoomedPoints(5,20) else canvasState.rescale()
-
-    @dragging = false
+      e.preventDefault()
+      @mark.draw(e) if @mark?.dragging
 
   drawAxes: ->
     #draws non-scaled axes
@@ -70,7 +56,7 @@ class CanvasGraph
       @ctx.fillStyle = "#fff"
       @ctx.fillRect(x, y,2,2)
 
-    @scale = 1 + (xMax - xMin) / @largestX 
+    @scale = 1 + (xMax - xMin) / @largestX
 
   rescale: ->
     @clearCanvas()
@@ -104,23 +90,51 @@ class Marks
     document.getElementById('marks-container').innerHTML = ""
     @all = []
 
-  drawAll: (scale = 1) ->
-
 class Mark
   constructor: (e, @canvasGraph) ->
+    #TODO: make an active state
     @element = document.createElement('div')
     @element.className = "mark"
 
     @element.style.left = e.x + "px"
     @element.style.position =  'absolute'
-    @element.style.top = e.target.offsetTop + "px" # used to be .getBoundingClientRect().top
+    @element.style.top = e.target.offsetTop + "px"
     @element.style.height = @canvasGraph.canvas.height - 13 + 'px' # subtract border height
     @element.style.backgroundColor = 'rgba(255,0,0,.5)'
     @element.style.border =  '2px solid red'
     @element.style.borderTop =  '13px solid red'
-    @element.style.pointerEvents = 'none'
 
     @startingPoint = e.x
+    @dragging = false
+
+    @element.addEventListener 'mousedown', (e) =>
+      # resizing
+      if (Math.abs e.layerX - (@domXMax-@domXMin)) < 12
+        @startingPoint = @domXMin
+        @dragging = true
+      else if e.layerX < 12
+        @startingPoint = @domXMax
+        @dragging = true
+      else if e.layerY > 15
+        @moving = true
+        @movingStart = e.x
+
+    @element.addEventListener 'mousemove', (e) =>
+      @draw(e) if @dragging
+      @move(e) if @moving
+
+    @element.addEventListener 'mouseup', (e) =>
+      if @dragging
+        @canvasGraph.marks.add(@)
+        document.getElementById('points').innerHTML += "x1: #{@dataXMin}, x2: #{@dataXMax}</br>"
+        console.log "Marks", @canvasGraph.marks
+        @dragging = false
+      else if @moving
+        @save(@domXMin, @domXMax)
+        @moving = false
+
+    @element.addEventListener 'click', (e) =>
+      @canvasGraph.marks.remove(@) if e.layerY < 15
 
   draw: (e) ->
     markLeftX = Math.min @startingPoint, e.x
@@ -130,6 +144,16 @@ class Mark
     @element.style.width = (Math.abs markRightX - markLeftX) + "px"
     # @element.style.webkitTransform = "rotate(-2deg)" #whoa
 
+    @save(markLeftX, markRightX)
+
+  move: (e) ->
+    markLeftX = @domXMin - (@movingStart - e.x)
+    markRightX = @domXMax - (@movingStart - e.x)
+
+    @element.style.left = (Math.min markLeftX, markRightX) + "px"
+    @element.style.width = (Math.abs markRightX - markLeftX) + "px"
+
+  save: (markLeftX, markRightX) ->
     #dom coords
     @domXMin = markLeftX
     @domXMax = markRightX
@@ -141,8 +165,5 @@ class Mark
     #data coords
     @dataXMin = @canvasGraph.toDataXCoord(@canvasXMin)
     @dataXMax = @canvasGraph.toDataXCoord(@canvasXMax)
-
-
-  # move: ->
 
 module?.exports = CanvasGraph: CanvasGraph, Marks: Marks, Mark: Mark
