@@ -18,13 +18,16 @@
 				<div id="scale">
 					<input id="scale-slider" type="range" min="0" max="35" step="1.0" data-ticks="true"/>
 				</div>
+
 			</div>
 
 
+				<div>
+					<button id="no-transits" class="no-transits" id="tutorial">No Transits</button>
+				</div>
+
 			<div id="marks-container"><!-- marks go here --></div>
 			<div id="points"></div>
-
-			<!-- <button id="no-transits" class="no-transits" id="tutorial">No Transits</button> -->
 
 		</div>
 	</div>
