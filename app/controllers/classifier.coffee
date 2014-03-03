@@ -48,7 +48,11 @@ class Classifier extends BaseController
 
   onToggleZoom: ->
     console.log 'onToggleZoom()'
-
+    if @isZoomed
+      # console.log @zoomButton
+    else
+      @zoomButton.prop 'background-color', '#151A1B'
+      @isZoomed = true
 
   onToggleFav: ->
     console.log 'onToggleFav()'
