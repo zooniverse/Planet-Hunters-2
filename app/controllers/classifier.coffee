@@ -29,4 +29,7 @@ class Classifier extends BaseController
     @zoomed = !@zoomed
     if @zoomed then @canvaState.plotZoomedPoints(5,20) else @canvaState.rescale()
 
+  date = new Date
+  console.log "date: ", date
+
 module.exports = Classifier
