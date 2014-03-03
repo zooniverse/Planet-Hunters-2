@@ -48,15 +48,25 @@ class Classifier extends BaseController
 
   onToggleZoom: ->
     console.log 'onToggleZoom()'
+    zoomButton = @el.find("#toggle-zoom")[0]
     if @isZoomed
-      # console.log @zoomButton
+      @isZoomed = false
+      zoomButton.innerHTML = '<img src="images/icons/toolbar-zoomplus.png">Zoom'
     else
-      @zoomButton.prop 'background-color', '#151A1B'
       @isZoomed = true
-
+      zoomButton.innerHTML = '<img src="images/icons/toolbar-zoomminus.png">Zoom'
+      # zoomButton.attr 'background-color', '#151A1B'
+        
   onToggleFav: ->
     console.log 'onToggleFav()'
-
+    favButton = @el.find("#toggle-fav")[0]
+    if @isFaved
+      @isFaved = false
+      favButton.innerHTML = '<img src="images/icons/toolbar-fav-empty.png">Zoom'
+    else
+      @isFaved = true
+      favButton.innerHTML = '<img src="images/icons/toolbar-fav-filled.png">Zoom'
+    
   onClickHelp: ->
     console.log 'onClickHelp()'
 
