@@ -11,6 +11,6 @@
   },
   "scripts": {
     "start": "haw serve --port 3416",
-    "deploy-to-staging": "haw build && publisssh ./build zooniverse-demo/asteroid && rm -rf ./build"
+    "deploy-to-staging": "haw build && publisssh ./build zooniverse-demo/planethunters && rm -rf ./build"
   }
 }

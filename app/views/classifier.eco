@@ -4,6 +4,14 @@
 			<div class="subject-header">
 				<h3>Do you see a transit?</h3>
 				<p>If so, highlight it on the graph!</p>
+
+				<div id="lesson-prompt">
+					<b>Lesson available!</b> Become better at identifying transits. Interested?
+					<button class="lesson-button">Yes</button>
+					<button class="lesson-button">No</button>
+					<button class="lesson-button">Never</button>
+				</div>
+
 			</div>
 
 			<div id="graph-container">

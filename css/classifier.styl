@@ -7,7 +7,7 @@
     text-align: center
     font-size: 0.75em
     border: 1px solid
-    border-radius: 0.3em
+    // border-radius: 0.3em
     opacity 0.5
 
     &:active
@@ -18,10 +18,21 @@
       opacity 1.0
 
   .tool-button
+    border none
     color white
     background-color: rgb(50,50,50)
     height: 60px
     width: 50px
+
+    // &:active
+    //   border 1px solid white
+    //   border-radius: 0.3em
+    //   opacity 1.0
+
+    &:hover
+      border 1px solid white
+      border-radius: 0.3em
+      opacity 1.0
 
   .no-transits
     float right
@@ -31,23 +42,51 @@
     color black
     padding 10px 20px 10px 20px
     border none
-    opacity 1.0
+    opacity 0.5
+    border-radius: 0.3em
 
-    &:active
-      border none
-      opacity 1.0
+    // &:active
+    //   border none
+    //   opacity 1.0
 
     &:hover
-      border 1px solid black
+      // border 1px solid black
       opacity 1.0
 
   #subject-container
     width: 1140px
 
+
     .subject-header
-      padding-bottom: 45px
+      // padding-bottom: 45px
       h3
         color: white
+
+    #lesson-prompt
+      height 30px
+      margin-top 10px
+      margin-bottom 10px
+      padding-left 15px
+      vertical-align middle
+      // line-height 25px
+      font-size 1em
+      color white
+      background-color #3E89AF
+      // height 25px
+      width inherit
+      border-radius: 0.3em
+
+    .lesson-button
+      height 100%
+      margin auto
+      color black
+      border none
+
+      &:hover
+        color white
+        background-color rgba(0,0,0,0.5)
+
+
 
     #graph-container
       float: left
