@@ -47,25 +47,26 @@ class Classifier extends BaseController
     if @zoomed then @canvasState.plotZoomedPoints(5,20) else @canvasState.rescale()
 
   onToggleZoom: ->
-    console.log 'onToggleZoom()'
     zoomButton = @el.find("#toggle-zoom")[0]
     if @isZoomed
       @isZoomed = false
       zoomButton.innerHTML = '<img src="images/icons/toolbar-zoomplus.png">Zoom'
+      @el.find("#toggle-zoom").removeClass("toggled")
     else
       @isZoomed = true
       zoomButton.innerHTML = '<img src="images/icons/toolbar-zoomminus.png">Zoom'
-      # zoomButton.attr 'background-color', '#151A1B'
-        
+      @el.find("#toggle-zoom").addClass("toggled")
+
   onToggleFav: ->
-    console.log 'onToggleFav()'
     favButton = @el.find("#toggle-fav")[0]
     if @isFaved
       @isFaved = false
-      favButton.innerHTML = '<img src="images/icons/toolbar-fav-empty.png">Zoom'
+      favButton.innerHTML = '<img src="images/icons/toolbar-fav-empty.png">+Fav'
+      @el.find("#toggle-fav").removeClass("toggled")
     else
       @isFaved = true
-      favButton.innerHTML = '<img src="images/icons/toolbar-fav-filled.png">Zoom'
+      favButton.innerHTML = '<img src="images/icons/toolbar-fav-filled.png">+Fav'
+      @el.find("#toggle-fav").addClass("toggled")
     
   onClickHelp: ->
     console.log 'onClickHelp()'
