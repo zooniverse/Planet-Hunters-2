@@ -1,39 +1,29 @@
 .classifier
-  color: inherit
+  color inherit
 
   button
-    padding: 5px
-    margin: 5px 0px 5px 0px
-    text-align: center
-    font-size: 0.75em
-    border: 1px solid
-    // border-radius: 0.3em
+    padding 5px
+    margin 5px 0px 5px 0px
+    text-align center
+    font-size 0.75em
+    border 1px solid
     opacity 0.5
-
     &:active
-      transform: translateY(1px)
-      box-shadow: none
-
+      transform translateY(1px)
+      box-shadow none
     &:hover
       opacity 1.0
 
   .tool-button
     border none
     color white
-    background-color: rgb(50,50,50)
-    height: 60px
-    width: 50px
-
-    // &:active
-    //   border 1px solid white
-    //   border-radius: 0.3em
-    //   opacity 1.0
-
+    background-color rgb(50,50,50)
+    height 60px
+    width 50px
     &:hover
       border 1px solid white
-      border-radius: 0.3em
+      border-radius 0.3em
       opacity 1.0
-
   .no-transits
     float right
     font-size 1.2em
@@ -43,85 +33,69 @@
     padding 10px 20px 10px 20px
     border none
     opacity 0.5
-    border-radius: 0.3em
-
-    // &:active
-    //   border none
-    //   opacity 1.0
-
+    border-radius 0.3em
     &:hover
-      // border 1px solid black
       opacity 1.0
 
   #subject-container
-    width: 1140px
-
+    width 1140px
 
     .subject-header
-      // padding-bottom: 45px
       h3
-        color: white
+        color white
 
     #lesson-prompt
-      height 30px
-      margin-top 10px
+      height 25px
+      margin-top 5px
       margin-bottom 10px
       padding-left 15px
       vertical-align middle
-      // line-height 25px
       font-size 1em
       color white
       background-color #3E89AF
-      // height 25px
       width inherit
       border-radius: 0.3em
-
     .lesson-button
       height 100%
       margin auto
       color black
       border none
-
       &:hover
         color white
         background-color rgba(0,0,0,0.5)
 
-
-
     #graph-container
-      float: left
+      float left
 
       #graph
-        width: 1078px
-        height: 420px
-        float: left
-        border: 1px solid #5e5e5e; 
-        background: rgba(13,21,24,0.75)
+        width 1078px
+        height 420px
+        float left
+        border 1px solid #5e5e5e; 
+        background rgba(13,21,24,0.75)
 
     #tools
-      float: left
-      width: 50px   // account for padding
-      height: 410px // account for padding
-      padding: 5px
-      background-color: rgb(50,50,50)
-
+      float left
+      width 50px   // account for padding
+      height 410px // account for padding
+      padding 5px
+      background-color rgb(50,50,50)
       h3
-        font-style: italic
-        font-size: 0.9em
+        font-style italic
+        font-size 0.9em
 
     #scale
-      float:left
-      display: inline-block
-      background-color: black
-      width: 1078px
-      height: 20px
-      border: 1px solid rgb(50,50,50)
+      float left
+      display inline-block
+      background-color black
+      width 1078px
+      height 20px
+      border 1px solid rgb(50,50,50)
 
       #scale-slider
-        width: 1078px
-        padding-top: auto
-        padding-bottom: auto
-
+        width 1078px
+        padding-top auto
+        padding-bottom auto
 
       .faux-range-input
         width 1078px
@@ -131,37 +105,32 @@
         cursor ew-resize
         cursor -webkit-grab
         top 0px
-
         &:before
-          content: "1.2.3.4.5.6.7"
+          content "1.2.3.4.5.6.7"
           margin 0px
           font-size 12px
-          top: 0
+          top 0
           letter-spacing 79px
-
         .faux-range-track
           width 822px // (1078-256px)
-
         .faux-range-thumb
           margin -1px 0 0 -8px
-          background: none
-          // background rgba(50,50,50,0.75) //#1b7a85
+          // background none
+          background rgba(50,50,50,0.75) //#1b7a85
           outline none
           border 1px solid #5e5e5e
           width 256px
           height 20px
           border-radius 4px
           top 0px
-
           &:before
-            // content: "III"
-            color #2fa5b9
+            text-align center
+            line-height 20px
+            content "III"
             position absolute
             margin 0px
             font-size 12px
-            width: 100%
+            width 100%
             z-index 5
-
         .faux-range-tick
           display none
-
