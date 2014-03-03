@@ -93,13 +93,16 @@ class Marks
 class Mark
   constructor: (e, @canvasGraph) ->
     #TODO: make an active state
+
+    @canvas = @canvasGraph.canvas
+
     @element = document.createElement('div')
     @element.className = "mark"
 
     @element.style.left = e.x + "px"
     @element.style.position =  'absolute'
     @element.style.top = e.target.offsetTop + "px"
-    @element.style.height = @canvasGraph.canvas.height - 13 + 'px' # subtract border height
+    @element.style.height = @canvas.height - 13 + 'px' # subtract border height
     @element.style.backgroundColor = 'rgba(255,0,0,.5)'
     @element.style.border =  '2px solid red'
     @element.style.borderTop =  '13px solid red'
@@ -107,34 +110,11 @@ class Mark
     @startingPoint = e.x
     @dragging = false
 
-    @element.addEventListener 'mousedown', (e) =>
-      # resizing
-      if (Math.abs e.layerX - (@domXMax-@domXMin)) < 12
-        @startingPoint = @domXMin
-        @dragging = true
-      else if e.layerX < 12
-        @startingPoint = @domXMax
-        @dragging = true
-      else if e.layerY > 15
-        @moving = true
-        @movingStart = e.x
-
-    @element.addEventListener 'mousemove', (e) =>
-      @draw(e) if @dragging
-      @move(e) if @moving
-
-    @element.addEventListener 'mouseup', (e) =>
-      if @dragging
-        @canvasGraph.marks.add(@)
-        document.getElementById('points').innerHTML += "x1: #{@dataXMin}, x2: #{@dataXMax}</br>"
-        console.log "Marks", @canvasGraph.marks
-        @dragging = false
-      else if @moving
-        @save(@domXMin, @domXMax)
-        @moving = false
-
-    @element.addEventListener 'click', (e) =>
-      @canvasGraph.marks.remove(@) if e.layerY < 15
+    @element.addEventListener 'mouseover', (e) => @hovering = true
+    @element.addEventListener 'mousedown', (e) => @onMouseDown(e)
+    @element.addEventListener 'mousemove', (e) => @onMouseMove(e)
+    @element.addEventListener 'mouseup', (e) => @onMouseUp(e)
+    @element.addEventListener 'click', (e) => @canvasGraph.marks.remove(@) if e.layerY < 15
 
   draw: (e) ->
     markLeftX = Math.min @startingPoint, e.x
@@ -165,5 +145,41 @@ class Mark
     #data coords
     @dataXMin = @canvasGraph.toDataXCoord(@canvasXMin)
     @dataXMax = @canvasGraph.toDataXCoord(@canvasXMax)
+
+  updateCursor: (e) ->
+    if ((Math.abs e.layerX - (@domXMax-@domXMin)) < 10) || e.layerX < 10
+      @element.style.cursor = "ew-resize"
+    else if e.layerY < 15
+      @element.style.cursor = "pointer"
+    else
+      @element.style.cursor = "move"
+
+  onMouseMove: (e) ->
+    @draw(e) if @dragging
+    @move(e) if @moving
+    @updateCursor(e) if @hovering
+
+  onMouseDown: (e) ->
+    if (Math.abs e.layerX - (@domXMax-@domXMin)) < 10
+      @startingPoint = @domXMin
+      @dragging = true
+    else if e.layerX < 10
+      @startingPoint = @domXMax
+      @dragging = true
+    else if e.layerY > 15
+      @moving = true
+      @movingStart = e.x
+
+  onMouseUp: (e) ->
+    if @dragging
+      @canvasGraph.marks.add(@)
+      document.getElementById('points').innerHTML += "x1: #{@dataXMin}, x2: #{@dataXMax}</br>"
+      console.log "Marks", @canvasGraph.marks
+      @dragging = false
+    else if @moving
+      console.log "OLD SP", @startingPoint
+      @save(@domXMin, @domXMax)
+      console.log "NEW SP", @startingPoint
+      @moving = false
 
 module?.exports = CanvasGraph: CanvasGraph, Marks: Marks, Mark: Mark
