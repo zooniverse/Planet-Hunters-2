@@ -11,14 +11,24 @@ class Classifier extends BaseController
   template: require '../views/classifier'
 
   elements:
-    '#toggle-zoom'      : 'toggleZoom'
+    '#toggle-zoom'      : 'zoomButton'
+    '#toggle-fav'       : 'favButton'
+    '#help'             : 'helpButton'
+    '#tutorial'         : 'tutorialButton'
 
   events:
     'click button[id="toggle-zoom"]' : 'onToggleZoom'
     'click button[id="toggle-fav"]'  : 'onToggleFav'
+    'click button[id="help"]'        : 'onClickHelp'
+    'click button[id="tutorial"]'    : 'onClickTutorial'
+    'click button[id="no-transits"]' : 'onClickNoTransits'
+      
   
   constructor: ->
     super
+
+    isZoomed: false
+    ifFaved: false
 
     @scaleSlider = new FauxRangeInput('#scale-slider')
 
@@ -37,10 +47,20 @@ class Classifier extends BaseController
     if @zoomed then @canvasState.plotZoomedPoints(5,20) else @canvasState.rescale()
 
   onToggleZoom: ->
-    console.log 'zoom toggled!'
+    console.log 'onToggleZoom()'
+
 
   onToggleFav: ->
-    console.log 'fav toggled!'
+    console.log 'onToggleFav()'
+
+  onClickHelp: ->
+    console.log 'onClickHelp()'
+
+  onClickTutorial: ->
+    console.log 'onClickTutorial()'
+
+  onClickNoTransits: ->
+    console.log 'onClickNoTransits()'
 
 
 module.exports = Classifier
