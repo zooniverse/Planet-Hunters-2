@@ -25,6 +25,9 @@ class CanvasGraph
     canvas.addEventListener 'mousemove', (e) =>
       e.preventDefault()
       @mark.draw(e) if @mark?.dragging
+      @mark.move(e) if @mark?.moving
+      @mark.resize(e) if @mark?.resizing
+      @mark.updateCursor(e) if @mark?.hovering
 
   drawAxes: ->
     #draws non-scaled axes
@@ -127,11 +130,9 @@ class Mark
     @save(markLeftX, markRightX)
 
   move: (e) ->
-    markLeftX = @domXMin - (@movingStart - e.x)
-    markRightX = @domXMax - (@movingStart - e.x)
-
-    @element.style.left = (Math.min markLeftX, markRightX) + "px"
-    @element.style.width = (Math.abs markRightX - markLeftX) + "px"
+    leftXPos = (e.x-@pointerOffset)
+    @element.style.left = leftXPos + "px"
+    @save(leftXPos, leftXPos+parseInt(@element.style.width, 10))
 
   save: (markLeftX, markRightX) ->
     #dom coords
@@ -168,7 +169,7 @@ class Mark
       @dragging = true
     else if e.layerY > 15
       @moving = true
-      @movingStart = e.x
+      @pointerOffset = (e.x-@domXMin)
 
   onMouseUp: (e) ->
     if @dragging
@@ -177,9 +178,7 @@ class Mark
       console.log "Marks", @canvasGraph.marks
       @dragging = false
     else if @moving
-      console.log "OLD SP", @startingPoint
       @save(@domXMin, @domXMax)
-      console.log "NEW SP", @startingPoint
       @moving = false
 
 module?.exports = CanvasGraph: CanvasGraph, Marks: Marks, Mark: Mark
