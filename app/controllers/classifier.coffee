@@ -30,6 +30,12 @@ class Classifier extends BaseController
     if @zoomed then @canvaState.plotZoomedPoints(5,20) else @canvaState.rescale()
 
   date = new Date
-  console.log "date: ", date
+  console.log "date, hour: ", date.getHours()
+  console.log "date, minute: ", date.getMinutes()
+  planet = document.getElementsByClassName "planet-container"
+
+  # contentBlocks = document.getElementsByClassName "content-block"
+  # console.log contentBlocks[1]
+
 
 module.exports = Classifier
