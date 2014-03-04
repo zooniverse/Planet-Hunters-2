@@ -100,6 +100,8 @@ class Mark
   MIN_WIDTH = 10
   MAX_WIDTH = 150
 
+  #move to end of marks-container on mousedown => for mousedown event
+
   constructor: (e, @canvasGraph) ->
     @canvas = @canvasGraph.canvas
 
@@ -126,8 +128,6 @@ class Mark
     @element.addEventListener 'click', (e) => @canvasGraph.marks.remove(@) if e.layerY < 15
 
   draw: (e) ->
-    console.log "SP", @startingPoint, "e.layerX", e.pageX
-
     markLeftX = Math.min @startingPoint, (e.pageX-@canvas.getBoundingClientRect().left)
     markRightX = Math.max @startingPoint, (e.pageX-@canvas.getBoundingClientRect().left)
 
@@ -182,7 +182,6 @@ class Mark
       @pointerOffset = ((e.pageX) - @domXMin)
 
   onMouseUp: (e) ->
-    console.log "MARK", @
     e.preventDefault()
     @dragging = false
     @moving = false

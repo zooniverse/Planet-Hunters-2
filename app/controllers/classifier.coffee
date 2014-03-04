@@ -23,7 +23,7 @@ class Classifier extends BaseController
     'click button[id="help"]'        : 'onClickHelp'
     'click button[id="tutorial"]'    : 'onClickTutorial'
     'click button[id="no-transits"]' : 'onClickNoTransits'
-    'change input[id="scale-slider"]': 'onChangeScaleSlider'
+    # 'change input[id="scale-slider"]': 'onChangeScaleSlider'
   
   constructor: ->
     super
