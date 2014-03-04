@@ -74,7 +74,6 @@ class CanvasGraph
 
   toDataXCoord: (domCoord) -> ((domCoord - @canvas.getBoundingClientRect().left)/ @canvas.width) * (@largestX - @smallestX)
 
-  # TODO: fix the math on this one....
   toDomXCoord: (dataPoint) -> ((dataPoint) * (@largestX - @smallestX)) + @canvas.getBoundingClientRect().left
 
 class Marks
@@ -159,17 +158,16 @@ class Mark
     e.preventDefault()
     @draw(e) if @dragging
     @move(e) if @moving
-    @draw(e) if @resizing
     @updateCursor(e) if @hovering
 
   onMouseDown: (e) ->
     e.preventDefault()
     if (Math.abs e.layerX - (@domXMax-@domXMin)) < 10
       @startingPoint = @domXMin
-      @resizing = true
+      @dragging = true
     else if e.layerX < 10
       @startingPoint = @domXMax
-      @resizing = true
+      @dragging = true
     else if e.layerY > 15
       @moving = true
       @pointerOffset = (e.pageX - @domXMin)
@@ -178,7 +176,6 @@ class Mark
     e.preventDefault()
     @dragging = false
     @moving = false
-    @resizing = false
     if (@ in @canvasGraph.marks.all) then @canvasGraph.marks.update(@) else @canvasGraph.marks.add(@)
 
 module?.exports = CanvasGraph: CanvasGraph, Marks: Marks, Mark: Mark
