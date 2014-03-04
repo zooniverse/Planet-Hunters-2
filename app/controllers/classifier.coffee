@@ -15,6 +15,7 @@ class Classifier extends BaseController
     '#toggle-fav'       : 'favButton'
     '#help'             : 'helpButton'
     '#tutorial'         : 'tutorialButton'
+    '#scale-slider'     : 'scaleSlider'
 
   events:
     'click button[id="toggle-zoom"]' : 'onToggleZoom'
@@ -22,7 +23,7 @@ class Classifier extends BaseController
     'click button[id="help"]'        : 'onClickHelp'
     'click button[id="tutorial"]'    : 'onClickTutorial'
     'click button[id="no-transits"]' : 'onClickNoTransits'
-      
+    'change input[id="scale-slider"]': 'onChangeScaleSlider'
   
   constructor: ->
     super
@@ -42,6 +43,20 @@ class Classifier extends BaseController
 
     @zoomBtn.addEventListener 'click', (e) => @onClickZoom()
 
+    console.log @canvasState.largestX
+    @el.find("#scale-slider").attr "max", 1077 # should eventually be dynamic
+    @el.find("#scale-slider").attr "min", 0
+
+  onChangeScaleSlider: ->
+    thumbWid = 256
+    focusCenter = +@el.find('#scale-slider').val() + thumbWid/2
+    console.log "onChangeScaleSlider()"
+    console.log " value: ", focusCenter
+
+    xMin = @canvasState.toDataXCoord(focusCenter-thumbWid/2)
+    xMax = @canvasState.toDataXCoord(focusCenter+thumbWid/2)
+    @canvasState.plotZoomedPoints(xMin,xMax)
+  
   onClickZoom: ->
     @zoomed = !@zoomed
     if @zoomed then @canvasState.plotZoomedPoints(5,20) else @canvasState.rescale()
@@ -70,6 +85,7 @@ class Classifier extends BaseController
     
   onClickHelp: ->
     console.log 'onClickHelp()'
+    console.log @el.find("#scale-slider")
 
   onClickTutorial: ->
     console.log 'onClickTutorial()'

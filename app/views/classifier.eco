@@ -36,7 +36,7 @@
 					</button>
 				</div>
 				<div id="scale">
-					<input id="scale-slider" type="range" min="0" max="35" step="1.0" data-ticks="true"/>
+					<input id="scale-slider" type="range" min="0" max="35"/>
 				</div>
 
 			</div>
