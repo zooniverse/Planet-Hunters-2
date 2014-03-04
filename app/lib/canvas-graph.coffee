@@ -128,6 +128,8 @@ class Mark
     @element.addEventListener 'click', (e) => @canvasGraph.marks.remove(@) if e.layerY < 15
 
   draw: (e) ->
+    console.log "SP", @startingPoint, "e.layerX", e.pageX
+
     markLeftX = Math.min @startingPoint, (e.pageX-@canvas.getBoundingClientRect().left)
     markRightX = Math.max @startingPoint, (e.pageX-@canvas.getBoundingClientRect().left)
 
@@ -171,6 +173,7 @@ class Mark
 
   onMouseDown: (e) ->
     e.preventDefault()
+    @element.parentNode.appendChild(@element) #move to end of container for z index
     if (Math.abs e.layerX - (@domXMax-@domXMin)) < 10
       @startingPoint = @domXMin
       @dragging = true
