@@ -22,11 +22,11 @@ class CanvasGraph
       @mark.dragging = true
       @mark.draw(e)
 
-    canvas.addEventListener 'mousemove', (e) => 
+    canvas.addEventListener 'mousemove', (e) =>
       e.preventDefault()
       @mark?.onMouseMove(e)
 
-    canvas.addEventListener 'mouseup', (e) => 
+    canvas.addEventListener 'mouseup', (e) =>
       e.preventDefault()
       @mark?.onMouseUp(e)
 
@@ -107,7 +107,7 @@ class Mark
     @element = document.createElement('div')
     @element.className = "mark"
 
-    @element.style.left = e.x + "px"
+    @element.style.left = e.pageX + "px"
     @element.style.position =  'absolute'
     @element.style.top = e.target.offsetTop + "px"
     @element.style.height = @canvas.height - 13 + 'px' # subtract border height
@@ -115,7 +115,7 @@ class Mark
     @element.style.border =  '2px solid red'
     @element.style.borderTop =  '13px solid red'
 
-    @startingPoint = e.x - MIN_WIDTH
+    @startingPoint = e.pageX - MIN_WIDTH
     @dragging = false
 
     @element.addEventListener 'mouseover', (e) => @hovering = true
@@ -126,8 +126,9 @@ class Mark
     @element.addEventListener 'click', (e) => @canvasGraph.marks.remove(@) if e.layerY < 15
 
   draw: (e) ->
-    markLeftX = Math.min @startingPoint, e.x
-    markRightX = Math.max @startingPoint, e.x
+    console.log "E", e
+    markLeftX = Math.min @startingPoint, e.pageX
+    markRightX = Math.max @startingPoint, e.pageX
 
     width = (Math.min (Math.max (Math.abs markRightX - markLeftX), MIN_WIDTH), MAX_WIDTH)
 
@@ -137,7 +138,7 @@ class Mark
     @save(markLeftX, markLeftX+width)
 
   move: (e) ->
-    leftXPos = (e.x-@pointerOffset)
+    leftXPos = (e.pageX - @pointerOffset)
     @element.style.left = leftXPos + "px"
     @save(leftXPos, leftXPos+parseInt(@element.style.width, 10))
 
@@ -179,7 +180,7 @@ class Mark
       @resizing = true
     else if e.layerY > 15
       @moving = true
-      @pointerOffset = (e.x-@domXMin)
+      @pointerOffset = (e.pageX - @domXMin)
 
   onMouseUp: (e) ->
     e.preventDefault()
