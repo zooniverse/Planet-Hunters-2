@@ -72,12 +72,10 @@ class CanvasGraph
     @ctx.translate(0,@canvas.height)
     @ctx.scale(1,-1)
 
-  toCanvasXCoord: (dataPoint) -> ((dataPoint - @smallestX) / (@largestX - @smallestX)) * @canvas.width
-
-  toDataXCoord: (canvasPoint) -> (canvasPoint / @canvas.width) * (@largestX - @smallestX)
+  toDataXCoord: (domCoord) -> ((domCoord - @canvas.getBoundingClientRect().left)/ @canvas.width) * (@largestX - @smallestX)
 
   # TODO: fix the math on this one....
-  toDomXCoord: (dataPoint) -> ((dataPoint / @canvas.width) * (@largestX - @smallestX) * @canvas.width) + @canvas.getBoundingClientRect().left
+  toDomXCoord: (dataPoint) -> ((dataPoint) * (@largestX - @smallestX)) + @canvas.getBoundingClientRect().left
 
 class Marks
   constructor: -> @all = []
@@ -101,7 +99,6 @@ class Mark
   MAX_WIDTH = 150
 
   constructor: (e, @canvasGraph) ->
-    #TODO: make an active state
     @canvas = @canvasGraph.canvas
 
     @element = document.createElement('div')
@@ -126,7 +123,6 @@ class Mark
     @element.addEventListener 'click', (e) => @canvasGraph.marks.remove(@) if e.layerY < 15
 
   draw: (e) ->
-    console.log "E", e
     markLeftX = Math.min @startingPoint, e.pageX
     markRightX = Math.max @startingPoint, e.pageX
 
@@ -147,13 +143,9 @@ class Mark
     @domXMin = markLeftX
     @domXMax = markRightX
 
-    #canvas coords
-    @canvasXMin = markLeftX - @canvasGraph.canvas.getBoundingClientRect().left
-    @canvasXMax = markRightX - @canvasGraph.canvas.getBoundingClientRect().left
-
     #data coords
-    @dataXMin = @canvasGraph.toDataXCoord(@canvasXMin)
-    @dataXMax = @canvasGraph.toDataXCoord(@canvasXMax)
+    @dataXMin = @canvasGraph.toDataXCoord(@domXMin)
+    @dataXMax = @canvasGraph.toDataXCoord(@domXMax)
 
   updateCursor: (e) ->
     if e.layerY < 15
