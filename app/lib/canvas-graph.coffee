@@ -70,7 +70,6 @@ class CanvasGraph
     @ctx.translate(0,@canvas.height)
     @ctx.scale(1,-1)
 
-
   toCanvasXCoord: (dataPoint) -> ((dataPoint - @smallestX) / (@largestX - @smallestX)) * @canvas.width
 
   # toDataXCoord: (domCoord) -> ((domCoord - @canvas.getBoundingClientRect().left)/ @canvas.width) * (@largestX - @smallestX)
@@ -117,7 +116,7 @@ class Mark
     @element.style.borderTop =  '13px solid red'
     @element.style.pointerEvents = 'auto'
 
-    @startingPoint = (e.pageX-@canvas.getBoundingClientRect().left) - MIN_WIDTH
+    @startingPoint = @toCanvasXPoint(e) - MIN_WIDTH
     @dragging = false
 
     @element.addEventListener 'mouseover', (e) => @hovering = true
@@ -128,8 +127,8 @@ class Mark
     window.addEventListener 'mouseup', (e) => @onMouseUp(e)
 
   draw: (e) ->
-    markLeftX = Math.min @startingPoint, (e.pageX-@canvas.getBoundingClientRect().left)
-    markRightX = Math.max @startingPoint, (e.pageX-@canvas.getBoundingClientRect().left)
+    markLeftX = Math.min @startingPoint, @toCanvasXPoint(e)
+    markRightX = Math.max @startingPoint, @toCanvasXPoint(e)
 
     width = (Math.min (Math.max (Math.abs markRightX - markLeftX), MIN_WIDTH), MAX_WIDTH)
 
@@ -187,5 +186,8 @@ class Mark
     if (@ in @canvasGraph.marks.all) then @canvasGraph.marks.update(@) else @canvasGraph.marks.add(@)
     @dragging = false
     @moving = false
+
+  toCanvasXPoint: (e) -> e.pageX-@canvas.getBoundingClientRect().left - window.scrollX
+
 
 module?.exports = CanvasGraph: CanvasGraph, Marks: Marks, Mark: Mark
