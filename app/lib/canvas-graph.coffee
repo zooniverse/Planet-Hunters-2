@@ -107,7 +107,7 @@ class Mark
     @element = document.createElement('div')
     @element.className = "mark"
 
-    @element.style.left = @elementXOffset(e) + "px"
+    @element.style.left = @pointerXInElement(e) + "px"
     @element.style.position =  'absolute'
     @element.style.top = e.target.offsetTop + "px"
     @element.style.height = @canvas.height - 13 + 'px' # subtract border height
@@ -122,7 +122,7 @@ class Mark
     @element.addEventListener 'mouseover', (e) => @hovering = true
     @element.addEventListener 'mouseout', (e) => @hovering = false
     @element.addEventListener 'mousedown', (e) => @onMouseDown(e)
-    @element.addEventListener 'click', (e) => @canvasGraph.marks.remove(@) if @elementYOffset(e) < 15
+    @element.addEventListener 'click', (e) => @canvasGraph.marks.remove(@) if @pointerYInElement(e) < 15
     window.addEventListener 'mousemove', (e) => @onMouseMove(e)
     window.addEventListener 'mouseup', (e) => @onMouseUp(e)
 
@@ -152,14 +152,17 @@ class Mark
     @dataXMax = @canvasGraph.toDataXCoord(@canvasXMax)
 
   updateCursor: (e) ->
-    if @elementYOffset(e) < 15
+    console.log "E", e.layerX
+    console.log @pointerXInElement e
+    if @pointerYInElement(e) < 15
       @element.style.cursor = "pointer"
-    else if ((Math.abs @elementXOffset(e) - (@canvasXMax-@canvasXMin)) < 10) || @elementXOffset(e) < 10
+    else if ((Math.abs @pointerXInElement(e) - (@canvasXMax-@canvasXMin)) < 10) || @pointerXInElement(e) < 10
       @element.style.cursor = "ew-resize"
     else
       @element.style.cursor = "move"
 
   onMouseMove: (e) ->
+    console.log "ONMOUSEMOVE"
     e.preventDefault()
     @draw(e) if @dragging
     @move(e) if @moving
@@ -168,13 +171,13 @@ class Mark
   onMouseDown: (e) ->
     e.preventDefault()
     @element.parentNode.appendChild(@element) #move to end of container for z index
-    if (Math.abs @elementXOffset(e) - (@canvasXMax-@canvasXMin)) < 10
+    if (Math.abs @pointerXInElement(e) - (@canvasXMax-@canvasXMin)) < 10
       @startingPoint = @canvasXMin
       @dragging = true
-    else if @elementXOffset(e) < 10
+    else if @pointerXInElement(e) < 10
       @startingPoint = @canvasXMax
       @dragging = true
-    else if @elementYOffset(e) > 15
+    else if @pointerYInElement(e) > 15
       @moving = true
       @pointerOffset = ((e.pageX) - @canvasXMin)
 
@@ -189,9 +192,9 @@ class Mark
 
   toCanvasXPoint: (e) -> e.pageX-@canvas.getBoundingClientRect().left - window.scrollX
 
-  elementXOffset: (e) -> e.offsetX || e.clientX - e.target.offsetLeft + window.pageXOffset
+  pointerXInElement: (e) -> e.offsetX || e.clientX - e.target.offsetLeft + window.pageXOffset - @canvas.getBoundingClientRect().left
 
-  elementYOffset: (e) -> e.offsetY || e.clientY - e.target.offsetTop + window.pageYOffset
+  pointerYInElement: (e) -> e.offsetY || e.clientY - e.target.offsetTop + window.pageYOffset - @canvas.getBoundingClientRect().top
 
 
 module?.exports = CanvasGraph: CanvasGraph, Marks: Marks, Mark: Mark
