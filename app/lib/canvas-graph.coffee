@@ -123,13 +123,11 @@ class Mark
     @element.addEventListener 'mouseover', (e) => @hovering = true
     @element.addEventListener 'mouseout', (e) => @hovering = false
     @element.addEventListener 'mousedown', (e) => @onMouseDown(e)
-    @element.addEventListener 'mousemove', (e) => @onMouseMove(e)
-    @element.addEventListener 'mouseup', (e) => @onMouseUp(e)
     @element.addEventListener 'click', (e) => @canvasGraph.marks.remove(@) if e.layerY < 15
+    window.addEventListener 'mousemove', (e) => @onMouseMove(e)
+    window.addEventListener 'mouseup', (e) => @onMouseUp(e)
 
   draw: (e) ->
-    console.log "SP", @startingPoint, "e.layerX", e.pageX
-
     markLeftX = Math.min @startingPoint, (e.pageX-@canvas.getBoundingClientRect().left)
     markRightX = Math.max @startingPoint, (e.pageX-@canvas.getBoundingClientRect().left)
 
@@ -186,8 +184,11 @@ class Mark
 
   onMouseUp: (e) ->
     e.preventDefault()
+    for mark in @canvasGraph.marks.all
+      mark.dragging = false
+      mark.moving = false
+    if (@ in @canvasGraph.marks.all) then @canvasGraph.marks.update(@) else @canvasGraph.marks.add(@)
     @dragging = false
     @moving = false
-    if (@ in @canvasGraph.marks.all) then @canvasGraph.marks.update(@) else @canvasGraph.marks.add(@)
 
 module?.exports = CanvasGraph: CanvasGraph, Marks: Marks, Mark: Mark
