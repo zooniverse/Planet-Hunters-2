@@ -30,20 +30,7 @@ class CanvasGraph
       e.preventDefault()
       @mark?.onMouseUp(e)
 
-  plotPoints: ->
-    for point in @data
-      x = ((point.x - @smallestX) / (@largestX - @smallestX)) * @canvas.width
-      y = ((point.y - @largestY) / (@smallestY - @largestY)) * @canvas.height
-      @ctx.fillStyle = "#fff"
-      @ctx.fillRect(x, y,2,2)
-
-    # @scale = (@largestX - @smallestX) / @largestX
-
-    for mark in @marks.all
-      mark.element.style.width = (mark.canvasXMax-mark.canvasXMin) + "px"
-      mark.element.style.left = (mark.canvasXMin) + "px"
-
-  plotZoomedPoints: (xMin, xMax) ->
+  plotPoints: (xMin = @smallestX, xMax = @largestX) ->
     @clearCanvas()
     for point in @data
       x = ((point.x - xMin) / (xMax - xMin)) * @canvas.width
@@ -59,10 +46,6 @@ class CanvasGraph
 
       mark.element.style.width = (scaledMax-scaledMin) + "px"
       mark.element.style.left = (scaledMin) + "px"
-
-  rescale: ->
-    @clearCanvas()
-    @plotPoints()
 
   clearCanvas: -> @ctx.clearRect(0,0,@canvas.width, @canvas.height)
 
@@ -152,8 +135,6 @@ class Mark
     @dataXMax = @canvasGraph.toDataXCoord(@canvasXMax)
 
   updateCursor: (e) ->
-    console.log "E", e.layerX
-    console.log @pointerXInElement e
     if @pointerYInElement(e) < 15
       @element.style.cursor = "pointer"
     else if ((Math.abs @pointerXInElement(e) - (@canvasXMax-@canvasXMin)) < 10) || @pointerXInElement(e) < 10
@@ -162,7 +143,6 @@ class Mark
       @element.style.cursor = "move"
 
   onMouseMove: (e) ->
-    console.log "ONMOUSEMOVE"
     e.preventDefault()
     @draw(e) if @dragging
     @move(e) if @moving

@@ -55,11 +55,11 @@ class Classifier extends BaseController
 
     xMin = @canvasState.toDataXCoord(focusCenter-thumbWid/2)
     xMax = @canvasState.toDataXCoord(focusCenter+thumbWid/2)
-    @canvasState.plotZoomedPoints(xMin,xMax)
+    @canvasState.plotPoints(xMin,xMax)
   
   onClickZoom: ->
     @zoomed = !@zoomed
-    if @zoomed then @canvasState.plotZoomedPoints(5,20) else @canvasState.rescale()
+    if @zoomed then @canvasState.plotPoints(5,20) else @canvasState.plotPoints()
 
   onToggleZoom: ->
     zoomButton = @el.find("#toggle-zoom")[0]
