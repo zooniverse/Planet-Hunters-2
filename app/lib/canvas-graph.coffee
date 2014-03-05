@@ -107,7 +107,7 @@ class Mark
     @element = document.createElement('div')
     @element.className = "mark"
 
-    @element.style.left = e.layerX + "px"
+    @element.style.left = @elementXOffset(e) + "px"
     @element.style.position =  'absolute'
     @element.style.top = e.target.offsetTop + "px"
     @element.style.height = @canvas.height - 13 + 'px' # subtract border height
@@ -122,7 +122,7 @@ class Mark
     @element.addEventListener 'mouseover', (e) => @hovering = true
     @element.addEventListener 'mouseout', (e) => @hovering = false
     @element.addEventListener 'mousedown', (e) => @onMouseDown(e)
-    @element.addEventListener 'click', (e) => @canvasGraph.marks.remove(@) if e.layerY < 15
+    @element.addEventListener 'click', (e) => @canvasGraph.marks.remove(@) if @elementYOffset(e) < 15
     window.addEventListener 'mousemove', (e) => @onMouseMove(e)
     window.addEventListener 'mouseup', (e) => @onMouseUp(e)
 
@@ -152,9 +152,9 @@ class Mark
     @dataXMax = @canvasGraph.toDataXCoord(@canvasXMax)
 
   updateCursor: (e) ->
-    if e.layerY < 15
+    if @elementYOffset(e) < 15
       @element.style.cursor = "pointer"
-    else if ((Math.abs e.layerX - (@canvasXMax-@canvasXMin)) < 10) || e.layerX < 10
+    else if ((Math.abs @elementXOffset(e) - (@canvasXMax-@canvasXMin)) < 10) || @elementXOffset(e) < 10
       @element.style.cursor = "ew-resize"
     else
       @element.style.cursor = "move"
@@ -168,13 +168,13 @@ class Mark
   onMouseDown: (e) ->
     e.preventDefault()
     @element.parentNode.appendChild(@element) #move to end of container for z index
-    if (Math.abs e.layerX - (@canvasXMax-@canvasXMin)) < 10
+    if (Math.abs @elementXOffset(e) - (@canvasXMax-@canvasXMin)) < 10
       @startingPoint = @canvasXMin
       @dragging = true
-    else if e.layerX < 10
+    else if @elementXOffset(e) < 10
       @startingPoint = @canvasXMax
       @dragging = true
-    else if e.layerY > 15
+    else if @elementYOffset(e) > 15
       @moving = true
       @pointerOffset = ((e.pageX) - @canvasXMin)
 
@@ -188,6 +188,10 @@ class Mark
     @moving = false
 
   toCanvasXPoint: (e) -> e.pageX-@canvas.getBoundingClientRect().left - window.scrollX
+
+  elementXOffset: (e) -> e.offsetX || e.clientX - e.target.offsetLeft + window.pageXOffset
+
+  elementYOffset: (e) -> e.offsetY || e.clientY - e.target.offsetTop + window.pageYOffset
 
 
 module?.exports = CanvasGraph: CanvasGraph, Marks: Marks, Mark: Mark
