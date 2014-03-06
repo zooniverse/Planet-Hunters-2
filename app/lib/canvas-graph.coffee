@@ -23,6 +23,8 @@ class CanvasGraph
       @mark.draw(e)
 
   plotPoints: (xMin = @smallestX, xMax = @largestX) ->
+    @xMin = xMin
+    @xMax = xMax
     @clearCanvas()
     for point in @data
       x = ((point.x - xMin) / (xMax - xMin)) * @canvas.width
@@ -30,11 +32,9 @@ class CanvasGraph
       @ctx.fillStyle = "#fff"
       @ctx.fillRect(x, y,2,2)
 
-    # @scale = 1 + (xMax - xMin) / @largestX
-
     for mark in @marks.all
-      scaledMin = ((@toDataXCoord(mark.canvasXMin) - xMin) / (xMax - xMin)) * @canvas.width
-      scaledMax = ((@toDataXCoord(mark.canvasXMax) - xMin) / (xMax - xMin)) * @canvas.width
+      scaledMin = ((mark.dataXMin - xMin) / (xMax - xMin)) * @canvas.width
+      scaledMax = ((mark.dataXMax - xMin) / (xMax - xMin)) * @canvas.width
 
       mark.element.style.width = (scaledMax-scaledMin) + "px"
       mark.element.style.left = (scaledMin) + "px"
@@ -47,11 +47,7 @@ class CanvasGraph
 
   toCanvasXCoord: (dataPoint) -> ((dataPoint - @smallestX) / (@largestX - @smallestX)) * @canvas.width
 
-  # toDataXCoord: (domCoord) -> ((domCoord - @canvas.getBoundingClientRect().left)/ @canvas.width) * (@largestX - @smallestX)
-
-  toDataXCoord: (canvasPoint) -> (canvasPoint / @canvas.width) * (@largestX - @smallestX)
-
-  toDomXCoord: (dataPoint) -> ((dataPoint) * (@largestX - @smallestX)) + @canvas.getBoundingClientRect().left
+  toDataXCoord: (canvasPoint) -> ((canvasPoint / @canvas.width) * (@xMax - @xMin)) + @xMin
 
 class Marks
   constructor: -> @all = []
@@ -167,6 +163,5 @@ class Mark
   pointerXInElement: (e) -> e.offsetX || e.clientX - e.target.offsetLeft + window.pageXOffset - @canvas.getBoundingClientRect().left
 
   pointerYInElement: (e) -> e.offsetY || e.clientY - e.target.offsetTop + window.pageYOffset - @canvas.getBoundingClientRect().top
-
 
 module?.exports = CanvasGraph: CanvasGraph, Marks: Marks, Mark: Mark
