@@ -39,13 +39,15 @@ class CanvasGraph
       mark.element.style.width = (scaledMax-scaledMin) + "px"
       mark.element.style.left = (scaledMin) + "px"
 
+      mark.save(scaledMin, scaledMax)
+
   clearCanvas: -> @ctx.clearRect(0,0,@canvas.width, @canvas.height)
 
   mirrorVertically: ->
     @ctx.translate(0,@canvas.height)
     @ctx.scale(1,-1)
 
-  toCanvasXCoord: (dataPoint) -> ((dataPoint - @smallestX) / (@largestX - @smallestX)) * @canvas.width
+  toCanvasXCoord: (dataPoint) -> ((dataPoint - @xMin) / (@xMax - @xMin)) * @canvas.width
 
   toDataXCoord: (canvasPoint) -> ((canvasPoint / @canvas.width) * (@xMax - @xMin)) + @xMin
 
@@ -109,7 +111,7 @@ class Mark
     @save(markLeftX, markLeftX+width)
 
   move: (e) ->
-    leftXPos = (e.pageX - @pointerOffset)
+    leftXPos = (@toCanvasXPoint(e) - @pointerOffset)
     @element.style.left = leftXPos + "px"
     @save(leftXPos, leftXPos+parseInt(@element.style.width, 10))
 
@@ -147,7 +149,7 @@ class Mark
       @dragging = true
     else if @pointerYInElement(e) > 15
       @moving = true
-      @pointerOffset = ((e.pageX) - @canvasXMin)
+      @pointerOffset = (@toCanvasXPoint(e) - @canvasXMin)
 
   onMouseUp: (e) ->
     e.preventDefault()
