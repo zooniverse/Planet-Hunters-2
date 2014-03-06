@@ -5,6 +5,8 @@ class CanvasGraph
     window.canvas = @canvas
     window.canvasGraph = @
 
+    @canvasWidth = 1078 #@el.find("canvas").attr "width"
+
     @smallestX = Math.min (point.x for point in @data)...
     @smallestY = Math.min (point.y for point in @data)...
 
@@ -47,9 +49,8 @@ class CanvasGraph
     @ctx.translate(0,@canvas.height)
     @ctx.scale(1,-1)
 
-  toCanvasXCoord: (dataPoint) -> ((dataPoint - @xMin) / (@xMax - @xMin)) * @canvas.width
-
-  toDataXCoord: (canvasPoint) -> ((canvasPoint / @canvas.width) * (@xMax - @xMin)) + @xMin
+  # toCanvasXCoord: (dataPoint) -> ((dataPoint - @xMin) / (@xMax - @xMin)) * @canvas.width
+  # toDataXCoord: (canvasPoint) -> ((canvasPoint / @canvas.width) * (@xMax - @xMin)) + @xMin
 
 class Marks
   constructor: -> @all = []
