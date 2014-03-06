@@ -15,7 +15,7 @@ module.exports =
       title:          ''
       content:        ''
       start:          ''
-      getClassifying: ''
+      getClassifying: 'Classify'
       learnMore:      ''
     whatDo:
       title:          ''

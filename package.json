@@ -2,15 +2,16 @@
   "name": "web-app-template",
   "version": "0.0.1",
   "dependencies": {
-    "haw": "~0.2.4",
+    "haw": "~0.2.17",
     "publisssh": "~0.2.1",
     "stack-of-pages": "0.0.11",
     "t7e": "~0.2.3",
     "zooniverse": "~0.2.3",
-    "faux-range-input": "~0.1.0"
+    "faux-range-input": "~0.1.0",
+    "zootorial": "~0.4.12"
   },
   "scripts": {
     "start": "haw serve --port 3416",
-    "deploy-to-staging": "haw build && publisssh ./build zooniverse-demo/asteroid && rm -rf ./build"
+    "deploy-to-staging": "haw build && publisssh ./build zooniverse-demo/planethunters && rm -rf ./build"
   }
 }

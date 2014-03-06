@@ -5,26 +5,50 @@
 			<div class="subject-header">
 				<h3>Do you see a transit?</h3>
 				<p>If so, highlight it on the graph!</p>
+
+				<div id="lesson-prompt">
+					<b>Lesson available!</b> Become better at identifying transits. Interested?
+					<button class="lesson-button">Yes</button>
+					<button class="lesson-button">No</button>
+					<button class="lesson-button">Never</button>
+					<img id="lesson-close" class="lesson-close" src="./images/icons/marking-closex.png">
+				</div>
 			</div>
 
 			<div id="graph-container">
-				<canvas id="graph" width="1000" height="420" style="border: 1px solid #5e5e5e; background:rgba(13, 21, 24, .75);"></canvas>
+				<div id="marks-container">
+					<canvas id="graph" width="1078" height="420" style="border: 1px solid #5e5e5e; background:rgba(13, 21, 24, .75);"></canvas>
+					<!-- marks go here -->
+				</div>
 				<div id="tools">
 					<h3>TOOLS</h3>
-					<button class="tool-button" id="toggle-zoom">Zoom</button>
-					<button class="tool-button" id="favorite">+Fav</button>
-					<button class="tool-button" id="help">Help</button>
-					<button class="tool-button" id="tutorial">Tutorial</button>
+					<button class="tool-button" id="toggle-zoom">
+						<img src="images/icons/toolbar-zoomplus.png"/>
+						Zoom
+					</button>
+					<button class="tool-button" id="toggle-fav">
+						<img src="images/icons/toolbar-fav-empty.png"/>
+						+Fav
+					</button>
+					<button class="tool-button" id="help">
+						<img src="images/icons/toolbar-question-mark.png"/>
+						Help
+					</button>
+					<button class="tool-button" id="tutorial">
+						<img src="images/icons/toolbar-cursor.png"/>
+						Tutorial
+					</button>
 				</div>
 				<div id="scale">
-					<input id="scale-slider" type="range" min="0" max="35" step="1.0" data-ticks="true"/>
+					<input id="scale-slider" type="range" min="0" max="35"/>
 				</div>
 			</div>
 
-			<div id="marks-container"><!-- marks go here --></div>
+				<div>
+					<button id="no-transits" class="no-transits" id="tutorial">No Transits</button>
+				</div>
+				
 			<div id="points"></div>
-
-			<!-- <button id="no-transits" class="no-transits" id="tutorial">No Transits</button> -->
 
 		</div>
 	</div>

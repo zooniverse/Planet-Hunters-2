@@ -1,18 +1,16 @@
 .site-navigation
   background-color #000
-  color: #fff
-  font-weight: 300
-  overflow: hidden
-  // padding: 10px 75px 10px 75px
-  height: 50px
+  color #fff
+  font-weight 300
+  overflow hidden
+  height 50px
 
   .content-container
     width SITE_WIDTH
-    padding: 75px
-    margin-top: 20px
-    margin-left: 75px
-    // line-height 65px
-    text-align: right
+    padding 75px
+    margin-top 20px
+    margin-left 75px
+    text-align right
 
   .temp_logo
     font-size: 0.7em
@@ -25,6 +23,14 @@
     padding-right: 20px
     letter-spacing: 2px
     font-style: bold
+    // text-align center
+    // line-height 50px
+    // float left
+    // text-transform uppercase
+    // color white
+    // padding-left 150px
+    // @media screen and (max-width: 1350px)
+    //   padding 0 20px
 
   .logo
     float left
@@ -33,75 +39,61 @@
     transform-origin -5%
     text-transform: uppercase
 
+  .link
+    width 80px
+
   .links
-    float: left
-    padding: 0px 20px 0px 20px
-    line-height: 50px
-    display: block
-    text-align: center
-    margin: auto
+    float left
+    padding 0px 20px 0px 20px
+    line-height 50px
+    display block
+    text-align center
+
     a
       font-size 12px
-      padding: 25px 10px 25px 10px
-      position: relative
-      border: solid thin transparent
-
+      display inline-block
+      position relative
+      @media screen and (min-width: 1300px)
+        padding 0 10px
       &.active
-        background: rgb(252,69,65)
         font-weight bold
-        border: solid thin transparent
-
+        background rgb(252,69,65)
       &:after
-        background: transparent
-        border: solid thin transparent
-
-
-      &:hover
-        border: solid thin rgb(252,69,65)
-        top: 100%
-        transition: 0.2s
-
+        background transparent
+        content ""
+        height 4px
+        left 0
+        margin-top -4px
+        position absolute
+        top 67%
+        width 100%
       &:hover:after
         height 4px
-        background: #5e5e5e
-        top: 100%
-        border: solid thin transparent
-
-
+        background rgb(252,69,65)
+        top 100%
       &.active:after
-        background: rgb(252,69,65)
-        // top: 100%
-        transition: .4s
-        border: solid thin transparent
-
-    .link
-      width: 80px
-
+        background rgb(252,69,65)
+        top 100%
+        transition .2s
 
 .zooniverse-top-bar
-  background: transparent
-  font-weight: 300
-  // margin-right: unit((100 - SITE_WIDTH) / 2, '%')
+  background transparent
+  font-weight 300
   svg
     g
       fill #757575
-
   .corner
-    display: none
-
+    display none
   .current-user-name
-    font-weight: inherit
-
+    font-weight inherit
   .avatar img
-    border-radius: 50%
+    border-radius 50%
 
 .footer-container
-  padding: 20px
-
+  padding 20px
   .zooniverse-footer
-    float: right
-
+    float right
     .logo
-      transform: scale(0.4)
+      transform scale(0.4)
     .content
-      display: inline
+      display inline

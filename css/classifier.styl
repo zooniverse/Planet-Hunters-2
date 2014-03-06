@@ -1,90 +1,143 @@
 .classifier
-  color: inherit
+  color inherit
+
+  button
+    padding 5px
+    margin 5px 0px 5px 0px
+    text-align center
+    font-size 0.75em
+    border 1px solid
+    opacity 0.5
+    &:active
+      transform translateY(1px)
+      box-shadow none
+    &:hover
+      opacity 1.0
+  #marks-container
+    height 420px
+    width 1080px
+    overflow hidden
+    float left
+    position relative
+
+  .tool-button
+    border none
+    color white
+    background-color rgb(50,50,50)
+    height 60px
+    width 50px
+    border-radius 0.3em
+    transition 0.3s
+    &:hover
+      background-color #4C4C4C //#151A1B
+      border-radius 0.3em
+      opacity 1.0
+    // &:active
+    //   background-color #151A1B
+    //   border-radius 0.3em
+    //   opacity 1.0
+    
+    &.toggled
+      background-color #151A1B
+      transition 0.3s
+      
+  .no-transits
+    float right
+    font-size 1.2em
+    font-style bold
+    background-color white
+    color black
+    padding 10px 20px 10px 20px
+    border none
+    opacity 0.5
+    border-radius 0.3em
+    &:hover
+      opacity 1.0
 
 
   #graph
     z-index 3
   #subject-container
-    width: 1140px
+    width 1140px
 
     .subject-header
-      padding-bottom: 45px
       h3
-        color: white
+        color white
+
+    #lesson-prompt
+      height 25px
+      margin-top 5px
+      margin-bottom 10px
+      padding-left 15px
+      vertical-align middle
+      font-size 1em
+      color white
+      background-color #3E89AF
+      width inherit
+      border-radius: 0.3em
+    .lesson-button
+      height 100%
+      margin auto
+      color black
+      border none
+      transition 0.4s
+      &:hover
+        color white
+        background-color rgba(0,0,0,0.5)
+        transition 0.4s
+    .lesson-close
+      // line-height 25px
+      padding 9px // 10px 10px 10px
+      float right
 
     #graph-container
-      float: left
-      // z-index: 20
-
+      float left
       #graph
-        width: 1000px
-        height: 420px
-        float: left
-        border: 1px solid #5e5e5e; 
-        background: rgba(13,21,24,0.75)
+        float left
+        border 1px solid #5e5e5e
+        background rgba(13,21,24,0.75)
 
     #tools
-      float: left
-      width: 50px   // account for padding
-      height: 410px // account for padding
-      padding: 5px
-      background-color: rgb(50,50,50)
-
+      float left
+      width 50px   // account for padding
+      height 410px // account for padding
+      padding 5px
+      background-color rgb(50,50,50)
       h3
-        font-style: italic
-        font-size: 0.9em
-
-      .tool-button
-        padding: 5px
-        margin: 5px 0px 5px 0px
-        text-align: center
-        font-size: 0.75em
-        height: 60px
-        width: 50px
-        border: 1px solid
-        border-radius: 0.3em
-        // display: inline-block
-        &:active
-          transform: translateY(1px)
-          box-shadow: none
-        &:hover
-          opacity 0.95
+        font-style italic
+        font-size 0.9em
 
     #scale
-      float:left
-      display: inline-block
-      background-color: black
-      width: 1000px
-      height: 20px
-      border: 1px solid rgb(50,50,50)
+      float left
+      display inline-block
+      background-color black
+      width 1078px
+      height 20px
+      border 1px solid rgb(50,50,50)
 
       #scale-slider
-        width: 1000px
-        padding-top: auto
-        padding-bottom: auto
-
-
+        width 1078px
+        padding-top auto
+        padding-bottom auto
       .faux-range-input
-        width 1000px
+        width 1078px
         height 20px
         vertical-align middle
         background black //#25b4c5
         cursor ew-resize
         cursor -webkit-grab
         top 0px
-
         &:before
-          content: "1.2.3.4.5.6."
+          content "1.2.3.4.5.6.7"
           margin 0px
           font-size 12px
-          top: 0
+          top 0
           letter-spacing 79px
-
         .faux-range-track
-          width 744px // (1000-256px)
-
+          width 822px // (1078-256px)
         .faux-range-thumb
           margin -1px 0 0 -8px
+          // background none
           background rgba(50,50,50,0.75) //#1b7a85
           outline none
           border 1px solid #5e5e5e
@@ -92,16 +145,14 @@
           height 20px
           border-radius 4px
           top 0px
-
           &:before
-            // content: "III"
-            color #2fa5b9
+            text-align center
+            line-height 20px
+            content "III"
             position absolute
             margin 0px
             font-size 12px
-            width: 100%
+            width 100%
             z-index 5
-
         .faux-range-tick
           display none
-

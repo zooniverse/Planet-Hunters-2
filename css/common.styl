@@ -6,16 +6,29 @@ SITE_WIDTH = 80%
 h1, h2, h3, h4, h5, h6, p, .zootorial-dialog
   margin 0px
   -webkit-font-smoothing antialiased
+  
+button
+  padding 5px
+  margin 5px 0px 5px 0px
+  text-align center
+  font-size 0.75em
+  border 1px solid
+  opacity 0.5
+  &:active
+    transform translateY(1px)
+    box-shadow none
+  &:hover
+    opacity 1.0
 
 #_STANDARD_BUTTON
-  border: 1px solid
-  border-radius: 0.3em
-  display: inline-block
-  margin: 0 0.2em
-  padding: 0.4em 1.6em
+  border 1px solid
+  border-radius 0.3em
+  display inline-block
+  margin 0 0.2em
+  padding 0.4em 1.6em
   &:active
-    transform: translateY(1px)
-    box-shadow: none
+    transform translateY(1px)
+    box-shadow none
   &:hover
     opacity 0.95
 
@@ -28,19 +41,19 @@ h1, h2, h3, h4, h5, h6, p, .zootorial-dialog
 #_TOGGLE_BUTTON
   @extends #_STANDARD_BUTTON
 
-  border-right-width: 0
-  border-radius: 0
-  margin: 0
+  border-right-width 0
+  border-radius 0
+  margin 0
 
   &:first-child
-    border-radius: 0.3em 0 0 0.3em
+    border-radius 0.3em 0 0 0.3em
 
   &:last-child
-    border-radius: 0 0.3em 0.3em 0
-    border-right-width: 1px
+    border-radius 0 0.3em 0.3em 0
+    border-right-width 1px
 
   &.selected
-    box-shadow: 0 0 1.5em inset
+    box-shadow 0 0 1.5em inset
 
 // Manual griddage
 // Set something like {float: left; margin-right: unit(GUTTER_WIDTH, 'px'); width: columns(4);}
