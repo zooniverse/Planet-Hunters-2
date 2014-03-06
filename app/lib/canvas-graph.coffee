@@ -92,12 +92,14 @@ class Mark
     @startingPoint = @toCanvasXPoint(e) - MIN_WIDTH
     @dragging = false
 
-    @element.addEventListener 'mouseover', (e) => @hovering = true
-    @element.addEventListener 'mouseout', (e) => @hovering = false
-    @element.addEventListener 'mousedown', (e) => @onMouseDown(e)
+    @element.addEventListener 'mouseover', => @hovering = true
+    @element.addEventListener 'mouseout', => @hovering = false
+
+    @element.addEventListener 'mousedown',
+      @onMouseDown
+      window.addEventListener 'mousemove', @onMouseMove
+      window.addEventListener 'mouseup', @onMouseUp
     @element.addEventListener 'click', (e) => @canvasGraph.marks.remove(@) if @pointerYInElement(e) < 15
-    window.addEventListener 'mousemove', (e) => @onMouseMove(e)
-    window.addEventListener 'mouseup', (e) => @onMouseUp(e)
 
   draw: (e) ->
     markLeftX = Math.min @startingPoint, @toCanvasXPoint(e)
@@ -124,7 +126,7 @@ class Mark
     @dataXMin = @canvasGraph.toDataXCoord(@canvasXMin)
     @dataXMax = @canvasGraph.toDataXCoord(@canvasXMax)
 
-  updateCursor: (e) ->
+  updateCursor: (e) =>
     if @pointerYInElement(e) < 15
       @element.style.cursor = "pointer"
     else if ((Math.abs @pointerXInElement(e) - (@canvasXMax-@canvasXMin)) < 10) || @pointerXInElement(e) < 10
@@ -132,14 +134,16 @@ class Mark
     else
       @element.style.cursor = "move"
 
-  onMouseMove: (e) ->
+  onMouseMove: (e) =>
     e.preventDefault()
     @draw(e) if @dragging
     @move(e) if @moving
     @updateCursor(e) if @hovering
 
-  onMouseDown: (e) ->
+  onMouseDown: (e) =>
     e.preventDefault()
+
+    console.log "E from onmousedown", e
     @element.parentNode.appendChild(@element) #move to end of container for z index
     if (Math.abs @pointerXInElement(e) - (@canvasXMax-@canvasXMin)) < 10
       @startingPoint = @canvasXMin
@@ -151,7 +155,7 @@ class Mark
       @moving = true
       @pointerOffset = (@toCanvasXPoint(e) - @canvasXMin)
 
-  onMouseUp: (e) ->
+  onMouseUp: (e) =>
     e.preventDefault()
     for mark in @canvasGraph.marks.all
       mark.dragging = false
@@ -159,8 +163,10 @@ class Mark
     if (@ in @canvasGraph.marks.all) then @canvasGraph.marks.update(@) else @canvasGraph.marks.add(@)
     @dragging = false
     @moving = false
+    window.removeEventListener 'mousemove', @onMouseMove
+    window.removeEventListener 'mouseup', @onMouseUp
 
-  toCanvasXPoint: (e) -> e.pageX-@canvas.getBoundingClientRect().left - window.scrollX
+  toCanvasXPoint: (e) -> e.pageX - @canvas.getBoundingClientRect().left - window.scrollX
 
   pointerXInElement: (e) -> e.offsetX || e.clientX - e.target.offsetLeft + window.pageXOffset - @canvas.getBoundingClientRect().left
 
