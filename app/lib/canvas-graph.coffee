@@ -22,14 +22,6 @@ class CanvasGraph
       @mark.dragging = true
       @mark.draw(e)
 
-    canvas.addEventListener 'mousemove', (e) =>
-      e.preventDefault()
-      @mark?.onMouseMove(e)
-
-    canvas.addEventListener 'mouseup', (e) =>
-      e.preventDefault()
-      @mark?.onMouseUp(e)
-
   plotPoints: (xMin = @smallestX, xMax = @largestX) ->
     @clearCanvas()
     for point in @data
