@@ -28,10 +28,8 @@ class Classifier extends BaseController
   
   constructor: ->
     super
-
     isZoomed: false
     ifFaved: false
-
     @scaleSlider = new FauxRangeInput('#scale-slider')
 
     @canvas = @el.find('#graph')[0]
@@ -41,8 +39,6 @@ class Classifier extends BaseController
 
     @canvasState = new CanvasGraph(@canvas, light_curve_data)
     @canvasState.plotPoints()
-
-    @zoomBtn.addEventListener 'click', (e) => @onClickZoom()
 
     console.log @canvasState.largestX
     @el.find("#scale-slider").attr "max", 1077 # should eventually be dynamic
@@ -54,24 +50,21 @@ class Classifier extends BaseController
     console.log "onChangeScaleSlider()"
     console.log " value: ", focusCenter
 
-    xMin = @canvasState.toDataXCoord(focusCenter-thumbWid/2)
-    xMax = @canvasState.toDataXCoord(focusCenter+thumbWid/2)
+    xMin = @canvasState.toCanvasXCoord(focusCenter-thumbWid/2)
+    xMax = @canvasState.toCanvasXCoord(focusCenter+thumbWid/2)
     @canvasState.plotPoints(xMin,xMax)
   
-  onClickZoom: ->
-    @zoomed = !@zoomed
-    if @zoomed then @canvasState.plotPoints(5,20) else @canvasState.plotPoints()
-
   onToggleZoom: ->
+    @isZoomed = !@isZoomed
     zoomButton = @el.find("#toggle-zoom")[0]
     if @isZoomed
-      @isZoomed = false
-      zoomButton.innerHTML = '<img src="images/icons/toolbar-zoomplus.png">Zoom'
-      @el.find("#toggle-zoom").removeClass("toggled")
-    else
-      @isZoomed = true
+      @canvasState.plotPoints(5,20)
       zoomButton.innerHTML = '<img src="images/icons/toolbar-zoomminus.png">Zoom'
       @el.find("#toggle-zoom").addClass("toggled")
+    else
+      @canvasState.plotPoints()
+      zoomButton.innerHTML = '<img src="images/icons/toolbar-zoomplus.png">Zoom'
+      @el.find("#toggle-zoom").removeClass("toggled")
 
   onToggleFav: ->
     favButton = @el.find("#toggle-fav")[0]
