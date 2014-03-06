@@ -23,6 +23,7 @@ class Classifier extends BaseController
     'click button[id="help"]'        : 'onClickHelp'
     'click button[id="tutorial"]'    : 'onClickTutorial'
     'click button[id="no-transits"]' : 'onClickNoTransits'
+    'click img[id="lesson-close"]'   : 'onClickLessonClose'
     # 'change input[id="scale-slider"]': 'onChangeScaleSlider'
   
   constructor: ->
@@ -92,6 +93,9 @@ class Classifier extends BaseController
 
   onClickNoTransits: ->
     console.log 'onClickNoTransits()'
+
+  onClickLessonClose: ->
+    console.log 'onClickLessonClose()'
 
 
 module.exports = Classifier
