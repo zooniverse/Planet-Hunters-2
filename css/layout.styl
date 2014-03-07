@@ -13,48 +13,42 @@ body
   margin 0
 
 .bg-overlay
-  width: 1436px
-  // width auto
-  // height: 640px
-  height 640px
-  position: absolute
-  top: 50px
-  background-color: rgba(19,34,44,0.92) // rgba(200,20,20,0.92)
-  // background-size cover
-  // clip:rect(0px,1436px,730px,0px);
-  z-index: -2
-  // overflow: hidden
+  width 1436px
+  height 730px
+  position absolute
+  top 50px
+  background-color rgba(19,34,44,0.75)
+  z-index -1
 
 .bg-planet
-  background-image: url('images/planet.png'); 
-  position: absolute
-  top: 250px
-  left: 600px
-  width: 530px
-  height: 530px
-  z-index: -2
+  background-image url('images/planet.png'); 
+  position absolute
+  top 200px
+  left 800px
+  width 530px
+  height 530px
+  z-index -1
 
 .bg-moon
   background-image url('images/moon.png'); 
   background-size cover
-  position: absolute
-  top: 659px
-  left: 1100px
-  width: 75px
-  height: 75px
-  z-index: -2
+  position absolute
+  top 460px
+  left 700px
+  width 75px
+  height 75px
+  z-index -1
   overflow hidden
 
 .bg-starfield-sun
   background-image url('images/field-sun.jpg'); 
-  // background-size cover
-  width: 1436px
-  height: 640px
-  width auto
-  position: absolute
-  top: 50px
-  z-index: -3
-  // overflow: hidden
+  background-size cover
+  position absolute
+  top 50px
+  width 100%
+  height 730px
+  z-index -2
+  overflow hidden
 
 .content-block
   // background-color: rgb(37,51,60)
@@ -64,17 +58,17 @@ body
   // background-size cover
   // background-repeat: no-repeat;
 
-  height: 640px; 
-  width: auto
-  padding: 45px 150px 45px 150px
-  margin: 0 auto
-  z-index: -2
+  height 730px
+  width auto
+  padding 45px 150px 45px 150px
+  margin 0 auto
+  z-index -2
 
   .content-container
     clearfix()
-    margin: 0 auto
-    z-index: 10
-    width: 768px
+    margin 0 auto
+    z-index 10
+    width 768px
     h1, h2, h3
       text-transform uppercase
     .intro
@@ -170,4 +164,3 @@ button
     pointer-events none
   &:hover
     opacity 0.95
-
