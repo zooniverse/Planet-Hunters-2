@@ -84,10 +84,10 @@ class Mark
         <img class="close-icon" src="./images/icons/marking-closex.png" style="position: relative; top: -2px;">
       </div>
       <div class="left-border" style="position: absolute; top: 0px; left: 0px;width: 2px; height: 100%; background-color: red;z-index: 100;">
-        <div class="left-handle" style="position: absolute; left: -5px; width: 12px; height: 12px; background-color: red; top: 190px; border-radius: 3px;"></div>
+        <div class="left-handle" style="position: absolute; left: -5px; width: 12px; height: 12px; background-color: red; top: 50%; border-radius: 3px;"></div>
       </div>
       <div class="right-border" style="position: absolute; top: 0px; right: 0px; width: 2px; height: 100%; background-color: red; z-index: 100;">
-        <div class="right-handle" style="position: absolute; right: -5px; width: 12px; height: 12px; background-color: red; top: 190px; border-radius: 3px;"></div>
+        <div class="right-handle" style="position: absolute; right: -5px; width: 12px; height: 12px; background-color: red; top: 50%; border-radius: 3px;"></div>
       </div>
     """
 
