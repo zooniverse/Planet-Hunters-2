@@ -80,18 +80,21 @@ class Mark
     @element.className = "mark"
 
     @element.innerHTML = """
+      <div class="top-bar" style="position: relative; width:100%; height: 13px; top 0px; background-color: red;"></div>
       <img class="close-icon" src="./images/icons/marking-closex.png" style="position: relative; top: -15px;">
-      <div class="left-handle" style="position: absolute; left: -7px; width: 12px; height: 12px; background-color: red; top: 190px; border-radius: 3px;"></div>
-      <div class="right-handle" style="position: absolute; right: -7px; width: 12px; height: 12px; background-color: red; top: 190px; border-radius: 3px;"></div>
+      <div class="left-border" style="position: absolute; top: 0px; left: 0px;width: 2px; height: 100%; background-color: red;">
+        <div class="left-handle" style="position: absolute; left: -5px; width: 12px; height: 12px; background-color: red; top: 190px; border-radius: 3px;"></div>
+      </div>
+      <div class="right-border" style="position: absolute; top: 0px; right: 0px; width: 2px; height: 100%; background-color: red;">
+        <div class="right-handle" style="position: absolute; right: -5px; width: 12px; height: 12px; background-color: red; top: 190px; border-radius: 3px;"></div>
+      </div>
     """
 
     @element.style.left = @pointerXInElement(e) + "px"
     @element.style.position = 'absolute'
     @element.style.top = e.target.offsetTop + "px"
-    @element.style.height = @canvas.height - 15 + 'px' # subtract vertical borders
+    @element.style.height = @canvas.height + 'px'
     @element.style.backgroundColor = 'rgba(255,0,0,.5)'
-    @element.style.border =  '2px solid red'
-    @element.style.borderTop =  '13px solid red'
     @element.style.pointerEvents = 'auto'
     @element.style.textAlign = 'center'
 
