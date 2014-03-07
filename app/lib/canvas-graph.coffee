@@ -91,7 +91,7 @@ class Mark
       </div>
     """
 
-    @element.style.left = @pointerXInElement(e) + "px"
+    @element.style.left = @toCanvasXPoint(e) + "px"
     @element.style.position = 'absolute'
     @element.style.top = e.target.offsetTop + "px"
     @element.style.height = @canvas.height + 'px'
@@ -169,8 +169,6 @@ class Mark
     @canvasGraph.marks.add(@) unless (@ in @canvasGraph.marks.all)
     @canvasGraph.marks.remove(@) if e.target.className is "top-bar"
 
-  toCanvasXPoint: (e) -> e.pageX - @canvas.getBoundingClientRect().left - window.scrollX
-
-  pointerXInElement: (e) -> e.offsetX || e.clientX - e.target.offsetLeft + window.pageXOffset - @canvas.getBoundingClientRect().left
+  toCanvasXPoint: (e) -> e.pageX - @canvas.getBoundingClientRect().left - window.scrollXg
 
 module?.exports = CanvasGraph: CanvasGraph, Marks: Marks, Mark: Mark
