@@ -60,7 +60,9 @@ class Marks
   add: (mark) -> @all.push(mark)
 
   remove: (mark) ->
-    @all.splice(@all.indexOf(mark), 1)
+    console.log "REMOVING", mark
+    console.log (mark in @all)
+    console.log @all.splice(@all.indexOf(mark), 1)
     document.getElementById('marks-container').removeChild(mark.element)
 
   destroyAll: ->
@@ -104,7 +106,6 @@ class Mark
 
     @element.addEventListener 'mousemove', @updateCursor
     @element.addEventListener 'mousedown', @onMouseDown
-    @element.addEventListener 'click', (e) => @canvasGraph.marks.remove(@) if @pointerYInElement(e) < 15
 
   draw: (e) ->
     markLeftX = Math.min @startingPoint, @toCanvasXPoint(e)
@@ -148,28 +149,28 @@ class Mark
     window.addEventListener 'mousemove', @onMouseMove
     window.addEventListener 'mouseup', @onMouseUp
 
-    console.log e.target.className
     @element.parentNode.appendChild(@element) #move to end of container for z index
-    if (Math.abs @pointerXInElement(e) - (@canvasXMax-@canvasXMin)) < 10
+
+    if e.target.className is "right-border" or e.target.className is "right-border"
       @startingPoint = @canvasXMin
       @dragging = true
-    else if @pointerXInElement(e) < 10
+    else if e.target.className is "left-border" or e.target.className is "left-handle"
       @startingPoint = @canvasXMax
       @dragging = true
-    else if @pointerYInElement(e) > 15
+    else if e.target.className is "mark"
       @moving = true
       @pointerOffset = (@toCanvasXPoint(e) - @canvasXMin)
+    else if e.target.className is "top-bar"
+      @canvasGraph.marks.remove(@)
 
   onMouseUp: (e) =>
     e.preventDefault()
+    window.removeEventListener 'mousemove', @onMouseMove
+    window.removeEventListener 'mouseup', @onMouseUp
     for mark in @canvasGraph.marks.all
       mark.dragging = false
       mark.moving = false
     @canvasGraph.marks.add(@) unless (@ in @canvasGraph.marks.all)
-    @dragging = false
-    @moving = false
-    window.removeEventListener 'mousemove', @onMouseMove
-    window.removeEventListener 'mouseup', @onMouseUp
 
   toCanvasXPoint: (e) -> e.pageX - @canvas.getBoundingClientRect().left - window.scrollX
 
