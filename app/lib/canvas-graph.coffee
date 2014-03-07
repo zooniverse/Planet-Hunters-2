@@ -60,8 +60,6 @@ class Marks
   add: (mark) -> @all.push(mark)
 
   remove: (mark) ->
-    console.log "REMOVING", mark
-    console.log (mark in @all)
     console.log @all.splice(@all.indexOf(mark), 1)
     document.getElementById('marks-container').removeChild(mark.element)
 
@@ -70,7 +68,7 @@ class Marks
     @all = []
 
 class Mark
-  MIN_WIDTH = 10
+  MIN_WIDTH = 15
   MAX_WIDTH = 150
 
   #move to end of marks-container on mousedown => for mousedown event
@@ -160,8 +158,6 @@ class Mark
     else if e.target.className is "mark"
       @moving = true
       @pointerOffset = (@toCanvasXPoint(e) - @canvasXMin)
-    else if e.target.className is "top-bar"
-      @canvasGraph.marks.remove(@)
 
   onMouseUp: (e) =>
     e.preventDefault()
@@ -171,11 +167,10 @@ class Mark
       mark.dragging = false
       mark.moving = false
     @canvasGraph.marks.add(@) unless (@ in @canvasGraph.marks.all)
+    @canvasGraph.marks.remove(@) if e.target.className is "top-bar"
 
   toCanvasXPoint: (e) -> e.pageX - @canvas.getBoundingClientRect().left - window.scrollX
 
   pointerXInElement: (e) -> e.offsetX || e.clientX - e.target.offsetLeft + window.pageXOffset - @canvas.getBoundingClientRect().left
-
-  pointerYInElement: (e) -> e.offsetY || e.clientY - e.target.offsetTop + window.pageYOffset - @canvas.getBoundingClientRect().top
 
 module?.exports = CanvasGraph: CanvasGraph, Marks: Marks, Mark: Mark
