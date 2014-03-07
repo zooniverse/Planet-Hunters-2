@@ -80,12 +80,13 @@ class Mark
     @element.className = "mark"
 
     @element.innerHTML = """
-      <div class="top-bar" style="position: relative; width:100%; height: 13px; top 0px; background-color: red;"></div>
-      <img class="close-icon" src="./images/icons/marking-closex.png" style="position: relative; top: -15px;">
-      <div class="left-border" style="position: absolute; top: 0px; left: 0px;width: 2px; height: 100%; background-color: red;">
+      <div class="top-bar" style="position: relative; width:100%; height: 13px; top 0px; background-color: red;">
+        <img class="close-icon" src="./images/icons/marking-closex.png" style="position: relative; top: -2px;">
+      </div>
+      <div class="left-border" style="position: absolute; top: 0px; left: 0px;width: 2px; height: 100%; background-color: red;z-index: 100;">
         <div class="left-handle" style="position: absolute; left: -5px; width: 12px; height: 12px; background-color: red; top: 190px; border-radius: 3px;"></div>
       </div>
-      <div class="right-border" style="position: absolute; top: 0px; right: 0px; width: 2px; height: 100%; background-color: red;">
+      <div class="right-border" style="position: absolute; top: 0px; right: 0px; width: 2px; height: 100%; background-color: red; z-index: 100;">
         <div class="right-handle" style="position: absolute; right: -5px; width: 12px; height: 12px; background-color: red; top: 190px; border-radius: 3px;"></div>
       </div>
     """
@@ -102,9 +103,7 @@ class Mark
     @dragging = false
 
     @element.addEventListener 'mousemove', @updateCursor
-
     @element.addEventListener 'mousedown', @onMouseDown
-
     @element.addEventListener 'click', (e) => @canvasGraph.marks.remove(@) if @pointerYInElement(e) < 15
 
   draw: (e) ->
@@ -133,24 +132,23 @@ class Mark
     @dataXMax = @canvasGraph.toDataXCoord(@canvasXMax)
 
   updateCursor: (e) =>
-    if @pointerYInElement(e) < 15
-      @element.style.cursor = "pointer"
-    else if ((Math.abs @pointerXInElement(e) - (@canvasXMax-@canvasXMin)) < 10) || @pointerXInElement(e) < 10
-      @element.style.cursor = "ew-resize"
-    else
-      @element.style.cursor = "move"
+    switch e.target.className
+      when "mark" then @element.style.cursor = "move"
+      when "left-border" then @element.style.cursor = "ew-resize"
+      when "right-border" then @element.style.cursor = "ew-resize"
+      when "top-bar" then @element.style.cursor = "pointer"
 
   onMouseMove: (e) =>
     e.preventDefault()
     @draw(e) if @dragging
     @move(e) if @moving
-    @updateCursor(e) if @hovering
 
   onMouseDown: (e) =>
     e.preventDefault()
     window.addEventListener 'mousemove', @onMouseMove
     window.addEventListener 'mouseup', @onMouseUp
 
+    console.log e.target.className
     @element.parentNode.appendChild(@element) #move to end of container for z index
     if (Math.abs @pointerXInElement(e) - (@canvasXMax-@canvasXMin)) < 10
       @startingPoint = @canvasXMin
