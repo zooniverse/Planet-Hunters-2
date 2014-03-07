@@ -106,12 +106,12 @@ class Mark
     @element.addEventListener 'mousedown', @onMouseDown
 
   draw: (e) ->
-    markLeftX = Math.min @startingPoint, @toCanvasXPoint(e)
+    markLeftX = Math.max @startingPoint - MAX_WIDTH, Math.min @startingPoint, @toCanvasXPoint(e)
     markRightX = Math.max @startingPoint, @toCanvasXPoint(e)
 
     width = (Math.min (Math.max (Math.abs markRightX - markLeftX), MIN_WIDTH), MAX_WIDTH)
 
-    @element.style.left = (Math.min markLeftX, markRightX) + "px"
+    @element.style.left = markLeftX + "px"
     @element.style.width = width + "px"
 
     @save(markLeftX, markLeftX+width)
