@@ -80,25 +80,32 @@ class Mark
     @element = document.createElement('div')
     @element.className = "mark"
 
+    @element.innerHTML = """
+      <img class="close-icon" src="./images/icons/marking-closex.png" style="position: relative; top: -15px;">
+      <div class="left-handle" style="position: absolute; left: -7px; width: 12px; height: 12px; background-color: red; top: 190px; border-radius: 3px;"></div>
+      <div class="right-handle" style="position: absolute; right: -7px; width: 12px; height: 12px; background-color: red; top: 190px; border-radius: 3px;"></div>
+    """
+
     @element.style.left = @pointerXInElement(e) + "px"
-    @element.style.position =  'absolute'
+    @element.style.position = 'absolute'
     @element.style.top = e.target.offsetTop + "px"
-    @element.style.height = @canvas.height - 13 + 'px' # subtract border height
+    @element.style.height = @canvas.height - 15 + 'px' # subtract vertical borders
     @element.style.backgroundColor = 'rgba(255,0,0,.5)'
     @element.style.border =  '2px solid red'
     @element.style.borderTop =  '13px solid red'
     @element.style.pointerEvents = 'auto'
+    @element.style.textAlign = 'center'
 
     @startingPoint = @toCanvasXPoint(e) - MIN_WIDTH
     @dragging = false
 
     @element.addEventListener 'mouseover', => @hovering = true
     @element.addEventListener 'mouseout', => @hovering = false
-
     @element.addEventListener 'mousedown',
       @onMouseDown
       window.addEventListener 'mousemove', @onMouseMove
       window.addEventListener 'mouseup', @onMouseUp
+    @element.addEventListener 'mouseup', @onMouseUp
     @element.addEventListener 'click', (e) => @canvasGraph.marks.remove(@) if @pointerYInElement(e) < 15
 
   draw: (e) ->
