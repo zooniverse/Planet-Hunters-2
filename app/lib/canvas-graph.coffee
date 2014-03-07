@@ -169,6 +169,6 @@ class Mark
     @canvasGraph.marks.add(@) unless (@ in @canvasGraph.marks.all)
     @canvasGraph.marks.remove(@) if e.target.className is "top-bar"
 
-  toCanvasXPoint: (e) -> e.pageX - @canvas.getBoundingClientRect().left - window.scrollXg
+  toCanvasXPoint: (e) -> e.pageX - @canvas.getBoundingClientRect().left - window.scrollX
 
 module?.exports = CanvasGraph: CanvasGraph, Marks: Marks, Mark: Mark
