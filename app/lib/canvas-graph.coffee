@@ -149,7 +149,7 @@ class Mark
 
     @element.parentNode.appendChild(@element) #move to end of container for z index
 
-    if e.target.className is "right-border" or e.target.className is "right-border"
+    if e.target.className is "right-border" or e.target.className is "right-handle"
       @startingPoint = @canvasXMin
       @dragging = true
     else if e.target.className is "left-border" or e.target.className is "left-handle"
@@ -164,7 +164,7 @@ class Mark
     window.removeEventListener 'mousemove', @onMouseMove
     window.removeEventListener 'mouseup', @onMouseUp
     @canvasGraph.marks.add(@) unless (@ in @canvasGraph.marks.all)
-    @canvasGraph.marks.remove(@) if e.target.className is "top-bar"
+    @canvasGraph.marks.remove(@) if e.target.className is "top-bar" or e.target.className is "close-icon"
     for mark in @canvasGraph.marks.all
       mark.dragging = false
       mark.moving = false
