@@ -19,6 +19,7 @@ class CanvasGraph
       e.preventDefault()
       @mark = new Mark(e, @)
       @marks.create(@mark)
+      @mark.onMouseDown(e)
       @mark.dragging = true
       @mark.draw(e)
 
@@ -57,8 +58,6 @@ class Marks
   create: (mark) -> document.getElementById('marks-container').appendChild(mark.element)
 
   add: (mark) -> @all.push(mark)
-
-  update: (mark) -> @all[@all.indexOf(mark)] = mark
 
   remove: (mark) ->
     @all.splice(@all.indexOf(mark), 1)
@@ -99,13 +98,10 @@ class Mark
     @startingPoint = @toCanvasXPoint(e) - MIN_WIDTH
     @dragging = false
 
-    @element.addEventListener 'mouseover', => @hovering = true
-    @element.addEventListener 'mouseout', => @hovering = false
-    @element.addEventListener 'mousedown',
-      @onMouseDown
-      window.addEventListener 'mousemove', @onMouseMove
-      window.addEventListener 'mouseup', @onMouseUp
-    @element.addEventListener 'mouseup', @onMouseUp
+    @element.addEventListener 'mousemove', @updateCursor
+
+    @element.addEventListener 'mousedown', @onMouseDown
+
     @element.addEventListener 'click', (e) => @canvasGraph.marks.remove(@) if @pointerYInElement(e) < 15
 
   draw: (e) ->
@@ -149,8 +145,9 @@ class Mark
 
   onMouseDown: (e) =>
     e.preventDefault()
+    window.addEventListener 'mousemove', @onMouseMove
+    window.addEventListener 'mouseup', @onMouseUp
 
-    console.log "E from onmousedown", e
     @element.parentNode.appendChild(@element) #move to end of container for z index
     if (Math.abs @pointerXInElement(e) - (@canvasXMax-@canvasXMin)) < 10
       @startingPoint = @canvasXMin
@@ -167,7 +164,7 @@ class Mark
     for mark in @canvasGraph.marks.all
       mark.dragging = false
       mark.moving = false
-    if (@ in @canvasGraph.marks.all) then @canvasGraph.marks.update(@) else @canvasGraph.marks.add(@)
+    @canvasGraph.marks.add(@) unless (@ in @canvasGraph.marks.all)
     @dragging = false
     @moving = false
     window.removeEventListener 'mousemove', @onMouseMove
