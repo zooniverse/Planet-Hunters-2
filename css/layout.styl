@@ -12,19 +12,20 @@ html
 body
   margin 0
 
-.content-block-overlay
-  // width: 1436px
-  width auto
-  height: 640px
+.bg-overlay
+  width: 1436px
+  // width auto
+  // height: 640px
+  height 640px
   position: absolute
   top: 50px
-  background-color: rgba(200,20,20,0.92)//rgba(19,34,44,0.92)
-  background-size cover
+  background-color: rgba(19,34,44,0.92) // rgba(200,20,20,0.92)
+  // background-size cover
   // clip:rect(0px,1436px,730px,0px);
   z-index: -2
   // overflow: hidden
 
-.planet-container
+.bg-planet
   background-image: url('images/planet.png'); 
   position: absolute
   top: 250px
@@ -33,34 +34,36 @@ body
   height: 530px
   z-index: -2
 
-.moon-container
-  background-image: url('images/moon.png'); 
+.bg-moon
+  background-image url('images/moon.png'); 
+  background-size cover
   position: absolute
   top: 659px
   left: 1100px
   width: 75px
   height: 75px
   z-index: -2
+  overflow hidden
 
-.content-block-background
+.bg-starfield-sun
   background-image url('images/field-sun.jpg'); 
-  background-size cover
-  // width: 1436px
+  // background-size cover
+  width: 1436px
   height: 640px
   width auto
   position: absolute
   top: 50px
   z-index: -3
-  overflow: hidden
+  // overflow: hidden
 
 .content-block
   // background-color: rgb(37,51,60)
   // background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(19,34,44,0.92)), to(rgba(19,34,44,0.92))), url('images/field-sun.jpg'); 
-  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(19,34,44,0.92)), to(rgba(19,34,44,0.92))), url('images/field-sun.jpg');  
+  // background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(19,34,44,0.92)), to(rgba(19,34,44,0.92))), url('images/field-sun.jpg');  
   // background-image: url('images/starfield-planets.jpg'); 
-  background-size cover
+  // background-size cover
+  // background-repeat: no-repeat;
 
-  background-repeat: no-repeat;
   height: 640px; 
   width: auto
   padding: 45px 150px 45px 150px
