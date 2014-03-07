@@ -2,19 +2,13 @@
 <div class="content-block">
 	<div class="content-container">
 	  <div class="white-sheet" id="home-main-content">
-	    <div class="centered-container">
-	      <h2>There are undiscovered worlds out there right now!</h2>
-	      <p>Become a planet hunter and discover distant worlds within our galaxy.</p>
+
+	    <div class="call-to-action">
+	      <h1>Ready to discover new worlds?</h1>
+	      <p class="call-to-action description">Join the search for exoplanets with Planet Hunters</p>
+	    	<button id="begin-classifying"><%- translate 'a.call-to-action', 'home.header.getClassifying', href: '#/classify' %></button>
 	    </div>
 
-	    <br>
-	    <div class="content-container">
-	      <div class="centered-container">
-	        <h2>Ready to Classify?</h2>
-	        <p>What are you waiting for? Get started!</p>
-	        <button id="begin-classifying"><%- translate 'a.call-to-action', 'home.header.getClassifying', href: '#/classify' %></button>
-	      </div>
-	    </div>
 	  </div>
 	</div>
 </div>
