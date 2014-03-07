@@ -1,5 +1,6 @@
 <div class="content-block">
-	<div class="content-container">
+	<div class="planet-container"></div>
+	<div class="content-contianer">
 		<div id="subject-container">
 			<div class="subject-header">
 				<h3>Do you see a transit?</h3>
@@ -43,13 +44,18 @@
 				</div>
 			</div>
 
-
 				<div>
 					<button id="no-transits" class="no-transits" id="tutorial">No Transits</button>
 				</div>
-
+				
 			<div id="points"></div>
 
 		</div>
 	</div>
 </div>
+
+<!-- PLANET TIME -->
+<div class="planet-time planet-container"></div>
+<div class="planet-time moon-container"></div>
+<div class="planet-time content-block-background"></div>
+<div class="planet-time content-block-overlay"></div>

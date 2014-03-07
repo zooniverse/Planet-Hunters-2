@@ -29,7 +29,12 @@ stack = new StackOfPages
   '#/': require './controllers/home-page'
   '#/about': require './controllers/about-page'
   '#/classify': require './controllers/classifier'
-  '#/science': require './controllers/science-page'
+  '#/science': require './controllers/science-page'  
+  '#/profile': require './controllers/profile'
+  '#/education': require './controllers/education'
+  '#/discuss': require './controllers/discuss'
+  '#/blog': require './controllers/blog'
+
   NOT_FOUND: '<div class="content-block"><div class="content-container"><h1>Page not found!</h1></div></div>'
   ERROR: '<div class="content-block"><div class="content-container"><h1>There was an error!</h1></div></div>'
 document.body.appendChild stack.el
