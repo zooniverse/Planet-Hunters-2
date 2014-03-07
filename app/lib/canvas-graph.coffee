@@ -163,11 +163,11 @@ class Mark
     e.preventDefault()
     window.removeEventListener 'mousemove', @onMouseMove
     window.removeEventListener 'mouseup', @onMouseUp
+    @canvasGraph.marks.add(@) unless (@ in @canvasGraph.marks.all)
+    @canvasGraph.marks.remove(@) if e.target.className is "top-bar"
     for mark in @canvasGraph.marks.all
       mark.dragging = false
       mark.moving = false
-    @canvasGraph.marks.add(@) unless (@ in @canvasGraph.marks.all)
-    @canvasGraph.marks.remove(@) if e.target.className is "top-bar"
 
   toCanvasXPoint: (e) -> e.pageX - @canvas.getBoundingClientRect().left - window.scrollX
 
