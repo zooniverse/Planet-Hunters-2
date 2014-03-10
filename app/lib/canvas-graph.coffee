@@ -19,6 +19,7 @@ class CanvasGraph
       e.preventDefault()
       @mark = new Mark(e, @)
       @marks.create(@mark)
+      @mark.onMouseDown(e)
       @mark.dragging = true
       @mark.draw(e)
 
@@ -58,10 +59,8 @@ class Marks
 
   add: (mark) -> @all.push(mark)
 
-  update: (mark) -> @all[@all.indexOf(mark)] = mark
-
   remove: (mark) ->
-    @all.splice(@all.indexOf(mark), 1)
+    console.log @all.splice(@all.indexOf(mark), 1)
     document.getElementById('marks-container').removeChild(mark.element)
 
   destroyAll: ->
@@ -69,7 +68,7 @@ class Marks
     @all = []
 
 class Mark
-  MIN_WIDTH = 10
+  MIN_WIDTH = 15
   MAX_WIDTH = 150
 
   #move to end of marks-container on mousedown => for mousedown event
@@ -80,32 +79,39 @@ class Mark
     @element = document.createElement('div')
     @element.className = "mark"
 
-    @element.style.left = @pointerXInElement(e) + "px"
-    @element.style.position =  'absolute'
+    @element.innerHTML = """
+      <div class="top-bar" style="position: relative; width:100%; height: 13px; top 0px; background-color: red;">
+        <img class="close-icon" src="./images/icons/marking-closex.png" style="position: relative; top: -2px;">
+      </div>
+      <div class="left-border" style="position: absolute; top: 0px; left: 0px;width: 2px; height: 100%; background-color: red;z-index: 100;">
+        <div class="left-handle" style="position: absolute; left: -5px; width: 12px; height: 12px; background-color: red; top: 50%; border-radius: 3px;"></div>
+      </div>
+      <div class="right-border" style="position: absolute; top: 0px; right: 0px; width: 2px; height: 100%; background-color: red; z-index: 100;">
+        <div class="right-handle" style="position: absolute; right: -5px; width: 12px; height: 12px; background-color: red; top: 50%; border-radius: 3px;"></div>
+      </div>
+    """
+
+    @element.style.left = @toCanvasXPoint(e) + "px"
+    @element.style.position = 'absolute'
     @element.style.top = e.target.offsetTop + "px"
-    @element.style.height = @canvas.height - 13 + 'px' # subtract border height
+    @element.style.height = @canvas.height + 'px'
     @element.style.backgroundColor = 'rgba(255,0,0,.5)'
-    @element.style.border =  '2px solid red'
-    @element.style.borderTop =  '13px solid red'
     @element.style.pointerEvents = 'auto'
+    @element.style.textAlign = 'center'
 
     @startingPoint = @toCanvasXPoint(e) - MIN_WIDTH
     @dragging = false
 
-    @element.addEventListener 'mouseover', (e) => @hovering = true
-    @element.addEventListener 'mouseout', (e) => @hovering = false
-    @element.addEventListener 'mousedown', (e) => @onMouseDown(e)
-    @element.addEventListener 'click', (e) => @canvasGraph.marks.remove(@) if @pointerYInElement(e) < 15
-    window.addEventListener 'mousemove', (e) => @onMouseMove(e)
-    window.addEventListener 'mouseup', (e) => @onMouseUp(e)
+    @element.addEventListener 'mousemove', @updateCursor
+    @element.addEventListener 'mousedown', @onMouseDown
 
   draw: (e) ->
-    markLeftX = Math.min @startingPoint, @toCanvasXPoint(e)
+    markLeftX = Math.max @startingPoint - MAX_WIDTH, Math.min @startingPoint, @toCanvasXPoint(e)
     markRightX = Math.max @startingPoint, @toCanvasXPoint(e)
 
     width = (Math.min (Math.max (Math.abs markRightX - markLeftX), MIN_WIDTH), MAX_WIDTH)
 
-    @element.style.left = (Math.min markLeftX, markRightX) + "px"
+    @element.style.left = markLeftX + "px"
     @element.style.width = width + "px"
 
     @save(markLeftX, markLeftX+width)
@@ -124,46 +130,45 @@ class Mark
     @dataXMin = @canvasGraph.toDataXCoord(@canvasXMin)
     @dataXMax = @canvasGraph.toDataXCoord(@canvasXMax)
 
-  updateCursor: (e) ->
-    if @pointerYInElement(e) < 15
-      @element.style.cursor = "pointer"
-    else if ((Math.abs @pointerXInElement(e) - (@canvasXMax-@canvasXMin)) < 10) || @pointerXInElement(e) < 10
-      @element.style.cursor = "ew-resize"
-    else
-      @element.style.cursor = "move"
+  updateCursor: (e) =>
+    switch e.target.className
+      when "mark" then @element.style.cursor = "move"
+      when "left-border" then @element.style.cursor = "ew-resize"
+      when "right-border" then @element.style.cursor = "ew-resize"
+      when "top-bar" then @element.style.cursor = "pointer"
 
-  onMouseMove: (e) ->
+  onMouseMove: (e) =>
     e.preventDefault()
     @draw(e) if @dragging
     @move(e) if @moving
-    @updateCursor(e) if @hovering
 
-  onMouseDown: (e) ->
+  onMouseDown: (e) =>
     e.preventDefault()
+    window.addEventListener 'mousemove', @onMouseMove
+    window.addEventListener 'mouseup', @onMouseUp
+
     @element.parentNode.appendChild(@element) #move to end of container for z index
-    if (Math.abs @pointerXInElement(e) - (@canvasXMax-@canvasXMin)) < 10
+
+    if e.target.className is "right-border" or e.target.className is "right-handle"
       @startingPoint = @canvasXMin
       @dragging = true
-    else if @pointerXInElement(e) < 10
+    else if e.target.className is "left-border" or e.target.className is "left-handle"
       @startingPoint = @canvasXMax
       @dragging = true
-    else if @pointerYInElement(e) > 15
+    else if e.target.className is "mark"
       @moving = true
       @pointerOffset = (@toCanvasXPoint(e) - @canvasXMin)
 
-  onMouseUp: (e) ->
+  onMouseUp: (e) =>
     e.preventDefault()
+    window.removeEventListener 'mousemove', @onMouseMove
+    window.removeEventListener 'mouseup', @onMouseUp
+    @canvasGraph.marks.add(@) unless (@ in @canvasGraph.marks.all)
+    @canvasGraph.marks.remove(@) if e.target.className is "top-bar" or e.target.className is "close-icon"
     for mark in @canvasGraph.marks.all
       mark.dragging = false
       mark.moving = false
-    if (@ in @canvasGraph.marks.all) then @canvasGraph.marks.update(@) else @canvasGraph.marks.add(@)
-    @dragging = false
-    @moving = false
 
-  toCanvasXPoint: (e) -> e.pageX-@canvas.getBoundingClientRect().left - window.scrollX
-
-  pointerXInElement: (e) -> e.offsetX || e.clientX - e.target.offsetLeft + window.pageXOffset - @canvas.getBoundingClientRect().left
-
-  pointerYInElement: (e) -> e.offsetY || e.clientY - e.target.offsetTop + window.pageYOffset - @canvas.getBoundingClientRect().top
+  toCanvasXPoint: (e) -> e.pageX - @canvas.getBoundingClientRect().left - window.scrollX
 
 module?.exports = CanvasGraph: CanvasGraph, Marks: Marks, Mark: Mark

@@ -1,132 +1,104 @@
 .classifier
   color inherit
-
-  button
-    padding 5px
-    margin 5px 0px 5px 0px
-    text-align center
-    font-size 0.75em
-    border 1px solid
-    opacity 0.5
-    &:active
-      transform translateY(1px)
-      box-shadow none
-    &:hover
-      opacity 1.0
-  #marks-container
-    height 420px
-    width 1080px
-    overflow hidden
-    float left
-    position relative
-
-  .tool-button
-    border none
-    color white
-    background-color rgb(50,50,50)
-    height 60px
-    width 50px
-    border-radius 0.3em
-    transition 0.3s
-    &:hover
-      background-color #4C4C4C //#151A1B
-      border-radius 0.3em
-      opacity 1.0
-    // &:active
-    //   background-color #151A1B
-    //   border-radius 0.3em
-    //   opacity 1.0
-    
-    &.toggled
-      background-color #151A1B
-      transition 0.3s
-      
-  .no-transits
-    float right
-    font-size 1.2em
-    font-style bold
-    background-color white
-    color black
-    padding 10px 20px 10px 20px
-    border none
-    opacity 0.5
-    border-radius 0.3em
-    &:hover
-      opacity 1.0
-
-
-  #graph
-    z-index 3
   #subject-container
     width 1140px
-
+    margin 0 auto
     .subject-header
       h3
         color white
-
-    #lesson-prompt
-      height 25px
-      margin-top 5px
-      margin-bottom 10px
-      padding-left 15px
-      vertical-align middle
-      font-size 1em
-      color white
-      background-color #3E89AF
-      width inherit
-      border-radius: 0.3em
-    .lesson-button
-      height 100%
-      margin auto
-      color black
-      border none
-      transition 0.4s
-      &:hover
+      #lesson-prompt
+        height 25px
+        margin-top 5px
+        margin-bottom 10px
+        padding-left 15px
+        vertical-align middle
+        font-size 1em
         color white
-        background-color rgba(0,0,0,0.5)
+        background-color #3E89AF
+        width inherit
+        border-radius: 0.3em
+      .lesson-button
+        height 100%
+        margin auto
+        color black
+        border none
         transition 0.4s
-    .lesson-close
-      // line-height 25px
-      padding 9px // 10px 10px 10px
-      float right
+        &:hover
+          color white
+          background-color rgba(0,0,0,0.5)
+          transition 0.4s
+      .lesson-close
+        // line-height 25px
+        padding 9px // 10px 10px 10px
+        float right
 
     #graph-container
       float left
+
       #graph
         float left
-        border 1px solid #5e5e5e
+        border 1px solid rgb(50,50,50)
         background rgba(13,21,24,0.75)
+        z-index 3
 
-    #tools
-      float left
-      width 50px   // account for padding
-      height 410px // account for padding
-      padding 5px
-      background-color rgb(50,50,50)
-      h3
-        font-style italic
-        font-size 0.9em
+      #marks-container
+        height 420px
+        width 1080px
+        overflow hidden
+        float left
+        position relative
 
-    #scale
-      float left
-      display inline-block
-      background-color black
-      width 1078px
-      height 20px
-      border 1px solid rgb(50,50,50)
+      #tools
+        float left
+        width 50px   // account for padding
+        height 430px // account for padding
+        padding 5px
+        background-color rgb(50,50,50)
+        h3
+          font-style italic
+          font-size 0.9em
+        button
+          padding 5px
+          margin 5px 0px 5px 0px
+          text-align center
+          font-size 0.75em
+          opacity 0.5
+          &:active
+            transform translateY(1px)
+            box-shadow none
+          &:hover
+            opacity 1.0
 
-      #scale-slider
-        width 1078px
-        padding-top auto
-        padding-bottom auto
+        .tool-button
+          border none
+          color white
+          background-color rgb(50,50,50)
+          height 60px
+          width 50px
+          border-radius 0.3em
+          transition 0.3s
+          &:hover
+            background-color #4C4C4C //#151A1B
+            border-radius 0.3em
+            opacity 1.0
+          // &:active
+          //   background-color #151A1B
+          //   border-radius 0.3em
+          //   opacity 1.0
+          
+          &.toggled
+            background-color #151A1B
+            transition 0.3s
+
       .faux-range-input
         width 1078px
-        height 20px
+        height 18px
         vertical-align middle
         background black //#25b4c5
         cursor ew-resize
         cursor -webkit-grab
-        top 0px
+        top -20px
+        border 1px solid rgb(50,50,50)
         &:before
           content "1.2.3.4.5.6.7"
           margin 0px
@@ -137,7 +109,6 @@
           width 822px // (1078-256px)
         .faux-range-thumb
           margin -1px 0 0 -8px
-          // background none
           background rgba(50,50,50,0.75) //#1b7a85
           outline none
           border 1px solid #5e5e5e
@@ -156,3 +127,16 @@
             z-index 5
         .faux-range-tick
           display none
+
+  .no-transits
+    float right
+    font-size 1.2em
+    font-style bold
+    background-color white
+    color black
+    padding 10px 20px 10px 20px
+    border none
+    opacity 0.5
+    border-radius 0.3em
+    &:hover
+      opacity 1.0
