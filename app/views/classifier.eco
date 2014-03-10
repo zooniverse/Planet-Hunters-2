@@ -15,7 +15,7 @@
 
     <div id="graph-container">
       <div id="marks-container">
-        <canvas id="graph" width="1078" height="420" style="border: 1px solid #5e5e5e; background:rgba(13, 21, 24, .75);"></canvas>
+        <canvas id="graph" width="1078" height="420"></canvas>
         <!-- marks go here -->
       </div>
       <div id="tools">
@@ -37,9 +37,7 @@
           Tutorial
         </button>
       </div>
-      <div id="scale">
-        <input id="scale-slider" type="range" min="0" max="35"/>
-      </div>
+      <input id="scale-slider" type="range" min="0" max="35"/>
     </div>
 
     <button id="no-transits" class="no-transits" id="tutorial">No Transits</button>
