@@ -11,8 +11,8 @@
     <%- translate 'a', 'siteNavigation.about',     href: '#/about',     class: 'link' %>
     <%- translate 'a', 'siteNavigation.profile',   href: '#/profile',   class: 'link' %>
     <%- translate 'a', 'siteNavigation.education', href: '#/education', class: 'link' %>
-    <%- translate 'a', 'siteNavigation.talk',      href: '#_TODO_TALK', class: 'link' %>
-    <%- translate 'a', 'siteNavigation.blog',      href: '#_TODO_BLOG', class: 'link' %>
+    <%- translate 'a', 'siteNavigation.talk',      href: '#/discuss', class: 'link' %>
+    <%- translate 'a', 'siteNavigation.blog',      href: '#/blog', class: 'link' %>
   </div>
 </div>
 
