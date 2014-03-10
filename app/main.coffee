@@ -59,6 +59,29 @@ footer = new Footer
 document.body.appendChild footerContainer
 footer.el.appendTo footerContainer
 
+
+# planet-time
+# refreshTime = ->
+#   setTimeout displayTime(), 100000
+
+movePlanet = ->
+  date = new Date
+  # planet = document.getElementsByClassName "bg-planet"
+
+  for planet of @el.find(".bg-planet")
+    console.log  planet
+  # planet.attr 'left' date.getSeconds()
+
+  console.log planet
+
+  console.log 'DATE/TIME: '
+  console.log " date, hour: ", date.getHours()
+  console.log " date, minute: ", date.getMinutes()
+  console.log " date, second: ", date.getSeconds()
+  # setTimeout( movePlanet, 1000 )
+
+# movePlanet()
+
 # bind app to window
 window.app = {api, siteNavigation, stack, topBar}
 module.exports = window.app

@@ -99,14 +99,4 @@ class Classifier extends BaseController
   onClickLessonClose: ->
     console.log 'onClickLessonClose()'
 
-
-  date = new Date
-  console.log "date, hour: ", date.getHours()
-  console.log "date, minute: ", date.getMinutes()
-  planet = document.getElementsByClassName "planet-container"
-
-  # contentBlocks = document.getElementsByClassName "content-block"
-  # console.log contentBlocks[1]
-
-
 module.exports = Classifier
