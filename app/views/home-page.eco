@@ -1,14 +1,14 @@
 <% translate = require 't7e' %>
 <div class="content-block">
 	<div class="content-container">
-	  <div class="white-sheet" id="home-main-content">
+	  <div class="call-to-action are-you-ready">
+	    Ready to discover new worlds?
+	  </div>
 
-	    <div class="call-to-action">
-	      <h1>Ready to discover new worlds?</h1>
-	      <p class="call-to-action description">Join the search for exoplanets with Planet Hunters</p>
-	    	<button id="begin-classifying"><%- translate 'a.call-to-action', 'home.header.getClassifying', href: '#/classify' %></button>
-	    </div>
-
+	  <div class="call-to-action">
+	   	Join the search for exoplanets with Planet Hunters
+	  	<button id="begin-classifying"><%- translate 'a.call-to-action', 'home.header.getClassifying', href: '#/classify' %></button>
+	  	<button id="learn-more">Learn More</button>
 	  </div>
 	</div>
 </div>

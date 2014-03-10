@@ -1,29 +1,31 @@
 .home-page
   color inherit
 
+  .content-container
+    margin-top 10%
+
   .bg-overlay
     background-color rgba(19,34,44,0.75)
 
   .call-to-action
-    // @extends #_HOME_BUTTON
-    border 1px solid transparent
-    font-weight bold
-    // margin-right 10px
-    // line-height 640px
+    // margin-top 20%
+    float left
+    font-family "Open Sans Condensed"
+    font-weight 300
+    // background-color rgba(200,20,20,0.5)
+  .are-you-ready
+    color #fff
+    font-size 65px
+  .description
+    font-size 18px
 
-    .description
-    	// margin 40px 0px 40px 0px
-    	text-align left
-    	line-height 730px
+  button
+    @extends #_STANDARD_BUTTON
+    color #fff  
+    &#begin-classifying
+      background-color #e4c460
+      border none
+    &#learn-more
+      background-color none
 
-    h1
-    	color white
-    	font-weight normal
-    	font-size 3em
-    	letter-spacing 2px
-    	text-transform none
-    	line-height 640px
-
-    button
-    	@extends #_HOME_BUTTON
 
