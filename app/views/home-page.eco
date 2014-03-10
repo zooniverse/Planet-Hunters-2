@@ -5,10 +5,14 @@
 	    Ready to discover new worlds?
 	  </div>
 
-	  <div class="call-to-action">
+	  <div class="call-to-action description">
 	   	Join the search for exoplanets with Planet Hunters
-	  	<button id="begin-classifying"><%- translate 'a.call-to-action', 'home.header.getClassifying', href: '#/classify' %></button>
-	  	<button id="learn-more">Learn More</button>
+	  	<button id="begin-classifying">
+	  		<%- translate 'a', 'home.header.beginClassifying', href: '#/classify' %>
+	  	</button>
+	  	<button id="learn-more">
+	  		<%- translate 'a', 'home.header.learnMore', href: '' %>
+	  	</button>
 	  </div>
 	</div>
 </div>

@@ -12,11 +12,11 @@ module.exports =
 
   home:
     header:
-      title:          ''
-      content:        ''
-      start:          ''
-      getClassifying: 'Classify'
-      learnMore:      ''
+      title            : ''
+      content          : ''
+      start            : ''
+      beginClassifying : 'Classify'
+      learnMore        : 'Learn More'
     whatDo:
-      title:          ''
-      content:        ''
+      title            : ''
+      content          : ''
