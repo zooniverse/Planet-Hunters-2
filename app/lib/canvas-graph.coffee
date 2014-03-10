@@ -146,6 +146,7 @@ class Mark
     e.preventDefault()
     window.addEventListener 'mousemove', @onMouseMove
     window.addEventListener 'mouseup', @onMouseUp
+    window.addEventListener 'touchmove', @onMouseMove
 
     @element.parentNode.appendChild(@element) #move to end of container for z index
 
@@ -163,6 +164,7 @@ class Mark
     e.preventDefault()
     window.removeEventListener 'mousemove', @onMouseMove
     window.removeEventListener 'mouseup', @onMouseUp
+    window.removeEventListener 'touchmove', @onMouseMove
     @canvasGraph.marks.add(@) unless (@ in @canvasGraph.marks.all)
     @canvasGraph.marks.remove(@) if e.target.className is "top-bar" or e.target.className is "close-icon"
     for mark in @canvasGraph.marks.all
