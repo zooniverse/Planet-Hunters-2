@@ -1,6 +1,6 @@
 <div class="title">Transit Verification</div>
 <div class="container">
-  <img src="./images/dev-mobile-classify.png">
+  <canvas id="verify-graph" width="460" height="460"></canvas>
   <p>Is this a proper transit?</p>
   <button name="yes">Yes</button>
   <button name="no">No</button>

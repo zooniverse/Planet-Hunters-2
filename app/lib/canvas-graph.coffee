@@ -33,14 +33,15 @@ class CanvasGraph
       @ctx.fillStyle = "#fff"
       @ctx.fillRect(x, y,2,2)
 
-    for mark in @marks.all
-      scaledMin = ((mark.dataXMin - xMin) / (xMax - xMin)) * @canvas.width
-      scaledMax = ((mark.dataXMax - xMin) / (xMax - xMin)) * @canvas.width
+    if @marks
+      for mark in @marks.all
+        scaledMin = ((mark.dataXMin - xMin) / (xMax - xMin)) * @canvas.width
+        scaledMax = ((mark.dataXMax - xMin) / (xMax - xMin)) * @canvas.width
 
-      mark.element.style.width = (scaledMax-scaledMin) + "px"
-      mark.element.style.left = (scaledMin) + "px"
+        mark.element.style.width = (scaledMax-scaledMin) + "px"
+        mark.element.style.left = (scaledMin) + "px"
 
-      mark.save(scaledMin, scaledMax)
+        mark.save(scaledMin, scaledMax)
 
   clearCanvas: -> @ctx.clearRect(0,0,@canvas.width, @canvas.height)
 
