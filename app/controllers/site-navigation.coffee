@@ -28,6 +28,7 @@ class SiteNavigation extends BaseController
     super
     addEventListener 'hashchange', @onHashChange, false
     @onHashChange()
+    window.onresize = => @onWindowResize()
 
   onHashChange: =>
     @navLinks.removeClass @activeClass
@@ -56,5 +57,16 @@ class SiteNavigation extends BaseController
     @onClickClose()
     $('.zooniverse-top-bar').slideToggle(250)
     @userIcon.toggleClass('active')
+
+  onWindowResize: ->
+    if window.innerWidth > 520
+      icon.hide() for icon in [@hamburger, @closeIcon, @userIcon]
+      @links.show()
+      $('.zooniverse-top-bar').show()
+    else
+      icon.show() for icon in [@hamburger, @userIcon]
+      $('.zooniverse-top-bar').hide()
+      @links.hide()
+
 
 module.exports = SiteNavigation
