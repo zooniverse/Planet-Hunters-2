@@ -9,7 +9,8 @@ class SiteNavigation extends BaseController
   activeClass: 'active'
 
   elements:
-    '.links': 'links'
+    '.link'      : 'link'
+    '.links'     : 'links'
     '.learn-more': 'learnMore'
     '#hamburger' : 'hamburger'
     '#user-icon' : 'userIcon'
@@ -19,7 +20,8 @@ class SiteNavigation extends BaseController
     'click .learn-more': 'onClickLearnMore'
     'click #hamburger' : 'onClickHamburger'
     'click #user-icon' : 'onClickUserIcon'
-    'click #close': 'onClickClose'
+    'click #close'     : 'onClickClose'
+    'click .link'      : 'onClickLink'
 
   constructor: ->
     super
@@ -34,14 +36,18 @@ class SiteNavigation extends BaseController
     $("html, body").animate scrollTop: $("#home-main-content").offset().top, 350
 
   onClickHamburger: ->
+    @mobileNav = true
     @hamburger.hide()
-    @links.show()
+    @links.slideDown(250)
     @closeIcon.show()
 
   onClickClose: ->
+    @mobileNav = false
     @closeIcon.hide()
-    @links.hide()
+    @links.slideUp(250)
     @hamburger.show()
+
+  onClickLink: -> @onClickClose() if @mobileNav
 
   onClickUserIcon: -> console.log "user icon"
 
