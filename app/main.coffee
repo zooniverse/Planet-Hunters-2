@@ -68,41 +68,33 @@ footer.el.appendTo footerContainer
 movePlanet = ->
   date = new Date
   console.log "movePlanet(): ", date.getHours(), ':', date.getMinutes(), ':', date.getSeconds()
+  
+
+  minuteFrac = ( date.getSeconds() / 60 )
+  hourFrac   = ( date.getMinutes() / 60 )
+  dayFrac    = ( date.getHours() / 24 )
+
+  console.log 'minuteFrac = ', minuteFrac
+  console.log 'hourFrac   = ', hourFrac
+  console.log 'dayFrac    = ', dayFrac
+
+  scaleFactor = minuteFrac
   for planet in [$(".bg-planet")...]
     # planet.style.bottom = Math.round(date.getSeconds()/60 * 730+50) + 'px'
     # planet.style.left   = Math.round(date.getSeconds()/60 * 1138+530) + 'px'
-    planet.style.top    = Math.round((date.getSeconds() + date.getSeconds()/60)/60 * 100) + '%'
-    planet.style.left   = Math.round((date.getSeconds() + date.getSeconds()/60)/60 * 100) + '%'
-    planet.style.width  = Math.round((date.getSeconds() + date.getSeconds()/60)/60 * 2*530) + 'px'
-    planet.style.height = Math.round((date.getSeconds() + date.getSeconds()/60)/60 * 2*530) + 'px'
+    planet.style.top    = Math.round( scaleFactor * 100) + '%'
+    planet.style.left   = Math.round( scaleFactor * 100) + '%'
+    planet.style.width  = Math.round( scaleFactor * 2*530) + 'px'
+    planet.style.height = Math.round( scaleFactor * 2*530) + 'px'
 
-
+    # DEBUG CODE
     console.log '-------------------------------'
     console.log 'planet.top: ',    planet.style.top
     console.log 'planet.left: ',   planet.style.left
     console.log 'planet.width: ',  planet.style.width
     console.log 'planet.height: ', planet.style.height
-
-    # console.log 'planet: ', planet
-    # console.log 'DATE/TIME: '
-    # console.log " date, hour: ", date.getHours()
-    # console.log " date, minute: ", date.getMinutes()
-    # console.log " date, second: ", date.getSeconds()
   # setTimeout( movePlanet, 300000 ) # 5 min
-  setTimeout( movePlanet, 1000 ) # 5 min
-
-# moveMoon = ->
-#   console.log "movePlanet()"
-#   date = new Date
-#   for moon in [$(".bg-moon")...]
-#     moon.style.top  = date.getSeconds()*5 + 'px'
-#     moon.style.left = date.getSeconds()*5 + 'px'
-#     console.log 'planet: ', moon
-#     console.log 'DATE/TIME: '
-#     console.log " date, hour: ", date.getHours()
-#     console.log " date, minute: ", date.getMinutes()
-#     console.log " date, second: ", date.getSeconds()
-#   setTimeout( moveMoon, 1000 )
+  setTimeout( movePlanet, 5000 ) # 5 min
 
 movePlanet()
 # moveMoon()
