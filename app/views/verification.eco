@@ -1,0 +1,8 @@
+<div class="title">Transit Verification</div>
+<div class="container">
+  <img src="./images/dev-mobile-classify.png">
+  <p>Is this a proper transit?</p>
+  <button name="yes">Yes</button>
+  <button name="no">No</button>
+  <button name="not-sure">Not Sure?</button>
+</div>
