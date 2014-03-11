@@ -14,6 +14,7 @@
 <!-- <img class="bg-moon"   src="./images/moon.png"> -->
 <!-- <div class="bg-planet"></div>
 <div class="bg-moon"></div> -->
-<div class="bg-overlay">
+<div class="bg-planet-container">
 	<img class="bg-planet" src="./images/planet.png">
 </div>
+<div class="bg-overlay"></div>

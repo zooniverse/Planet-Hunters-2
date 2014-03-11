@@ -66,15 +66,16 @@ footer.el.appendTo footerContainer
 #   setTimeout displayTime(), 100000
 
 movePlanet = ->
-  console.log "movePlanet()"
   date = new Date
+  console.log "movePlanet(): ", date.getHours(), ':', date.getMinutes(), ':', date.getSeconds()
   for planet in [$(".bg-planet")...]
     # planet.style.bottom = Math.round(date.getSeconds()/60 * 730+50) + 'px'
     # planet.style.left   = Math.round(date.getSeconds()/60 * 1138+530) + 'px'
-    planet.style.top    = Math.round((date.getMinutes() + date.getSeconds()/60)/60 * 100) + '%'
-    planet.style.left   = Math.round((date.getMinutes() + date.getSeconds()/60)/60 * 100) + '%'
-    planet.style.width  = Math.round((date.getMinutes() + date.getSeconds()/60)/60 * 2*530) + 'px'
-    planet.style.height = Math.round((date.getMinutes() + date.getSeconds()/60)/60 * 2*530) + 'px'
+    planet.style.top    = Math.round((date.getSeconds() + date.getSeconds()/60)/60 * 100) + '%'
+    planet.style.left   = Math.round((date.getSeconds() + date.getSeconds()/60)/60 * 100) + '%'
+    planet.style.width  = Math.round((date.getSeconds() + date.getSeconds()/60)/60 * 2*530) + 'px'
+    planet.style.height = Math.round((date.getSeconds() + date.getSeconds()/60)/60 * 2*530) + 'px'
+
 
     console.log '-------------------------------'
     console.log 'planet.top: ',    planet.style.top
@@ -87,7 +88,8 @@ movePlanet = ->
     # console.log " date, hour: ", date.getHours()
     # console.log " date, minute: ", date.getMinutes()
     # console.log " date, second: ", date.getSeconds()
-  setTimeout( movePlanet, 60000 )
+  # setTimeout( movePlanet, 300000 ) # 5 min
+  setTimeout( movePlanet, 1000 ) # 5 min
 
 # moveMoon = ->
 #   console.log "movePlanet()"
