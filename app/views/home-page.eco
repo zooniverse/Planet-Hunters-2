@@ -20,7 +20,7 @@
 <!-- PLANET TIME -->
 <div class="bg-starfield-sun"></div>
 <img class="bg-planet" src="./images/planet.png">
-<img class="bg-moon"   src="./images/moon.png">
+<!-- <img class="bg-moon"   src="./images/moon.png"> -->
 <!-- <div class="bg-planet"></div>
 <div class="bg-moon"></div> -->
 <div class="bg-overlay"></div>
