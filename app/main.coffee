@@ -69,13 +69,15 @@ movePlanet = ->
   console.log "movePlanet()"
   date = new Date
   for planet in [$(".bg-planet")...]
-    planet.style.bottom = Math.round(date.getSeconds()/60 * 730+50) + 'px'
-    planet.style.left   = Math.round(date.getSeconds()/60 * 1138-530) + 'px'
-    planet.style.width  = Math.round(date.getSeconds()/60 * 530) + 'px'
-    planet.style.height = Math.round(date.getSeconds()/60 * 530) + 'px'
+    # planet.style.bottom = Math.round(date.getSeconds()/60 * 730+50) + 'px'
+    # planet.style.left   = Math.round(date.getSeconds()/60 * 1138+530) + 'px'
+    planet.style.top    = Math.round((date.getMinutes() + date.getSeconds()/60)/60 * 100) + '%'
+    planet.style.left   = Math.round((date.getMinutes() + date.getSeconds()/60)/60 * 100) + '%'
+    planet.style.width  = Math.round((date.getMinutes() + date.getSeconds()/60)/60 * 2*530) + 'px'
+    planet.style.height = Math.round((date.getMinutes() + date.getSeconds()/60)/60 * 2*530) + 'px'
 
     console.log '-------------------------------'
-    console.log 'planet.bottom: ', planet.style.bottom
+    console.log 'planet.top: ',    planet.style.top
     console.log 'planet.left: ',   planet.style.left
     console.log 'planet.width: ',  planet.style.width
     console.log 'planet.height: ', planet.style.height
@@ -85,7 +87,7 @@ movePlanet = ->
     # console.log " date, hour: ", date.getHours()
     # console.log " date, minute: ", date.getMinutes()
     # console.log " date, second: ", date.getSeconds()
-  setTimeout( movePlanet, 1000 )
+  setTimeout( movePlanet, 60000 )
 
 # moveMoon = ->
 #   console.log "movePlanet()"
