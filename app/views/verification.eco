@@ -1,8 +1,18 @@
 <div class="title">Transit Verification</div>
 <div class="container">
-  <canvas id="verify-graph" width="460" height="460"></canvas>
-  <p>Is this a proper transit?</p>
-  <button name="yes">Yes</button>
-  <button name="no">No</button>
-  <button name="not-sure">Not Sure?</button>
+  <div id="canvas-container">
+    <div id="summary">
+      <h1>Nice Work!</h1>
+      <p id="summary-message"></p>
+    </div>
+    <canvas id="verify-graph" width="380" height="380"></canvas>
+  </div>
+  <p id="user-message"></p>
+
+  <div id="button-container">
+    <button name="next-subject">Next Subject</button>
+    <button name="yes">Yes</button>
+    <button name="no">No</button>
+    <button name="not-sure">Not Sure?</button>
+  </div>
 </div>
