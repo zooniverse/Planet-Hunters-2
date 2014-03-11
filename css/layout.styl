@@ -23,7 +23,8 @@ body
   z-index -1
 
 .bg-planet
-  background-image url('images/planet.png'); 
+  // background-image url('images/planet.png'); 
+  background-repeat no-repeat
   position absolute
   width 530px
   height 530px
@@ -31,10 +32,12 @@ body
 
   top 10%
   left 60% //800px
+  transition 60s
 
 .bg-moon
-  background-image url('images/moon.png'); 
+  // background-image url('images/moon.png'); 
   background-size cover
+  background-repeat no-repeat
   position absolute
   width 75px
   height 75px
@@ -42,6 +45,7 @@ body
 
   top 45%
   left 50% //700px
+  transition 60s
 
 .bg-starfield-sun
   background-image url('images/field-sun.jpg'); 
