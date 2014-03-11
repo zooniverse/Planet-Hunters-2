@@ -6,11 +6,13 @@
     .subject-header
       h3
         color white
+      p, h3
+        padding-left 20px
       #lesson-prompt
         height 25px
         margin-top 5px
         margin-bottom 10px
-        padding-left 15px
+        padding-left 20px
         vertical-align middle
         font-size 1em
         color white
@@ -18,6 +20,7 @@
         width inherit
         border-radius: 0.3em
       .lesson-button
+        padding 0px 5px 0px 5px
         height 100%
         margin auto
         color black
@@ -28,8 +31,7 @@
           background-color rgba(0,0,0,0.5)
           transition 0.4s
       .lesson-close
-        // line-height 25px
-        padding 9px // 10px 10px 10px
+        padding 9px
         float right
 
     #graph-container
@@ -81,10 +83,6 @@
             background-color #4C4C4C //#151A1B
             border-radius 0.3em
             opacity 1.0
-          // &:active
-          //   background-color #151A1B
-          //   border-radius 0.3em
-          //   opacity 1.0
           
           &.toggled
             background-color #151A1B

@@ -5,7 +5,7 @@
       <p>If so, highlight it on the graph!</p>
 
       <div id="lesson-prompt">
-        <b>Lesson available!</b> Become better at identifying transits. Interested?
+        Lesson available! Become better at identifying transits. Interested?
         <button class="lesson-button">Yes</button>
         <button class="lesson-button">No</button>
         <button class="lesson-button">Never</button>
