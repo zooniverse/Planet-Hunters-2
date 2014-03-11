@@ -39,8 +39,6 @@
     transform-origin -5%
     text-transform: uppercase
 
-  .link
-    width 80px
 
   .links
     float left
@@ -52,29 +50,33 @@
       font-size 12px
       display inline-block
       position relative
+      opacity 0.5
       @media screen and (min-width: 1300px)
         padding 0 10px
-      @media screen and (min-width 520px)
-        &.active
-          font-weight bold
-          background rgb(252,69,65)
+      &.active
+        background rgb(252,69,65)
+        opacity 1.0
+      &:after
+        background transparent
+        content ""
+        height 4px
+        left 0
+        margin-top -4px
+        position absolute
+        top 67%
+        width 100%
+      &:hover
+        opacity 1.0
         &:after
-          background transparent
-          content ""
-          height 4px
-          left 0
-          margin-top -4px
-          position absolute
-          top 67%
-          width 100%
-        &:hover:after
           height 4px
           background rgb(252,69,65)
           top 100%
-        &.active:after
-          background rgb(252,69,65)
-          top 100%
-          transition .2s
+      &.active:after
+        background rgb(252,69,65)
+        top 100%
+        transition .2s
+    .link
+      width 80px
 
 .zooniverse-top-bar
   background transparent

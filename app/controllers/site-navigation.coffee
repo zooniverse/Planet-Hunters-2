@@ -10,6 +10,7 @@ class SiteNavigation extends BaseController
 
   elements:
     '.link'      : 'link'
+    'a'          : 'navLinks'
     '.links'     : 'links'
     '.learn-more': 'learnMore'
     '#hamburger' : 'hamburger'
@@ -18,10 +19,10 @@ class SiteNavigation extends BaseController
 
   events:
     'click .learn-more': 'onClickLearnMore'
+    'click a'          : 'onClickLink'
     'click #hamburger' : 'onClickHamburger'
     'click #user-icon' : 'onClickUserIcon'
     'click #close'     : 'onClickClose'
-    'click .link'      : 'onClickLink'
 
   constructor: ->
     super
@@ -29,13 +30,14 @@ class SiteNavigation extends BaseController
     @onHashChange()
 
   onHashChange: =>
-    @links.removeClass @activeClass
-    @links.filter("[href='#{location.hash}']").addClass @activeClass
+    @navLinks.removeClass @activeClass
+    @navLinks.filter("[href='#{location.hash}']").addClass @activeClass
 
   onClickLearnMore: =>
     $("html, body").animate scrollTop: $("#home-main-content").offset().top, 350
 
   onClickHamburger: ->
+    @onClickUserIcon() if @userIcon.hasClass('active')
     @mobileNav = true
     @hamburger.hide()
     @links.slideDown(250)
@@ -49,6 +51,10 @@ class SiteNavigation extends BaseController
 
   onClickLink: -> @onClickClose() if @mobileNav
 
-  onClickUserIcon: -> console.log "user icon"
+  onClickUserIcon: ->
+    @mobileNav = !@mobileNav
+    @onClickClose()
+    $('.zooniverse-top-bar').slideToggle(250)
+    @userIcon.toggleClass('active')
 
 module.exports = SiteNavigation

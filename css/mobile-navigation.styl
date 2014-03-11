@@ -1,7 +1,5 @@
 @media screen and (max-width: 520px)
   .site-navigation
-    background-color blue
-
     #hamburger, #close, #user-icon
       float left
       display inline-block
@@ -16,6 +14,8 @@
     #user-icon
       float right
       width 25px
+      &.active
+        background-color #252525
 
     .links
       display none
@@ -29,9 +29,31 @@
       a
         line-height 75px
         font-size 25px
+        opacity 1
       .link
         width 100%
         display block
 
   .zooniverse-top-bar
     display none
+    position absolute
+    top 50px
+    width 100%
+    background-color #252525
+    text-align center
+    margin 0
+    padding 0
+    .zooniverse-info, .zooniverse-language-icon, .separator, .current-user-name
+      display none
+    .sign-in.piece, .user-info.piece
+      margin 0
+      width 100%
+      button
+        display block
+        line-height 75px
+        font-size 25px
+        opacity 1
+        text-transform capitalize
+        margin 0 auto
+    img
+      margin-bottom 10px
