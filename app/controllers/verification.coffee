@@ -1,8 +1,9 @@
 BaseController = require 'zooniverse/controllers/base-controller'
 $ = window.jQuery
-class MobileClassify extends BaseController
-  className: 'mobile-classify'
-  template: require '../views/mobile-classify'
+
+class Verification extends BaseController
+  className: 'verification'
+  template: require '../views/verification'
 
   elements:
     'button[name="yes"]': 'yesButton'
@@ -23,5 +24,4 @@ class MobileClassify extends BaseController
 
   onClickNotSureButton: -> console.log "NOT SURE"
 
-
-module.exports = MobileClassify
+module.exports = Verification

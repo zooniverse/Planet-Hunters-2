@@ -34,7 +34,7 @@ stack = new StackOfPages
   '#/education': require './controllers/education'
   '#/discuss': require './controllers/discuss'
   '#/blog': require './controllers/blog'
-  "#/mclassify": require './controllers/mobile-classify'
+  "#/verify": require './controllers/verification'
 
   NOT_FOUND: '<div class="content-block"><div class="content-container"><h1>Page not found!</h1></div></div>'
   ERROR: '<div class="content-block"><div class="content-container"><h1>There was an error!</h1></div></div>'
