@@ -1,5 +1,7 @@
 BaseController = require 'zooniverse/controllers/base-controller'
+{CanvasGraph, Marks, Mark} = require "../lib/canvas-graph"
 $ = window.jQuery
+require '../lib/sample-data'
 
 class Verification extends BaseController
   className: 'verification'
@@ -17,6 +19,10 @@ class Verification extends BaseController
 
   constructor: ->
     super
+    @canvas = @el.find('#verify-graph')[0]
+    console.log @canvas
+    @canvasGraph = new CanvasGraph(@canvas, light_curve_data)
+    @canvasGraph.plotPoints()
 
   onClickYesButton: -> console.log "YES"
 

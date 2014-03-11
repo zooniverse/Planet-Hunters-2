@@ -1,10 +1,17 @@
 <% translate = require 't7e' %>
 <div>
+  <img id="hamburger" src="./images/mobile-icons/hamburger-menu.svg">
+
+  <img id="close" src="./images/mobile-icons/close-x.svg">
+
   <div class="temp_logo">
     <h1>
-      <a href="#/">PLANET HUNTERS 2</a>
+      <a href="#/" id="title">PLANET HUNTERS 2</a>
     </h1>
   </div>
+
+  <img id="user-icon" src="./images/mobile-icons/user-icon.svg">
+
   <div class="links">
     <%- translate 'a', 'siteNavigation.classify',  href: '#/classify',  class: 'link' %>
     <%- translate 'a', 'siteNavigation.science',   href: '#/science',   class: 'link' %>
@@ -15,6 +22,7 @@
     <%- translate 'a', 'siteNavigation.blog',      href: '#/blog', class: 'link' %>
   </div>
 </div>
+
 
 <!-- <div class="for-home-page">
   <div class="content-block">

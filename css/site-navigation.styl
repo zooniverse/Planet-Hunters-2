@@ -4,7 +4,6 @@
   font-weight 300
   overflow hidden
   height 50px
-
   .content-container
     width SITE_WIDTH
     padding 75px
@@ -24,6 +23,9 @@
     letter-spacing: 2px
     font-style: bold
 
+  #hamburger, #user-icon, #close
+    display none
+
   .logo
     float left
     width 200px
@@ -31,8 +33,6 @@
     transform-origin -5%
     text-transform: uppercase
 
-  .link
-    width 80px
 
   .links
     float left
@@ -40,7 +40,6 @@
     line-height 50px
     display block
     text-align center
-
     a
       font-size 12px
       display inline-block
@@ -70,6 +69,8 @@
         background rgb(252,69,65)
         top 100%
         transition .2s
+    .link
+      width 80px
 
 .zooniverse-top-bar
   background transparent

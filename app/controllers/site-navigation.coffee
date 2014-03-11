@@ -9,22 +9,64 @@ class SiteNavigation extends BaseController
   activeClass: 'active'
 
   elements:
-    'a': 'links'
+    '.link'      : 'link'
+    'a'          : 'navLinks'
+    '.links'     : 'links'
     '.learn-more': 'learnMore'
+    '#hamburger' : 'hamburger'
+    '#user-icon' : 'userIcon'
+    '#close'     : 'closeIcon'
 
   events:
     'click .learn-more': 'onClickLearnMore'
+    'click a'          : 'onClickLink'
+    'click #hamburger' : 'onClickHamburger'
+    'click #user-icon' : 'onClickUserIcon'
+    'click #close'     : 'onClickClose'
 
   constructor: ->
     super
     addEventListener 'hashchange', @onHashChange, false
     @onHashChange()
+    window.onresize = => @onWindowResize()
 
   onHashChange: =>
-    @links.removeClass @activeClass
-    @links.filter("[href='#{location.hash}']").addClass @activeClass
+    @navLinks.removeClass @activeClass
+    @navLinks.filter("[href='#{location.hash}']").addClass @activeClass
 
   onClickLearnMore: =>
     $("html, body").animate scrollTop: $("#home-main-content").offset().top, 350
+
+  onClickHamburger: ->
+    @onClickUserIcon() if @userIcon.hasClass('active')
+    @mobileNav = true
+    @hamburger.hide()
+    @links.slideDown(250)
+    @closeIcon.show()
+
+  onClickClose: ->
+    @mobileNav = false
+    @closeIcon.hide()
+    @links.slideUp(250)
+    @hamburger.show()
+
+  onClickLink: -> @onClickClose() if @mobileNav
+
+  onClickUserIcon: ->
+    @mobileNav = !@mobileNav
+    @onClickClose()
+    $('.zooniverse-top-bar').slideToggle(250)
+    @userIcon.toggleClass('active')
+
+  onWindowResize: ->
+    if window.innerWidth > 520
+      icon.hide() for icon in [@hamburger, @closeIcon, @userIcon]
+      @links.show()
+      $('.zooniverse-top-bar').show()
+    else
+      icon.show() for icon in [@hamburger, @userIcon]
+      $('.zooniverse-top-bar').hide()
+      @links.hide()
+
 
 module.exports = SiteNavigation
