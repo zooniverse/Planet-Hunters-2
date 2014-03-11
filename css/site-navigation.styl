@@ -45,11 +45,12 @@
       font-size 12px
       display inline-block
       position relative
+      opacity 0.5
       @media screen and (min-width: 1300px)
         padding 0 10px
       &.active
-        font-weight bold
         background rgb(252,69,65)
+        opacity 1.0
       &:after
         background transparent
         content ""
@@ -59,10 +60,12 @@
         position absolute
         top 67%
         width 100%
-      &:hover:after
-        height 4px
-        background rgb(252,69,65)
-        top 100%
+      &:hover
+        opacity 1.0
+        &:after
+          height 4px
+          background rgb(252,69,65)
+          top 100%
       &.active:after
         background rgb(252,69,65)
         top 100%
