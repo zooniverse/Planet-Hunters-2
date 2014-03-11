@@ -11,11 +11,11 @@ class CanvasGraph
     @largestX = Math.max (point.x for point in @data)...
     @largestY = Math.max (point.y for point in @data)...
 
+  enableMarking: ->
     @marks = new Marks
     window.marks = @marks
-    # @mirrorVertically()
 
-    canvas.addEventListener 'mousedown', (e) =>
+    @canvas.addEventListener 'mousedown', (e) =>
       e.preventDefault()
       @mark = new Mark(e, @)
       @marks.create(@mark)
