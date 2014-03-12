@@ -11,6 +11,8 @@ class CanvasGraph
     @largestX = Math.max @data.x...
     @largestY = Math.max @data.y...
 
+    @arrayLength = Math.min @data.x.length, @data.y.length
+
     @mirrorVertically()
 
   enableMarking: ->
@@ -29,8 +31,8 @@ class CanvasGraph
     @xMin = xMin
     @xMax = xMax
     @clearCanvas()
-    for point, i in @data.x
-      x = ((point - xMin) / (xMax - xMin)) * @canvas.width
+    for i in [0...@arrayLength]
+      x = ((+@data.x[i] - xMin) / (xMax - xMin)) * @canvas.width
       y = ((+@data.y[i] - @largestY) / (@smallestY - @largestY)) * @canvas.height
       @ctx.fillStyle = "#fff"
       @ctx.fillRect(x, y,2,2)
