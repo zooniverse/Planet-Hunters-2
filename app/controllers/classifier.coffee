@@ -109,8 +109,8 @@ class Classifier extends BaseController
 
   updateButtons: ->
     if @canvasGraph.marks.all.length > 0
-      @finishedButton.show()
       @noTransitsButton.hide()
+      @finishedButton.show()
     else
       @finishedButton.hide()
       @noTransitsButton.show()
