@@ -10,9 +10,9 @@
   <p id="user-message"></p>
 
   <div id="button-container">
-    <button name="next-subject">Next Subject</button>
-    <button name="yes">Yes</button>
-    <button name="no">No</button>
-    <button name="not-sure">Not Sure?</button>
+    <button class="std-btn big-btn yellow" name="next-subject">Next Subject</button>
+    <button class="std-btn big-btn yellow" name="yes">Yes</button>
+    <button class="std-btn big-btn" name="no">No</button>
+    <button class="std-btn big-btn transparent"name="not-sure">Not Sure?</button>
   </div>
 </div>

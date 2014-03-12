@@ -5,11 +5,14 @@ class CanvasGraph
     window.canvas = @canvas
     window.canvasGraph = @
 
+    # @clearCanvas()
     @smallestX = Math.min (point.x for point in @data)...
     @smallestY = Math.min (point.y for point in @data)...
 
     @largestX = Math.max (point.x for point in @data)...
     @largestY = Math.max (point.y for point in @data)...
+
+    console.log "CanvasGraph Constructor"
 
   enableMarking: ->
     @marks = new Marks

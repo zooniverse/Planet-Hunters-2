@@ -16,13 +16,19 @@ class Classifier extends BaseController
     '#help'             : 'helpButton'
     '#tutorial'         : 'tutorialButton'
     '#scale-slider'     : 'scaleSlider'
+    '#classify-summary' : 'classifySummary'
+    'button[name="no-transits"]' : 'noTransitsButton'
+    'button[name="finished"]' : 'finishedButton'
+    'button[name="next-subject"]' :'nextSubjectButton'
 
   events:
     'click button[id="toggle-zoom"]' : 'onToggleZoom'
     'click button[id="toggle-fav"]'  : 'onToggleFav'
     'click button[id="help"]'        : 'onClickHelp'
     'click button[id="tutorial"]'    : 'onClickTutorial'
-    'click button[id="no-transits"]' : 'onClickNoTransits'
+    'click button[name="no-transits"]' : 'onClickNoTransits'
+    'click button[name="next-subject"]' : 'onClickNextSubject'
+    'click button[name="finished"]' : 'onClickFinished'
     'click img[id="lesson-close"]'   : 'onClickLessonClose'
     'change input[id="scale-slider"]': 'onChangeScaleSlider'
   
@@ -33,9 +39,6 @@ class Classifier extends BaseController
     @scaleSlider = new FauxRangeInput('#scale-slider')
 
     @canvas = @el.find('#graph')[0]
-    @zoomBtn = @el.find('#toggle-zoom')[0]
-    @marksContainer = @el.find('#marks-container')[0]
-    @zoomBtn = @el.find('#toggle-zoom')[0]
 
     @canvasGraph = new CanvasGraph(@canvas, light_curve_data)
     @canvasGraph.enableMarking()
@@ -44,6 +47,9 @@ class Classifier extends BaseController
     console.log @canvasGraph.largestX
     @el.find("#scale-slider").attr "max", @canvasGraph.largestX
     @el.find("#scale-slider").attr "min", @canvasGraph.smallestX
+
+  loadSubject: ->
+
 
   onChangeScaleSlider: ->
     @zoomRange = 15
@@ -75,7 +81,6 @@ class Classifier extends BaseController
       @el.find("#toggle-zoom").removeClass("toggled")
       @el.find("#scale-slider").removeClass("active")
 
-
   onToggleFav: ->
     favButton = @el.find("#toggle-fav")[0]
     if @isFaved
@@ -94,8 +99,25 @@ class Classifier extends BaseController
   onClickTutorial: ->
     console.log 'onClickTutorial()'
 
-  onClickNoTransits: ->
-    console.log 'onClickNoTransits()'
+  onClickNoTransits: -> @finishSubject()
+
+  onClickFinished: -> @finishSubject()
+
+  onClickNextSubject: ->
+    @noTransitsButton.show()
+    @classifySummary.fadeOut(150)
+    @nextSubjectButton.hide()
+    console.log "LOAD NEW SUBJECT HERE"
+
+  finishSubject: ->
+    @showSummary()
+    console.log "SEND CLASSIFICATION HERE"
+
+  showSummary: ->
+    @classifySummary.fadeIn(150)
+    @nextSubjectButton.show()
+    @noTransitsButton.hide()
+    @finishedButton.hide()
 
   onClickLessonClose: ->
     console.log 'onClickLessonClose()'

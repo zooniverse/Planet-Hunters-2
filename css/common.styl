@@ -4,6 +4,9 @@ MAIN_FONT_FAMILY = 'Open Sans', sans-serif
 
 SITE_WIDTH = 80%
 
+BUTTON_YELLOW = #deb85b
+OFF_WHITE = #fbffff
+
 h1, h2, h3, h4, h5, h6, p, .zootorial-dialog
   margin 0px
   -webkit-font-smoothing antialiased
@@ -32,28 +35,27 @@ button
   &:hover
     opacity 0.95
 
-#_HOME_BUTTON
-  @extends #_STANDARD_BUTTON
-  height 30px
-  line-height 30px
-  font-size 14px
-
-#_TOGGLE_BUTTON
-  @extends #_STANDARD_BUTTON
-
-  border-right-width 0
-  border-radius 0
-  margin 0
-
-  &:first-child
-    border-radius 0.3em 0 0 0.3em
-
-  &:last-child
-    border-radius 0 0.3em 0.3em 0
-    border-right-width 1px
-
-  &.selected
-    box-shadow 0 0 1.5em inset
+.std-btn
+  border-radius 5px
+  height 40px
+  line-height 40px
+  padding 0 35px
+  color OFF_WHITE
+  font-weight bold
+  font-size 12px
+  border 2px solid transparent
+  &.big-btn
+    height 60px
+    line-height 60px
+    font-size 16px
+    border 2px solid transparent
+  &.yellow
+    background-color BUTTON_YELLOW
+  &.transparent
+    border-color OFF_WHITE
+  &.white
+    background-color OFF_WHITE
+    color #000
 
 // Manual griddage
 // Set something like {float: left; margin-right: unit(GUTTER_WIDTH, 'px'); width: columns(4);}

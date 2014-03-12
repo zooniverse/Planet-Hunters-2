@@ -2,7 +2,7 @@
   color #bbbcc2
   font-size 20px
   font-weight 300
-  background "./images/planet.png"
+  background-color #072034
 
   .title
     background-color #fc2738
@@ -10,10 +10,9 @@
     font-size 15px
     letter-spacing 2px
     text-transform uppercase
-    margin-bottom 10px
 
   .container
-    padding 0 10px
+    padding 10px
     text-align center
     max-width 520px
     margin 0 auto
@@ -23,27 +22,19 @@
     p
       margin 10px 0
     button
-      color #fff
-      height 60px
-      line-height 60px
-      border 2px solid transparent
-      border-radius 5px 
       margin 10px 0
       &[name="yes"]
-        background-color #deb85b
         width 48%
         float left
       &[name="no"]
         background-color #fff
+        color #000
         width 48%
         float right
-        color #000
       &[name="not-sure"]
-        border 2px solid #bbbcc2
         width 100%
       &[name="next-subject"]
         display none
-        background-color #deb85b
         width 100%
     #canvas-container
       position relative
