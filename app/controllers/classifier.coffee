@@ -37,19 +37,25 @@ class Classifier extends BaseController
     isZoomed: false
     ifFaved: false
     @scaleSlider = new FauxRangeInput('#scale-slider')
+    @marksContainer = @el.find('#marks-container')[0]
 
-    @canvas = @el.find('#graph')[0]
-
-    @canvasGraph = new CanvasGraph(@canvas, light_curve_data)
-    @canvasGraph.enableMarking()
-    @canvasGraph.plotPoints()
+    @loadSubject(sampleData[0])
 
     console.log @canvasGraph.largestX
     @el.find("#scale-slider").attr "max", @canvasGraph.largestX
     @el.find("#scale-slider").attr "min", @canvasGraph.smallestX
 
-  loadSubject: ->
+  loadSubject: (data) ->
+    # create a new canvas
+    @canvas = document.createElement('canvas')
+    @canvas.id = 'graph'
+    @canvas.width = 1078
+    @canvas.height = 420
 
+    @marksContainer.appendChild(@canvas)
+    @canvasGraph = new CanvasGraph(@canvas, data)
+    @canvasGraph.enableMarking()
+    @canvasGraph.plotPoints()
 
   onChangeScaleSlider: ->
     @zoomRange = 15
@@ -107,7 +113,11 @@ class Classifier extends BaseController
     @noTransitsButton.show()
     @classifySummary.fadeOut(150)
     @nextSubjectButton.hide()
+    @canvasGraph.marks.destroyAll() #clear old marks
+    @canvas.outerHTML = ""
     console.log "LOAD NEW SUBJECT HERE"
+    #fake it for now...
+    @loadSubject(sampleData[1])
 
   finishSubject: ->
     @showSummary()

@@ -68,7 +68,7 @@ class Marks
     document.getElementById('marks-container').removeChild(mark.element)
 
   destroyAll: ->
-    document.getElementById('marks-container').innerHTML = ""
+    mark.element.outerHTML = "" for mark in @all
     @all = []
 
 class Mark

@@ -15,14 +15,14 @@
 
     <div id="graph-container">
       <div id="marks-container">
-        <canvas id="graph" width="1078" height="420"></canvas>
+        <!-- <canvas id="graph" width="1078" height="420"></canvas> -->
         <!-- marks go here -->
       </div>
       <div id="classify-summary">
         <div class="three-column">
           <div class="content">
             <h1>Nice Work!</h1>
-            <p>Looks like youve found 2 potential transits!</p>
+            <p>Looks like you've found 2 potential transits!</p>
             <p>Look to your right and see if anyone is talking about the star, or start a conversation of your own.</p>
             <p>Move on to the next subject when you're ready.</p>
           </div>
