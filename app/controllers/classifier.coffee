@@ -51,7 +51,7 @@ class Classifier extends BaseController
     # create a new canvas
     @canvas = document.createElement('canvas')
     @canvas.id = 'graph'
-    @canvas.width = 1078
+    @canvas.width = 1024
     @canvas.height = 420
 
     @marksContainer.appendChild(@canvas)
