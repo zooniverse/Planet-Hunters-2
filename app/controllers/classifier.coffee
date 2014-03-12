@@ -127,7 +127,7 @@ class Classifier extends BaseController
     @canvas.outerHTML = ""
     console.log "LOAD NEW SUBJECT HERE"
     #fake it for now...
-    @loadSubject(sampleData[1])
+    @loadSubject(sampleData[Math.round Math.random()*(sampleData.length-1)])
 
   finishSubject: ->
     @showSummary()
