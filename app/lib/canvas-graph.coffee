@@ -12,8 +12,6 @@ class CanvasGraph
     @largestX = Math.max (point.x for point in @data)...
     @largestY = Math.max (point.y for point in @data)...
 
-    console.log "CanvasGraph Constructor"
-
   enableMarking: ->
     @marks = new Marks
     window.marks = @marks
@@ -174,6 +172,9 @@ class Mark
     for mark in @canvasGraph.marks.all
       mark.dragging = false
       mark.moving = false
+
+    mouseChange = new Event("mark-change")
+    document.dispatchEvent(mouseChange)
 
   toCanvasXPoint: (e) -> e.pageX - @canvas.getBoundingClientRect().left - window.scrollX
 

@@ -45,6 +45,8 @@ class Classifier extends BaseController
     @el.find("#scale-slider").attr "max", @canvasGraph.largestX
     @el.find("#scale-slider").attr "min", @canvasGraph.smallestX
 
+    document.addEventListener 'mark-change', => @updateButtons()
+
   loadSubject: (data) ->
     # create a new canvas
     @canvas = document.createElement('canvas')
@@ -104,6 +106,14 @@ class Classifier extends BaseController
 
   onClickTutorial: ->
     console.log 'onClickTutorial()'
+
+  updateButtons: ->
+    if @canvasGraph.marks.all.length > 0
+      @finishedButton.show()
+      @noTransitsButton.hide()
+    else
+      @finishedButton.hide()
+      @noTransitsButton.show()
 
   onClickNoTransits: -> @finishSubject()
 
