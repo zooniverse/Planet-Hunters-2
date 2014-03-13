@@ -11,7 +11,7 @@ class CanvasGraph
     @largestX = Math.max @data.x...
     @largestY = Math.max @data.y...
 
-    @arrayLength = Math.min @data.x.length, @data.y.length
+    @dataLength = Math.min @data.x.length, @data.y.length
 
     @mirrorVertically()
 
@@ -31,7 +31,7 @@ class CanvasGraph
     @xMin = xMin
     @xMax = xMax
     @clearCanvas()
-    for i in [0...@arrayLength]
+    for i in [0...@dataLength]
       x = ((+@data.x[i] - xMin) / (xMax - xMin)) * @canvas.width
       y = ((+@data.y[i] - @largestY) / (@smallestY - @largestY)) * @canvas.height
       @ctx.fillStyle = "#fff"
@@ -95,9 +95,6 @@ class Mark
       </div>
     """
 
-    @minWidth = 15 * @canvasGraph.scale
-    @maxWidth = 150 * @canvasGraph.scale
-
     @element.style.left = @toCanvasXPoint(e) + "px"
     @element.style.position = 'absolute'
     @element.style.top = e.target.offsetTop + "px"
@@ -106,17 +103,21 @@ class Mark
     @element.style.pointerEvents = 'auto'
     @element.style.textAlign = 'center'
 
-    @startingPoint = @toCanvasXPoint(e) - @minWidth
+    @startingPoint = @toCanvasXPoint(e) - @minWidth()
     @dragging = false
 
     @element.addEventListener 'mousemove', @updateCursor
     @element.addEventListener 'mousedown', @onMouseDown
 
+  minWidth: -> 15 * (@canvasGraph.scale || 1)
+
+  maxWidth: -> 150 * (@canvasGraph.scale || 1)
+
   draw: (e) ->
-    markLeftX = Math.max @startingPoint - @maxWidth, Math.min @startingPoint, @toCanvasXPoint(e)
+    markLeftX = Math.max @startingPoint - @maxWidth(), Math.min @startingPoint, @toCanvasXPoint(e)
     markRightX = Math.max @startingPoint, @toCanvasXPoint(e)
 
-    width = (Math.min (Math.max (Math.abs markRightX - markLeftX), @minWidth), @maxWidth)
+    width = (Math.min (Math.max (Math.abs markRightX - markLeftX), @minWidth()), @maxWidth())
 
     @element.style.left = markLeftX + "px"
     @element.style.width = width + "px"
