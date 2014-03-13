@@ -5,7 +5,7 @@
       <h1>Nice Work!</h1>
       <p id="summary-message"></p>
     </div>
-    <canvas id="verify-graph" width="380" height="380"></canvas>
+    <canvas id="verify-graph" width="300" height="300"></canvas>
   </div>
   <p id="user-message"></p>
 

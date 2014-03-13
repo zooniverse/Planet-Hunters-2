@@ -55,7 +55,4 @@ class Verification extends BaseController
     @nextSubjectButton.show()
     button.hide() for button in [@yesButton, @noButton, @notSureButton]
 
-
-
-
 module.exports = Verification
