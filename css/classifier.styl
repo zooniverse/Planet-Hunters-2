@@ -1,7 +1,7 @@
 .classifier
   color inherit
   #subject-container
-    width 1140px
+    width 1090px
     margin 0 auto
     .subject-header
       h3
@@ -36,6 +36,7 @@
 
     #graph-container
       float left
+      position relative
 
       #graph
         float left
@@ -45,10 +46,45 @@
 
       #marks-container
         height 420px
-        width 1080px
+        width 1026px
         overflow hidden
         float left
         position relative
+
+      #classify-summary
+        display none
+        position absolute
+        top 0px
+        height 450px
+        width 100%
+        z-index 100
+        border-radius 5px
+        .three-column
+          margin 0
+          padding 0
+          float left
+          width 33.33%
+          height 100%
+          background-color rgba(13,21,24,0.9)
+          &:nth-child(1)
+            background-color #fc4541
+            border-radius 5px 0 0 5px
+          &:nth-child(3)
+            border-radius 0 5px 5px 0
+          .content
+            padding 20px
+            color #fff
+            p
+              margin-bottom 10px
+            h1, h2
+              margin-bottom 30px
+            h1
+              font-weight 300
+              font-size 24px
+            h2
+              text-transform uppercase
+              font-size 14px
+              line-height 36px
 
       #tools
         float left
@@ -89,7 +125,7 @@
             transition 0.3s
 
       .faux-range-input
-        width 1078px
+        width 1024px
         height 18px
         vertical-align middle
         background black //#25b4c5
@@ -104,7 +140,7 @@
           top 0
           letter-spacing 79px
         .faux-range-track
-          width 822px // (1078-256px)
+          width 768px // (1078-256px)
         .faux-range-thumb
           margin -1px 0 0 -8px
           background rgba(50,50,50,0.75) //#1b7a85
@@ -126,15 +162,16 @@
         .faux-range-tick
           display none
 
-  .no-transits
-    float right
-    font-size 1.2em
-    font-style bold
-    background-color white
-    color black
-    padding 10px 20px 10px 20px
-    border none
-    opacity 0.5
-    border-radius 0.3em
-    &:hover
-      opacity 1.0
+  button
+    &[name="no-transits"]
+      float right
+      opacity 0.5
+      font-weight bold
+      &:hover
+        opacity .9
+    &[name="finished"]
+      display none
+      float right
+    &[name="next-subject"]
+      display none
+      float right

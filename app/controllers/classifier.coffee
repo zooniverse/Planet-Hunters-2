@@ -16,13 +16,19 @@ class Classifier extends BaseController
     '#help'             : 'helpButton'
     '#tutorial'         : 'tutorialButton'
     '#scale-slider'     : 'scaleSlider'
+    '#classify-summary' : 'classifySummary'
+    'button[name="no-transits"]' : 'noTransitsButton'
+    'button[name="finished"]' : 'finishedButton'
+    'button[name="next-subject"]' :'nextSubjectButton'
 
   events:
     'click button[id="toggle-zoom"]' : 'onToggleZoom'
     'click button[id="toggle-fav"]'  : 'onToggleFav'
     'click button[id="help"]'        : 'onClickHelp'
     'click button[id="tutorial"]'    : 'onClickTutorial'
-    'click button[id="no-transits"]' : 'onClickNoTransits'
+    'click button[name="no-transits"]' : 'onClickNoTransits'
+    'click button[name="next-subject"]' : 'onClickNextSubject'
+    'click button[name="finished"]' : 'onClickFinished'
     'click img[id="lesson-close"]'   : 'onClickLessonClose'
     'change input[id="scale-slider"]': 'onChangeScaleSlider'
   
@@ -31,19 +37,27 @@ class Classifier extends BaseController
     isZoomed: false
     ifFaved: false
     @scaleSlider = new FauxRangeInput('#scale-slider')
-
-    @canvas = @el.find('#graph')[0]
-    @zoomBtn = @el.find('#toggle-zoom')[0]
     @marksContainer = @el.find('#marks-container')[0]
-    @zoomBtn = @el.find('#toggle-zoom')[0]
 
-    @canvasGraph = new CanvasGraph(@canvas, light_curve_data)
-    @canvasGraph.enableMarking()
-    @canvasGraph.plotPoints()
+    @loadSubject(sampleData[0])
 
     console.log @canvasGraph.largestX
     @el.find("#scale-slider").attr "max", @canvasGraph.largestX
     @el.find("#scale-slider").attr "min", @canvasGraph.smallestX
+
+    document.addEventListener 'mark-change', => @updateButtons()
+
+  loadSubject: (data) ->
+    # create a new canvas
+    @canvas = document.createElement('canvas')
+    @canvas.id = 'graph'
+    @canvas.width = 1024
+    @canvas.height = 420
+
+    @marksContainer.appendChild(@canvas)
+    @canvasGraph = new CanvasGraph(@canvas, data)
+    @canvasGraph.enableMarking()
+    @canvasGraph.plotPoints()
 
   onChangeScaleSlider: ->
     @zoomRange = 15
@@ -75,7 +89,6 @@ class Classifier extends BaseController
       @el.find("#toggle-zoom").removeClass("toggled")
       @el.find("#scale-slider").removeClass("active")
 
-
   onToggleFav: ->
     favButton = @el.find("#toggle-fav")[0]
     if @isFaved
@@ -94,8 +107,37 @@ class Classifier extends BaseController
   onClickTutorial: ->
     console.log 'onClickTutorial()'
 
-  onClickNoTransits: ->
-    console.log 'onClickNoTransits()'
+  updateButtons: ->
+    if @canvasGraph.marks.all.length > 0
+      @noTransitsButton.hide()
+      @finishedButton.show()
+    else
+      @finishedButton.hide()
+      @noTransitsButton.show()
+
+  onClickNoTransits: -> @finishSubject()
+
+  onClickFinished: -> @finishSubject()
+
+  onClickNextSubject: ->
+    @noTransitsButton.show()
+    @classifySummary.fadeOut(150)
+    @nextSubjectButton.hide()
+    @canvasGraph.marks.destroyAll() #clear old marks
+    @canvas.outerHTML = ""
+    console.log "LOAD NEW SUBJECT HERE"
+    #fake it for now...
+    @loadSubject(sampleData[Math.round Math.random()*(sampleData.length-1)])
+
+  finishSubject: ->
+    @showSummary()
+    console.log "SEND CLASSIFICATION HERE"
+
+  showSummary: ->
+    @classifySummary.fadeIn(150)
+    @nextSubjectButton.show()
+    @noTransitsButton.hide()
+    @finishedButton.hide()
 
   onClickLessonClose: ->
     console.log 'onClickLessonClose()'

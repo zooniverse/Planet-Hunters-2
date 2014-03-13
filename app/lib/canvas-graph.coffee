@@ -5,11 +5,17 @@ class CanvasGraph
     window.canvas = @canvas
     window.canvasGraph = @
 
-    @smallestX = Math.min (point.x for point in @data)...
-    @smallestY = Math.min (point.y for point in @data)...
+    @smallestX = Math.min @data.x...
+    @smallestY = Math.min @data.y...
 
-    @largestX = Math.max (point.x for point in @data)...
-    @largestY = Math.max (point.y for point in @data)...
+    @largestX = Math.max @data.x...
+    @largestY = Math.max @data.y...
+
+    @arrayLength = Math.min @data.x.length, @data.y.length
+
+    @mirrorVertically()
+
+    @scale = 1
 
   enableMarking: ->
     @marks = new Marks
@@ -27,9 +33,9 @@ class CanvasGraph
     @xMin = xMin
     @xMax = xMax
     @clearCanvas()
-    for point in @data
-      x = ((point.x - xMin) / (xMax - xMin)) * @canvas.width
-      y = ((point.y - @largestY) / (@smallestY - @largestY)) * @canvas.height
+    for i in [0...@arrayLength]
+      x = ((+@data.x[i] - xMin) / (xMax - xMin)) * @canvas.width
+      y = ((+@data.y[i] - @largestY) / (@smallestY - @largestY)) * @canvas.height
       @ctx.fillStyle = "#fff"
       @ctx.fillRect(x, y,2,2)
 
@@ -42,6 +48,9 @@ class CanvasGraph
         mark.element.style.left = (scaledMin) + "px"
 
         mark.save(scaledMin, scaledMax)
+
+    @scale = (@largestX - @smallestX) / (@xMax - @xMin)
+    console.log "SCALE", @scale
 
   clearCanvas: -> @ctx.clearRect(0,0,@canvas.width, @canvas.height)
 
@@ -65,13 +74,10 @@ class Marks
     document.getElementById('marks-container').removeChild(mark.element)
 
   destroyAll: ->
-    document.getElementById('marks-container').innerHTML = ""
+    mark.element.outerHTML = "" for mark in @all
     @all = []
 
 class Mark
-  MIN_WIDTH = 15
-  MAX_WIDTH = 150
-
   #move to end of marks-container on mousedown => for mousedown event
 
   constructor: (e, @canvasGraph) ->
@@ -92,6 +98,9 @@ class Mark
       </div>
     """
 
+    @minWidth = 15 * @canvasGraph.scale
+    @maxWidth = 150 * @canvasGraph.scale
+
     @element.style.left = @toCanvasXPoint(e) + "px"
     @element.style.position = 'absolute'
     @element.style.top = e.target.offsetTop + "px"
@@ -100,17 +109,17 @@ class Mark
     @element.style.pointerEvents = 'auto'
     @element.style.textAlign = 'center'
 
-    @startingPoint = @toCanvasXPoint(e) - MIN_WIDTH
+    @startingPoint = @toCanvasXPoint(e) - @minWidth
     @dragging = false
 
     @element.addEventListener 'mousemove', @updateCursor
     @element.addEventListener 'mousedown', @onMouseDown
 
   draw: (e) ->
-    markLeftX = Math.max @startingPoint - MAX_WIDTH, Math.min @startingPoint, @toCanvasXPoint(e)
+    markLeftX = Math.max @startingPoint - @maxWidth, Math.min @startingPoint, @toCanvasXPoint(e)
     markRightX = Math.max @startingPoint, @toCanvasXPoint(e)
 
-    width = (Math.min (Math.max (Math.abs markRightX - markLeftX), MIN_WIDTH), MAX_WIDTH)
+    width = (Math.min (Math.max (Math.abs markRightX - markLeftX), @minWidth), @maxWidth)
 
     @element.style.left = markLeftX + "px"
     @element.style.width = width + "px"
@@ -171,6 +180,9 @@ class Mark
     for mark in @canvasGraph.marks.all
       mark.dragging = false
       mark.moving = false
+
+    mouseChange = new Event("mark-change")
+    document.dispatchEvent(mouseChange)
 
   toCanvasXPoint: (e) -> e.pageX - @canvas.getBoundingClientRect().left - window.scrollX
 
