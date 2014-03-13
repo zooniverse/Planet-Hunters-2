@@ -1,10 +1,13 @@
 .secondary-header
   margin 0 auto
   max-width 1090px
-  height 100px
-  line-height 100px
+  height 140px
+  line-height 140px
   font-size 20px
   color #fff
+  h1
+    font-size 40px
+    font-weight 300
 .secondary-white
   background-color #fff
   padding-bottom 50px
@@ -53,8 +56,19 @@
       button
         width 100%
         margin 20px 0
-    @media screen and (max-width: 820px)
+
+@media screen and (max-width: 820px)
+  .secondary-white
+    .secondary-content
       .right-column, .left-column
         width 100%
+
+@media screen and (max-width: 1090px)
+  .secondary-white
+    .secondary-content
+      .right-column, .left-column
         .content
           padding 0 10px
+  .secondary-header
+    h1
+      padding 0 10px
