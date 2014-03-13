@@ -15,8 +15,6 @@ class CanvasGraph
 
     @mirrorVertically()
 
-    @scale = 1
-
   enableMarking: ->
     @marks = new Marks
     window.marks = @marks
@@ -50,7 +48,6 @@ class CanvasGraph
         mark.save(scaledMin, scaledMax)
 
     @scale = (@largestX - @smallestX) / (@xMax - @xMin)
-    console.log "SCALE", @scale
 
   clearCanvas: -> @ctx.clearRect(0,0,@canvas.width, @canvas.height)
 
