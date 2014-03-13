@@ -1,12 +1,53 @@
-<div class="content-block">
-	<div class="content-container">
-		<div>
-			<h3>Science</h3>
-			<p>
-				Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-			</p>
-		</div>
-	</div>
+
+<div class="secondary-header">
+  <h3>The Science</h3>
+</div>
+
+<div class="secondary-white">
+  <div class="secondary-content">
+    <nav>
+      <button class="active">Planets</button>
+      <button>Transits</button>
+      <button>Your Task</button>
+      <button>Goals</button>
+      <button>Results</button>
+    </nav>
+  </div>
+  <div class="secondary-content">
+    <div class="left-column">
+      <div class="content">
+        <h1>Finding Planets</h1>
+        <p>
+          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+        </p>
+
+        <img src="./images/starfield.jpg">
+
+        <p>
+          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+        </p>
+
+        <p>
+          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+        </p>
+
+        <p>
+          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+        </p>
+
+      </div>
+    </div>
+    <div class="right-column">
+      <div class="content">
+        <h1>Get Involved</h1>
+        <p>Join us in finding the many workds out there. Are you ready?</p>
+        <button class="std-btn big-btn yellow">Start Classifying</button>
+
+        <h1>Connect</h1>
+        <p>Follow the <a href="">Planet Hunters 2</a> Blog and <a href="">@planethunters</a> to keep current with the latest results</p>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- PLANET TIME -->
