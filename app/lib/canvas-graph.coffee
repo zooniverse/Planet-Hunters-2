@@ -15,6 +15,8 @@ class CanvasGraph
 
     @mirrorVertically()
 
+    @scale = 1
+
   enableMarking: ->
     @marks = new Marks
     window.marks = @marks
@@ -47,6 +49,9 @@ class CanvasGraph
 
         mark.save(scaledMin, scaledMax)
 
+    @scale = (@largestX - @smallestX) / (@xMax - @xMin)
+    console.log "SCALE", @scale
+
   clearCanvas: -> @ctx.clearRect(0,0,@canvas.width, @canvas.height)
 
   mirrorVertically: ->
@@ -73,9 +78,6 @@ class Marks
     @all = []
 
 class Mark
-  MIN_WIDTH = 15
-  MAX_WIDTH = 150
-
   #move to end of marks-container on mousedown => for mousedown event
 
   constructor: (e, @canvasGraph) ->
@@ -96,6 +98,9 @@ class Mark
       </div>
     """
 
+    @minWidth = 15 * @canvasGraph.scale
+    @maxWidth = 150 * @canvasGraph.scale
+
     @element.style.left = @toCanvasXPoint(e) + "px"
     @element.style.position = 'absolute'
     @element.style.top = e.target.offsetTop + "px"
@@ -104,17 +109,17 @@ class Mark
     @element.style.pointerEvents = 'auto'
     @element.style.textAlign = 'center'
 
-    @startingPoint = @toCanvasXPoint(e) - MIN_WIDTH
+    @startingPoint = @toCanvasXPoint(e) - @minWidth
     @dragging = false
 
     @element.addEventListener 'mousemove', @updateCursor
     @element.addEventListener 'mousedown', @onMouseDown
 
   draw: (e) ->
-    markLeftX = Math.max @startingPoint - MAX_WIDTH, Math.min @startingPoint, @toCanvasXPoint(e)
+    markLeftX = Math.max @startingPoint - @maxWidth, Math.min @startingPoint, @toCanvasXPoint(e)
     markRightX = Math.max @startingPoint, @toCanvasXPoint(e)
 
-    width = (Math.min (Math.max (Math.abs markRightX - markLeftX), MIN_WIDTH), MAX_WIDTH)
+    width = (Math.min (Math.max (Math.abs markRightX - markLeftX), @minWidth), @maxWidth)
 
     @element.style.left = markLeftX + "px"
     @element.style.width = width + "px"
