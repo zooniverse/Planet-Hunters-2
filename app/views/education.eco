@@ -4,15 +4,15 @@
 
 <div class="secondary-white">
   <div class="secondary-content">
-    <nav>
-      <button class="active">Classroom</button>
-      <button>Resources</button>
-      <button>Zooteach.org</button>
+    <nav class="sub-nav-education">
+      <button name="classroom">Classroom</button>
+      <button name="resources">Resources</button>
+      <button name="zooteach">Zooteach.org</button>
     </nav>
   </div>
   <div class="secondary-content">
     <div class="left-column">
-      <div class="content">
+      <div class="content sub-nav-education-classroom">
         <h1>In the Classroom</h1>
         <h2>Can I use Planet Hunters 2 in the classroom?</h2>
         <p>
@@ -25,6 +25,17 @@
           Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
         </p>
       </div>
+
+      <div class="content sub-nav-education-resources">
+        <h1>Resources</h1>
+        <p>This will be the content for the resources section</p>
+      </div>
+
+      <div class="content sub-nav-education-zooteach">
+        <h1>Zooteach</h1>
+        <p>This will be the content for the zooteach section</p>
+      </div>
+
     </div>
     <div class="right-column">
       <div class="content">
@@ -36,6 +47,7 @@
         <p>Follow the <a href="">Planet Hunters 2</a> Blog and <a href="">@planethunters</a> to keep current with the latest results</p>
       </div>
     </div>
+
   </div>
 </div>
 <!-- PLANET TIME -->
