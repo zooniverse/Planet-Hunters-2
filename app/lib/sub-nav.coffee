@@ -6,8 +6,8 @@ Secondary Page SubNav Usage
 1. Create a nav with class="sub-nav-PAGE_NAME"
     ex: "science", "education"
 
-2. Add buttons to the nav with name="SECTION_SECTION" 
-    ex: "science", "more-info", etc.
+2. Add buttons to the nav with name="SECTION_NAME" 
+    ex: "planets", "more-info", etc.
 
 3. Add content sections with class="sub-nav-PAGE_NAME-SECTION_NAME"
 
@@ -25,8 +25,7 @@ class SubNav
 
       $(".sub-nav-#{pageName}-#{initialClassName}:nth-child(1)").siblings().hide()
 
-      $(".sub-nav-#{pageName} button").on "click", (e) => 
-        console.log "clicked", e.target.name
+      $(".sub-nav-#{pageName} button").on "click", (e) =>
         $(".sub-nav-#{pageName}-#{e.target.name}").show().siblings().hide()
         $(".sub-nav-#{pageName} button[name=#{e.target.name}").addClass("active").siblings().removeClass("active")
 
