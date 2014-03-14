@@ -20,6 +20,7 @@ class Classifier extends BaseController
     'button[name="no-transits"]' : 'noTransitsButton'
     'button[name="finished"]' : 'finishedButton'
     'button[name="next-subject"]' :'nextSubjectButton'
+    'button[name="join-convo"]' : 'joinConvoBtn'
 
   events:
     'click button[id="toggle-zoom"]' : 'onToggleZoom'
@@ -31,7 +32,8 @@ class Classifier extends BaseController
     'click button[name="finished"]' : 'onClickFinished'
     'click img[id="lesson-close"]'   : 'onClickLessonClose'
     'change input[id="scale-slider"]': 'onChangeScaleSlider'
-  
+    'click button[name="join-convo"]': 'onClickJoinConvo'
+
   constructor: ->
     super
     isZoomed: false
@@ -141,5 +143,7 @@ class Classifier extends BaseController
 
   onClickLessonClose: ->
     console.log 'onClickLessonClose()'
+
+  onClickJoinConvo: -> @joinConvoBtn.hide().siblings().show()
 
 module.exports = Classifier

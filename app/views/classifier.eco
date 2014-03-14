@@ -32,16 +32,28 @@
             <h2>Discussions about this star</h2>
             <p>Some content for a comment</p>
             <p>by someAuthor X minutes ago</p>
-            <button class="std-btn transparent">Open In Talk</button>
+            <button class="std-btn transparent" name="join-convo">Join the Conversation</button>
+
+            <div class="talk-pill">
+              <textarea placeholder="Type something..."></textarea>
+              <button name="submit-talk">Submit</button>
+            </div>
           </div>
         </div>
+
         <div class="three-column">
           <div class="content">
             <h2>Discussions about this star</h2>
             <p>Some content for a comment</p>
             <p>by someAuthor X minutes ago</p>
-            <button class="std-btn transparent">Open In Talk</button>
+            <button class="std-btn transparent" name="join-convo-alt">Join the Conversation</button>
+
+            <div class="talk-pill">
+              <textarea placeholder="Type something..."></textarea>
+              <button name="submit-talk-alt">Submit</button>
+            </div>
           </div>
+
         </div>
       </div>
       <div id="tools">
