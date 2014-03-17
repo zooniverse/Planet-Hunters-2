@@ -30,8 +30,20 @@
         <div class="three-column">
           <div class="content">
             <h2>Discussions about this star</h2>
-            <p>Some content for a comment</p>
-            <p>by someAuthor X minutes ago</p>
+            <div id="comments">
+              <div class="formatted-comment">
+                <p>Some content for a comment</p>
+                <p>by <strong>someAuthor</strong> X minutes ago</p>
+              </div>
+              <div class="formatted-comment">
+                <p>Some content for a comment</p>
+                <p>by <strong>someAuthor</strong> X minutes ago</p>
+              </div>
+              <div class="formatted-comment">
+                <p>Some content for a longer comment. Some content for a longer comment. Some content for a longer comment.</p>
+                <p>by <strong>someAuthor</strong> X minutes ago</p>
+              </div>
+            </div>
             <button class="std-btn transparent" name="join-convo">Join the Conversation</button>
 
             <div class="talk-pill">
@@ -44,8 +56,12 @@
         <div class="three-column">
           <div class="content">
             <h2>Discussions about this star</h2>
-            <p>Some content for a comment</p>
-            <p>by someAuthor X minutes ago</p>
+            <div id="alt-comments">
+              <div class="formatted-comment">
+                <p>Some content for an alternate talk comment. Wow what a comment!</p>
+                <p>by <strong>someAuthor</strong> X minutes ago</p>
+              </div>
+            </div>
             <button class="std-btn transparent" name="alt-join-convo">Join the Conversation</button>
 
             <div class="talk-pill">
@@ -53,7 +69,6 @@
               <button name="alt-submit-talk">Submit</button>
             </div>
           </div>
-
         </div>
       </div>
       <div id="tools">

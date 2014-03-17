@@ -17,6 +17,8 @@ class Classifier extends BaseController
     '#tutorial'         : 'tutorialButton'
     '#scale-slider'     : 'scaleSlider'
     '#classify-summary' : 'classifySummary'
+    '#comments'         : 'comments'
+    '#alt-comments'         : 'altComments'
     'button[name="no-transits"]' : 'noTransitsButton'
     'button[name="finished"]' : 'finishedButton'
     'button[name="next-subject"]' :'nextSubjectButton'
@@ -160,12 +162,22 @@ class Classifier extends BaseController
 
   onClickSubmitTalk: ->
     console.log "SEND THIS TO MAIN TALK DISCUSSION", @talkComment.val()
-    @resetTalkComment @talkComment
+    @appendComment(@talkComment, @comments)
 
   onClickSubmitTalkAlt: ->
     console.log "SEND THIS TO ANOTHER TALK DISCUSSION", @altTalkComment.val()
-    @resetTalkComment @altTalkComment
+    @appendComment(@altTalkComment, @altComments)
 
   resetTalkComment: (talkComment) -> talkComment.val("").parent().hide().siblings().show()
+
+  appendComment: (comment, container) ->
+    container.append("""
+      <div class="formatted-comment">
+        <p>#{comment.val()}</p>
+        <p>by <strong>#{'currentUser'}</strong> 0 minutes ago</p>
+      </div>
+    """)
+    container.children().first().remove() unless container.children().length <= 3
+    @resetTalkComment comment
 
 module.exports = Classifier
