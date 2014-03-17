@@ -1,3 +1,5 @@
+$ = window.jQuery
+
 class CanvasGraph
   constructor: (@canvas, @data) ->
     @ctx = @canvas.getContext('2d')
@@ -179,8 +181,8 @@ class Mark
       mark.dragging = false
       mark.moving = false
 
-    mouseChange = new Event("mark-change")
-    document.dispatchEvent(mouseChange)
+    $(document).trigger("mark-change")
+
 
   toCanvasXPoint: (e) -> e.pageX - @canvas.getBoundingClientRect().left - window.scrollX
 

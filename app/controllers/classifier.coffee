@@ -55,7 +55,7 @@ class Classifier extends BaseController
     @el.find("#scale-slider").attr "max", @canvasGraph.largestX
     @el.find("#scale-slider").attr "min", @canvasGraph.smallestX
 
-    document.addEventListener 'mark-change', => @updateButtons()
+    $(document).on 'mark-change', => @updateButtons()
 
   loadSubject: (data) ->
     # create a new canvas
