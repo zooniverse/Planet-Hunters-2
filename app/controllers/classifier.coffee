@@ -21,6 +21,9 @@ class Classifier extends BaseController
     'button[name="finished"]' : 'finishedButton'
     'button[name="next-subject"]' :'nextSubjectButton'
     'button[name="join-convo"]' : 'joinConvoBtn'
+    'button[name="alt-join-convo"]' : 'altJoinConvoBtn'
+    'textarea[name="talk-comment"]' : 'talkComment'
+    'textarea[name="alt-talk-comment"]' : 'altTalkComment'
 
   events:
     'click button[id="toggle-zoom"]' : 'onToggleZoom'
@@ -33,6 +36,9 @@ class Classifier extends BaseController
     'click img[id="lesson-close"]'   : 'onClickLessonClose'
     'change input[id="scale-slider"]': 'onChangeScaleSlider'
     'click button[name="join-convo"]': 'onClickJoinConvo'
+    'click button[name="alt-join-convo"]' : 'onClickAltJoinConvo'
+    'click button[name="submit-talk"]' : 'onClickSubmitTalk'
+    'click button[name="alt-submit-talk"]' :'onClickSubmitTalkAlt'
 
   constructor: ->
     super
@@ -127,6 +133,10 @@ class Classifier extends BaseController
     @nextSubjectButton.hide()
     @canvasGraph.marks.destroyAll() #clear old marks
     @canvas.outerHTML = ""
+
+    @resetTalkComment @talkComment
+    @resetTalkComment @altTalkComment
+
     console.log "LOAD NEW SUBJECT HERE"
     #fake it for now...
     @loadSubject(sampleData[Math.round Math.random()*(sampleData.length-1)])
@@ -145,5 +155,17 @@ class Classifier extends BaseController
     console.log 'onClickLessonClose()'
 
   onClickJoinConvo: -> @joinConvoBtn.hide().siblings().show()
+
+  onClickAltJoinConvo: -> @altJoinConvoBtn.hide().siblings().show()
+
+  onClickSubmitTalk: ->
+    console.log "SEND THIS TO MAIN TALK DISCUSSION", @talkComment.val()
+    @resetTalkComment @talkComment
+
+  onClickSubmitTalkAlt: ->
+    console.log "SEND THIS TO ANOTHER TALK DISCUSSION", @altTalkComment.val()
+    @resetTalkComment @altTalkComment
+
+  resetTalkComment: (talkComment) -> talkComment.val("").parent().hide().siblings().show()
 
 module.exports = Classifier
