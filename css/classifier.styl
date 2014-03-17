@@ -113,15 +113,19 @@
                 background transparent
                 border 2px solid #fff
                 border-radius 5px 0 0 5px
-            .formatted-comment
-              border-bottom 1px solid #848b92
-              margin-bottom 20px
-              p
-                &:not(:nth-child(1))
-                  font-size 10px
-                  font-style italic
-                  span
-                    color #fff
+            #comments, #alt-comments
+              height 240px
+              .formatted-comment
+                border-bottom 1px solid #848b92
+                margin-bottom 20px
+                &:last-child
+                  border-bottom none
+                p
+                  &:not(:nth-child(1))
+                    font-size 10px
+                    font-style italic
+                    span
+                      color #fff
 
       #tools
         float left

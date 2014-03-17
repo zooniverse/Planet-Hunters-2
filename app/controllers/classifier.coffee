@@ -171,12 +171,12 @@ class Classifier extends BaseController
   resetTalkComment: (talkComment) -> talkComment.val("").parent().hide().siblings().show()
 
   appendComment: (comment, container) ->
-    container.append("""
+    container.append """
       <div class="formatted-comment">
         <p>#{comment.val()}</p>
         <p>by <strong>#{'currentUser'}</strong> 0 minutes ago</p>
       </div>
-    """)
+    """
     container.children().first().remove() unless container.children().length <= 3
     @resetTalkComment comment
 
