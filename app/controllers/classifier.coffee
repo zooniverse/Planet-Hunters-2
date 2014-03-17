@@ -57,7 +57,7 @@ class Classifier extends BaseController
     @el.find("#scale-slider").attr "min", @canvasGraph.smallestX
 
     $(document).on 'mark-change', => @updateButtons()
-
+    setTimeout => @el.find(".faux-range-thumb").hide()
     @drawSliderAxisNums()
 
   loadSubject: (data) ->
@@ -96,11 +96,13 @@ class Classifier extends BaseController
       zoomButton.innerHTML = '<img src="images/icons/toolbar-zoomminus.png">Zoom'
       @el.find("#toggle-zoom").addClass("toggled")
       @el.find("#scale-slider").addClass("active")
+      @el.find(".faux-range-thumb").fadeIn(150)
     else
       @canvasGraph.plotPoints()
       zoomButton.innerHTML = '<img src="images/icons/toolbar-zoomplus.png">Zoom'
       @el.find("#toggle-zoom").removeClass("toggled")
       @el.find("#scale-slider").removeClass("active")
+      @el.find(".faux-range-thumb").fadeOut(150)
 
   onToggleFav: ->
     favButton = @el.find("#toggle-fav")[0]
