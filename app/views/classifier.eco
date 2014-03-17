@@ -90,7 +90,11 @@
           Tutorial
         </button>
       </div>
-      <input id="scale-slider" type="range" min="0" max="35"/>
+      <div id="slider-container">
+        <div id="axis-label">DAYS</div>
+        <div id="numbers-container"></div>
+        <input id="scale-slider" type="range" min="0" max="35"/>
+      </div>
     </div>
 
     <button class="std-btn yellow" name="finished">Finished</button>

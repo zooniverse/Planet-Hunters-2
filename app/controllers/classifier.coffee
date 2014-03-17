@@ -16,6 +16,7 @@ class Classifier extends BaseController
     '#help'             : 'helpButton'
     '#tutorial'         : 'tutorialButton'
     '#scale-slider'     : 'scaleSlider'
+    'numbers-container' : 'numbersContainer'
     '#classify-summary' : 'classifySummary'
     '#comments'         : 'comments'
     '#alt-comments'         : 'altComments'
@@ -56,6 +57,8 @@ class Classifier extends BaseController
     @el.find("#scale-slider").attr "min", @canvasGraph.smallestX
 
     $(document).on 'mark-change', => @updateButtons()
+
+    @drawSliderAxisNums()
 
   loadSubject: (data) ->
     # create a new canvas
@@ -178,5 +181,11 @@ class Classifier extends BaseController
       </div>
     """).animate({ scrollTop: container[0].scrollHeight}, 1000)
     @resetTalkComment comment
+
+  drawSliderAxisNums: ->
+    sliderNums = ""
+    for num in [(Math.round @canvasGraph.smallestX + 1)..(Math.round @canvasGraph.largestX)]
+      sliderNums += if num%2 is 0 then "<span class='slider-num'>#{num}</span>" else "<span class='slider-num'>&#x2022</span>"
+    @el.find("#numbers-container").append(sliderNums)
 
 module.exports = Classifier
