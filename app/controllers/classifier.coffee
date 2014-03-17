@@ -177,7 +177,6 @@ class Classifier extends BaseController
         <p>by <strong>#{'currentUser'}</strong> 0 minutes ago</p>
       </div>
     """).animate({ scrollTop: container[0].scrollHeight}, 1000)
-    container.children().first().remove() unless container.children().length <= 3
     @resetTalkComment comment
 
 module.exports = Classifier
