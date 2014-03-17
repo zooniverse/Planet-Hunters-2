@@ -24,13 +24,21 @@ class Verification extends BaseController
 
   constructor: ->
     super
-    @loadSubject(light_curve_data)
+    @loadSubject()
 
-  loadSubject: (data) ->
+  loadSubject: ->
+    @dataIndex ||= 0
     @canvas = @el.find('#verify-graph')[0]
-    @canvasGraph = new CanvasGraph(@canvas, data)
-    @canvasGraph.plotPoints()
+
+    # sampleData[@dataIndex] will become a subjects data from the server
+    # plotPoints will take in the minX and maxX of that subject
+    @canvasGraph = new CanvasGraph(@canvas, sampleData[@dataIndex]).plotPoints(2,4)
+
     @message.html "Is this a proper transit?"
+
+    # sampleData[@dataIndex+1] will become the subject after that's data
+    # plotPoints will take in the minX and maxX of that subject
+    upcomingSubject = new CanvasGraph(@el.find("#right-graph")[0], sampleData[@dataIndex+1]).plotPoints(2,4)
 
   onClickYesButton: -> @showSummary()
 
@@ -42,11 +50,16 @@ class Verification extends BaseController
     @summary.hide()
     @message.html "Is this a proper transit?"
 
+    oldSubject = new CanvasGraph(@el.find("#left-graph")[0], sampleData[@dataIndex]).plotPoints(2,4)
+
+    @dataIndex += 1
+    @loadSubject()
+
   onClickNotSureButton: -> console.log "NOT SURE"
 
   showSummary: -> 
     @message.html "Ready to move on?"
-    @summaryMessage.html("#{num = Math.round Math.random()*100 + 1} other user#{if num > 1 then 's' else ''} agree")
+    @summaryMessage.html("") # place a post classify message to users here if desired
     @summary.show()
     @showNextSubjectButton()
 
@@ -54,5 +67,6 @@ class Verification extends BaseController
     console.log "call @loadSubject(NEXT_SUBJECTS_DATA) here)"
     @nextSubjectButton.show()
     button.hide() for button in [@yesButton, @noButton, @notSureButton]
+
 
 module.exports = Verification

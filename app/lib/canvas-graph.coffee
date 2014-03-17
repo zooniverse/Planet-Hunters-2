@@ -3,9 +3,9 @@ $ = window.jQuery
 class CanvasGraph
   constructor: (@canvas, @data) ->
     @ctx = @canvas.getContext('2d')
-    window.ctx = @ctx
-    window.canvas = @canvas
-    window.canvasGraph = @
+    # window.ctx = @ctx
+    # window.canvas = @canvas
+    # window.canvasGraph = @
 
     @smallestX = Math.min @data.x...
     @smallestY = Math.min @data.y...

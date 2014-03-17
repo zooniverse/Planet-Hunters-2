@@ -1,15 +1,19 @@
 <div class="title">Transit Verification</div>
 <div class="container">
   <div id="canvas-container">
-    <div id="summary">
-      <h1>Nice Work!</h1>
-      <p id="summary-message"></p>
+    <canvas id="left-graph" width="300" height="300"></canvas>
+    <div id="main-subject">
+      <canvas id="verify-graph" width="300" height="300"></canvas>
+      <div id="summary">
+        <h1>Nice Work!</h1>
+        <p id="summary-message"></p>
+      </div>
     </div>
-    <canvas id="verify-graph" width="300" height="300"></canvas>
+    <canvas id="right-graph" width="300" height="300"></canvas>
   </div>
-  <p id="user-message"></p>
 
   <div id="button-container">
+    <p id="user-message"></p>
     <button class="std-btn big-btn yellow" name="next-subject">Next Subject</button>
     <button class="std-btn big-btn yellow" name="yes">Yes</button>
     <button class="std-btn big-btn" name="no">No</button>
