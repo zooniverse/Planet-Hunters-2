@@ -2,7 +2,8 @@
   color #bbbcc2
   font-size 20px
   font-weight 300
-  background-color #072034
+  // background-color #072034 // solid color bg option
+  background url("./images/starfield-planets.jpg")
 
   .title
     background-color #fc2738
@@ -15,15 +16,14 @@
     padding 10px
     text-align center
     margin 0 auto
-    border 3px solid red
     img
       width 100%
       border-radius 5px
     p
       margin 10px 0
     #button-container
-      border 3px solid blue
-      width 320px
+      width 480px
+      height 200px
       margin 0 auto
       button
         margin 10px 0
@@ -37,23 +37,26 @@
           float right
         &[name="not-sure"]
           width 100%
+          &:hover
+            background-color rgba(13,21,24,0.1)
         &[name="next-subject"]
           display none
           width 100%
     #canvas-container
       margin 0 auto
-      display table
-      border 3px solid green
+      canvas
+        border-radius 5px
+        border 2px solid black
       #main-subject
         display inline-block
-        border 3px solid yellow
         position relative
         #summary
           display none
           position absolute
+          border-radius 5px
           background-color rgba(13,21,24,0.75)
           width 100%
-          height 100%
+          height 304px
           top 0px
           h1
             margin-top 120px
@@ -61,12 +64,26 @@
       #verify-graph
         background rgba(13,21,24,0.75)
       #left-graph, #right-graph
-        transform scale(0.6)
-      #left-graph
-        width 300px
-        height 300px
-        display inline-block
-        background red
-      #right-graph
-        background green
+        vertical-align 50px
         opacity 0.5
+      #left-graph
+        background green
+        margin-right 45px
+      #right-graph
+        background red
+        margin-left 45px
+
+@media screen and (max-width: 820px)
+  .verification
+    .container
+      #canvas-container
+        #left-graph
+          display none
+        #right-graph
+          display none
+
+@media screen and (max-width: 520px)
+  .verification
+    .container
+      #button-container
+        width 100%

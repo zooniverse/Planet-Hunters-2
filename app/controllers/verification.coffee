@@ -12,7 +12,7 @@ class Verification extends BaseController
     'button[name="no"]' : 'noButton'
     'button[name="not-sure"]': 'notSureButton'
     'button[name="next-subject"]': 'nextSubjectButton'
-    '#summary'       : 'summary'
+    '#summary' :  'summary'
     '#user-message' : 'message'
     '#summary-message': 'summaryMessage'
 
@@ -36,9 +36,9 @@ class Verification extends BaseController
 
     @message.html "Is this a proper transit?"
 
-    # sampleData[@dataIndex+1] will become the subject after that's data
+    # sampleData[@dataIndex+1] will become the next subject after that's data
     # plotPoints will take in the minX and maxX of that subject
-    upcomingSubject = new CanvasGraph(@el.find("#right-graph")[0], sampleData[@dataIndex+1]).plotPoints(2,4)
+    upcomingSubject = new CanvasGraph(@el.find("#left-graph")[0], sampleData[@dataIndex+1]).plotPoints(2,4)
 
   onClickYesButton: -> @showSummary()
 
@@ -50,7 +50,7 @@ class Verification extends BaseController
     @summary.hide()
     @message.html "Is this a proper transit?"
 
-    oldSubject = new CanvasGraph(@el.find("#left-graph")[0], sampleData[@dataIndex]).plotPoints(2,4)
+    oldSubject = new CanvasGraph(@el.find("#right-graph")[0], sampleData[@dataIndex]).plotPoints(2,4)
 
     @dataIndex += 1
     @loadSubject()

@@ -29,7 +29,7 @@ stack = new StackOfPages
   '#/': require './controllers/home-page'
   '#/about': require './controllers/about-page'
   '#/classify': require './controllers/classifier'
-  '#/science': require './controllers/science-page'  
+  '#/science': require './controllers/science-page'
   '#/profile': require './controllers/profile'
   '#/education': require './controllers/education'
   '#/discuss': require './controllers/discuss'
