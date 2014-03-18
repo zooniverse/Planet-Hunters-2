@@ -24,21 +24,18 @@ class Verification extends BaseController
 
   constructor: ->
     super
-    @loadSubject()
+    setTimeout =>
+      @loadSubject()
+      middleStart = @el.find('.verify-canvas:nth-child(2)')[0]
+      startCanvas = new CanvasGraph(middleStart, sampleData[3]).plotPoints(2,4)
 
   loadSubject: ->
     @dataIndex ||= 0
-    @canvas = @el.find('#verify-graph')[0]
+    canvas = @el.find('.verify-canvas:nth-child(3)')[0]
 
-    # sampleData[@dataIndex] will become a subjects data from the server
-    # plotPoints will take in the minX and maxX of that subject
-    @canvasGraph = new CanvasGraph(@canvas, sampleData[@dataIndex]).plotPoints(2,4)
+    @canvasGraph = new CanvasGraph(canvas, sampleData[@dataIndex]).plotPoints(2,4)
 
     @message.html "Is this a proper transit?"
-
-    # sampleData[@dataIndex+1] will become the next subject after that's data
-    # plotPoints will take in the minX and maxX of that subject
-    upcomingSubject = new CanvasGraph(@el.find("#left-graph")[0], sampleData[@dataIndex+1]).plotPoints(2,4)
 
   onClickYesButton: -> @showSummary()
 
@@ -50,9 +47,12 @@ class Verification extends BaseController
     @summary.hide()
     @message.html "Is this a proper transit?"
 
-    oldSubject = new CanvasGraph(@el.find("#right-graph")[0], sampleData[@dataIndex]).plotPoints(2,4)
-
     @dataIndex += 1
+
+    canvasContainer = document.getElementById('canvas-container')
+    firstChild = canvasContainer.children[0]
+    canvasContainer.appendChild(firstChild)
+
     @loadSubject()
 
   onClickNotSureButton: -> console.log "NOT SURE"

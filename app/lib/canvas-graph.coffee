@@ -15,8 +15,6 @@ class CanvasGraph
 
     @dataLength = Math.min @data.x.length, @data.y.length
 
-    @mirrorVertically()
-
   enableMarking: ->
     @marks = new Marks
     window.marks = @marks
@@ -77,8 +75,6 @@ class Marks
     @all = []
 
 class Mark
-  #move to end of marks-container on mousedown => for mousedown event
-
   constructor: (e, @canvasGraph) ->
     @canvas = @canvasGraph.canvas
 
