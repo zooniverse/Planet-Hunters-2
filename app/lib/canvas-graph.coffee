@@ -80,9 +80,9 @@ class Marks
     # or
     # (allXPoints.reduce (a, b) -> a.concat b).sort (a, b) -> a - b
 
-  closestXBelow: (xCoord) -> (@sortedXCoords().filter (i) -> i <= xCoord).pop()
+  closestXBelow: (xCoord) -> (@sortedXCoords().filter (i) -> i < xCoord).pop()
 
-  closestXAbove: (xCoord) -> (@sortedXCoords().filter (i) -> i >= xCoord).shift()
+  closestXAbove: (xCoord) -> (@sortedXCoords().filter (i) -> i > xCoord).shift()
 
 class Mark
   constructor: (e, @canvasGraph) ->
@@ -126,7 +126,11 @@ class Mark
     markRightX = Math.max @startingPoint, @toCanvasXPoint(e)
 
 
+    markLeftX = (Math.max markLeftX, (@closestXBelow || markLeftX))
+    markRightX = (Math.min markRightX, (@closestXAbove || markRightX))
+
     width = (Math.min (Math.max (Math.abs markRightX - markLeftX), @minWidth()), @maxWidth())
+
 
     @element.style.left = markLeftX + "px"
     @element.style.width = width + "px"
@@ -176,6 +180,9 @@ class Mark
     else if e.target.className is "mark"
       @moving = true
       @pointerOffset = (@toCanvasXPoint(e) - @canvasXMin)
+
+    @closestXBelow = @canvasGraph.marks.closestXBelow(@canvasXMin)
+    @closestXAbove = @canvasGraph.marks.closestXAbove(@canvasXMax)
 
   onMouseUp: (e) =>
     e.preventDefault()
