@@ -128,8 +128,8 @@ class Mark
     markRightX = Math.max @startingPoint, @toCanvasXPoint(e)
 
     # no overlapping of marks
-    markLeftX = (Math.max markLeftX, (@closestXBelow || markLeftX)) + HANDLE_WIDTH
-    markRightX = (Math.min markRightX, (@closestXAbove || markRightX)) - HANDLE_WIDTH
+    markLeftX = (Math.max markLeftX, (@closestXBelow + HANDLE_WIDTH || markLeftX))
+    markRightX = (Math.min markRightX, (@closestXAbove - HANDLE_WIDTH || markRightX))
 
     # max and min width on creating / resizing marks
     width = (Math.min (Math.max (Math.abs markRightX - markLeftX), @minWidth()), @maxWidth())
@@ -142,9 +142,9 @@ class Mark
   move: (e) ->
     markWidth = parseInt(@element.style.width, 10)
 
-    # no overlapping of marks
-    leftXPos = Math.max (@toCanvasXPoint(e) - @pointerOffset), (@closestXBelow || 0) + HANDLE_WIDTH
-    leftXPos = Math.min leftXPos, ((@closestXAbove || @canvas.width) - markWidth) - HANDLE_WIDTH
+    # no overlapping of marks or moving out of canvas bounds
+    leftXPos = Math.max (@toCanvasXPoint(e) - @pointerOffset), (@closestXBelow || -HANDLE_WIDTH) + HANDLE_WIDTH
+    leftXPos = Math.min leftXPos, ((@closestXAbove || @canvas.width + HANDLE_WIDTH) - markWidth) - HANDLE_WIDTH
 
     markRightX = leftXPos + markWidth
 
