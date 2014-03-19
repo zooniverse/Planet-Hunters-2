@@ -80,6 +80,10 @@ class Marks
     # or
     # (allXPoints.reduce (a, b) -> a.concat b).sort (a, b) -> a - b
 
+  closestXBelow: (xCoord) -> (@sortedXCoords().filter (i) -> i <= xCoord).pop()
+
+  closestXAbove: (xCoord) -> (@sortedXCoords().filter (i) -> i >= xCoord).shift()
+
 class Mark
   constructor: (e, @canvasGraph) ->
     @canvas = @canvasGraph.canvas
