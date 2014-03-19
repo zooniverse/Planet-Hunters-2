@@ -138,9 +138,14 @@ class Mark
     @save(markLeftX, markLeftX+width)
 
   move: (e) ->
-    leftXPos = (@toCanvasXPoint(e) - @pointerOffset)
+    markWidth = parseInt(@element.style.width, 10)
+    leftXPos = Math.max (@toCanvasXPoint(e) - @pointerOffset), (@closestXBelow || 0)
+    leftXPos = Math.min leftXPos, ((@closestXAbove || @canvas.width) - markWidth)
+
+    markRightX = leftXPos + markWidth
+
     @element.style.left = leftXPos + "px"
-    @save(leftXPos, leftXPos+parseInt(@element.style.width, 10))
+    @save(leftXPos, markRightX)
 
   save: (markLeftX, markRightX) ->
     #canvas coords
