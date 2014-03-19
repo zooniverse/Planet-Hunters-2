@@ -74,6 +74,12 @@ class Marks
     mark.element.outerHTML = "" for mark in @all
     @all = []
 
+  sortedXCoords: ->
+    allXPoints = ([mark.canvasXMin, mark.canvasXMax] for mark in @all)
+    [].concat.apply([], allXPoints).sort (a, b) -> a - b
+    # or
+    # (allXPoints.reduce (a, b) -> a.concat b).sort (a, b) -> a - b
+
 class Mark
   constructor: (e, @canvasGraph) ->
     @canvas = @canvasGraph.canvas
@@ -114,6 +120,7 @@ class Mark
   draw: (e) ->
     markLeftX = Math.max @startingPoint - @maxWidth(), Math.min @startingPoint, @toCanvasXPoint(e)
     markRightX = Math.max @startingPoint, @toCanvasXPoint(e)
+
 
     width = (Math.min (Math.max (Math.abs markRightX - markLeftX), @minWidth()), @maxWidth())
 
@@ -178,7 +185,6 @@ class Mark
       mark.moving = false
 
     $(document).trigger("mark-change")
-
 
   toCanvasXPoint: (e) -> e.pageX - @canvas.getBoundingClientRect().left - window.scrollX
 
