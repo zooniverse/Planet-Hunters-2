@@ -23,9 +23,8 @@ class CanvasGraph
       e.preventDefault()
       @mark = new Mark(e, @)
       @marks.create(@mark)
-      @mark.onMouseDown(e)
-      @mark.dragging = true
       @mark.draw(e)
+      @mark.onMouseDown(e)
 
   plotPoints: (xMin = @smallestX, xMax = @largestX) ->
     @xMin = xMin
@@ -112,7 +111,8 @@ class Mark
     @element.style.textAlign = 'center'
 
     @startingPoint = @toCanvasXPoint(e) - @minWidth()
-    @dragging = false
+
+    @dragging = true
 
     @element.addEventListener 'mousemove', @updateCursor
     @element.addEventListener 'mousedown', @onMouseDown
@@ -125,12 +125,12 @@ class Mark
     markLeftX = Math.max @startingPoint - @maxWidth(), Math.min @startingPoint, @toCanvasXPoint(e)
     markRightX = Math.max @startingPoint, @toCanvasXPoint(e)
 
-
+    # no overlapping of marks
     markLeftX = (Math.max markLeftX, (@closestXBelow || markLeftX))
     markRightX = (Math.min markRightX, (@closestXAbove || markRightX))
 
+    # max and min width on creating / resizing marks
     width = (Math.min (Math.max (Math.abs markRightX - markLeftX), @minWidth()), @maxWidth())
-
 
     @element.style.left = markLeftX + "px"
     @element.style.width = width + "px"
@@ -139,6 +139,8 @@ class Mark
 
   move: (e) ->
     markWidth = parseInt(@element.style.width, 10)
+
+    # no overlapping of marks
     leftXPos = Math.max (@toCanvasXPoint(e) - @pointerOffset), (@closestXBelow || 0)
     leftXPos = Math.min leftXPos, ((@closestXAbove || @canvas.width) - markWidth)
 
