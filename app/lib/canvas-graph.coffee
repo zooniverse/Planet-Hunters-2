@@ -84,6 +84,8 @@ class Marks
   closestXAbove: (xCoord) -> (@sortedXCoords().filter (i) -> i > xCoord).shift()
 
 class Mark
+  HANDLE_WIDTH = 12
+
   constructor: (e, @canvasGraph) ->
     @canvas = @canvasGraph.canvas
 
@@ -126,8 +128,8 @@ class Mark
     markRightX = Math.max @startingPoint, @toCanvasXPoint(e)
 
     # no overlapping of marks
-    markLeftX = (Math.max markLeftX, (@closestXBelow || markLeftX))
-    markRightX = (Math.min markRightX, (@closestXAbove || markRightX))
+    markLeftX = (Math.max markLeftX, (@closestXBelow || markLeftX)) + HANDLE_WIDTH
+    markRightX = (Math.min markRightX, (@closestXAbove || markRightX)) - HANDLE_WIDTH
 
     # max and min width on creating / resizing marks
     width = (Math.min (Math.max (Math.abs markRightX - markLeftX), @minWidth()), @maxWidth())
@@ -141,8 +143,8 @@ class Mark
     markWidth = parseInt(@element.style.width, 10)
 
     # no overlapping of marks
-    leftXPos = Math.max (@toCanvasXPoint(e) - @pointerOffset), (@closestXBelow || 0)
-    leftXPos = Math.min leftXPos, ((@closestXAbove || @canvas.width) - markWidth)
+    leftXPos = Math.max (@toCanvasXPoint(e) - @pointerOffset), (@closestXBelow || 0) + HANDLE_WIDTH
+    leftXPos = Math.min leftXPos, ((@closestXAbove || @canvas.width) - markWidth) - HANDLE_WIDTH
 
     markRightX = leftXPos + markWidth
 
