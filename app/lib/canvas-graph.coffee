@@ -21,10 +21,11 @@ class CanvasGraph
 
     @canvas.addEventListener 'mousedown', (e) =>
       e.preventDefault()
-      @mark = new Mark(e, @)
-      @marks.create(@mark)
-      @mark.draw(e)
-      @mark.onMouseDown(e)
+      unless @marks.markTooCloseToAnotherMark(e)
+        @mark = new Mark(e, @)
+        @marks.create(@mark)
+        @mark.draw(e)
+        @mark.onMouseDown(e)
 
   plotPoints: (xMin = @smallestX, xMax = @largestX) ->
     @xMin = xMin
@@ -58,6 +59,8 @@ class CanvasGraph
 
   toDataXCoord: (canvasPoint) -> ((canvasPoint / @canvas.width) * (@xMax - @xMin)) + @xMin
 
+
+
 class Marks
   constructor: -> @all = []
 
@@ -82,6 +85,15 @@ class Marks
   closestXBelow: (xCoord) -> (@sortedXCoords().filter (i) -> i < xCoord).pop()
 
   closestXAbove: (xCoord) -> (@sortedXCoords().filter (i) -> i > xCoord).shift()
+
+  toCanvasXPoint: (e) -> e.pageX - e.target.getBoundingClientRect().left - window.scrollX
+
+  markTooCloseToAnotherMark: (e) ->
+    mouseLocation = @toCanvasXPoint(e)
+    markBelow = Math.abs mouseLocation - @closestXBelow(mouseLocation)
+    markAbove = Math.abs mouseLocation - @closestXAbove(mouseLocation)
+    # larger distance below because marks are created to left of cursor
+    if markBelow < 24 or markAbove < 12 then true else false
 
 class Mark
   HANDLE_WIDTH = 12

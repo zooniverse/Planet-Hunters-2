@@ -69,8 +69,8 @@ class Classifier extends BaseController
 
     @marksContainer.appendChild(@canvas)
     @canvasGraph = new CanvasGraph(@canvas, data)
-    @canvasGraph.enableMarking()
     @canvasGraph.plotPoints()
+    @canvasGraph.enableMarking()
 
   onChangeScaleSlider: ->
     @zoomRange = 15
