@@ -59,8 +59,6 @@ class CanvasGraph
 
   toDataXCoord: (canvasPoint) -> ((canvasPoint / @canvas.width) * (@xMax - @xMin)) + @xMin
 
-
-
 class Marks
   constructor: -> @all = []
 
@@ -69,7 +67,7 @@ class Marks
   add: (mark) -> @all.push(mark)
 
   remove: (mark) ->
-    console.log @all.splice(@all.indexOf(mark), 1)
+    @all.splice(@all.indexOf(mark), 1)
     document.getElementById('marks-container').removeChild(mark.element)
 
   destroyAll: ->
@@ -96,8 +94,6 @@ class Marks
     if markBelow < 24 or markAbove < 12 then true else false
 
 class Mark
-  HANDLE_WIDTH = 12
-
   constructor: (e, @canvasGraph) ->
     @canvas = @canvasGraph.canvas
 
@@ -135,13 +131,15 @@ class Mark
 
   maxWidth: -> 150 * (@canvasGraph.scale || 1)
 
+  handleWidth: -> 12 * (@canvasGraph.scale || 1)
+
   draw: (e) ->
     markLeftX = Math.max @startingPoint - @maxWidth(), Math.min @startingPoint, @toCanvasXPoint(e)
     markRightX = Math.max @startingPoint, @toCanvasXPoint(e)
 
     # no overlapping of marks
-    markLeftX = (Math.max markLeftX, (@closestXBelow + HANDLE_WIDTH || markLeftX))
-    markRightX = (Math.min markRightX, (@closestXAbove - HANDLE_WIDTH || markRightX))
+    markLeftX = (Math.max markLeftX, (@closestXBelow + @handleWidth() || markLeftX))
+    markRightX = (Math.min markRightX, (@closestXAbove - @handleWidth() || markRightX))
 
     # max and min width on creating / resizing marks
     width = (Math.min (Math.max (Math.abs markRightX - markLeftX), @minWidth()), @maxWidth())
@@ -155,8 +153,8 @@ class Mark
     markWidth = parseInt(@element.style.width, 10)
 
     # no overlapping of marks or moving out of canvas bounds
-    leftXPos = Math.max (@toCanvasXPoint(e) - @pointerOffset), (@closestXBelow || -HANDLE_WIDTH) + HANDLE_WIDTH
-    leftXPos = Math.min leftXPos, ((@closestXAbove || @canvas.width + HANDLE_WIDTH) - markWidth) - HANDLE_WIDTH
+    leftXPos = Math.max (@toCanvasXPoint(e) - @pointerOffset), (@closestXBelow || -@handleWidth()) + @handleWidth()
+    leftXPos = Math.min leftXPos, ((@closestXAbove || @canvas.width + @handleWidth()) - markWidth) - @handleWidth()
 
     markRightX = leftXPos + markWidth
 
