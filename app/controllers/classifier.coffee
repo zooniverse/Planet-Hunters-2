@@ -19,6 +19,7 @@ class Classifier extends BaseController
     'numbers-container' : 'numbersContainer'
     '#classify-summary' : 'classifySummary'
     '#comments'         : 'comments'
+    '#planet-num'       : 'planetNum'
     '#alt-comments'         : 'altComments'
     'button[name="no-transits"]' : 'noTransitsButton'
     'button[name="finished"]' : 'finishedButton'
@@ -155,6 +156,7 @@ class Classifier extends BaseController
   showSummary: ->
     @classifySummary.fadeIn(150)
     @nextSubjectButton.show()
+    @planetNum.html @canvasGraph.marks.all.length # number of marks
     @noTransitsButton.hide()
     @finishedButton.hide()
 
