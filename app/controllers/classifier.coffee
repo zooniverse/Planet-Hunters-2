@@ -46,6 +46,8 @@ class Classifier extends BaseController
 
   constructor: ->
     super
+    @zoomRange = 15
+
     isZoomed: false
     ifFaved: false
     @scaleSlider = new FauxRangeInput('#scale-slider')
@@ -54,7 +56,7 @@ class Classifier extends BaseController
     @loadSubject(sampleData[0])
 
     console.log @canvasGraph.largestX
-    @el.find("#scale-slider").attr "max", @canvasGraph.largestX
+    @el.find("#scale-slider").attr "max", @canvasGraph.largestX - @zoomRange
     @el.find("#scale-slider").attr "min", @canvasGraph.smallestX
 
     $(document).on 'mark-change', => @updateButtons()
@@ -74,14 +76,15 @@ class Classifier extends BaseController
     @canvasGraph.enableMarking()
 
   onChangeScaleSlider: ->
-    @zoomRange = 15
-    @focusCenter = +@el.find('#scale-slider').val() + @zoomRange/2
-    
-    xMin = @focusCenter-@zoomRange/2
-    xMax = @focusCenter+@zoomRange/2
+    val = +@el.find("#scale-slider").val()
+    # @focusCenter = +@el.find('#scale-slider').val() + @zoomRange/2
+
+    # xMin = @focusCenter-@zoomRange/2
+    # xMax = @focusCenter+@zoomRange/2
 
     return unless @isZoomed
-    @canvasGraph.plotPoints(xMin,xMax)
+
+    @canvasGraph.plotPoints(val, (val + @zoomRange))
 
     console.log "data center: ", @focusCenter
     # console.log 'data largestX : ', @canvasGraph.largestX
@@ -93,17 +96,32 @@ class Classifier extends BaseController
     @isZoomed = !@isZoomed
     zoomButton = @el.find("#toggle-zoom")[0]
     if @isZoomed
-      @canvasGraph.plotPoints(@focusCenter-@zoomRange/2,@focusCenter+@zoomRange/2)
+      @animateZoomTo(0, 15)
       zoomButton.innerHTML = '<img src="images/icons/toolbar-zoomminus.png">Zoom'
       @el.find("#toggle-zoom").addClass("toggled")
       @el.find("#scale-slider").addClass("active")
       @el.find(".faux-range-thumb").fadeIn(150)
     else
-      @canvasGraph.plotPoints()
+      @animateZoomTo(@canvasGraph.smallestX, @canvasGraph.largestX)
       zoomButton.innerHTML = '<img src="images/icons/toolbar-zoomplus.png">Zoom'
       @el.find("#toggle-zoom").removeClass("toggled")
       @el.find("#scale-slider").removeClass("active")
       @el.find(".faux-range-thumb").fadeOut(150)
+
+  animateZoomTo: (x1, x2) ->
+    @el.find('#scale-slider').val(x1)
+    currentMin = @canvasGraph.xMin
+    currentMax = @canvasGraph.xMax
+
+    minRange = [currentMin..x1]
+    maxRange = [currentMax..x2]
+
+    i = 0
+    zoom = setInterval (=>
+      clearInterval zoom if i is maxRange.length-1
+      @canvasGraph.plotPoints(minRange[i], maxRange[i])
+      i += 1
+    ), 20
 
   onToggleFav: ->
     favButton = @el.find("#toggle-fav")[0]
