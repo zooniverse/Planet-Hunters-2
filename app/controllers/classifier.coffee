@@ -84,7 +84,7 @@ class Classifier extends BaseController
 
     return unless @isZoomed
 
-    @canvasGraph.plotPoints(val, (val + @zoomRange))
+    @canvasGraph.plotPoints(val, (val + @zoomRange)) #TODO: wanted value=15.34 dynamically
 
     console.log "data center: ", @focusCenter
     # console.log 'data largestX : ', @canvasGraph.largestX
@@ -96,32 +96,44 @@ class Classifier extends BaseController
     @isZoomed = !@isZoomed
     zoomButton = @el.find("#toggle-zoom")[0]
     if @isZoomed
-      @animateZoomTo(0, 15)
+      @zoomInTo(0, 15)
       zoomButton.innerHTML = '<img src="images/icons/toolbar-zoomminus.png">Zoom'
       @el.find("#toggle-zoom").addClass("toggled")
       @el.find("#scale-slider").addClass("active")
       @el.find(".faux-range-thumb").fadeIn(150)
     else
-      @animateZoomTo(@canvasGraph.smallestX, @canvasGraph.largestX)
+      @zoomOutTo(@canvasGraph.smallestX, @canvasGraph.largestX)
       zoomButton.innerHTML = '<img src="images/icons/toolbar-zoomplus.png">Zoom'
       @el.find("#toggle-zoom").removeClass("toggled")
       @el.find("#scale-slider").removeClass("active")
       @el.find(".faux-range-thumb").fadeOut(150)
 
-  animateZoomTo: (x1, x2) ->
+  zoomInTo: (x1, x2) ->
     @el.find('#scale-slider').val(x1)
-    currentMin = @canvasGraph.xMin
-    currentMax = @canvasGraph.xMax
-
-    minRange = [currentMin..x1]
-    maxRange = [currentMax..x2]
-
-    i = 0
+    cMin = @canvasGraph.xMin
+    cMax = @canvasGraph.xMax
+    wMin = x1
+    wMax = x2
     zoom = setInterval (=>
-      clearInterval zoom if i is maxRange.length-1
-      @canvasGraph.plotPoints(minRange[i], maxRange[i])
-      i += 1
-    ), 20
+      @canvasGraph.plotPoints(cMin,cMax)
+      cMin += 0.2 unless cMin >= wMin
+      cMax -= 0.2 unless cMax <= wMax
+      clearInterval zoom if cMin >= wMin and cMax <= wMax
+    ), 5
+
+  zoomOutTo: (x1, x2) ->
+    @el.find('#scale-slider').val(x1)
+    cMin = @canvasGraph.xMin
+    cMax = @canvasGraph.xMax
+    wMin = x1
+    wMax = x2
+
+    zoom = setInterval (=>
+      @canvasGraph.plotPoints(cMin,cMax)
+      cMin -= 0.2 unless cMin <= wMin
+      cMax += 0.2 unless cMax >= wMax
+      clearInterval zoom if cMin <= wMin and cMax >= wMax
+    ), 5
 
   onToggleFav: ->
     favButton = @el.find("#toggle-fav")[0]
