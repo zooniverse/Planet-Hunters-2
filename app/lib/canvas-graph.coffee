@@ -160,8 +160,13 @@ class Mark
     markRightX = Math.max @startingPoint, @toCanvasXPoint(e)
 
     # no overlapping of marks
-    markLeftX = (Math.max markLeftX, (@closestXBelow + @handleWidth() || markLeftX))
-    markRightX = (Math.min markRightX, (@closestXAbove - @handleWidth() || markRightX))
+    markLeftX = Math.max markLeftX,
+                        (@closestXBelow + @handleWidth() || markLeftX),
+                        (@canvasGraph.toCanvasXCoord(@canvasGraph.smallestX))
+
+    markRightX = Math.min markRightX,
+                         (@closestXAbove - @handleWidth() || markRightX),
+                         (@canvasGraph.toCanvasXCoord(@canvasGraph.largestX))
 
     # max and min width on creating / resizing marks
     width = (Math.min (Math.max (Math.abs markRightX - markLeftX), @minWidth()), @maxWidth())
@@ -175,8 +180,10 @@ class Mark
     markWidth = parseInt(@element.style.width, 10)
 
     # no overlapping of marks or moving out of canvas bounds
-    leftXPos = Math.max (@toCanvasXPoint(e) - @pointerOffset), (@closestXBelow || -@handleWidth()) + @handleWidth()
-    leftXPos = Math.min leftXPos, ((@closestXAbove || @canvas.width + @handleWidth()) - markWidth) - @handleWidth()
+    leftXPos = Math.max (@toCanvasXPoint(e) - @pointerOffset),
+                        (@closestXBelow || -@handleWidth()) + @handleWidth()
+    leftXPos = Math.min leftXPos,
+                        ((@closestXAbove || @canvas.width + @handleWidth()) - markWidth) - @handleWidth()
 
     markRightX = leftXPos + markWidth
 
