@@ -3,9 +3,6 @@ $ = window.jQuery
 class CanvasGraph
   constructor: (@canvas, @data) ->
     @ctx = @canvas.getContext('2d')
-    # window.ctx = @ctx
-    # window.canvas = @canvas
-    # window.canvasGraph = @
 
     @smallestX = Math.min @data.x...
     @smallestY = Math.min @data.y...
@@ -21,7 +18,7 @@ class CanvasGraph
 
     @canvas.addEventListener 'mousedown', (e) =>
       e.preventDefault()
-      unless @marks.markTooCloseToAnotherMark(e)
+      unless @marks.markTooCloseToAnotherMark(e, @scale)
         @mark = new Mark(e, @)
         @marks.create(@mark)
         @mark.draw(e)
@@ -48,6 +45,31 @@ class CanvasGraph
         mark.save(scaledMin, scaledMax)
 
     @scale = (@largestX - @smallestX) / (@xMax - @xMin)
+
+  zoomInTo: (wMin, wMax) ->
+    [cMin, cMax] = [@xMin, @xMax]
+
+    zoom = setInterval (=>
+      @plotPoints(cMin,cMax)
+      cMin += 0.3 unless cMin >= wMin
+      cMax -= 0.3 unless cMax <= wMax
+      if cMin >= wMin and cMax <= wMax
+        clearInterval zoom
+        @plotPoints(wMin,wMax)
+    ), 5
+
+  zoomOut: ->
+    [cMin, cMax] = [@xMin, @xMax]
+    [wMin, wMax] = [@smallestX, @largestX]
+
+    zoom = setInterval (=>
+      @plotPoints(cMin,cMax)
+      cMin -= 0.3 unless cMin <= wMin
+      cMax += 0.3 unless cMax >= wMax
+      if cMin <= wMin and cMax >= wMax
+        clearInterval zoom
+        @plotPoints(wMin, wMax)
+    ), 5
 
   clearCanvas: -> @ctx.clearRect(0,0,@canvas.width, @canvas.height)
 
@@ -86,12 +108,12 @@ class Marks
 
   toCanvasXPoint: (e) -> e.pageX - e.target.getBoundingClientRect().left - window.scrollX
 
-  markTooCloseToAnotherMark: (e) ->
+  markTooCloseToAnotherMark: (e, scale) ->
     mouseLocation = @toCanvasXPoint(e)
     markBelow = Math.abs mouseLocation - @closestXBelow(mouseLocation)
     markAbove = Math.abs mouseLocation - @closestXAbove(mouseLocation)
     # larger distance below because marks are created to left of cursor
-    if markBelow < 24 or markAbove < 12 then true else false
+    if markBelow < (24*scale) or markAbove < (12*scale) then true else false
 
 class Mark
   constructor: (e, @canvasGraph) ->

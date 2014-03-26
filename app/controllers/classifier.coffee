@@ -15,7 +15,6 @@ class Classifier extends BaseController
     '#toggle-fav'       : 'favButton'
     '#help'             : 'helpButton'
     '#tutorial'         : 'tutorialButton'
-    '#scale-slider'     : 'scaleSlider'
     'numbers-container' : 'numbersContainer'
     '#classify-summary' : 'classifySummary'
     '#comments'         : 'comments'
@@ -46,6 +45,8 @@ class Classifier extends BaseController
 
   constructor: ->
     super
+    @zoomRange = 15.00
+
     isZoomed: false
     ifFaved: false
     @scaleSlider = new FauxRangeInput('#scale-slider')
@@ -54,11 +55,10 @@ class Classifier extends BaseController
     @loadSubject(sampleData[0])
 
     console.log @canvasGraph.largestX
-    @el.find("#scale-slider").attr "max", @canvasGraph.largestX
+    @el.find("#scale-slider").attr "max", @canvasGraph.largestX - @zoomRange
     @el.find("#scale-slider").attr "min", @canvasGraph.smallestX
 
     $(document).on 'mark-change', => @updateButtons()
-    setTimeout => @el.find(".faux-range-thumb").hide()
     @drawSliderAxisNums()
 
   loadSubject: (data) ->
@@ -73,17 +73,20 @@ class Classifier extends BaseController
     @canvasGraph.plotPoints()
     @canvasGraph.enableMarking()
 
+    window.canvasGraph = @canvasGraph
+
   onChangeScaleSlider: ->
-    @zoomRange = 15
-    @focusCenter = +@el.find('#scale-slider').val() + @zoomRange/2
-    
-    xMin = @focusCenter-@zoomRange/2
-    xMax = @focusCenter+@zoomRange/2
+    val = +@el.find("#scale-slider").val()
+    # @focusCenter = +@el.find('#scale-slider').val() + @zoomRange/2
+
+    # xMin = @focusCenter-@zoomRange/2
+    # xMax = @focusCenter+@zoomRange/2
 
     return unless @isZoomed
-    @canvasGraph.plotPoints(xMin,xMax)
 
-    console.log "data center: ", @focusCenter
+    @canvasGraph.plotPoints(val, (val + @zoomRange))
+
+    # console.log "data center: ", @focusCenters
     # console.log 'data largestX : ', @canvasGraph.largestX
     # console.log 'data smallestX: ', @canvasGraph.smallestX
     # console.log 'Data domain  : [', @canvasGraph.toDataXCoord(xMin), ',', @canvasGraph.toDataXCoord(xMax), ']'
@@ -93,16 +96,16 @@ class Classifier extends BaseController
     @isZoomed = !@isZoomed
     zoomButton = @el.find("#toggle-zoom")[0]
     if @isZoomed
-      @canvasGraph.plotPoints(@focusCenter-@zoomRange/2,@focusCenter+@zoomRange/2)
+      @canvasGraph.zoomInTo(0, @zoomRange)
       zoomButton.innerHTML = '<img src="images/icons/toolbar-zoomminus.png">Zoom'
       @el.find("#toggle-zoom").addClass("toggled")
-      @el.find("#scale-slider").addClass("active")
+      @el.find("#scale-slider").addClass("active").val(0)
       @el.find(".faux-range-thumb").fadeIn(150)
     else
-      @canvasGraph.plotPoints()
+      @canvasGraph.zoomOut()
       zoomButton.innerHTML = '<img src="images/icons/toolbar-zoomplus.png">Zoom'
       @el.find("#toggle-zoom").removeClass("toggled")
-      @el.find("#scale-slider").removeClass("active")
+      @el.find("#scale-slider").removeClass("active").val(@canvasGraph.smallestX)
       @el.find(".faux-range-thumb").fadeOut(150)
 
   onToggleFav: ->
