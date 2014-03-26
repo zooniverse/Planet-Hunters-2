@@ -27,6 +27,6 @@ class SubNav
 
       $(".sub-nav-#{pageName} button").on "click", (e) =>
         $(".sub-nav-#{pageName}-#{e.target.name}").show().siblings().hide()
-        $(".sub-nav-#{pageName} button[name=#{e.target.name}").addClass("active").siblings().removeClass("active")
+        $(".sub-nav-#{pageName} button[name=#{e.target.name}]").addClass("active").siblings().removeClass("active")
 
 module?.exports = SubNav
