@@ -15,7 +15,6 @@ class Classifier extends BaseController
     '#toggle-fav'       : 'favButton'
     '#help'             : 'helpButton'
     '#tutorial'         : 'tutorialButton'
-    '#scale-slider'     : 'scaleSlider'
     'numbers-container' : 'numbersContainer'
     '#classify-summary' : 'classifySummary'
     '#comments'         : 'comments'
