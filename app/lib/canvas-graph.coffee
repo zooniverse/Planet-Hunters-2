@@ -113,7 +113,7 @@ class Marks
     markBelow = Math.abs mouseLocation - @closestXBelow(mouseLocation)
     markAbove = Math.abs mouseLocation - @closestXAbove(mouseLocation)
     # larger distance below because marks are created to left of cursor
-    if markBelow < (24*scale) or markAbove < (12*scale) then true else false
+    markBelow < (24*scale) or markAbove < (12*scale) or mouseLocation in @sortedXCoords()
 
 class Mark
   constructor: (e, @canvasGraph) ->
