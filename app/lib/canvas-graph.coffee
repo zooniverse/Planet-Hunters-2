@@ -127,18 +127,19 @@ class Mark
         <img class="close-icon" src="./images/icons/marking-closex.png" style="position: relative; top: -2px;">
       </div>
       <div class="left-border" style="position: absolute; top: 0px; left: 0px;width: 2px; height: 100%; background-color: red;z-index: 100;">
-        <div class="left-handle" style="position: absolute; left: -5px; width: 12px; height: 12px; background-color: red; top: 50%; border-radius: 3px;"></div>
+        <div class="left-handle" style="position: absolute; left: -5px; width: 12px; height: 12px; background-color: red; top: 50%; border-radius: 3px; color: #b7061e; font-size: 8px; letter-spacing: 1px;">III</div>
       </div>
       <div class="right-border" style="position: absolute; top: 0px; right: 0px; width: 2px; height: 100%; background-color: red; z-index: 100;">
-        <div class="right-handle" style="position: absolute; right: -5px; width: 12px; height: 12px; background-color: red; top: 50%; border-radius: 3px;"></div>
+        <div class="right-handle" style="position: absolute; right: -5px; width: 12px; height: 12px; background-color: red; top: 50%; border-radius: 3px; color: #b7061e; font-size: 8px; letter-spacing: 1px;">III</div>
       </div>
     """
 
     @element.style.left = @toCanvasXPoint(e) + "px"
     @element.style.position = 'absolute'
     @element.style.top = e.target.offsetTop + "px"
-    @element.style.height = @canvas.height + 'px'
+    @element.style.height = (@canvas.height - 2) + 'px'
     @element.style.backgroundColor = 'rgba(255,0,0,.5)'
+    @element.style.borderBottom = '2px solid red'
     @element.style.pointerEvents = 'auto'
     @element.style.textAlign = 'center'
 
@@ -203,7 +204,9 @@ class Mark
     switch e.target.className
       when "mark" then @element.style.cursor = "move"
       when "left-border" then @element.style.cursor = "ew-resize"
+      when "left-handle" then @element.style.cursor = "ew-resize"
       when "right-border" then @element.style.cursor = "ew-resize"
+      when "right-handle" then @element.style.cursor = "ew-resize"
       when "top-bar" then @element.style.cursor = "pointer"
 
   onMouseMove: (e) =>
