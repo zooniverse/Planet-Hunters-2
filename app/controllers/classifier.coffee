@@ -1,5 +1,7 @@
 BaseController = require 'zooniverse/controllers/base-controller'
 FauxRangeInput = require 'faux-range-input'
+User           = require 'zooniverse/models/user'
+
 
 $ = window.jQuery
 require '../lib/sample-data'
@@ -48,6 +50,7 @@ class Classifier extends BaseController
 
   constructor: ->
     super
+    window.classifier = @
     @zoomRange = 15.00
 
     isZoomed: false
@@ -57,7 +60,6 @@ class Classifier extends BaseController
 
     @loadSubject(sampleData[0])
 
-    console.log @canvasGraph.largestX
     @el.find("#scale-slider").attr "max", @canvasGraph.largestX - @zoomRange
     @el.find("#scale-slider").attr "min", @canvasGraph.smallestX
 
@@ -121,17 +123,38 @@ class Classifier extends BaseController
       @isFaved = true
       favButton.innerHTML = '<img src="images/icons/toolbar-fav-filled.png">+Fav'
       @el.find("#toggle-fav").addClass("toggled")
-    
+  
 
+  # BEGIN LESSON METHODS (eventually move to separate file?)
   onClickLessonYes: ->
     console.log "lesson: yes"
+    console.log User.current.setPreference 'lesson', 'yes', true, @displayLesson()
+    console.log 'preference: ', @userLessonPref
+    console.log 'num. class: ', @userClassCount
 
   onClickLessonNo: ->
     console.log "lesson: no"
+    console.log User.current.setPreference 'lesson', 'no', true
+    console.log 'preference: ', @userLessonPref
+    console.log 'num. class: ', @userClassCount
 
   onClickLessonNever: ->
     console.log "lesson: never"
-    
+    console.log User.current.setPreference 'lesson', 'never', true
+    console.log 'preference: ', @userLessonPref
+    console.log 'num. class: ', @userClassCount
+
+  displayLesson: ->
+    console.log 'displayLesson()'
+
+  getUserLessonPref: ->
+    @userLessonPref = User.current?.preferences['lesson']
+  
+  getUserClassCount: ->
+    @userClassCount = User.current?.classification_count
+
+  # END LESSON METHODS
+
   onClickHelp: ->
     console.log 'onClickHelp()'
     console.log @el.find("#scale-slider")
