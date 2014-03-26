@@ -60,7 +60,6 @@ class Classifier extends BaseController
     @el.find("#scale-slider").attr "min", @canvasGraph.smallestX
 
     $(document).on 'mark-change', => @updateButtons()
-    setTimeout => @el.find(".faux-range-thumb").hide()
     @drawSliderAxisNums()
 
   loadSubject: (data) ->
