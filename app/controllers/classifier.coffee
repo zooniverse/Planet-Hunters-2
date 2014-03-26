@@ -98,48 +98,17 @@ class Classifier extends BaseController
     @isZoomed = !@isZoomed
     zoomButton = @el.find("#toggle-zoom")[0]
     if @isZoomed
-      @zoomInTo(0, @zoomRange)
+      @canvasGraph.zoomInTo(0, @zoomRange)
       zoomButton.innerHTML = '<img src="images/icons/toolbar-zoomminus.png">Zoom'
       @el.find("#toggle-zoom").addClass("toggled")
-      @el.find("#scale-slider").addClass("active")
+      @el.find("#scale-slider").addClass("active").val(0)
       @el.find(".faux-range-thumb").fadeIn(150)
     else
-      @zoomOutTo(@canvasGraph.smallestX, @canvasGraph.largestX)
+      @canvasGraph.zoomOutTo(@canvasGraph.smallestX, @canvasGraph.largestX)
       zoomButton.innerHTML = '<img src="images/icons/toolbar-zoomplus.png">Zoom'
       @el.find("#toggle-zoom").removeClass("toggled")
-      @el.find("#scale-slider").removeClass("active")
+      @el.find("#scale-slider").removeClass("active").val(@canvasGraph.smallestX)
       @el.find(".faux-range-thumb").fadeOut(150)
-
-  zoomInTo: (x1, x2) ->
-    @el.find('#scale-slider').val(x1)
-    cMin = @canvasGraph.xMin
-    cMax = @canvasGraph.xMax
-    wMin = x1
-    wMax = x2
-    zoom = setInterval (=>
-      @canvasGraph.plotPoints(cMin,cMax)
-      cMin += 0.2 unless cMin >= wMin
-      cMax -= 0.2 unless cMax <= wMax
-      if cMin >= wMin and cMax <= wMax
-        clearInterval zoom
-        @canvasGraph.plotPoints(wMin,wMax)
-    ), 5
-
-  zoomOutTo: (x1, x2) ->
-    @el.find('#scale-slider').val(x1)
-    cMin = @canvasGraph.xMin
-    cMax = @canvasGraph.xMax
-    wMin = x1
-    wMax = x2
-
-    zoom = setInterval (=>
-      @canvasGraph.plotPoints(cMin,cMax)
-      cMin -= 0.2 unless cMin <= wMin
-      cMax += 0.2 unless cMax >= wMax
-      if cMin <= wMin and cMax >= wMax
-        clearInterval zoom
-        @canvasGraph.plotPoints(wMin, wMax)
-    ), 5
 
   onToggleFav: ->
     favButton = @el.find("#toggle-fav")[0]

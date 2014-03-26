@@ -49,6 +49,30 @@ class CanvasGraph
 
     @scale = (@largestX - @smallestX) / (@xMax - @xMin)
 
+  zoomInTo: (wMin, wMax) ->
+    [cMin, cMax] = [@xMin, @xMax]
+
+    zoom = setInterval (=>
+      @plotPoints(cMin,cMax)
+      cMin += 0.2 unless cMin >= wMin
+      cMax -= 0.2 unless cMax <= wMax
+      if cMin >= wMin and cMax <= wMax
+        clearInterval zoom
+        @canvasGraph.plotPoints(wMin,wMax)
+    ), 5
+
+  zoomOutTo: (wMin, wMax) ->
+    [cMin, cMax] = [@xMin, @xMax]
+
+    zoom = setInterval (=>
+      @plotPoints(cMin,cMax)
+      cMin -= 0.2 unless cMin <= wMin
+      cMax += 0.2 unless cMax >= wMax
+      if cMin <= wMin and cMax >= wMax
+        clearInterval zoom
+        @plotPoints(wMin, wMax)
+    ), 5
+
   clearCanvas: -> @ctx.clearRect(0,0,@canvas.width, @canvas.height)
 
   mirrorVertically: ->
