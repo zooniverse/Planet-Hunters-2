@@ -125,7 +125,7 @@ class Mark
     bgColor = "#fc4541"
     @element.innerHTML = """
       <div class="top-bar" style="position: relative; width:100%; height: 13px; top 0px; background-color: #{bgColor};">
-        <img class="close-icon" src="./images/icons/marking-closex.png" style="position: relative; top: -2px;">
+        <img class="close-icon" src="./images/icons/marking-closex.png" style="position: relative; bottom: 4px;">
       </div>
       <div class="left-border" style="position: absolute; top: 0px; left: 0px;width: 2px; height: 100%; background-color: #{bgColor};z-index: 100;">
         <div class="left-handle" style="position: absolute; left: -5px; width: 12px; height: 12px; background-color: #{bgColor}; top: 50%; border-radius: 3px; color: #b7061e; font-size: 8px; letter-spacing: 1px;">III</div>
