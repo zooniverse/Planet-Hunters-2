@@ -18,7 +18,7 @@ class CanvasGraph
 
     @canvas.addEventListener 'mousedown', (e) =>
       e.preventDefault()
-      unless @marks.markTooCloseToAnotherMark(e)
+      unless @marks.markTooCloseToAnotherMark(e, @scale)
         @mark = new Mark(e, @)
         @marks.create(@mark)
         @mark.draw(e)
@@ -108,12 +108,12 @@ class Marks
 
   toCanvasXPoint: (e) -> e.pageX - e.target.getBoundingClientRect().left - window.scrollX
 
-  markTooCloseToAnotherMark: (e) ->
+  markTooCloseToAnotherMark: (e, scale) ->
     mouseLocation = @toCanvasXPoint(e)
     markBelow = Math.abs mouseLocation - @closestXBelow(mouseLocation)
     markAbove = Math.abs mouseLocation - @closestXAbove(mouseLocation)
     # larger distance below because marks are created to left of cursor
-    if markBelow < 24 or markAbove < 12 then true else false
+    if markBelow < (24*scale) or markAbove < (12*scale) then true else false
 
 class Mark
   constructor: (e, @canvasGraph) ->
