@@ -122,15 +122,16 @@ class Mark
     @element = document.createElement('div')
     @element.className = "mark"
 
+    bgColor = "#fc4541"
     @element.innerHTML = """
-      <div class="top-bar" style="position: relative; width:100%; height: 13px; top 0px; background-color: red;">
+      <div class="top-bar" style="position: relative; width:100%; height: 13px; top 0px; background-color: #{bgColor};">
         <img class="close-icon" src="./images/icons/marking-closex.png" style="position: relative; top: -2px;">
       </div>
-      <div class="left-border" style="position: absolute; top: 0px; left: 0px;width: 2px; height: 100%; background-color: red;z-index: 100;">
-        <div class="left-handle" style="position: absolute; left: -5px; width: 12px; height: 12px; background-color: red; top: 50%; border-radius: 3px; color: #b7061e; font-size: 8px; letter-spacing: 1px;">III</div>
+      <div class="left-border" style="position: absolute; top: 0px; left: 0px;width: 2px; height: 100%; background-color: #{bgColor};z-index: 100;">
+        <div class="left-handle" style="position: absolute; left: -5px; width: 12px; height: 12px; background-color: #{bgColor}; top: 50%; border-radius: 3px; color: #b7061e; font-size: 8px; letter-spacing: 1px;">III</div>
       </div>
-      <div class="right-border" style="position: absolute; top: 0px; right: 0px; width: 2px; height: 100%; background-color: red; z-index: 100;">
-        <div class="right-handle" style="position: absolute; right: -5px; width: 12px; height: 12px; background-color: red; top: 50%; border-radius: 3px; color: #b7061e; font-size: 8px; letter-spacing: 1px;">III</div>
+      <div class="right-border" style="position: absolute; top: 0px; right: 0px; width: 2px; height: 100%; background-color: #{bgColor}; z-index: 100;">
+        <div class="right-handle" style="position: absolute; right: -5px; width: 12px; height: 12px; background-color: #{bgColor}; top: 50%; border-radius: 3px; color: #b7061e; font-size: 8px; letter-spacing: 1px;">III</div>
       </div>
     """
 
@@ -138,8 +139,8 @@ class Mark
     @element.style.position = 'absolute'
     @element.style.top = e.target.offsetTop + "px"
     @element.style.height = (@canvas.height - 2) + 'px'
-    @element.style.backgroundColor = 'rgba(255,0,0,.5)'
-    @element.style.borderBottom = '2px solid red'
+    @element.style.backgroundColor = 'rgba(252,69,65,.6)'
+    @element.style.borderBottom = "2px solid #{bgColor}"
     @element.style.pointerEvents = 'auto'
     @element.style.textAlign = 'center'
 
