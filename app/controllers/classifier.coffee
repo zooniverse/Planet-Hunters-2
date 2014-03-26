@@ -47,11 +47,14 @@ class Classifier extends BaseController
     'click button[name="lesson-yes"]'      : 'onClickLessonYes'
     'click button[name="lesson-no"]'       : 'onClickLessonNo'
     'click button[name="lesson-never"]'    : 'onClickLessonNever'
+    'click button[name="lesson-close"]'    : 'onClickLessonClose'
 
   constructor: ->
     super
     window.classifier = @
     @zoomRange = 15.00
+
+    @el.find('#lesson-container').hide() # hide lessonn
 
     isZoomed: false
     ifFaved: false
@@ -83,7 +86,6 @@ class Classifier extends BaseController
   onChangeScaleSlider: ->
     val = +@el.find("#scale-slider").val()
     # @focusCenter = +@el.find('#scale-slider').val() + @zoomRange/2
-
     # xMin = @focusCenter-@zoomRange/2
     # xMax = @focusCenter+@zoomRange/2
 
@@ -125,7 +127,7 @@ class Classifier extends BaseController
       @el.find("#toggle-fav").addClass("toggled")
   
 
-  # BEGIN LESSON METHODS (eventually move to separate file?)
+  # BEGIN LESSON METHODS >>> (eventually move to separate file?)
   onClickLessonYes: ->
     console.log "lesson: yes"
     console.log User.current.setPreference 'lesson', 'yes', true, @displayLesson()
@@ -145,15 +147,20 @@ class Classifier extends BaseController
     console.log 'num. class: ', @userClassCount
 
   displayLesson: ->
-    console.log 'displayLesson()'
+    @el.find('#lesson-container').show()
+
+  onClickLessonClose: ->
+    console.log 'lessonClose()'
+    @el.find('#lesson-container').hide()
 
   getUserLessonPref: ->
     @userLessonPref = User.current?.preferences['lesson']
+    return @userLessonPref
   
   getUserClassCount: ->
     @userClassCount = User.current?.classification_count
-
-  # END LESSON METHODS
+    return @userClassCount
+  # <<< END LESSON METHODS
 
   onClickHelp: ->
     console.log 'onClickHelp()'
@@ -199,8 +206,8 @@ class Classifier extends BaseController
     @noTransitsButton.hide()
     @finishedButton.hide()
 
-  onClickLessonClose: ->
-    console.log 'onClickLessonClose()'
+  # onClickLessonClose: ->
+  #   console.log 'onClickLessonClose()'
 
   onClickJoinConvo: -> @joinConvoBtn.hide().siblings().show()
 

@@ -13,6 +13,16 @@
       </div>
     </div>
 
+    <div id="lesson-container">
+      <h3 class="lesson-header">What is Planet Hunters?</h3>
+      <p class="lesson-text">
+        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.    
+      </p>  
+
+      <button id="lesson-close" name="lesson-close" class="std-btn white">Close</button>
+
+    </div>
+
     <div id="graph-container">
       <div id="marks-container">
         <!-- <canvas id="graph" width="1078" height="420"></canvas> -->
