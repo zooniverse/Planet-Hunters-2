@@ -104,7 +104,7 @@ class Classifier extends BaseController
       @el.find("#scale-slider").addClass("active").val(0)
       @el.find(".faux-range-thumb").fadeIn(150)
     else
-      @canvasGraph.zoomOutTo(@canvasGraph.smallestX, @canvasGraph.largestX)
+      @canvasGraph.zoomOut()
       zoomButton.innerHTML = '<img src="images/icons/toolbar-zoomplus.png">Zoom'
       @el.find("#toggle-zoom").removeClass("toggled")
       @el.find("#scale-slider").removeClass("active").val(@canvasGraph.smallestX)

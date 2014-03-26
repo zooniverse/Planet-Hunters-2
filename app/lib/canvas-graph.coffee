@@ -3,9 +3,6 @@ $ = window.jQuery
 class CanvasGraph
   constructor: (@canvas, @data) ->
     @ctx = @canvas.getContext('2d')
-    # window.ctx = @ctx
-    # window.canvas = @canvas
-    # window.canvasGraph = @
 
     @smallestX = Math.min @data.x...
     @smallestY = Math.min @data.y...
@@ -58,11 +55,12 @@ class CanvasGraph
       cMax -= 0.2 unless cMax <= wMax
       if cMin >= wMin and cMax <= wMax
         clearInterval zoom
-        @canvasGraph.plotPoints(wMin,wMax)
+        @plotPoints(wMin,wMax)
     ), 5
 
-  zoomOutTo: (wMin, wMax) ->
+  zoomOut: ->
     [cMin, cMax] = [@xMin, @xMax]
+    [wMin, wMax] = [@smallestX, @largestX]
 
     zoom = setInterval (=>
       @plotPoints(cMin,cMax)
