@@ -46,7 +46,7 @@ class Classifier extends BaseController
 
   constructor: ->
     super
-    @zoomRange = 15
+    @zoomRange = 15.00
 
     isZoomed: false
     ifFaved: false
@@ -84,7 +84,7 @@ class Classifier extends BaseController
 
     return unless @isZoomed
 
-    @canvasGraph.plotPoints(val, (val + @zoomRange)) #TODO: wanted value=15.34 dynamically
+    @canvasGraph.plotPoints(val, (val + @zoomRange))
 
     console.log "data center: ", @focusCenter
     # console.log 'data largestX : ', @canvasGraph.largestX
@@ -96,7 +96,7 @@ class Classifier extends BaseController
     @isZoomed = !@isZoomed
     zoomButton = @el.find("#toggle-zoom")[0]
     if @isZoomed
-      @zoomInTo(0, 15)
+      @zoomInTo(0, @zoomRange)
       zoomButton.innerHTML = '<img src="images/icons/toolbar-zoomminus.png">Zoom'
       @el.find("#toggle-zoom").addClass("toggled")
       @el.find("#scale-slider").addClass("active")
