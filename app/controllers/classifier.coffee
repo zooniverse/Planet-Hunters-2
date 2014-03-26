@@ -11,37 +11,40 @@ class Classifier extends BaseController
   template: require '../views/classifier'
 
   elements:
-    '#toggle-zoom'      : 'zoomButton'
-    '#toggle-fav'       : 'favButton'
-    '#help'             : 'helpButton'
-    '#tutorial'         : 'tutorialButton'
-    'numbers-container' : 'numbersContainer'
-    '#classify-summary' : 'classifySummary'
-    '#comments'         : 'comments'
-    '#planet-num'       : 'planetNum'
-    '#alt-comments'         : 'altComments'
-    'button[name="no-transits"]' : 'noTransitsButton'
-    'button[name="finished"]' : 'finishedButton'
-    'button[name="next-subject"]' :'nextSubjectButton'
-    'button[name="join-convo"]' : 'joinConvoBtn'
-    'button[name="alt-join-convo"]' : 'altJoinConvoBtn'
-    'textarea[name="talk-comment"]' : 'talkComment'
+    '#toggle-zoom'                      : 'zoomButton'
+    '#toggle-fav'                       : 'favButton'
+    '#help'                             : 'helpButton'
+    '#tutorial'                         : 'tutorialButton'
+    'numbers-container'                 : 'numbersContainer'
+    '#classify-summary'                 : 'classifySummary'
+    '#comments'                         : 'comments'
+    '#planet-num'                       : 'planetNum'
+    '#alt-comments'                     : 'altComments'
+    'button[name="no-transits"]'        : 'noTransitsButton'
+    'button[name="finished"]'           : 'finishedButton'
+    'button[name="next-subject"]'       :'nextSubjectButton'
+    'button[name="join-convo"]'         : 'joinConvoBtn'
+    'button[name="alt-join-convo"]'     : 'altJoinConvoBtn'
+    'textarea[name="talk-comment"]'     : 'talkComment'
     'textarea[name="alt-talk-comment"]' : 'altTalkComment'
 
   events:
-    'click button[id="toggle-zoom"]' : 'onToggleZoom'
-    'click button[id="toggle-fav"]'  : 'onToggleFav'
-    'click button[id="help"]'        : 'onClickHelp'
-    'click button[id="tutorial"]'    : 'onClickTutorial'
-    'click button[name="no-transits"]' : 'onClickNoTransits'
-    'click button[name="next-subject"]' : 'onClickNextSubject'
-    'click button[name="finished"]' : 'onClickFinished'
-    'click img[id="lesson-close"]'   : 'onClickLessonClose'
-    'change input[id="scale-slider"]': 'onChangeScaleSlider'
-    'click button[name="join-convo"]': 'onClickJoinConvo'
-    'click button[name="alt-join-convo"]' : 'onClickAltJoinConvo'
-    'click button[name="submit-talk"]' : 'onClickSubmitTalk'
-    'click button[name="alt-submit-talk"]' :'onClickSubmitTalkAlt'
+    'click button[id="toggle-zoom"]'       : 'onToggleZoom'
+    'click button[id="toggle-fav"]'        : 'onToggleFav'
+    'click button[id="help"]'              : 'onClickHelp'
+    'click button[id="tutorial"]'          : 'onClickTutorial'
+    'click button[name="no-transits"]'     : 'onClickNoTransits'
+    'click button[name="next-subject"]'    : 'onClickNextSubject'
+    'click button[name="finished"]'        : 'onClickFinished'
+    'click img[id="lesson-close"]'         : 'onClickLessonClose'
+    'change input[id="scale-slider"]'      : 'onChangeScaleSlider'
+    'click button[name="join-convo"]'      : 'onClickJoinConvo'
+    'click button[name="alt-join-convo"]'  : 'onClickAltJoinConvo'
+    'click button[name="submit-talk"]'     : 'onClickSubmitTalk'
+    'click button[name="alt-submit-talk"]' : 'onClickSubmitTalkAlt'
+    'click button[name="lesson-yes"]'      : 'onClickLessonYes'
+    'click button[name="lesson-no"]'       : 'onClickLessonNo'
+    'click button[name="lesson-never"]'    : 'onClickLessonNever'
 
   constructor: ->
     super
@@ -118,6 +121,16 @@ class Classifier extends BaseController
       @isFaved = true
       favButton.innerHTML = '<img src="images/icons/toolbar-fav-filled.png">+Fav'
       @el.find("#toggle-fav").addClass("toggled")
+    
+
+  onClickLessonYes: ->
+    console.log "lesson: yes"
+
+  onClickLessonNo: ->
+    console.log "lesson: no"
+
+  onClickLessonNever: ->
+    console.log "lesson: never"
     
   onClickHelp: ->
     console.log 'onClickHelp()'
