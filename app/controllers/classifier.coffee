@@ -75,6 +75,8 @@ class Classifier extends BaseController
     @canvasGraph.plotPoints()
     @canvasGraph.enableMarking()
 
+    window.canvasGraph = @canvasGraph
+
   onChangeScaleSlider: ->
     val = +@el.find("#scale-slider").val()
     # @focusCenter = +@el.find('#scale-slider').val() + @zoomRange/2
@@ -86,7 +88,7 @@ class Classifier extends BaseController
 
     @canvasGraph.plotPoints(val, (val + @zoomRange))
 
-    console.log "data center: ", @focusCenter
+    # console.log "data center: ", @focusCenters
     # console.log 'data largestX : ', @canvasGraph.largestX
     # console.log 'data smallestX: ', @canvasGraph.smallestX
     # console.log 'Data domain  : [', @canvasGraph.toDataXCoord(xMin), ',', @canvasGraph.toDataXCoord(xMax), ']'
@@ -118,7 +120,9 @@ class Classifier extends BaseController
       @canvasGraph.plotPoints(cMin,cMax)
       cMin += 0.2 unless cMin >= wMin
       cMax -= 0.2 unless cMax <= wMax
-      clearInterval zoom if cMin >= wMin and cMax <= wMax
+      if cMin >= wMin and cMax <= wMax
+        clearInterval zoom
+        @canvasGraph.plotPoints(wMin,wMax)
     ), 5
 
   zoomOutTo: (x1, x2) ->
@@ -132,7 +136,9 @@ class Classifier extends BaseController
       @canvasGraph.plotPoints(cMin,cMax)
       cMin -= 0.2 unless cMin <= wMin
       cMax += 0.2 unless cMax >= wMax
-      clearInterval zoom if cMin <= wMin and cMax >= wMax
+      if cMin <= wMin and cMax >= wMax
+        clearInterval zoom
+        @canvasGraph.plotPoints(wMin, wMax)
     ), 5
 
   onToggleFav: ->
