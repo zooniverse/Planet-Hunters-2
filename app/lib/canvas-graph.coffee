@@ -51,12 +51,12 @@ class CanvasGraph
 
     zoom = setInterval (=>
       @plotPoints(cMin,cMax)
-      cMin += 0.3 unless cMin >= wMin
-      cMax -= 0.3 unless cMax <= wMax
+      cMin += 1.5 unless cMin >= wMin
+      cMax -= 1.5 unless cMax <= wMax
       if cMin >= wMin and cMax <= wMax
         clearInterval zoom
         @plotPoints(wMin,wMax)
-    ), 5
+    ), 30
 
   zoomOut: ->
     [cMin, cMax] = [@xMin, @xMax]
@@ -64,12 +64,12 @@ class CanvasGraph
 
     zoom = setInterval (=>
       @plotPoints(cMin,cMax)
-      cMin -= 0.3 unless cMin <= wMin
-      cMax += 0.3 unless cMax >= wMax
+      cMin -= 1.5 unless cMin <= wMin
+      cMax += 1.5 unless cMax >= wMax
       if cMin <= wMin and cMax >= wMax
         clearInterval zoom
         @plotPoints(wMin, wMax)
-    ), 5
+    ), 30
 
   clearCanvas: -> @ctx.clearRect(0,0,@canvas.width, @canvas.height)
 
