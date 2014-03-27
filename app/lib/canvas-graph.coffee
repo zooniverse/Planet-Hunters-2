@@ -154,6 +154,7 @@ class Mark
     @dragging = true
 
     @element.addEventListener 'mousedown', @onMouseDown
+    @element.addEventListener 'touchstart', @onMouseDown
 
   minWidth: -> 15 * (@canvasGraph.scale || 1)
 
