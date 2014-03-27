@@ -158,7 +158,9 @@ class Mark
   handleWidth: -> 12 * (@canvasGraph.scale || 1)
 
   draw: (e) ->
-    markLeftX = Math.max @startingPoint - @maxWidth(), Math.min @startingPoint, @toCanvasXPoint(e)
+    markLeftX = Math.max @startingPoint + @minWidth() - @maxWidth(),
+                         Math.min @startingPoint, @toCanvasXPoint(e)
+
     markRightX = Math.max @startingPoint + @minWidth(), @toCanvasXPoint(e)
 
     # no overlapping of marks
@@ -218,7 +220,7 @@ class Mark
       @startingPoint = @canvasXMin
       @dragging = true
     else if e.target.className is "left-border" or e.target.className is "left-handle"
-      @startingPoint = @canvasXMax
+      @startingPoint = @canvasXMax - @minWidth()
       @dragging = true
     else if e.target.className is "mark"
       @moving = true
