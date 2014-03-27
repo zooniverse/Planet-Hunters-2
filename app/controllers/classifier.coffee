@@ -3,7 +3,6 @@ FauxRangeInput = require 'faux-range-input'
 User           = require 'zooniverse/models/user'
 MiniCourse     = require '../lib/mini-course'
 
-
 $ = window.jQuery
 require '../lib/sample-data'
 require '../lib/mini-course'
@@ -40,12 +39,14 @@ class Classifier extends BaseController
     'click button[name="no-transits"]'     : 'onClickNoTransits'
     'click button[name="next-subject"]'    : 'onClickNextSubject'
     'click button[name="finished"]'        : 'onClickFinished'
-    'click img[id="course-prompt-close"]'  : 'onClickCoursePromptClose'
     'change input[id="scale-slider"]'      : 'onChangeScaleSlider'
     'click button[name="join-convo"]'      : 'onClickJoinConvo'
     'click button[name="alt-join-convo"]'  : 'onClickAltJoinConvo'
     'click button[name="submit-talk"]'     : 'onClickSubmitTalk'
     'click button[name="alt-submit-talk"]' : 'onClickSubmitTalkAlt'
+
+    # course-related events
+    'click img[id="course-prompt-close"]'  : 'onClickCoursePromptClose'
     'click button[name="course-yes"]'      : 'onClickCourseYes'
     'click button[name="course-no"]'       : 'onClickCourseNo'
     'click button[name="course-never"]'    : 'onClickCourseNever'
@@ -66,8 +67,6 @@ class Classifier extends BaseController
     @scaleSlider = new FauxRangeInput('#scale-slider')
     @marksContainer = @el.find('#marks-container')[0]
 
-    @courseRate = 3 
-
     @loadSubject(sampleData[0])
 
     @el.find("#scale-slider").attr "max", @canvasGraph.largestX - @zoomRange
@@ -76,7 +75,9 @@ class Classifier extends BaseController
     $(document).on 'mark-change', => @updateButtons()
     @drawSliderAxisNums()
 
-    @course = new MiniCourse
+    # mini course
+    @course = new MiniCourse(@el)
+    @course.setRate 3 
 
   loadSubject: (data) ->
     # create a new canvas
@@ -137,46 +138,46 @@ class Classifier extends BaseController
   
 
   # BEGIN LESSON METHODS >>> (eventually move to separate file?)
-  onClickCourseYes: ->
-    console.log "course: yes"
-    User.current.setPreference 'course', 'yes', true, @displayCourse()
-    @onClickCoursePromptClose()
+  # onClickCourseYes: ->
+  #   console.log "course: yes"
+  #   User.current.setPreference 'course', 'yes', true, @displayCourse()
+  #   @onClickCoursePromptClose()
 
-  onClickCourseNo: ->
-    console.log "course: no"
-    User.current.setPreference 'course', 'no', true
-    @onClickCoursePromptClose()
+  # onClickCourseNo: ->
+  #   console.log "course: no"
+  #   User.current.setPreference 'course', 'no', true
+  #   @onClickCoursePromptClose()
 
-  onClickCourseNever: ->
-    console.log "course: never"
-    User.current.setPreference 'course', 'never', true
-    @onClickCoursePromptClose()
+  # onClickCourseNever: ->
+  #   console.log "course: never"
+  #   User.current.setPreference 'course', 'never', true
+  #   @onClickCoursePromptClose()
 
-  displayCourse: ->
-    @el.find('#course-container').fadeIn('fast')
+  # displayCourse: ->
+  #   @el.find('#course-container').fadeIn('fast')
 
-  onClickCourseClose: ->
-    console.log 'courseClose()'
-    @el.find('#course-container').fadeOut('fast')
+  # onClickCourseClose: ->
+  #   console.log 'courseClose()'
+  #   @el.find('#course-container').fadeOut('fast')
 
-  onClickCoursePromptClose: ->
-    @hideCoursePrompt()
+  # onClickCoursePromptClose: ->
+  #   @hideCoursePrompt()
     
-  hideCoursePrompt: ->
-    @el.find('#course-prompt').slideUp()
+  # hideCoursePrompt: ->
+  #   @el.find('#course-prompt').slideUp()
 
-  showCoursePrompt: ->
-    console.log 'course prompt!'
-    @el.find('#course-prompt').slideDown()
+  # showCoursePrompt: ->
+  #   console.log 'course prompt!'
+  #   @el.find('#course-prompt').slideDown()
 
-  getUserCoursePref: ->
-    @userCoursePref = User.current?.preferences['course']
-    return @userCoursePref
+  # getUserCoursePref: ->
+  #   @userCoursePref = User.current?.preferences['course']
+  #   return @userCoursePref
   
-  getUserClassCount: ->
-    # @userClassCount = User.current?.classification_count 
-    # not live, so use faux counter
-    return @userClassCount
+  # getUserClassCount: ->
+  #   # @userClassCount = User.current?.classification_count 
+  #   # not live, so use faux counter
+  #   return @userClassCount
 
   # <<< END LESSON METHODS
 
@@ -216,7 +217,7 @@ class Classifier extends BaseController
     @resetTalkComment @altTalkComment
 
     # show courses
-    @showCoursePrompt() if @getUserCoursePref() isnt 'never' and @userClassCount % @courseRate is 0
+    @showCoursePrompt() if @getUserCoursePref() isnt 'never' and @userClassCount % @course.rate is 0
 
     console.log "LOAD NEW SUBJECT HERE"
     #fake it for now...
