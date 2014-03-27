@@ -134,18 +134,21 @@ class Classifier extends BaseController
     console.log User.current.setPreference 'lesson', 'yes', true, @displayLesson()
     console.log 'preference: ', @userLessonPref
     console.log 'num. class: ', @userClassCount
+    @onClickLessonPromptClose()
 
   onClickLessonNo: ->
     console.log "lesson: no"
     console.log User.current.setPreference 'lesson', 'no', true
     console.log 'preference: ', @userLessonPref
     console.log 'num. class: ', @userClassCount
+    @onClickLessonPromptClose()
 
   onClickLessonNever: ->
     console.log "lesson: never"
     console.log User.current.setPreference 'lesson', 'never', true
     console.log 'preference: ', @userLessonPref
     console.log 'num. class: ', @userClassCount
+    @onClickLessonPromptClose()
 
   displayLesson: ->
     @el.find('#lesson-container').show()
