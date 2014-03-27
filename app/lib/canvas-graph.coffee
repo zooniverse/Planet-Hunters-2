@@ -16,13 +16,9 @@ class CanvasGraph
     @marks = new Marks
     window.marks = @marks
 
-    @canvas.addEventListener 'mousedown', (e) =>
-      e.preventDefault()
-      unless @marks.markTooCloseToAnotherMark(e, @scale)
-        @mark = new Mark(e, @)
-        @marks.create(@mark)
-        @mark.draw(e)
-        @mark.onMouseDown(e)
+    @canvas.addEventListener 'mousedown', (e) => @addMarkToGraph(e)
+    @canvas.addEventListener 'touchstart', (e) => @addMarkToGraph(e)
+
 
   plotPoints: (xMin = @smallestX, xMax = @largestX) ->
     @xMin = xMin
@@ -80,6 +76,14 @@ class CanvasGraph
   toCanvasXCoord: (dataPoint) -> ((dataPoint - @xMin) / (@xMax - @xMin)) * @canvas.width
 
   toDataXCoord: (canvasPoint) -> ((canvasPoint / @canvas.width) * (@xMax - @xMin)) + @xMin
+
+  addMarkToGraph: (e) =>
+    e.preventDefault()
+    unless @marks.markTooCloseToAnotherMark(e, @scale)
+      @mark = new Mark(e, @)
+      @marks.create(@mark)
+      @mark.draw(e)
+      @mark.onMouseDown(e)
 
 class Marks
   constructor: -> @all = []
@@ -213,6 +217,7 @@ class Mark
     window.addEventListener 'mousemove', @onMouseMove
     window.addEventListener 'mouseup', @onMouseUp
     window.addEventListener 'touchmove', @onMouseMove
+    window.addEventListener 'touchend' , @onMouseUp
 
     @element.parentNode.appendChild(@element) #move to end of container for z index
 
@@ -234,6 +239,7 @@ class Mark
     window.removeEventListener 'mousemove', @onMouseMove
     window.removeEventListener 'mouseup', @onMouseUp
     window.removeEventListener 'touchmove', @onMouseMove
+    window.removeEventListener 'touchend', @onMouseUp
     @canvasGraph.marks.add(@) unless (@ in @canvasGraph.marks.all)
     @canvasGraph.marks.remove(@) if e.target.className is "top-bar" or e.target.className is "close-icon"
     for mark in @canvasGraph.marks.all
