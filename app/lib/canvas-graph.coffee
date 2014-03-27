@@ -112,8 +112,8 @@ class Marks
     mouseLocation = @toCanvasXPoint(e)
     markBelow = Math.abs mouseLocation - @closestXBelow(mouseLocation)
     markAbove = Math.abs mouseLocation - @closestXAbove(mouseLocation)
-    # larger distance below because marks are created to left of cursor
-    markBelow < (24*scale) or markAbove < (12*scale) or mouseLocation in @sortedXCoords()
+    # 18 is width of mark plus some room on each side
+    markBelow < (18*scale) or markAbove < (18*scale) or mouseLocation in @sortedXCoords()
 
 class Mark
   constructor: (e, @canvasGraph) ->
@@ -145,7 +145,7 @@ class Mark
     @element.style.textAlign = 'center'
     @element.style.cursor = "move"
 
-    @startingPoint = @toCanvasXPoint(e) - @minWidth()
+    @startingPoint = @toCanvasXPoint(e) - (@minWidth()/2)
 
     @dragging = true
 
@@ -158,8 +158,10 @@ class Mark
   handleWidth: -> 12 * (@canvasGraph.scale || 1)
 
   draw: (e) ->
-    markLeftX = Math.max @startingPoint - @maxWidth(), Math.min @startingPoint, @toCanvasXPoint(e)
-    markRightX = Math.max @startingPoint, @toCanvasXPoint(e)
+    markLeftX = Math.max @startingPoint + @minWidth() - @maxWidth(),
+                         Math.min @startingPoint, @toCanvasXPoint(e)
+
+    markRightX = Math.max @startingPoint + @minWidth(), @toCanvasXPoint(e)
 
     # no overlapping of marks
     markLeftX = Math.max markLeftX,
@@ -218,7 +220,7 @@ class Mark
       @startingPoint = @canvasXMin
       @dragging = true
     else if e.target.className is "left-border" or e.target.className is "left-handle"
-      @startingPoint = @canvasXMax
+      @startingPoint = @canvasXMax - @minWidth()
       @dragging = true
     else if e.target.className is "mark"
       @moving = true
