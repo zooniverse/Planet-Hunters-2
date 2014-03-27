@@ -24,7 +24,7 @@ class Classifier extends BaseController
     '#alt-comments'                     : 'altComments'
     'button[name="no-transits"]'        : 'noTransitsButton'
     'button[name="finished"]'           : 'finishedButton'
-    'button[name="next-subject"]'       :'nextSubjectButton'
+    'button[name="next-subject"]'       : 'nextSubjectButton'
     'button[name="join-convo"]'         : 'joinConvoBtn'
     'button[name="alt-join-convo"]'     : 'altJoinConvoBtn'
     'textarea[name="talk-comment"]'     : 'talkComment'
@@ -38,7 +38,7 @@ class Classifier extends BaseController
     'click button[name="no-transits"]'     : 'onClickNoTransits'
     'click button[name="next-subject"]'    : 'onClickNextSubject'
     'click button[name="finished"]'        : 'onClickFinished'
-    'click img[id="lesson-close"]'         : 'onClickLessonClose'
+    'click img[id="lesson-prompt-close"]'  : 'onClickLessonPromptClose'
     'change input[id="scale-slider"]'      : 'onChangeScaleSlider'
     'click button[name="join-convo"]'      : 'onClickJoinConvo'
     'click button[name="alt-join-convo"]'  : 'onClickAltJoinConvo'
@@ -55,6 +55,7 @@ class Classifier extends BaseController
     @zoomRange = 15.00
 
     @el.find('#lesson-container').hide() # hide lessonn
+    @el.find('#lesson-prompt').hide()
 
     isZoomed: false
     ifFaved: false
@@ -153,6 +154,9 @@ class Classifier extends BaseController
     console.log 'lessonClose()'
     @el.find('#lesson-container').hide()
 
+  onClickLessonPromptClose: ->
+    @el.find('#lesson-prompt').slideUp()
+
   getUserLessonPref: ->
     @userLessonPref = User.current?.preferences['lesson']
     return @userLessonPref
@@ -165,6 +169,7 @@ class Classifier extends BaseController
   onClickHelp: ->
     console.log 'onClickHelp()'
     console.log @el.find("#scale-slider")
+    @el.find('#lesson-prompt').slideDown()
 
   onClickTutorial: ->
     console.log 'onClickTutorial()'

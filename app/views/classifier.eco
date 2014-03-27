@@ -9,7 +9,7 @@
         <button name="lesson-yes" class="lesson-button">Yes</button>
         <button name="lesson-no" class="lesson-button">No</button>
         <button name="lesson-never" class="lesson-button">Never</button>
-        <img id="lesson-close" class="lesson-close" src="./images/icons/marking-closex.png">
+        <img id="lesson-prompt-close" class="lesson-prompt-close" src="./images/icons/marking-closex.png">
       </div>
     </div>
 
