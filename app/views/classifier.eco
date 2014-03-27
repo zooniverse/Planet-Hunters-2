@@ -15,10 +15,10 @@
 
     <div id="course-container">
       <h2 class="course-header">The Kepler Mission</h2>
+      <img class="course-figure" src="./images/mini-course/01-KeplerHR_sm.jpg">
       <p class="course-text">
         The Kepler space telescope was launched by NASA in 2009. It was named after German astronomer Johannes Kepler, who is best known for developing the laws of planetary motion in the 17th century. For 4 years it stared at a patch of sky 100 square degrees in area (500 times that of the full Moon) in the constellations Lyra, Cygnus and Draco, looking for the tell-tale dips in brightness caused when a planet passes in front of its host star. It is these brightness measurements you are looking at on Planet Hunters.
       </p>
-      <img src="">
       <p class="course-text">
         Prepare to be schooled in a way only Zooniverse can get away with. And pay attention, you'll be quizzed afterwards. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. 
       </p>

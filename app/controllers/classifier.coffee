@@ -5,6 +5,7 @@ User           = require 'zooniverse/models/user'
 
 $ = window.jQuery
 require '../lib/sample-data'
+require '../lib/mini-course'
 
 {CanvasGraph, Marks, Mark} = require "../lib/canvas-graph"
 
