@@ -1,7 +1,8 @@
-User = require 'zooniverse/models/user'
+User           = require 'zooniverse/models/user'
+BaseController = require 'zooniverse/controllers/base-controller'
 $ = window.jQuery
 
-class MiniCourse
+class MiniCourse extends BaseController
 
 	constructor: (el) ->
 		console.log 'MiniCourse.constructor()'
