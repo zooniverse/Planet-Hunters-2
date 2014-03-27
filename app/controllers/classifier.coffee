@@ -38,24 +38,24 @@ class Classifier extends BaseController
     'click button[name="no-transits"]'     : 'onClickNoTransits'
     'click button[name="next-subject"]'    : 'onClickNextSubject'
     'click button[name="finished"]'        : 'onClickFinished'
-    'click img[id="lesson-prompt-close"]'  : 'onClickLessonPromptClose'
+    'click img[id="course-prompt-close"]'  : 'onClickCoursePromptClose'
     'change input[id="scale-slider"]'      : 'onChangeScaleSlider'
     'click button[name="join-convo"]'      : 'onClickJoinConvo'
     'click button[name="alt-join-convo"]'  : 'onClickAltJoinConvo'
     'click button[name="submit-talk"]'     : 'onClickSubmitTalk'
     'click button[name="alt-submit-talk"]' : 'onClickSubmitTalkAlt'
-    'click button[name="lesson-yes"]'      : 'onClickLessonYes'
-    'click button[name="lesson-no"]'       : 'onClickLessonNo'
-    'click button[name="lesson-never"]'    : 'onClickLessonNever'
-    'click button[name="lesson-close"]'    : 'onClickLessonClose'
+    'click button[name="course-yes"]'      : 'onClickCourseYes'
+    'click button[name="course-no"]'       : 'onClickCourseNo'
+    'click button[name="course-never"]'    : 'onClickCourseNever'
+    'click button[name="course-close"]'    : 'onClickCourseClose'
 
   constructor: ->
     super
     window.classifier = @
     @zoomRange = 15.00
 
-    @el.find('#lesson-container').hide() # hide lessonn
-    @el.find('#lesson-prompt').hide()
+    @el.find('#course-container').hide() # hide coursen
+    @el.find('#course-prompt').hide()
 
     @userClassCount = 0 # initialize faux counter
 
@@ -64,7 +64,7 @@ class Classifier extends BaseController
     @scaleSlider = new FauxRangeInput('#scale-slider')
     @marksContainer = @el.find('#marks-container')[0]
 
-    @lessonRate = 3 
+    @courseRate = 3 
 
     @loadSubject(sampleData[0])
 
@@ -133,41 +133,41 @@ class Classifier extends BaseController
   
 
   # BEGIN LESSON METHODS >>> (eventually move to separate file?)
-  onClickLessonYes: ->
-    console.log "lesson: yes"
-    User.current.setPreference 'lesson', 'yes', true, @displayLesson()
-    @onClickLessonPromptClose()
+  onClickCourseYes: ->
+    console.log "course: yes"
+    User.current.setPreference 'course', 'yes', true, @displayCourse()
+    @onClickCoursePromptClose()
 
-  onClickLessonNo: ->
-    console.log "lesson: no"
-    User.current.setPreference 'lesson', 'no', true
-    @onClickLessonPromptClose()
+  onClickCourseNo: ->
+    console.log "course: no"
+    User.current.setPreference 'course', 'no', true
+    @onClickCoursePromptClose()
 
-  onClickLessonNever: ->
-    console.log "lesson: never"
-    User.current.setPreference 'lesson', 'never', true
-    @onClickLessonPromptClose()
+  onClickCourseNever: ->
+    console.log "course: never"
+    User.current.setPreference 'course', 'never', true
+    @onClickCoursePromptClose()
 
-  displayLesson: ->
-    @el.find('#lesson-container').fadeIn('fast')
+  displayCourse: ->
+    @el.find('#course-container').fadeIn('fast')
 
-  onClickLessonClose: ->
-    console.log 'lessonClose()'
-    @el.find('#lesson-container').fadeOut('fast')
+  onClickCourseClose: ->
+    console.log 'courseClose()'
+    @el.find('#course-container').fadeOut('fast')
 
-  onClickLessonPromptClose: ->
-    @hideLessonPrompt()
+  onClickCoursePromptClose: ->
+    @hideCoursePrompt()
     
-  hideLessonPrompt: ->
-    @el.find('#lesson-prompt').slideUp()
+  hideCoursePrompt: ->
+    @el.find('#course-prompt').slideUp()
 
-  showLessonPrompt: ->
-    console.log 'lesson prompt!'
-    @el.find('#lesson-prompt').slideDown()
+  showCoursePrompt: ->
+    console.log 'course prompt!'
+    @el.find('#course-prompt').slideDown()
 
-  getUserLessonPref: ->
-    @userLessonPref = User.current?.preferences['lesson']
-    return @userLessonPref
+  getUserCoursePref: ->
+    @userCoursePref = User.current?.preferences['course']
+    return @userCoursePref
   
   getUserClassCount: ->
     # @userClassCount = User.current?.classification_count 
@@ -179,7 +179,7 @@ class Classifier extends BaseController
   onClickHelp: ->
     console.log 'onClickHelp()'
     console.log @el.find("#scale-slider")
-    @el.find('#lesson-prompt').slideDown()
+    @el.find('#course-prompt').slideDown()
 
   onClickTutorial: ->
     console.log 'onClickTutorial()'
@@ -211,8 +211,8 @@ class Classifier extends BaseController
     @resetTalkComment @talkComment
     @resetTalkComment @altTalkComment
 
-    # show lessons
-    @showLessonPrompt() if @getUserLessonPref() isnt 'never' and @userClassCount % @lessonRate is 0
+    # show courses
+    @showCoursePrompt() if @getUserCoursePref() isnt 'never' and @userClassCount % @courseRate is 0
 
     console.log "LOAD NEW SUBJECT HERE"
     #fake it for now...
@@ -229,8 +229,8 @@ class Classifier extends BaseController
     @noTransitsButton.hide()
     @finishedButton.hide()
 
-  # onClickLessonClose: ->
-  #   console.log 'onClickLessonClose()'
+  # onClickCourseClose: ->
+  #   console.log 'onClickCourseClose()'
 
   onClickJoinConvo: -> @joinConvoBtn.hide().siblings().show()
 

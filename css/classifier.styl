@@ -7,7 +7,7 @@
     width 1090px
     margin 0 auto
 
-    #lesson-container
+    #course-container
       color black
       background rgba(255,255,255,0.90)
       box-shadow 10px 10px 5px #000
@@ -18,17 +18,20 @@
       height 600px
       width 1092px
       padding 20px
-      z-index 10
-      &.lesson-header
+      z-index 999
+      &.course-header
         font-size 20px
         font-weight bold
+    
+    .course-text
+      font-size 14px
       
     .subject-header
       h3
         color white
       p, h3
         padding-left 20px
-      #lesson-prompt
+      #course-prompt
         height 25px
         margin-top 5px
         // margin-bottom 10px
@@ -39,7 +42,7 @@
         background-color #3E89AF
         width inherit
         border-radius: 0.3em
-      .lesson-button
+      .course-button
         padding 0px 5px 0px 5px
         height 100%
         margin auto
@@ -50,7 +53,7 @@
           color white
           background-color rgba(0,0,0,0.5)
           transition 0.4s
-      .lesson-prompt-close
+      .course-prompt-close
         padding 9px
         float right
 
