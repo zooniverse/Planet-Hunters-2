@@ -5,7 +5,6 @@ MiniCourse     = require '../lib/mini-course'
 
 $ = window.jQuery
 require '../lib/sample-data'
-require '../lib/mini-course'
 
 {CanvasGraph, Marks, Mark} = require "../lib/canvas-graph"
 
@@ -45,13 +44,6 @@ class Classifier extends BaseController
     'click button[name="submit-talk"]'     : 'onClickSubmitTalk'
     'click button[name="alt-submit-talk"]' : 'onClickSubmitTalkAlt'
 
-    # course-related events
-    'click img[id="course-prompt-close"]'  : 'onClickCoursePromptClose'
-    'click button[name="course-yes"]'      : 'onClickCourseYes'
-    'click button[name="course-no"]'       : 'onClickCourseNo'
-    'click button[name="course-never"]'    : 'onClickCourseNever'
-    'click button[name="course-close"]'    : 'onClickCourseClose'
-
   constructor: ->
     super
     window.classifier = @
@@ -76,7 +68,8 @@ class Classifier extends BaseController
     @drawSliderAxisNums()
 
     # mini course
-    @course = new MiniCourse(@el)
+    # @course = new MiniCourse(@el)
+    @course = new MiniCourse
     @course.setRate 3 
 
   loadSubject: (data) ->
@@ -199,7 +192,7 @@ class Classifier extends BaseController
 
   onClickNoTransits: -> 
     @finishSubject()
-    @userClassCount = @getUserClassCount()
+    # @userClassCount = @course.getUserClassCount()
 
   onClickFinished: -> 
     @finishSubject()
@@ -217,7 +210,7 @@ class Classifier extends BaseController
     @resetTalkComment @altTalkComment
 
     # show courses
-    @showCoursePrompt() if @getUserCoursePref() isnt 'never' and @userClassCount % @course.rate is 0
+    # @course.showCoursePrompt() if @course.getUserCoursePref() isnt 'never' and @userClassCount % @course.rate is 0
 
     console.log "LOAD NEW SUBJECT HERE"
     #fake it for now...

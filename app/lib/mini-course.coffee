@@ -3,56 +3,60 @@ BaseController = require 'zooniverse/controllers/base-controller'
 $ = window.jQuery
 
 class MiniCourse extends BaseController
+  className: 'mini-course'
+  template: require '../views/classifier'
 
-	constructor: (el) ->
-		console.log 'MiniCourse.constructor()'
+  events:
+    'click img[id="course-prompt-close"]'  : 'onClickCoursePromptClose'
+    'click button[name="course-yes"]'      : 'onClickCourseYes'
+    'click button[name="course-no"]'       : 'onClickCourseNo'
+    'click button[name="course-never"]'    : 'onClickCourseNever'
+    'click button[name="course-close"]'    : 'onClickCourseClose'
 
-		@el = el
-		console.log @el.find("#course-prompt")
-		@rate = 10 # set default rate
+  # console.log events
 
-	setRate: (rate) ->
-		@rate = rate
+  # constructor: (el) ->
+  constructor: ->
+    super
+    console.log 'MiniCourse.constructor()'
+
+    console.log $('classifier').find("#course-prompt")
+    @rate = 10 # set default rate
+
+
+  setRate: (rate) ->
+    console.log 'setRate()'
+    @rate = rate
 
   onClickCourseYes: ->
-    console.log "course: yes"
-    User.current.setPreference 'course', 'yes', true, @displayCourse()
-    @onClickCoursePromptClose()
+    console.log "onClickCourseYes()"
 
   onClickCourseNo: ->
-    console.log "course: no"
-    User.current.setPreference 'course', 'no', true
-    @onClickCoursePromptClose()
+    console.log "onClickCourseNo()"
 
   onClickCourseNever: ->
-    console.log "course: never"
-    User.current.setPreference 'course', 'never', true
-    @onClickCoursePromptClose()
+    console.log "onClickCourseNever()"
 
   displayCourse: ->
-    @el.find('#course-container').fadeIn('fast')
+    console.log 'displayCourse()'
 
   onClickCourseClose: ->
     console.log 'courseClose()'
-    @el.find('#course-container').fadeOut('fast')
 
   onClickCoursePromptClose: ->
-    @hideCoursePrompt()
+    console.log 'onClickCoursePromptClose()'
     
   hideCoursePrompt: ->
-    @el.find('#course-prompt').slideUp()
+    console.log 'hideCoursePrompt()'
 
   showCoursePrompt: ->
-    console.log 'course prompt!'
-    @el.find('#course-prompt').slideDown()
+    console.log 'showCoursePrompt()'
 
   getUserCoursePref: ->
-    @userCoursePref = User.current?.preferences['course']
-    return @userCoursePref
-  
+    console.log 'getUserCoursePref()'
+
   getUserClassCount: ->
-    # @userClassCount = User.current?.classification_count 
-    # not live, so use faux counter
-    return @userClassCount
+    console.log 'getUserClassCount()'
+
 
 module.exports = MiniCourse
