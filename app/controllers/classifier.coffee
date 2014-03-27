@@ -1,6 +1,7 @@
 BaseController = require 'zooniverse/controllers/base-controller'
 FauxRangeInput = require 'faux-range-input'
 User           = require 'zooniverse/models/user'
+MiniCourse     = require '../lib/mini-course'
 
 
 $ = window.jQuery
@@ -74,6 +75,8 @@ class Classifier extends BaseController
 
     $(document).on 'mark-change', => @updateButtons()
     @drawSliderAxisNums()
+
+    @course = new MiniCourse
 
   loadSubject: (data) ->
     # create a new canvas
