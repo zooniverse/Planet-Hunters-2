@@ -212,7 +212,7 @@ class Classifier extends BaseController
     @resetTalkComment @altTalkComment
 
     # show lessons
-    @showLessonPrompt() if @getUserLessonPref() is 'yes' and @userClassCount % @lessonRate is 0
+    @showLessonPrompt() if @getUserLessonPref() isnt 'never' and @userClassCount % @lessonRate is 0
 
     console.log "LOAD NEW SUBJECT HERE"
     #fake it for now...
