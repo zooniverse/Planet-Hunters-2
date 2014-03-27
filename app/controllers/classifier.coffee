@@ -57,10 +57,14 @@ class Classifier extends BaseController
     @el.find('#lesson-container').hide() # hide lessonn
     @el.find('#lesson-prompt').hide()
 
+    @userClassCount = 0 # initialize faux counter
+
     isZoomed: false
     ifFaved: false
     @scaleSlider = new FauxRangeInput('#scale-slider')
     @marksContainer = @el.find('#marks-container')[0]
+
+    @lessonRate = 3 
 
     @loadSubject(sampleData[0])
 
@@ -131,42 +135,45 @@ class Classifier extends BaseController
   # BEGIN LESSON METHODS >>> (eventually move to separate file?)
   onClickLessonYes: ->
     console.log "lesson: yes"
-    console.log User.current.setPreference 'lesson', 'yes', true, @displayLesson()
-    console.log 'preference: ', @userLessonPref
-    console.log 'num. class: ', @userClassCount
+    User.current.setPreference 'lesson', 'yes', true, @displayLesson()
     @onClickLessonPromptClose()
 
   onClickLessonNo: ->
     console.log "lesson: no"
-    console.log User.current.setPreference 'lesson', 'no', true
-    console.log 'preference: ', @userLessonPref
-    console.log 'num. class: ', @userClassCount
+    User.current.setPreference 'lesson', 'no', true
     @onClickLessonPromptClose()
 
   onClickLessonNever: ->
     console.log "lesson: never"
-    console.log User.current.setPreference 'lesson', 'never', true
-    console.log 'preference: ', @userLessonPref
-    console.log 'num. class: ', @userClassCount
+    User.current.setPreference 'lesson', 'never', true
     @onClickLessonPromptClose()
 
   displayLesson: ->
-    @el.find('#lesson-container').show()
+    @el.find('#lesson-container').fadeIn('fast')
 
   onClickLessonClose: ->
     console.log 'lessonClose()'
-    @el.find('#lesson-container').hide()
+    @el.find('#lesson-container').fadeOut('fast')
 
   onClickLessonPromptClose: ->
+    @hideLessonPrompt()
+    
+  hideLessonPrompt: ->
     @el.find('#lesson-prompt').slideUp()
+
+  showLessonPrompt: ->
+    console.log 'lesson prompt!'
+    @el.find('#lesson-prompt').slideDown()
 
   getUserLessonPref: ->
     @userLessonPref = User.current?.preferences['lesson']
     return @userLessonPref
   
   getUserClassCount: ->
-    @userClassCount = User.current?.classification_count
+    # @userClassCount = User.current?.classification_count 
+    # not live, so use faux counter
     return @userClassCount
+
   # <<< END LESSON METHODS
 
   onClickHelp: ->
@@ -185,9 +192,14 @@ class Classifier extends BaseController
       @finishedButton.hide()
       @noTransitsButton.show()
 
-  onClickNoTransits: -> @finishSubject()
+  onClickNoTransits: -> 
+    @finishSubject()
+    @userClassCount = @getUserClassCount()
 
-  onClickFinished: -> @finishSubject()
+  onClickFinished: -> 
+    @finishSubject()
+    @userClassCount = @userClassCount + 1
+    console.log 'YOU\'VE MARKED ', @userClassCount, ' LIGHT CURVES!'
 
   onClickNextSubject: ->
     @noTransitsButton.show()
@@ -198,6 +210,9 @@ class Classifier extends BaseController
 
     @resetTalkComment @talkComment
     @resetTalkComment @altTalkComment
+
+    # show lessons
+    @showLessonPrompt() if @getUserLessonPref() is 'yes' and @userClassCount % @lessonRate is 0
 
     console.log "LOAD NEW SUBJECT HERE"
     #fake it for now...
