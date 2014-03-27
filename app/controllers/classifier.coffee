@@ -1,5 +1,7 @@
 BaseController = require 'zooniverse/controllers/base-controller'
 FauxRangeInput = require 'faux-range-input'
+User           = require 'zooniverse/models/user'
+
 
 $ = window.jQuery
 require '../lib/sample-data'
@@ -11,50 +13,61 @@ class Classifier extends BaseController
   template: require '../views/classifier'
 
   elements:
-    '#toggle-zoom'      : 'zoomButton'
-    '#toggle-fav'       : 'favButton'
-    '#help'             : 'helpButton'
-    '#tutorial'         : 'tutorialButton'
-    'numbers-container' : 'numbersContainer'
-    '#classify-summary' : 'classifySummary'
-    '#comments'         : 'comments'
-    '#planet-num'       : 'planetNum'
-    '#alt-comments'         : 'altComments'
-    'button[name="no-transits"]' : 'noTransitsButton'
-    'button[name="finished"]' : 'finishedButton'
-    'button[name="next-subject"]' :'nextSubjectButton'
-    'button[name="join-convo"]' : 'joinConvoBtn'
-    'button[name="alt-join-convo"]' : 'altJoinConvoBtn'
-    'textarea[name="talk-comment"]' : 'talkComment'
+    '#toggle-zoom'                      : 'zoomButton'
+    '#toggle-fav'                       : 'favButton'
+    '#help'                             : 'helpButton'
+    '#tutorial'                         : 'tutorialButton'
+    'numbers-container'                 : 'numbersContainer'
+    '#classify-summary'                 : 'classifySummary'
+    '#comments'                         : 'comments'
+    '#planet-num'                       : 'planetNum'
+    '#alt-comments'                     : 'altComments'
+    'button[name="no-transits"]'        : 'noTransitsButton'
+    'button[name="finished"]'           : 'finishedButton'
+    'button[name="next-subject"]'       : 'nextSubjectButton'
+    'button[name="join-convo"]'         : 'joinConvoBtn'
+    'button[name="alt-join-convo"]'     : 'altJoinConvoBtn'
+    'textarea[name="talk-comment"]'     : 'talkComment'
     'textarea[name="alt-talk-comment"]' : 'altTalkComment'
 
   events:
-    'click button[id="toggle-zoom"]' : 'onToggleZoom'
-    'click button[id="toggle-fav"]'  : 'onToggleFav'
-    'click button[id="help"]'        : 'onClickHelp'
-    'click button[id="tutorial"]'    : 'onClickTutorial'
-    'click button[name="no-transits"]' : 'onClickNoTransits'
-    'click button[name="next-subject"]' : 'onClickNextSubject'
-    'click button[name="finished"]' : 'onClickFinished'
-    'click img[id="lesson-close"]'   : 'onClickLessonClose'
-    'change input[id="scale-slider"]': 'onChangeScaleSlider'
-    'click button[name="join-convo"]': 'onClickJoinConvo'
-    'click button[name="alt-join-convo"]' : 'onClickAltJoinConvo'
-    'click button[name="submit-talk"]' : 'onClickSubmitTalk'
-    'click button[name="alt-submit-talk"]' :'onClickSubmitTalkAlt'
+    'click button[id="toggle-zoom"]'       : 'onToggleZoom'
+    'click button[id="toggle-fav"]'        : 'onToggleFav'
+    'click button[id="help"]'              : 'onClickHelp'
+    'click button[id="tutorial"]'          : 'onClickTutorial'
+    'click button[name="no-transits"]'     : 'onClickNoTransits'
+    'click button[name="next-subject"]'    : 'onClickNextSubject'
+    'click button[name="finished"]'        : 'onClickFinished'
+    'click img[id="lesson-prompt-close"]'  : 'onClickLessonPromptClose'
+    'change input[id="scale-slider"]'      : 'onChangeScaleSlider'
+    'click button[name="join-convo"]'      : 'onClickJoinConvo'
+    'click button[name="alt-join-convo"]'  : 'onClickAltJoinConvo'
+    'click button[name="submit-talk"]'     : 'onClickSubmitTalk'
+    'click button[name="alt-submit-talk"]' : 'onClickSubmitTalkAlt'
+    'click button[name="lesson-yes"]'      : 'onClickLessonYes'
+    'click button[name="lesson-no"]'       : 'onClickLessonNo'
+    'click button[name="lesson-never"]'    : 'onClickLessonNever'
+    'click button[name="lesson-close"]'    : 'onClickLessonClose'
 
   constructor: ->
     super
+    window.classifier = @
     @zoomRange = 15.00
+
+    @el.find('#lesson-container').hide() # hide lessonn
+    @el.find('#lesson-prompt').hide()
+
+    @userClassCount = 0 # initialize faux counter
 
     isZoomed: false
     ifFaved: false
     @scaleSlider = new FauxRangeInput('#scale-slider')
     @marksContainer = @el.find('#marks-container')[0]
 
+    @lessonRate = 3 
+
     @loadSubject(sampleData[0])
 
-    console.log @canvasGraph.largestX
     @el.find("#scale-slider").attr "max", @canvasGraph.largestX - @zoomRange
     @el.find("#scale-slider").attr "min", @canvasGraph.smallestX
 
@@ -78,7 +91,6 @@ class Classifier extends BaseController
   onChangeScaleSlider: ->
     val = +@el.find("#scale-slider").val()
     # @focusCenter = +@el.find('#scale-slider').val() + @zoomRange/2
-
     # xMin = @focusCenter-@zoomRange/2
     # xMax = @focusCenter+@zoomRange/2
 
@@ -118,10 +130,56 @@ class Classifier extends BaseController
       @isFaved = true
       favButton.innerHTML = '<img src="images/icons/toolbar-fav-filled.png">+Fav'
       @el.find("#toggle-fav").addClass("toggled")
+  
+
+  # BEGIN LESSON METHODS >>> (eventually move to separate file?)
+  onClickLessonYes: ->
+    console.log "lesson: yes"
+    User.current.setPreference 'lesson', 'yes', true, @displayLesson()
+    @onClickLessonPromptClose()
+
+  onClickLessonNo: ->
+    console.log "lesson: no"
+    User.current.setPreference 'lesson', 'no', true
+    @onClickLessonPromptClose()
+
+  onClickLessonNever: ->
+    console.log "lesson: never"
+    User.current.setPreference 'lesson', 'never', true
+    @onClickLessonPromptClose()
+
+  displayLesson: ->
+    @el.find('#lesson-container').fadeIn('fast')
+
+  onClickLessonClose: ->
+    console.log 'lessonClose()'
+    @el.find('#lesson-container').fadeOut('fast')
+
+  onClickLessonPromptClose: ->
+    @hideLessonPrompt()
     
+  hideLessonPrompt: ->
+    @el.find('#lesson-prompt').slideUp()
+
+  showLessonPrompt: ->
+    console.log 'lesson prompt!'
+    @el.find('#lesson-prompt').slideDown()
+
+  getUserLessonPref: ->
+    @userLessonPref = User.current?.preferences['lesson']
+    return @userLessonPref
+  
+  getUserClassCount: ->
+    # @userClassCount = User.current?.classification_count 
+    # not live, so use faux counter
+    return @userClassCount
+
+  # <<< END LESSON METHODS
+
   onClickHelp: ->
     console.log 'onClickHelp()'
     console.log @el.find("#scale-slider")
+    @el.find('#lesson-prompt').slideDown()
 
   onClickTutorial: ->
     console.log 'onClickTutorial()'
@@ -134,9 +192,14 @@ class Classifier extends BaseController
       @finishedButton.hide()
       @noTransitsButton.show()
 
-  onClickNoTransits: -> @finishSubject()
+  onClickNoTransits: -> 
+    @finishSubject()
+    @userClassCount = @getUserClassCount()
 
-  onClickFinished: -> @finishSubject()
+  onClickFinished: -> 
+    @finishSubject()
+    @userClassCount = @userClassCount + 1
+    console.log 'YOU\'VE MARKED ', @userClassCount, ' LIGHT CURVES!'
 
   onClickNextSubject: ->
     @noTransitsButton.show()
@@ -147,6 +210,9 @@ class Classifier extends BaseController
 
     @resetTalkComment @talkComment
     @resetTalkComment @altTalkComment
+
+    # show lessons
+    @showLessonPrompt() if @getUserLessonPref() is 'yes' and @userClassCount % @lessonRate is 0
 
     console.log "LOAD NEW SUBJECT HERE"
     #fake it for now...
@@ -163,8 +229,8 @@ class Classifier extends BaseController
     @noTransitsButton.hide()
     @finishedButton.hide()
 
-  onClickLessonClose: ->
-    console.log 'onClickLessonClose()'
+  # onClickLessonClose: ->
+  #   console.log 'onClickLessonClose()'
 
   onClickJoinConvo: -> @joinConvoBtn.hide().siblings().show()
 

@@ -6,11 +6,29 @@
 
       <div id="lesson-prompt">
         Lesson available! Become better at identifying transits. Interested?
-        <button class="lesson-button">Yes</button>
-        <button class="lesson-button">No</button>
-        <button class="lesson-button">Never</button>
-        <img id="lesson-close" class="lesson-close" src="./images/icons/marking-closex.png">
+        <button name="lesson-yes" class="lesson-button">Yes</button>
+        <button name="lesson-no" class="lesson-button">No</button>
+        <button name="lesson-never" class="lesson-button">Never</button>
+        <img id="lesson-prompt-close" class="lesson-prompt-close" src="./images/icons/marking-closex.png">
       </div>
+    </div>
+
+    <div id="lesson-container">
+      <h2 class="lesson-header">Welcome to your first lesson!</h2>
+      <p class="lesson-text">
+        Prepare to be schooled in a way only Zooniverse can get away with. And pay attention, you'll be quizzed afterwards. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. 
+      </p>
+      <h2 class="lesson-header">What is a light curve?</h2>  
+      <p class='lesson-text'>
+        A light curve is a plot of a particular star's brightness over time. If you stare at a star long enough (not recommended) you may notice that it's brightness changes. This may be because the star's brightness is simply variable -- such stars are appropriately called variable stars. But on rare occasions, the changes in brightness may be due to an actual planet passing, or <i>transiting</i>, in front of it. This results in a slight dip in the brightness as the planet covers the incoming light. BAM! Consider yourself schooled.
+      </p>
+      <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. 
+      </p>  
+
+      <br>
+
+      <button id="lesson-close" name="lesson-close" class="std-btn yellow">Close</button>
+
     </div>
 
     <div id="graph-container">
