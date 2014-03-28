@@ -45,22 +45,11 @@ class MiniCourse
   hideCourse: ->
     @course_el.fadeOut()
 
-  # onClickCourseClose: ->
-  #   console.log 'courseClose()'
-  #   @hideCourse()
-
   showPrompt: ->
     @prompt_el.slideDown()
 
   hidePrompt: ->
     @prompt_el.slideUp()
-
-  # onClickCoursePromptClose: ->
-  #   console.log 'onClickCoursePromptClose()'
-  #   @prompt_el.slideUp()
-
-  # showCoursePrompt: ->
-  #   console.log 'showCoursePrompt()'
 
   getPref: ->
     @pref = User.current?.preferences['course']
