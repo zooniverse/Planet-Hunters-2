@@ -7,18 +7,19 @@ class MiniCourse #extends BaseController
     # super
     console.log 'MiniCourse.constructor()'
 
-    $(classifier.el).find("#course-prompt").hide()
-    $(classifier.el).find("#course-container").hide()
     @rate = 10 # set default rate
+    @prompt_el = $(classifier.el).find("#course-prompt")
+    @course_el = $(classifier.el).find("#course-container")
 
-    $(classifier.el).find("#course-prompt").on "click", "#course-yes", (e) => 
-      @onClickCourseYes()
-
-    $(classifier.el).find("#course-prompt").on "click", "#course-no", (e) => 
-      @onClickCourseNo()
-
-    $(classifier.el).find("#course-prompt").on "click", "#course-never", (e) => 
-      @onClickCourseNever()      
+    @prompt_el.hide()
+    @course_el.hide()
+    
+    # event callbacks
+    @prompt_el.on "click", "#course-yes", (e) => @onClickCourseYes()
+    @prompt_el.on "click", "#course-no", (e) => @onClickCourseNo()
+    @prompt_el.on "click", "#course-never", (e) => @onClickCourseNever()      
+    @prompt_el.on "click", "#course-prompt-close", (e) => @onClickCoursePromptClose()  
+    @course_el.on "click", "#course-close", (e) => @onClickCourseClose()
 
 
   setRate: (rate) ->
@@ -27,6 +28,7 @@ class MiniCourse #extends BaseController
 
   onClickCourseYes: ->
     console.log "onClickCourseYes()"
+    @displayCourse()
 
   onClickCourseNo: ->
     console.log "onClickCourseNo()"
@@ -36,15 +38,21 @@ class MiniCourse #extends BaseController
 
   displayCourse: ->
     console.log 'displayCourse()'
+    @course_el.fadeIn()
+
+  hideCourse: ->
+    @course_el.fadeOut()
 
   onClickCourseClose: ->
     console.log 'courseClose()'
+    @hideCourse()
+
+  hidePrompt: ->
+    @prompt_el.hide()
 
   onClickCoursePromptClose: ->
     console.log 'onClickCoursePromptClose()'
-    
-  hideCoursePrompt: ->
-    console.log 'hideCoursePrompt()'
+    @prompt_el.slideUp()
 
   showCoursePrompt: ->
     console.log 'showCoursePrompt()'
