@@ -1,7 +1,7 @@
 BaseController = require 'zooniverse/controllers/base-controller'
 FauxRangeInput = require 'faux-range-input'
 User           = require 'zooniverse/models/user'
-
+MiniCourse     = require '../lib/mini-course'
 
 $ = window.jQuery
 require '../lib/sample-data'
@@ -38,34 +38,20 @@ class Classifier extends BaseController
     'click button[name="no-transits"]'     : 'onClickNoTransits'
     'click button[name="next-subject"]'    : 'onClickNextSubject'
     'click button[name="finished"]'        : 'onClickFinished'
-    'click img[id="course-prompt-close"]'  : 'onClickCoursePromptClose'
     'change input[id="scale-slider"]'      : 'onChangeScaleSlider'
     'click button[name="join-convo"]'      : 'onClickJoinConvo'
     'click button[name="alt-join-convo"]'  : 'onClickAltJoinConvo'
     'click button[name="submit-talk"]'     : 'onClickSubmitTalk'
     'click button[name="alt-submit-talk"]' : 'onClickSubmitTalkAlt'
-    'click button[name="course-yes"]'      : 'onClickCourseYes'
-    'click button[name="course-no"]'       : 'onClickCourseNo'
-    'click button[name="course-never"]'    : 'onClickCourseNever'
-    'click button[name="course-close"]'    : 'onClickCourseClose'
 
   constructor: ->
     super
     window.classifier = @
     @zoomRange = 15.00
-
-    @el.find('#course-container').hide() # hide coursen
-    @el.find('#course-prompt').hide()
-
-    @userClassCount = 0 # initialize faux counter
-
     isZoomed: false
     ifFaved: false
     @scaleSlider = new FauxRangeInput('#scale-slider')
     @marksContainer = @el.find('#marks-container')[0]
-
-    @courseRate = 3 
-
     @loadSubject(sampleData[0])
 
     @el.find("#scale-slider").attr "max", @canvasGraph.largestX - @zoomRange
@@ -74,6 +60,10 @@ class Classifier extends BaseController
     $(document).on 'mark-change', => @updateButtons()
     @drawSliderAxisNums()
 
+    # mini course
+    @course = new MiniCourse
+    @course.setRate 3     
+    
   loadSubject: (data) ->
     # create a new canvas
     @canvas = document.createElement('canvas')
@@ -130,55 +120,9 @@ class Classifier extends BaseController
       @isFaved = true
       favButton.innerHTML = '<img src="images/icons/toolbar-fav-filled.png">+Fav'
       @el.find("#toggle-fav").addClass("toggled")
-  
-
-  # BEGIN LESSON METHODS >>> (eventually move to separate file?)
-  onClickCourseYes: ->
-    console.log "course: yes"
-    User.current.setPreference 'course', 'yes', true, @displayCourse()
-    @onClickCoursePromptClose()
-
-  onClickCourseNo: ->
-    console.log "course: no"
-    User.current.setPreference 'course', 'no', true
-    @onClickCoursePromptClose()
-
-  onClickCourseNever: ->
-    console.log "course: never"
-    User.current.setPreference 'course', 'never', true
-    @onClickCoursePromptClose()
-
-  displayCourse: ->
-    @el.find('#course-container').fadeIn('fast')
-
-  onClickCourseClose: ->
-    console.log 'courseClose()'
-    @el.find('#course-container').fadeOut('fast')
-
-  onClickCoursePromptClose: ->
-    @hideCoursePrompt()
-    
-  hideCoursePrompt: ->
-    @el.find('#course-prompt').slideUp()
-
-  showCoursePrompt: ->
-    console.log 'course prompt!'
-    @el.find('#course-prompt').slideDown()
-
-  getUserCoursePref: ->
-    @userCoursePref = User.current?.preferences['course']
-    return @userCoursePref
-  
-  getUserClassCount: ->
-    # @userClassCount = User.current?.classification_count 
-    # not live, so use faux counter
-    return @userClassCount
-
-  # <<< END LESSON METHODS
-
+ 
   onClickHelp: ->
     console.log 'onClickHelp()'
-    console.log @el.find("#scale-slider")
     @el.find('#course-prompt').slideDown()
 
   onClickTutorial: ->
@@ -194,12 +138,14 @@ class Classifier extends BaseController
 
   onClickNoTransits: -> 
     @finishSubject()
-    @userClassCount = @getUserClassCount()
 
   onClickFinished: -> 
     @finishSubject()
-    @userClassCount = @userClassCount + 1
-    console.log 'YOU\'VE MARKED ', @userClassCount, ' LIGHT CURVES!'
+
+    # fake classification counter
+    @course.count = @course.count + 1
+    
+    console.log 'YOU\'VE MARKED ', @course.count, ' LIGHT CURVES!'
 
   onClickNextSubject: ->
     @noTransitsButton.show()
@@ -212,7 +158,7 @@ class Classifier extends BaseController
     @resetTalkComment @altTalkComment
 
     # show courses
-    @showCoursePrompt() if @getUserCoursePref() isnt 'never' and @userClassCount % @courseRate is 0
+    @course.showPrompt() if @course.getPref() isnt 'never' and @course.count % @course.rate is 0
 
     console.log "LOAD NEW SUBJECT HERE"
     #fake it for now...
@@ -228,9 +174,6 @@ class Classifier extends BaseController
     @planetNum.html @canvasGraph.marks.all.length # number of marks
     @noTransitsButton.hide()
     @finishedButton.hide()
-
-  # onClickCourseClose: ->
-  #   console.log 'onClickCourseClose()'
 
   onClickJoinConvo: -> @joinConvoBtn.hide().siblings().show()
 
