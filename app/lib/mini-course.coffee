@@ -61,16 +61,27 @@ class MiniCourse
     # not working yet
     # @content = $.parseJSON @jsonFile
     @content = $.parseJSON jsonData
-    @render()
+    @num_courses = @content.length
+    # @render()
 
   render: ->
-    User.on "change", =>
+    if @curr > @num_courses
+      title  = "That\'s all, folks!"
+      text   = "This concludes the mini-course series. Thanks for tuning in!"
+      figure = ""
+    else
       title  = @content[@curr-1].material.title
       text   = @content[@curr-1].material.text
       figure = @content[@curr-1].material.figure
-      @course_el.find("#course-header").html title
-      @course_el.find("#course-text").html text
-      @course_el.find("#course-figure").attr 'src', figure
+
+    # DEBUG CODE
+    console.log 'title:  ', title
+    console.log 'text:   ', text
+    console.log 'figure: ', figure
+
+    @course_el.find("#course-header").html title
+    @course_el.find("#course-text").html text
+    @course_el.find("#course-figure").attr 'src', figure
 
   setRate: (rate) ->
     @rate = rate
@@ -96,10 +107,12 @@ class MiniCourse
   displayCourse: ->
     console.log 'displayCourse()'
     console.log 'CURRENT COURSE: ', @curr
-    @prev = @curr
-    @curr = +@curr + 1
     unless User.current is null
       User.current.setPreference 'prev_course', @curr, false
+      @render()
+      @prev = @curr
+      @curr = +@curr + 1
+
     @course_el.fadeIn()
 
   hideCourse: ->
