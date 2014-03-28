@@ -16,11 +16,8 @@
     <div id="course-container">
       <h2 id="course-header" class="course-header"></h2>
       <img id="course-figure" class="course-figure" src="">
-      <p id="course-text" class="course-text">
-      </p>
-      <br>
+      <div id="course-text" class="course-text"></div>
       <button id="course-close" name="course-close" class="std-btn yellow">Close</button>
-
     </div>
 
     <div id="graph-container">
