@@ -1,0 +1,23 @@
+[
+  {
+    "course_number": 1,
+    "material":
+    {
+      "title": "The Kepler Mission",
+      "text": "The Kepler space telescope was launched by NASA in 2009. It was named after German astronomer Johannes Kepler, who is best known for developing the laws of planetary motion in the 17th century. For 4 years it stared at a patch of sky 100 square degrees in area (500 times that of the full Moon) in the constellations Lyra, Cygnus and Draco, looking for the tell-tale dips in brightness caused when a planet passes in front of its host star. It is these brightness measurements you are looking at on Planet Hunters.",
+      "figure": "01-KeplerHR_sm.jpg"
+    }
+  },
+  {
+    "course_number": 2,
+    "material":
+    {
+      "title": "The First 'People's Planet'",
+      "text": "The first confirmed planet discovered by volunteers, like you, on Planet Hunters was PH1b (also known as Kepler-64b). It is a Neptune-sized giant planet with a radius 6 times greater than that of the Earth. The really interesting thing about PH1b is that it’s a circumbinary planet, meaning it orbits around two stars! Those two stars are also in orbit around another binary star system, which makes PH1b the first planet ever discovered in a quadruple star system.
+
+        Below you can see the original lightcurve seen by volunteers on Planet Hunters. The coloured region shows where separate volunteers marked the dip.",
+      "figure": "./images/mini-course/01-KeplerHR_sm.jpg"
+    }
+  }
+
+]  
