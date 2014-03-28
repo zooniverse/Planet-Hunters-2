@@ -1,15 +1,13 @@
-User           = require 'zooniverse/models/user'
-# BaseController = require 'zooniverse/controllers/base-controller'
+User = require 'zooniverse/models/user'
 $ = window.jQuery
 
-class MiniCourse #extends BaseController
-  constructor: ->
-    # super
-    console.log 'MiniCourse.constructor()'
+class MiniCourse
 
-    @rate = 10 # set default rate
+  constructor: ->
     @prompt_el = $(classifier.el).find("#course-prompt")
     @course_el = $(classifier.el).find("#course-container")
+
+    @count = 0 # fake classification counter
 
     @prompt_el.hide()
     @course_el.hide()
@@ -18,9 +16,8 @@ class MiniCourse #extends BaseController
     @prompt_el.on "click", "#course-yes", (e) => @onClickCourseYes()
     @prompt_el.on "click", "#course-no", (e) => @onClickCourseNo()
     @prompt_el.on "click", "#course-never", (e) => @onClickCourseNever()      
-    @prompt_el.on "click", "#course-prompt-close", (e) => @onClickCoursePromptClose()  
-    @course_el.on "click", "#course-close", (e) => @onClickCourseClose()
-
+    @prompt_el.on "click", "#course-prompt-close", (e) => @hidePrompt()  
+    @course_el.on "click", "#course-close", (e) => @hideCourse()
 
   setRate: (rate) ->
     console.log 'setRate()'
@@ -28,13 +25,18 @@ class MiniCourse #extends BaseController
 
   onClickCourseYes: ->
     console.log "onClickCourseYes()"
-    @displayCourse()
+    User.current.setPreference 'course', 'yes', true, @displayCourse()
+    @hidePrompt()
 
   onClickCourseNo: ->
     console.log "onClickCourseNo()"
+    User.current.setPreference 'course', 'no', true
+    @hidePrompt()
 
   onClickCourseNever: ->
     console.log "onClickCourseNever()"
+    User.current.setPreference 'course', 'never', true
+    @hidePrompt()
 
   displayCourse: ->
     console.log 'displayCourse()'
@@ -43,24 +45,28 @@ class MiniCourse #extends BaseController
   hideCourse: ->
     @course_el.fadeOut()
 
-  onClickCourseClose: ->
-    console.log 'courseClose()'
-    @hideCourse()
+  # onClickCourseClose: ->
+  #   console.log 'courseClose()'
+  #   @hideCourse()
+
+  showPrompt: ->
+    @prompt_el.slideDown()
 
   hidePrompt: ->
-    @prompt_el.hide()
-
-  onClickCoursePromptClose: ->
-    console.log 'onClickCoursePromptClose()'
     @prompt_el.slideUp()
 
-  showCoursePrompt: ->
-    console.log 'showCoursePrompt()'
+  # onClickCoursePromptClose: ->
+  #   console.log 'onClickCoursePromptClose()'
+  #   @prompt_el.slideUp()
 
-  getUserCoursePref: ->
-    console.log 'getUserCoursePref()'
+  # showCoursePrompt: ->
+  #   console.log 'showCoursePrompt()'
 
-  getUserClassCount: ->
-    console.log 'getUserClassCount()'
+  getPref: ->
+    @pref = User.current?.preferences['course']
+
+  getNumClass: ->
+    # fake it for not
+    # @count = User.current?.classification_count 
 
 module.exports = MiniCourse

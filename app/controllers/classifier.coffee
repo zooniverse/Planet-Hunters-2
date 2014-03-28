@@ -61,11 +61,9 @@ class Classifier extends BaseController
     @drawSliderAxisNums()
 
     # mini course
-    # @course = new MiniCourse(@el)
     @course = new MiniCourse
     @course.setRate 3     
-    @userClassCount = 0 # initialize faux counter
-
+    
   loadSubject: (data) ->
     # create a new canvas
     @canvas = document.createElement('canvas')
@@ -185,12 +183,14 @@ class Classifier extends BaseController
 
   onClickNoTransits: -> 
     @finishSubject()
-    # @userClassCount = @course.getUserClassCount()
 
   onClickFinished: -> 
     @finishSubject()
-    @userClassCount = @userClassCount + 1
-    console.log 'YOU\'VE MARKED ', @userClassCount, ' LIGHT CURVES!'
+
+    # fake classification counter
+    @course.count = @course.count + 1
+    
+    console.log 'YOU\'VE MARKED ', @course.count, ' LIGHT CURVES!'
 
   onClickNextSubject: ->
     @noTransitsButton.show()
@@ -203,7 +203,7 @@ class Classifier extends BaseController
     @resetTalkComment @altTalkComment
 
     # show courses
-    # @course.showCoursePrompt() if @course.getUserCoursePref() isnt 'never' and @userClassCount % @course.rate is 0
+    @course.showPrompt() if @course.getPref() isnt 'never' and @course.count % @course.rate is 0
 
     console.log "LOAD NEW SUBJECT HERE"
     #fake it for now...
