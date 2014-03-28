@@ -4,8 +4,17 @@ $ = window.jQuery
 class MiniCourse
 
   constructor: ->
+
+    # check previous courses taken
+    User.on 'change', =>
+      console.log 'FOO: ', User.current?.preferences.hasOwnProperty 'prev_course'
+      @resetCourse() unless User.current?.preferences.hasOwnProperty 'prev_course'
+      @prev = +User.current?.preferences['prev_course']
+      @curr = +@prev + 1
+
     @prompt_el = $(classifier.el).find("#course-prompt")
     @course_el = $(classifier.el).find("#course-container")
+
 
     @count = 0 # fake classification counter
 
@@ -54,26 +63,33 @@ class MiniCourse
     @content = $.parseJSON jsonData
     
   setRate: (rate) ->
-    console.log 'setRate()'
     @rate = rate
 
   onClickCourseYes: ->
     console.log "onClickCourseYes()"
-    User.current.setPreference 'course', 'yes', true, @displayCourse()
+    unless User.current is null
+      User.current.setPreference 'course', 'yes', false, @displayCourse()
     @hidePrompt()
 
   onClickCourseNo: ->
     console.log "onClickCourseNo()"
-    User.current.setPreference 'course', 'no', true
+    unless User.current is null
+      User.current.setPreference 'course', 'no', false
     @hidePrompt()
 
   onClickCourseNever: ->
     console.log "onClickCourseNever()"
-    User.current.setPreference 'course', 'never', true
+    unless User.current is null
+      User.current.setPreference 'course', 'never', false
     @hidePrompt()
 
   displayCourse: ->
     console.log 'displayCourse()'
+    console.log 'CURRENT COURSE: ', @curr
+    @prev = @curr
+    @curr = +@curr + 1
+    unless User.current is null
+      User.current.setPreference 'prev_course', @curr, false
     @course_el.fadeIn()
 
   hideCourse: ->
@@ -91,5 +107,13 @@ class MiniCourse
   getNumClass: ->
     # fake it for not
     # @count = User.current?.classification_count 
+
+  resetCourse: ->
+    console.log 'resetting course'
+    unless User.current is null
+      User.current?.setPreference 'prev_course', 0, false
+      @prev   = +prev.current?.preferences['prev_course']
+      @curr = +@prev + 1
+
 
 module.exports = MiniCourse
