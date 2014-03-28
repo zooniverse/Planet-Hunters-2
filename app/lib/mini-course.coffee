@@ -1,27 +1,24 @@
 User           = require 'zooniverse/models/user'
-BaseController = require 'zooniverse/controllers/base-controller'
+# BaseController = require 'zooniverse/controllers/base-controller'
 $ = window.jQuery
 
-class MiniCourse extends BaseController
-  className: 'mini-course'
-  template: require '../views/classifier'
-
-  events:
-    'click img[id="course-prompt-close"]'  : 'onClickCoursePromptClose'
-    'click button[name="course-yes"]'      : 'onClickCourseYes'
-    'click button[name="course-no"]'       : 'onClickCourseNo'
-    'click button[name="course-never"]'    : 'onClickCourseNever'
-    'click button[name="course-close"]'    : 'onClickCourseClose'
-
-  # console.log events
-
-  # constructor: (el) ->
+class MiniCourse #extends BaseController
   constructor: ->
-    super
+    # super
     console.log 'MiniCourse.constructor()'
 
-    console.log $('classifier').find("#course-prompt")
+    $(classifier.el).find("#course-prompt").hide()
+    $(classifier.el).find("#course-container").hide()
     @rate = 10 # set default rate
+
+    $(classifier.el).find("#course-prompt").on "click", "#course-yes", (e) => 
+      @onClickCourseYes()
+
+    $(classifier.el).find("#course-prompt").on "click", "#course-no", (e) => 
+      @onClickCourseNo()
+
+    $(classifier.el).find("#course-prompt").on "click", "#course-never", (e) => 
+      @onClickCourseNever()      
 
 
   setRate: (rate) ->
@@ -57,6 +54,5 @@ class MiniCourse extends BaseController
 
   getUserClassCount: ->
     console.log 'getUserClassCount()'
-
 
 module.exports = MiniCourse

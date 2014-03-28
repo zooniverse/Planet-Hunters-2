@@ -48,17 +48,10 @@ class Classifier extends BaseController
     super
     window.classifier = @
     @zoomRange = 15.00
-
-    @el.find('#course-container').hide() # hide coursen
-    @el.find('#course-prompt').hide()
-
-    @userClassCount = 0 # initialize faux counter
-
     isZoomed: false
     ifFaved: false
     @scaleSlider = new FauxRangeInput('#scale-slider')
     @marksContainer = @el.find('#marks-container')[0]
-
     @loadSubject(sampleData[0])
 
     @el.find("#scale-slider").attr "max", @canvasGraph.largestX - @zoomRange
@@ -70,7 +63,8 @@ class Classifier extends BaseController
     # mini course
     # @course = new MiniCourse(@el)
     @course = new MiniCourse
-    @course.setRate 3 
+    @course.setRate 3     
+    @userClassCount = 0 # initialize faux counter
 
   loadSubject: (data) ->
     # create a new canvas
@@ -176,7 +170,6 @@ class Classifier extends BaseController
 
   onClickHelp: ->
     console.log 'onClickHelp()'
-    console.log @el.find("#scale-slider")
     @el.find('#course-prompt').slideDown()
 
   onClickTutorial: ->
@@ -226,9 +219,6 @@ class Classifier extends BaseController
     @planetNum.html @canvasGraph.marks.all.length # number of marks
     @noTransitsButton.hide()
     @finishedButton.hide()
-
-  # onClickCourseClose: ->
-  #   console.log 'onClickCourseClose()'
 
   onClickJoinConvo: -> @joinConvoBtn.hide().siblings().show()
 
