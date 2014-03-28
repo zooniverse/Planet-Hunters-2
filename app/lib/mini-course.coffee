@@ -44,16 +44,16 @@ class MiniCourse
           {
             "title": "The Kepler Mission",
             "text": "The Kepler space telescope was launched by NASA in 2009. It was named after German astronomer Johannes Kepler, who is best known for developing the laws of planetary motion in the 17th century. For 4 years it stared at a patch of sky 100 square degrees in area (500 times that of the full Moon) in the constellations Lyra, Cygnus and Draco, looking for the tell-tale dips in brightness caused when a planet passes in front of its host star. It is these brightness measurements you are looking at on Planet Hunters.",
-            "figure": "01-KeplerHR_sm.jpg"
+            "figure": "./images/mini-course/01-KeplerHR_sm.jpg"
           }
         },
         {
-          "course_number": 1,
+          "course_number": 2,
           "material":
           {
-            "title": "The Kepler Mission",
-            "text": "The Kepler space telescope was launched by NASA in 2009. It was named after German astronomer Johannes Kepler, who is best known for developing the laws of planetary motion in the 17th century. For 4 years it stared at a patch of sky 100 square degrees in area (500 times that of the full Moon) in the constellations Lyra, Cygnus and Draco, looking for the tell-tale dips in brightness caused when a planet passes in front of its host star. It is these brightness measurements you are looking at on Planet Hunters.",
-            "figure": "01-KeplerHR_sm.jpg"
+            "title": "The Kepler Mission (Part 2)",
+            "text": "Prepare to be schooled!",
+            "figure": "./images/mini-course/01-KeplerHR_sm.jpg"
           }
         }
       ]'
@@ -61,7 +61,17 @@ class MiniCourse
     # not working yet
     # @content = $.parseJSON @jsonFile
     @content = $.parseJSON jsonData
-    
+    @render()
+
+  render: ->
+    User.on "change", =>
+      title  = @content[@curr-1].material.title
+      text   = @content[@curr-1].material.text
+      figure = @content[@curr-1].material.figure
+      @course_el.find("#course-header").html title
+      @course_el.find("#course-text").html text
+      @course_el.find("#course-figure").attr 'src', figure
+
   setRate: (rate) ->
     @rate = rate
 

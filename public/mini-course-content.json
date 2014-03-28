@@ -16,7 +16,7 @@
       "text": "The first confirmed planet discovered by volunteers, like you, on Planet Hunters was PH1b (also known as Kepler-64b). It is a Neptune-sized giant planet with a radius 6 times greater than that of the Earth. The really interesting thing about PH1b is that it’s a circumbinary planet, meaning it orbits around two stars! Those two stars are also in orbit around another binary star system, which makes PH1b the first planet ever discovered in a quadruple star system.
 
         Below you can see the original lightcurve seen by volunteers on Planet Hunters. The coloured region shows where separate volunteers marked the dip.",
-      "figure": "01-KeplerHR_sm.jpg"
+      "figure": "./images/mini-course/01-KeplerHR_sm.jpg"
     }
   }
 
