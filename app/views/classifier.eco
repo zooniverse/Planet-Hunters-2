@@ -6,9 +6,9 @@
 
       <div id="course-prompt">
         Mini-course available! Learn more about planet hunting. Interested?
-        <button name="course-yes" class="course-button">Yes</button>
-        <button name="course-no" class="course-button">No</button>
-        <button name="course-never" class="course-button">Never</button>
+        <button id="course-yes" name="course-yes" class="course-button">Yes</button>
+        <button id="course-no" name="course-no" class="course-button">No</button>
+        <button id="course-never" name="course-never" class="course-button">Never</button>
         <img id="course-prompt-close" class="course-prompt-close" src="./images/icons/marking-closex.png">
       </div>
     </div>
