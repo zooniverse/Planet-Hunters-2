@@ -1,15 +1,12 @@
 User = require 'zooniverse/models/user'
+Api  = require 'zooniverse/lib/api'
 $ = window.jQuery
 
 class MiniCourse
 
   constructor: ->
-
-    # check previous courses taken
     User.on 'change', =>
-      @resetCourse() unless User.current?.preferences.hasOwnProperty 'prev_course'
-      @prev = +User.current?.preferences['prev_course']
-      @curr = +@prev + 1
+      @resetCourse() unless User.current?.preferences[Api.current.project]?.hasOwnProperty 'prev_course'
 
     @prompt_el = $(classifier.el).find("#course-prompt")
     @course_el = $(classifier.el).find("#course-container")
@@ -28,6 +25,11 @@ class MiniCourse
     @course_el.on "click", "#course-close", (e) => @hideCourse()
 
     @loadCourseContent()
+
+  # check previous courses taken
+  User.on 'change', =>
+    console.log 'user has changed'
+
 
   loadCourseContent: ->
     # not working yet
@@ -80,9 +82,8 @@ class MiniCourse
     # @content = $.parseJSON @jsonFile
     @content = $.parseJSON jsonData
     @num_courses = @content.length
-    # @render()
 
-  render: ->
+  loadContent: ->
     if @curr > @num_courses
       title  = "That\'s all, folks!"
       text   = "This concludes the mini-course series. Thanks for tuning in!"
@@ -107,30 +108,30 @@ class MiniCourse
   onClickCourseYes: ->
     console.log "onClickCourseYes()"
     unless User.current is null
-      User.current.setPreference 'course', 'yes', false, @displayCourse()
-    @hidePrompt()
+      User.current.setPreference 'course', 'no'
+      @hidePrompt()
+      @displayCourse()
 
   onClickCourseNo: ->
     console.log "onClickCourseNo()"
     unless User.current is null
-      User.current.setPreference 'course', 'no', false
-    @hidePrompt()
+      User.current.setPreference 'course', 'no'
+      @hidePrompt()
 
   onClickCourseNever: ->
     console.log "onClickCourseNever()"
     unless User.current is null
-      User.current.setPreference 'course', 'never', false
-    @hidePrompt()
+      User.current.setPreference 'course', 'never' 
+      @hidePrompt()
 
   displayCourse: ->
     console.log 'displayCourse()'
     console.log 'CURRENT COURSE: ', @curr
     unless User.current is null
-      User.current.setPreference 'prev_course', @curr, false
-      @render()
+      @loadContent()
       @prev = @curr
       @curr = +@curr + 1
-
+      User.current.setPreference 'prev_course', @curr
     @course_el.fadeIn()
 
   hideCourse: ->
@@ -143,18 +144,17 @@ class MiniCourse
     @prompt_el.slideUp()
 
   getPref: ->
-    @pref = User.current?.preferences['course']
-
-  getNumClass: ->
-    # fake it for not
-    # @count = User.current?.classification_count 
+    @pref = User.current?.preferences[Api.current.project]['course']
+    console.log 'course preference: ', @pref
+    return @pref
 
   resetCourse: ->
     console.log 'resetting course'
     unless User.current is null
-      User.current?.setPreference 'prev_course', 0, false
-      @prev   = +prev.current?.preferences['prev_course']
-      @curr = +@prev + 1
-
+      console.log 'resetting course'
+      User.current.setPreference 'course', 'yes'
+      User.current.setPreference 'prev_course', 0
+      @prev = 0
+      @curr = 0
 
 module.exports = MiniCourse
