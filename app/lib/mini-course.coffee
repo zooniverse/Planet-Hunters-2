@@ -91,7 +91,6 @@ class MiniCourse
       text   = "This concludes the mini-course series. Thanks for tuning in!"
       figure = ""
     else
-      console.log 'CURR: ', @prev
       title  = @content[@curr].material.title
       text   = @content[@curr].material.text
       figure = @content[@curr].material.figure
@@ -109,29 +108,23 @@ class MiniCourse
     @rate = rate
 
   onClickCourseYes: ->
-    console.log "onClickCourseYes()"
     unless User.current is null
       User.current.setPreference 'course', 'yes'
       @hidePrompt()
       @displayCourse()
 
   onClickCourseNo: ->
-    console.log "onClickCourseNo()"
     unless User.current is null
       User.current.setPreference 'course', 'no'
       @hidePrompt()
 
   onClickCourseNever: ->
-    console.log "onClickCourseNever()"
     unless User.current is null
       User.current.setPreference 'course', 'never' 
       @hidePrompt()
 
   displayCourse: ->
-    console.log 'displayCourse()'
-    console.log 'CURRENT COURSE: ', @curr
     unless User.current is null
-      console.log 'PREV: ', @prev
       @prev = @curr
       @curr = +@curr + 1
       User.current.setPreference 'prev_course', @prev
@@ -153,9 +146,7 @@ class MiniCourse
     return @pref
 
   resetCourse: ->
-    console.log 'resetting course'
     unless User.current is null
-      console.log 'resetting course'
       User.current.setPreference 'course', 'yes'
       User.current.setPreference 'prev_course', 0
       @prev = User.current?.preferences[Api.current.project]['prev_course']
