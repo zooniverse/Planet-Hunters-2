@@ -2,42 +2,7 @@ User = require 'zooniverse/models/user'
 Api  = require 'zooniverse/lib/api'
 $ = window.jQuery
 
-class MiniCourse
-
-  constructor: ->
-    User.on 'change', =>
-      @resetCourse() unless User.current?.preferences[Api.current.project]?.hasOwnProperty 'prev_course'
-
-    @prompt_el = $(classifier.el).find("#course-prompt")
-    @course_el = $(classifier.el).find("#course-container")
-
-
-    @count = 0 # fake classification counter
-
-    @prompt_el.hide()
-    @course_el.hide()
-    
-    # event callbacks
-    @prompt_el.on "click", "#course-yes", (e) => @onClickCourseYes()
-    @prompt_el.on "click", "#course-no", (e) => @onClickCourseNo()
-    @prompt_el.on "click", "#course-never", (e) => @onClickCourseNever()      
-    @prompt_el.on "click", "#course-prompt-close", (e) => @hidePrompt()  
-    @course_el.on "click", "#course-close", (e) => @hideCourse()
-
-    @loadCourseContent()
-
-  # check previous courses taken
-  User.on 'change', =>
-    console.log 'user has changed'
-
-
-  loadCourseContent: ->
-    # not working yet
-    # @jsonFile = $.getJSON "./mini-course-content.json", @parseJSON()
-    @parseJSON()
-
-  parseJSON: ->
-    jsonData = '
+jsonData = '
       [
         {
           "course_number": 1,
@@ -77,21 +42,59 @@ class MiniCourse
           }
         }
       ]'
+
+class MiniCourse
+
+  constructor: ->
+    User.on 'change', =>
+      @resetCourse() unless User.current?.preferences[Api.current.project]?.hasOwnProperty 'prev_course'
+
+    @curr = 0
+    @prev = 0
+
+    @prompt_el = $(classifier.el).find("#course-prompt")
+    @course_el = $(classifier.el).find("#course-container")
+
+    @count = 0 # fake classification counter
+
+    @prompt_el.hide()
+    @course_el.hide()
     
+    # event callbacks
+    @prompt_el.on "click", "#course-yes", (e) => @onClickCourseYes()
+    @prompt_el.on "click", "#course-no", (e) => @onClickCourseNo()
+    @prompt_el.on "click", "#course-never", (e) => @onClickCourseNever()      
+    @prompt_el.on "click", "#course-prompt-close", (e) => @hidePrompt()  
+    @course_el.on "click", "#course-close", (e) => @hideCourse()
+
+    @loadCourseContent()
+
+  # check previous courses taken
+  User.on 'change', =>
+    console.log 'user has changed'
+
+
+  loadCourseContent: ->
+    # not working yet
+    # @jsonFile = $.getJSON "./mini-course-content.json", @parseJSON()
+    @parseJSON()
+
+  parseJSON: ->
     # not working yet
     # @content = $.parseJSON @jsonFile
     @content = $.parseJSON jsonData
     @num_courses = @content.length
 
   loadContent: ->
-    if @curr > @num_courses
+    if @curr >= @num_courses
       title  = "That\'s all, folks!"
       text   = "This concludes the mini-course series. Thanks for tuning in!"
       figure = ""
     else
-      title  = @content[@curr-1].material.title
-      text   = @content[@curr-1].material.text
-      figure = @content[@curr-1].material.figure
+      console.log 'CURR: ', @prev
+      title  = @content[@curr].material.title
+      text   = @content[@curr].material.text
+      figure = @content[@curr].material.figure
 
     # DEBUG CODE
     console.log 'title:  ', title
@@ -108,7 +111,7 @@ class MiniCourse
   onClickCourseYes: ->
     console.log "onClickCourseYes()"
     unless User.current is null
-      User.current.setPreference 'course', 'no'
+      User.current.setPreference 'course', 'yes'
       @hidePrompt()
       @displayCourse()
 
@@ -128,10 +131,11 @@ class MiniCourse
     console.log 'displayCourse()'
     console.log 'CURRENT COURSE: ', @curr
     unless User.current is null
-      @loadContent()
+      console.log 'PREV: ', @prev
       @prev = @curr
       @curr = +@curr + 1
-      User.current.setPreference 'prev_course', @curr
+      User.current.setPreference 'prev_course', @prev
+      @loadContent()
     @course_el.fadeIn()
 
   hideCourse: ->
@@ -154,7 +158,7 @@ class MiniCourse
       console.log 'resetting course'
       User.current.setPreference 'course', 'yes'
       User.current.setPreference 'prev_course', 0
-      @prev = 0
+      @prev = User.current?.preferences[Api.current.project]['prev_course']
       @curr = 0
 
 module.exports = MiniCourse
