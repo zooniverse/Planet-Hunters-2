@@ -60,7 +60,6 @@ footer = new Footer
 document.body.appendChild footerContainer
 footer.el.appendTo footerContainer
 
-
 # planet-time
 # refreshTime = ->
 #   setTimeout displayTime(), 100000
