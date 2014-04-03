@@ -116,8 +116,8 @@ class Marks
     mouseLocation = @toCanvasXPoint(e)
     markBelow = Math.abs mouseLocation - @closestXBelow(mouseLocation)
     markAbove = Math.abs mouseLocation - @closestXAbove(mouseLocation)
-    # 18 is width of mark plus some room on each side
-    markBelow < (18*scale) or markAbove < (18*scale) or mouseLocation in @sortedXCoords()
+    # 24 is width of mark plus some room on each side
+    markBelow < (24*scale) or markAbove < (18*scale) or mouseLocation in @sortedXCoords()
 
 class Mark
   constructor: (e, @canvasGraph) ->
@@ -131,10 +131,10 @@ class Mark
       <div class="top-bar" style="position: relative; width:100%; height: 13px; top 0px; background-color: #{bgColor}; cursor: pointer;">
         <img class="close-icon" src="./images/icons/marking-closex.png" style="position: relative; bottom: 4px;">
       </div>
-      <div class="left-border" style="position: absolute; top: 0px; left: 0px;width: 2px; height: 100%; background-color: #{bgColor};z-index: 100; cursor: ew-resize;">
+      <div class="left-border" style="position: absolute; top: 0px; left: -2px;width: 2px; height: 100%; background-color: #{bgColor};z-index: 100; cursor: ew-resize;">
         <div class="left-handle" style="position: absolute; left: -5px; width: 12px; height: 12px; background-color: #{bgColor}; top: 50%; border-radius: 3px; color: #b7061e; font-size: 8px; letter-spacing: 1px;">III</div>
       </div>
-      <div class="right-border" style="position: absolute; top: 0px; left: 100%; width: 2px; height: 100%; background-color: #{bgColor}; z-index: 100; cursor: ew-resize;">
+      <div class="right-border" style="position: absolute; top: 0px; right: -2px; width: 2px; height: 100%; background-color: #{bgColor}; z-index: 100; cursor: ew-resize;">
         <div class="right-handle" style="position: absolute; right: -5px; width: 12px; height: 12px; background-color: #{bgColor}; top: 50%; border-radius: 3px; color: #b7061e; font-size: 8px; letter-spacing: 1px;">III</div>
       </div>
     """
@@ -160,7 +160,7 @@ class Mark
 
   maxWidth: -> 150 * (@canvasGraph.scale || 1)
 
-  handleWidth: -> 14 * (@canvasGraph.scale || 1)
+  handleWidth: -> 16 * (@canvasGraph.scale || 1)
 
   draw: (e) ->
     markLeftX = Math.max @startingPoint + @minWidth() - @maxWidth(),
