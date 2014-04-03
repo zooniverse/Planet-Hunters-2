@@ -134,7 +134,7 @@ class Mark
       <div class="left-border" style="position: absolute; top: 0px; left: 0px;width: 2px; height: 100%; background-color: #{bgColor};z-index: 100; cursor: ew-resize;">
         <div class="left-handle" style="position: absolute; left: -5px; width: 12px; height: 12px; background-color: #{bgColor}; top: 50%; border-radius: 3px; color: #b7061e; font-size: 8px; letter-spacing: 1px;">III</div>
       </div>
-      <div class="right-border" style="position: absolute; top: 0px; right: 0px; width: 2px; height: 100%; background-color: #{bgColor}; z-index: 100; cursor: ew-resize;">
+      <div class="right-border" style="position: absolute; top: 0px; left: 100%; width: 2px; height: 100%; background-color: #{bgColor}; z-index: 100; cursor: ew-resize;">
         <div class="right-handle" style="position: absolute; right: -5px; width: 12px; height: 12px; background-color: #{bgColor}; top: 50%; border-radius: 3px; color: #b7061e; font-size: 8px; letter-spacing: 1px;">III</div>
       </div>
     """
@@ -160,7 +160,7 @@ class Mark
 
   maxWidth: -> 150 * (@canvasGraph.scale || 1)
 
-  handleWidth: -> 12 * (@canvasGraph.scale || 1)
+  handleWidth: -> 14 * (@canvasGraph.scale || 1)
 
   draw: (e) ->
     markLeftX = Math.max @startingPoint + @minWidth() - @maxWidth(),
