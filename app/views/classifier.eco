@@ -81,20 +81,16 @@
       <div id="tools">
         <h3>TOOLS</h3>
         <button class="tool-button" id="toggle-zoom">
-          <img src="images/icons/toolbar-zoomplus.png"/>
-          Zoom
+          <span>Zoom</span>
         </button>
         <button class="tool-button" id="toggle-fav">
-          <img src="images/icons/toolbar-fav-empty.png"/>
-          +Fav
+          <span>+Fav</span>
         </button>
         <button class="tool-button" id="help">
-          <img src="images/icons/toolbar-question-mark.png"/>
-          Help
+          <span>Help</span>
         </button>
         <button class="tool-button" id="tutorial">
-          <img src="images/icons/toolbar-cursor.png"/>
-          Tutorial
+          <span>Tutorial</span>
         </button>
       </div>
       <div id="slider-container">

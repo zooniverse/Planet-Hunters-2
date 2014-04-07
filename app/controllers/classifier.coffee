@@ -97,16 +97,13 @@ class Classifier extends BaseController
 
   onToggleZoom: ->
     @isZoomed = !@isZoomed
-    zoomButton = @el.find("#toggle-zoom")[0]
     if @isZoomed
       @canvasGraph.zoomInTo(0, @zoomRange)
-      zoomButton.innerHTML = '<img src="images/icons/toolbar-zoomminus.png">Zoom'
       @el.find("#toggle-zoom").addClass("toggled")
       @el.find("#ui-slider").val(0)
       @el.find(".noUi-handle").fadeIn(150)
     else
       @canvasGraph.zoomOut()
-      zoomButton.innerHTML = '<img src="images/icons/toolbar-zoomplus.png">Zoom'
       @el.find("#toggle-zoom").removeClass("toggled")
       @el.find("#ui-slider").val(@canvasGraph.smallestX)
       @el.find(".noUi-handle").fadeOut(150)
@@ -115,11 +112,9 @@ class Classifier extends BaseController
     favButton = @el.find("#toggle-fav")[0]
     if @isFaved
       @isFaved = false
-      favButton.innerHTML = '<img src="images/icons/toolbar-fav-empty.png">+Fav'
       @el.find("#toggle-fav").removeClass("toggled")
     else
       @isFaved = true
-      favButton.innerHTML = '<img src="images/icons/toolbar-fav-filled.png">+Fav'
       @el.find("#toggle-fav").addClass("toggled")
 
   onClickHelp: ->
@@ -167,6 +162,10 @@ class Classifier extends BaseController
 
   finishSubject: ->
     @showSummary()
+
+    @el.find("#toggle-zoom").removeClass("toggled")
+    @el.find(".noUi-handle").hide()
+    @isZoomed = false
     console.log "SEND CLASSIFICATION HERE"
 
   showSummary: ->

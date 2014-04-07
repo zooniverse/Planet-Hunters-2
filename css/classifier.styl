@@ -172,18 +172,34 @@
           text-align center
           font-size 0.75em
           opacity 0.5
+          span
+            top 20px
+            position relative
+            display inline-block
+            margin-bottom 10px
           &:active
             transform translateY(1px)
             box-shadow none
           &:hover
             opacity 1.0
-
+          &#toggle-zoom
+            background url("images/icons/toolbar-zoomplus.png") no-repeat 50% 35%
+            &.toggled
+              background #151a1b url("images/icons/toolbar-zoomminus.png") no-repeat 50% 35%
+          &#toggle-fav
+            background url("images/icons/toolbar-fav-empty.png") no-repeat 50% 35%
+            &.toggled
+              background #151a1b url("images/icons/toolbar-fav-filled.png") no-repeat 50% 35%
+          &#help
+            background url("images/icons/toolbar-question-mark.png") no-repeat 50% 35%
+          &#tutorial
+            background url("images/icons/toolbar-cursor.png/") no-repeat 50% 35%
         .tool-button
           border none
           color white
           background-color rgb(50,50,50)
           height 60px
-          width 50px
+          width 100%
           border-radius 0.3em
           transition 0.3s
           &:hover
