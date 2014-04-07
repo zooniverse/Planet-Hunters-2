@@ -15,7 +15,7 @@ module.exports =
       title            : ''
       content          : ''
       start            : ''
-      beginClassifying : 'Classify'
+      beginClassifying : 'Start Classifying'
       learnMore        : 'Learn More'
     whatDo:
       title            : ''

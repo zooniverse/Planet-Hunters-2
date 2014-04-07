@@ -7,7 +7,6 @@
     "stack-of-pages": "0.0.11",
     "t7e": "~0.2.3",
     "zooniverse": "~0.2.3",
-    "faux-range-input": "~0.1.0",
     "zootorial": "~0.4.12"
   },
   "scripts": {
