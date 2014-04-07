@@ -1,7 +1,7 @@
 BaseController = require 'zooniverse/controllers/base-controller'
-FauxRangeInput = require 'faux-range-input'
 User           = require 'zooniverse/models/user'
 MiniCourse     = require '../lib/mini-course'
+NoUiSlider     = require "../lib/jquery.nouislider.min"
 
 $ = window.jQuery
 require '../lib/sample-data'
@@ -38,7 +38,7 @@ class Classifier extends BaseController
     'click button[name="no-transits"]'     : 'onClickNoTransits'
     'click button[name="next-subject"]'    : 'onClickNextSubject'
     'click button[name="finished"]'        : 'onClickFinished'
-    'change input[id="scale-slider"]'      : 'onChangeScaleSlider'
+    'slide #ui-slider'                     : 'onChangeScaleSlider'
     'click button[name="join-convo"]'      : 'onClickJoinConvo'
     'click button[name="alt-join-convo"]'  : 'onClickAltJoinConvo'
     'click button[name="submit-talk"]'     : 'onClickSubmitTalk'
@@ -50,20 +50,21 @@ class Classifier extends BaseController
     @zoomRange = 15.00
     isZoomed: false
     ifFaved: false
-    @scaleSlider = new FauxRangeInput('#scale-slider')
     @marksContainer = @el.find('#marks-container')[0]
     @loadSubject(sampleData[0])
-
-    @el.find("#scale-slider").attr "max", @canvasGraph.largestX - @zoomRange
-    @el.find("#scale-slider").attr "min", @canvasGraph.smallestX
 
     $(document).on 'mark-change', => @updateButtons()
     @drawSliderAxisNums()
 
     # mini course
     @course = new MiniCourse
-    @course.setRate 3     
-    
+    @course.setRate 3
+    @el.find("#ui-slider").noUiSlider
+      start: 0
+      range:
+        "min": @canvasGraph.smallestX
+        "max": @canvasGraph.largestX - @zoomRange
+
   loadSubject: (data) ->
     # create a new canvas
     @canvas = document.createElement('canvas')
@@ -79,7 +80,7 @@ class Classifier extends BaseController
     window.canvasGraph = @canvasGraph
 
   onChangeScaleSlider: ->
-    val = +@el.find("#scale-slider").val()
+    val = +@el.find("#ui-slider").val()
     # @focusCenter = +@el.find('#scale-slider').val() + @zoomRange/2
     # xMin = @focusCenter-@zoomRange/2
     # xMax = @focusCenter+@zoomRange/2
@@ -93,7 +94,7 @@ class Classifier extends BaseController
     # console.log 'data smallestX: ', @canvasGraph.smallestX
     # console.log 'Data domain  : [', @canvasGraph.toDataXCoord(xMin), ',', @canvasGraph.toDataXCoord(xMax), ']'
     # console.log 'Canvas domain: [', xMin, ',', xMax, ']'
-    
+
   onToggleZoom: ->
     @isZoomed = !@isZoomed
     zoomButton = @el.find("#toggle-zoom")[0]
@@ -101,14 +102,14 @@ class Classifier extends BaseController
       @canvasGraph.zoomInTo(0, @zoomRange)
       zoomButton.innerHTML = '<img src="images/icons/toolbar-zoomminus.png">Zoom'
       @el.find("#toggle-zoom").addClass("toggled")
-      @el.find("#scale-slider").addClass("active").val(0)
-      @el.find(".faux-range-thumb").fadeIn(150)
+      @el.find("#ui-slider").val(0)
+      @el.find(".noUi-handle").fadeIn(150)
     else
       @canvasGraph.zoomOut()
       zoomButton.innerHTML = '<img src="images/icons/toolbar-zoomplus.png">Zoom'
       @el.find("#toggle-zoom").removeClass("toggled")
-      @el.find("#scale-slider").removeClass("active").val(@canvasGraph.smallestX)
-      @el.find(".faux-range-thumb").fadeOut(150)
+      @el.find("#ui-slider").val(@canvasGraph.smallestX)
+      @el.find(".noUi-handle").fadeOut(150)
 
   onToggleFav: ->
     favButton = @el.find("#toggle-fav")[0]
@@ -120,7 +121,7 @@ class Classifier extends BaseController
       @isFaved = true
       favButton.innerHTML = '<img src="images/icons/toolbar-fav-filled.png">+Fav'
       @el.find("#toggle-fav").addClass("toggled")
- 
+
   onClickHelp: ->
     console.log 'onClickHelp()'
     @el.find('#course-prompt').slideDown()
@@ -136,15 +137,15 @@ class Classifier extends BaseController
       @finishedButton.hide()
       @noTransitsButton.show()
 
-  onClickNoTransits: -> 
+  onClickNoTransits: ->
     @finishSubject()
 
-  onClickFinished: -> 
+  onClickFinished: ->
     @finishSubject()
 
     # fake classification counter
     @course.count = @course.count + 1
-    
+
     console.log 'YOU\'VE MARKED ', @course.count, ' LIGHT CURVES!'
 
   onClickNextSubject: ->

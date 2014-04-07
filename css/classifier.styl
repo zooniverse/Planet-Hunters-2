@@ -26,7 +26,7 @@
       float right
     .course-text
       font-size 14px
-      
+
     .subject-header
       h3
         color white
@@ -190,7 +190,7 @@
             background-color #4C4C4C //#151A1B
             border-radius 0.3em
             opacity 1.0
-          
+
           &.toggled
             background-color #151A1B
             transition 0.3s
@@ -199,6 +199,48 @@
         float left
         height 22px
         background rgba(13,21,24,0.75)
+        #ui-slider
+          width 964px
+          height 20px
+          position relative
+          float left
+          display inline-block
+          background none
+          &.noUi-background
+            border 1px solid #323232
+          &.noUi-target
+            border none
+            box-shadow none
+          .noUi-base
+            width 730px
+            margin-left 118px
+          .noUi-handle
+            border 1px solid #9a9ea2
+            background rgba(137, 137, 137, .6)
+            height 22px
+            top 0px
+            width 236px
+            left -118px
+            box-shadow none
+            display none
+            &:before
+              text-align center
+              color #9a9ea2
+              background none
+              content "III"
+              line-height 20px
+              height 20px
+              left 0px
+              top 0px
+              position relative
+              font-size 12px
+              width 100%
+              z-index 5
+            &:after
+              display none
+            &:hover
+              cursor -webkit-grab
+              cursor grab
         #axis-label
           width 60px
           float left
@@ -211,47 +253,18 @@
         #numbers-container
           display inline
           position absolute
-          width 964px
-          height 22px
+          background rgba(13,21,24,0.75)
+          width 954px
+          height 20px
           text-align justify
           display inline-table
-          padding 0 10px
+          padding-left 10px
           color #525c5b
           left 60px
+          border 1px solid #323232
           span
             width 10px
             display table-cell
-        .faux-range-input
-          width 964px
-          height 20px
-          vertical-align middle
-          cursor ew-resize
-          cursor -webkit-grab
-          border 1px solid rgb(50,50,50)
-          .faux-range-track
-            width 730px
-          .faux-range-thumb
-            margin -1px 0 0 -8px
-            background rgba(137, 137, 137, .6) //#1b7a85
-            outline none
-            border 1px solid #9a9ea2
-            width 235px
-            height 20px
-            border-radius 4px
-            top 0px
-            display none
-            &:before
-              text-align center
-              color #9a9ea2
-              line-height 20px
-              content "III"
-              position absolute
-              margin 0px
-              font-size 12px
-              width 100%
-              z-index 5
-          .faux-range-tick
-            display none
 
   button
     &[name="no-transits"]

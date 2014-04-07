@@ -100,7 +100,7 @@
       <div id="slider-container">
         <div id="axis-label">DAYS</div>
         <div id="numbers-container"></div>
-        <input id="scale-slider" type="range" value="0" step="0.01"/>
+        <div id="ui-slider"></div>
       </div>
     </div>
 
