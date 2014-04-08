@@ -1,3 +1,4 @@
+<% translate = require 't7e' %>
 <div class="content-block">
   <div id="subject-container">
     <div class="subject-header">
@@ -5,7 +6,7 @@
       <p>If so, highlight it on the graph!</p>
 
       <div id="course-prompt">
-        Mini-course available! Learn more about planet hunting. Interested?
+          <%- translate 'course.prompt.login_message' %>
         <button id="course-yes" name="course-yes" class="course-button">Yes</button>
         <button id="course-no" name="course-no" class="course-button">No</button>
         <button id="course-never" name="course-never" class="course-button">Never</button>
