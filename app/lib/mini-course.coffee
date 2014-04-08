@@ -1,5 +1,6 @@
 User = require 'zooniverse/models/user'
 Api  = require 'zooniverse/lib/api'
+require '../lib/en-us'
 $ = window.jQuery
 
 jsonData = '
@@ -46,19 +47,26 @@ jsonData = '
 class MiniCourse
 
   constructor: ->
-    User.on 'change', =>
-      @resetCourse() unless User.current?.preferences[Api.current.project]?.hasOwnProperty 'prev_course'
+    @prompt_el = $(classifier.el).find("#course-prompt")
+    @course_el = $(classifier.el).find("#course-container")
+    @prompt_el.hide()
+    @course_el.hide()
 
+    # keep track of courses
+    @count = 0 # fake classification counter
     @curr = 0
     @prev = 0
 
-    @prompt_el = $(classifier.el).find("#course-prompt")
-    @course_el = $(classifier.el).find("#course-container")
-
-    @count = 0 # fake classification counter
-
-    @prompt_el.hide()
-    @course_el.hide()
+    User.on 'change', =>
+      @resetCourse() unless User.current?.preferences[Api.current.project]?.hasOwnProperty 'prev_course'
+      if User.current?
+        @prompt_el.toggleClass 'signed-in'
+        @prompt_el.find('.course-button').show()
+        @prompt_el.find('#course-message').html 'Mini-course available! Learn more about planet hunting. Interested?'
+      else
+        @prompt_el.toggleClass 'signed-in'
+        @prompt_el.find('.course-button').hide()
+        @prompt_el.find('#course-message').html 'Please sign in to participate in the Planet Hunters mini-course.'
 
     # event callbacks
     @prompt_el.on "click", "#course-yes", (e) => @onClickCourseYes()
@@ -66,13 +74,7 @@ class MiniCourse
     @prompt_el.on "click", "#course-never", (e) => @onClickCourseNever()
     @prompt_el.on "click", "#course-prompt-close", (e) => @hidePrompt()
     @course_el.on "click", "#course-close", (e) => @hideCourse()
-
     @loadCourseContent()
-
-  # check previous courses taken
-  User.on 'change', =>
-    console.log 'user has changed'
-
 
   loadCourseContent: ->
     # not working yet
