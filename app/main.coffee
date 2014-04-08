@@ -16,7 +16,7 @@ languageManager.on 'change-language', (e, code, strings) ->
 
 # api
 Api = require 'zooniverse/lib/api'
-api = new Api project: 'asteroid'
+api = new Api project: 'planet_hunter'
 
 # site navigation
 SiteNavigation = require './controllers/site-navigation'

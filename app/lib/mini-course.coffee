@@ -27,7 +27,7 @@ jsonData = '
           "material":
           {
             "title": "How else can we discover planets? (Part 1)",
-            "text": "<p>The transit method is a very simple and effective method for discovering planets, but it is not the only one used by astronomers. Let’s have a look at some of the other methods.</p> 
+            "text": "<p>The transit method is a very simple and effective method for discovering planets, but it is not the only one used by astronomers. Let’s have a look at some of the other methods.</p>
             <p><b>The radial velocity method</b>: As a planet orbits a star its gravitational pull moves the star around. Therefore at some points the star is moving towards us (the observer) and at other it is moving away. We can measure the speed of this movement by looking at the spectrum of light from the star. When moving towards us its light becomes more blue, and when moving away its light becomes more red. The faster the star is moving, the more massive the planet. For example, Jupiter makes our Sun move at 12.7 m/s, whereas the Earth only makes it move at 0.09 m/s.</p>",
             "figure": ""
           }
@@ -59,12 +59,12 @@ class MiniCourse
 
     @prompt_el.hide()
     @course_el.hide()
-    
+
     # event callbacks
     @prompt_el.on "click", "#course-yes", (e) => @onClickCourseYes()
     @prompt_el.on "click", "#course-no", (e) => @onClickCourseNo()
-    @prompt_el.on "click", "#course-never", (e) => @onClickCourseNever()      
-    @prompt_el.on "click", "#course-prompt-close", (e) => @hidePrompt()  
+    @prompt_el.on "click", "#course-never", (e) => @onClickCourseNever()
+    @prompt_el.on "click", "#course-prompt-close", (e) => @hidePrompt()
     @course_el.on "click", "#course-close", (e) => @hideCourse()
 
     @loadCourseContent()
@@ -120,7 +120,7 @@ class MiniCourse
 
   onClickCourseNever: ->
     unless User.current is null
-      User.current.setPreference 'course', 'never' 
+      User.current.setPreference 'course', 'never'
       @hidePrompt()
 
   displayCourse: ->
