@@ -1,20 +1,21 @@
 <% translate = require 't7e' %>
 <div class="content-block">
 
-  <!-- COURSE CLOSE -->
+  <!-- COURSE  -->
   <div id="course-container">
-    <div id="course-header" class="course-header">
-    </div>
-    <div id="course-close">
-      Close <img class="course-close" src="./images/icons/marking-closex.png">
+    <!-- <div id="course-header">PH Mini-Course</div> -->
+    <div id="course-title"></div>
+    <div class="course-close">Close<img src="./images/icons/marking-closex.png">
     </div>
     <div id="course-body">
-      <img id="course-figure" class="course-figure" src="">
-      <div id="course-text" class="course-text"></div>
+      <div class="course-figure-container horizontal">
+        <img id="course-figure" src="">
+      </div>
+      <div class="course-text horizontal"></div>
     </div>
     <button name="course-close" class="course-close std-btn yellow">Close</button>
   </div>
-  <!-- COURSE CLOSE -->
+  <!-- COURSE -->
 
   <div id="subject-container">
     <div class="subject-header">

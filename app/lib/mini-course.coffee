@@ -49,8 +49,8 @@ class MiniCourse
   constructor: ->
     @prompt_el = $(classifier.el).find("#course-prompt")
     @course_el = $(classifier.el).find("#course-container")
-    # COMMENT FOR DEBUG
-    # @prompt_el.hide()
+    @subject_el = $(classifier.el).find("#subject-container")
+    @prompt_el.hide()
     @course_el.hide()
 
     # keep track of courses
@@ -103,8 +103,8 @@ class MiniCourse
     console.log 'text:   ', text
     console.log 'figure: ', figure
 
-    @course_el.find("#course-header").html title
-    @course_el.find("#course-text").html text
+    @course_el.find("#course-title").html title
+    @course_el.find(".course-text").html text
     @course_el.find("#course-figure").attr 'src', figure
 
   setRate: (rate) ->
@@ -128,14 +128,16 @@ class MiniCourse
 
   displayCourse: ->
     unless User.current is null
-      @prev = @curr
-      @curr = +@curr + 1
       User.current.setPreference 'prev_course', @prev
       @loadContent()
-    @course_el.show()
+      @subject_el.fadeOut()
+      @course_el.slideDown()
+      @prev = @curr
+      @curr = +@curr + 1
 
   hideCourse: ->
-    @course_el.fadeOut()
+    @course_el.slideUp()
+    @subject_el.slideDown()
 
   showPrompt: ->
     @prompt_el.slideDown()
