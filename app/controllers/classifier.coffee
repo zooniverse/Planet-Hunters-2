@@ -1,7 +1,10 @@
 BaseController = require 'zooniverse/controllers/base-controller'
 User           = require 'zooniverse/models/user'
+Subject        = require 'zooniverse/models/subject'
+Classification = require 'zooniverse/models/classification'
 MiniCourse     = require '../lib/mini-course'
 NoUiSlider     = require "../lib/jquery.nouislider.min"
+
 
 $ = window.jQuery
 require '../lib/sample-data'
@@ -50,6 +53,12 @@ class Classifier extends BaseController
     @zoomRange = 15.00
     isZoomed: false
     ifFaved: false
+
+    User.on 'change', @onUserChange
+    Subject.on 'fetch', @onSubjectFetch
+    Subject.on 'select', @onSubjectSelect
+    @Subject = Subject
+
     @marksContainer = @el.find('#marks-container')[0]
     @loadSubject(sampleData[0])
 
@@ -64,6 +73,17 @@ class Classifier extends BaseController
       range:
         "min": @canvasGraph.smallestX
         "max": @canvasGraph.largestX - @zoomRange
+
+  onUserChange: (e, user) =>
+    Subject.next() unless @classification?
+
+  onSubjectFetch: =>
+    console.log 'onSubjectFetch()'
+
+  onSubjectSelect: (e, subject) =>
+    console.log 'onSubjectSelect()'
+    @classification = new Classification {subject}
+    # @loadSubject()
 
   loadSubject: (data) ->
     # create a new canvas
