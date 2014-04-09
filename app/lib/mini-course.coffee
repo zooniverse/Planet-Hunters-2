@@ -59,7 +59,8 @@ class MiniCourse
     @prev = 0
 
     User.on 'change', =>
-      @resetCourse() unless User.current?.preferences[Api.current.project]?.hasOwnProperty 'prev_course'
+      # needs to be changed to read user's last course number
+      @resetCourse() #unless User.current?.preferences[Api.current.project]?.hasOwnProperty 'prev_course'
       if User.current?
         @prompt_el.toggleClass 'signed-in'
         @prompt_el.find('.course-button').show()
