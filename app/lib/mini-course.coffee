@@ -49,7 +49,8 @@ class MiniCourse
   constructor: ->
     @prompt_el = $(classifier.el).find("#course-prompt")
     @course_el = $(classifier.el).find("#course-container")
-    @prompt_el.hide()
+    # COMMENT FOR DEBUG
+    # @prompt_el.hide()
     @course_el.hide()
 
     # keep track of courses
@@ -73,7 +74,7 @@ class MiniCourse
     @prompt_el.on "click", "#course-no", (e) => @onClickCourseNo()
     @prompt_el.on "click", "#course-never", (e) => @onClickCourseNever()
     @prompt_el.on "click", "#course-prompt-close", (e) => @hidePrompt()
-    @course_el.on "click", "#course-close", (e) => @hideCourse()
+    @course_el.on "click", ".course-close", (e) => @hideCourse()
     @loadCourseContent()
 
   loadCourseContent: ->
@@ -131,7 +132,7 @@ class MiniCourse
       @curr = +@curr + 1
       User.current.setPreference 'prev_course', @prev
       @loadContent()
-    @course_el.fadeIn()
+    @course_el.show()
 
   hideCourse: ->
     @course_el.fadeOut()

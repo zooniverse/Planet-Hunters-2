@@ -1,5 +1,21 @@
 <% translate = require 't7e' %>
 <div class="content-block">
+
+  <!-- COURSE CLOSE -->
+  <div id="course-container">
+    <div id="course-header" class="course-header">
+    </div>
+    <div id="course-close">
+      Close <img class="course-close" src="./images/icons/marking-closex.png">
+    </div>
+    <div id="course-body">
+      <img id="course-figure" class="course-figure" src="">
+      <div id="course-text" class="course-text"></div>
+    </div>
+    <button name="course-close" class="course-close std-btn yellow">Close</button>
+  </div>
+  <!-- COURSE CLOSE -->
+
   <div id="subject-container">
     <div class="subject-header">
       <h3>Do you see a transit?</h3>
@@ -15,14 +31,6 @@
         <img id="course-prompt-close" class="course-prompt-close" src="./images/icons/marking-closex.png">
       </div>
     </div>
-
-    <div id="course-container">
-      <h2 id="course-header" class="course-header"></h2>
-      <img id="course-figure" class="course-figure" src="">
-      <div id="course-text" class="course-text"></div>
-      <button id="course-close" name="course-close" class="std-btn yellow">Close</button>
-    </div>
-
     <div id="graph-container">
       <div id="marks-container">
         <!-- <canvas id="graph" width="1078" height="420"></canvas> -->
