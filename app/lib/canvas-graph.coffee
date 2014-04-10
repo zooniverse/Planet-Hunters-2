@@ -3,46 +3,36 @@ $ = window.jQuery
 class CanvasGraph
   constructor: (@canvas, @data) ->
     console.log 'CanvasGraph.constructor()'
-    # debugger
     @ctx = @canvas.getContext('2d')
 
     @smallestX = Math.min @data.x...
     @smallestY = Math.min @data.y...
-
     @largestX = Math.max @data.x...
     @largestY = Math.max @data.y...
 
-    # for value in [@data.y...]
-    #   if value is +0
-    #     console.log 'ZERO!'
-    #     value = @smallestY
-
-    # for value in [@data.x...]
-    #   value = value - @smallestX
-
-
-    @normalize(@data.y)
-
-
     @dataLength = Math.min @data.x.length, @data.y.length
+    # normalize data
+
+    for xValue, idx in [@data.x...]
+      @data.x[idx] = xValue - @smallestX
+
+    @data.y = @normalize(@data.y)
 
   enableMarking: ->
     @marks = new Marks
     window.marks = @marks
-
     @canvas.addEventListener 'mousedown', (e) => @addMarkToGraph(e)
     @canvas.addEventListener 'touchstart', (e) => @addMarkToGraph(e)
-
 
   plotPoints: (xMin = @smallestX, xMax = @largestX) ->
     @xMin = xMin
     @xMax = xMax
     @clearCanvas()
 
-    # console.log 'points: ', {@data.x, @data.y}
     for i in [0...@dataLength]
       x = ((+@data.x[i] - xMin) / (xMax - xMin)) * @canvas.width
-      y = ((+@data.y[i] - @largestY) / (@smallestY - @largestY)) * @canvas.height
+      # y = ((+@data.y[i] - @largestY) / (@smallestY - @largestY)) * @canvas.height
+      y = +@data.y[i] * @canvas.height
       @ctx.fillStyle = "#fff"
       @ctx.fillRect(x,y,2,2)
 
@@ -50,25 +40,26 @@ class CanvasGraph
       for mark in @marks.all
         scaledMin = ((mark.dataXMin - xMin) / (xMax - xMin)) * @canvas.width
         scaledMax = ((mark.dataXMax - xMin) / (xMax - xMin)) * @canvas.width
-
         mark.element.style.width = (scaledMax-scaledMin) + "px"
         mark.element.style.left = (scaledMin) + "px"
-
         mark.save(scaledMin, scaledMax)
 
     @scale = (@largestX - @smallestX) / (@xMax - @xMin)
 
   normalize: (values) ->
+    console.log 'normalizing y-values'
     y_norm = []
-    # console.log 'y_values: ', @data.y
-    console.log 'yMin: ', @smallestY
-    console.log 'yMax: ', @largestY
+    for y, idx in [@data.y...]
+      # console.log 'y: ', ( parseFloat(y) - @smallestY ) / ( @largestY - @smallestY )
+      y_norm[idx] =  ( parseFloat(y) - @smallestY ) / ( @largestY - @smallestY )
 
-    for y, i in [@data.y...]
-      y_norm[i] =  ( parseFloat(y) - @yMin ) / ( @yMax - @yMin )
+    # update max/min values
+    @smallestX = Math.min @data.x...
+    @smallestY = Math.min @data.y...
+    @largestX = Math.max @data.x...
+    @largestY = Math.max @data.y...
     
-    console.log 'y: ', @data.y
-    console.log 'norm: ', y_norm
+    return y_norm
 
   zoomInTo: (wMin, wMax) ->
     [cMin, cMax] = [@xMin, @xMax]

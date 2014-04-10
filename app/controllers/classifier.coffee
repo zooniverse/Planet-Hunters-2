@@ -86,24 +86,24 @@ class Classifier extends BaseController
 
   loadSubjectData: ->
     console.log 'loading subject...'
-    jsonFile = @subject.location['1-0'] # read actual subject
+    jsonFile = @subject.location['14-1'] # read actual subject
     # jsonFile = './offline/subject.json' # for debug only
+    
     $.getJSON jsonFile, (data) =>
-      # console.log 'x: ', data.x
-      # console.log 'y: ', data.y
-
-      # load data into canvas
+      if @canvas?
+        @canvas.remove()
       @marksContainer.appendChild(@canvas)
       @canvasGraph = new CanvasGraph(@canvas, data)
       @canvasGraph.plotPoints()
       @canvasGraph.enableMarking()
       @drawSliderAxisNums()
+
       @el.find("#ui-slider").noUiSlider
         start: 0
         range:
           "min": @canvasGraph.smallestX
           "max": @canvasGraph.largestX - @zoomRange
-
+      
 
   onChangeScaleSlider: ->
     val = +@el.find("#ui-slider").val()
@@ -182,11 +182,8 @@ class Classifier extends BaseController
     # show courses
     @course.showPrompt() if @course.getPref() isnt 'never' and @course.count % @course.rate is 0
 
-    console.log "LOAD NEW SUBJECT HERE"
-    #fake it for now...
-    @loadSubxject()
-    # @loadSubject(sampleData[Math.round Math.random()*(sampleData.length-1)])
-
+    @loadSubjectData()
+    
   finishSubject: ->
     @showSummary()
 
@@ -229,6 +226,6 @@ class Classifier extends BaseController
     sliderNums = ""
     for num in [(Math.round @canvasGraph.smallestX + 1)..(Math.round @canvasGraph.largestX)]
       sliderNums += if num%2 is 0 then "<span class='slider-num'>#{num}</span>" else "<span class='slider-num'>&#x2022</span>"
-    @el.find("#numbers-container").append(sliderNums)
+    @el.find("#numbers-container").html sliderNums
 
 module.exports = Classifier
