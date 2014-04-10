@@ -180,10 +180,8 @@ class Mark
     @element.addEventListener 'mousedown', @onMouseDown
     @element.addEventListener 'touchstart', @onMouseDown
 
-  minWidth: -> 15 * (@canvasGraph.scale || 1)
-
-  maxWidth: -> 150 * (@canvasGraph.scale || 1)
-
+  minWidth: ->    @canvasGraph.scale * 10 #15 * (@canvasGraph.scale || 1)
+  maxWidth: ->    @canvasGraph.scale * 75 #150 * (@canvasGraph.scale || 1)
   handleWidth: -> 16 * (@canvasGraph.scale || 1)
 
   draw: (e) ->
