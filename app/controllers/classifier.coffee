@@ -1,10 +1,11 @@
 BaseController = require 'zooniverse/controllers/base-controller'
 User           = require 'zooniverse/models/user'
 Subject        = require 'zooniverse/models/subject'
+Subject::selected_lightcuve = {}
+
 Classification = require 'zooniverse/models/classification'
 MiniCourse     = require '../lib/mini-course'
 NoUiSlider     = require "../lib/jquery.nouislider.min"
-
 
 $ = window.jQuery
 require '../lib/sample-data'
@@ -48,7 +49,7 @@ class Classifier extends BaseController
     'click button[name="alt-submit-talk"]' : 'onClickSubmitTalkAlt'
 
   constructor: ->
-    super
+    super    
     window.classifier = @
     @zoomRange = 15.00
     isZoomed: false
@@ -77,12 +78,13 @@ class Classifier extends BaseController
   onUserChange: (e, user) =>
     Subject.next() unless @classification?
 
-  onSubjectFetch: =>
+  onSubjectFetch: (e, user) =>
     console.log 'onSubjectFetch()'
 
   onSubjectSelect: (e, subject) =>
     console.log 'onSubjectSelect()'
     @classification = new Classification {subject}
+    console.log 'subject: ', subject
     # @loadSubject()
 
   loadSubject: (data) ->
