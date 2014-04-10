@@ -11,15 +11,15 @@ class CanvasGraph
 
     @smallestX = Math.min @data.x...
     @smallestY = Math.min @data.y...
-    @largestX = Math.max @data.x...
-    @largestY = Math.max @data.y...
+    @largestX  = Math.max @data.x...
+    @largestY  = Math.max @data.y...
 
     @dataLength = Math.min @data.x.length, @data.y.length
-    # normalize data
 
     for xValue, idx in [@data.x...]
       @data.x[idx] = xValue - @smallestX
 
+    # normalize data
     @data.y = @normalize(@data.y)
 
   enableMarking: ->
@@ -51,19 +51,15 @@ class CanvasGraph
     @scale = (@largestX - @smallestX) / (@xMax - @xMin)
 
   normalize: (values) ->
-    console.log 'normalizing y-values'
     y_norm = []
     for y, idx in [@data.y...]
-      # console.log 'y: ', ( parseFloat(y) - @smallestY ) / ( @largestY - @smallestY )
       y_norm[idx] =  ( parseFloat(y) - @smallestY ) / ( @largestY - @smallestY )
-      # y_norm[idx] = -y_norm[idx]
 
-    # update max/min values
+    # update max/min values (still needed?)
     @smallestX = Math.min @data.x...
     @smallestY = Math.min @data.y...
     @largestX = Math.max @data.x...
     @largestY = Math.max @data.y...
-    
     return y_norm
 
   zoomInTo: (wMin, wMax) ->
@@ -98,7 +94,6 @@ class CanvasGraph
     @ctx.scale(1,-1)
 
   toCanvasXCoord: (dataPoint) -> ((dataPoint - @xMin) / (@xMax - @xMin)) * @canvas.width
-
   toDataXCoord: (canvasPoint) -> ((canvasPoint / @canvas.width) * (@xMax - @xMin)) + @xMin
 
   addMarkToGraph: (e) =>
@@ -111,9 +106,7 @@ class CanvasGraph
 
 class Marks
   constructor: -> @all = []
-
   create: (mark) -> document.getElementById('marks-container').appendChild(mark.element)
-
   add: (mark) -> @all.push(mark)
 
   remove: (mark) ->
@@ -131,9 +124,7 @@ class Marks
     # (allXPoints.reduce (a, b) -> a.concat b).sort (a, b) -> a - b
 
   closestXBelow: (xCoord) -> (@sortedXCoords().filter (i) -> i < xCoord).pop()
-
   closestXAbove: (xCoord) -> (@sortedXCoords().filter (i) -> i > xCoord).shift()
-
   toCanvasXPoint: (e) -> e.pageX - e.target.getBoundingClientRect().left - window.scrollX
 
   markTooCloseToAnotherMark: (e, scale) ->
@@ -174,9 +165,7 @@ class Mark
     @element.style.cursor = "move"
 
     @startingPoint = @toCanvasXPoint(e) - (@minWidth()/2)
-
     @dragging = true
-
     @element.addEventListener 'mousedown', @onMouseDown
     @element.addEventListener 'touchstart', @onMouseDown
 

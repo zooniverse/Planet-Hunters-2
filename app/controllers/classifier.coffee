@@ -6,7 +6,6 @@ MiniCourse     = require '../lib/mini-course'
 NoUiSlider     = require "../lib/jquery.nouislider.min"
 
 $ = window.jQuery
-# require '../lib/sample-data'
 
 {CanvasGraph, Marks, Mark} = require "../lib/canvas-graph"
 
@@ -92,6 +91,9 @@ class Classifier extends BaseController
     $.getJSON jsonFile, (data) =>
       if @canvas?
         @canvas.remove()
+        # @canvasGraph.marks.remove()
+
+        # @el.find("#ui-slider").remove()
       @marksContainer.appendChild(@canvas)
       @canvasGraph = new CanvasGraph(@canvas, data)
       @canvasGraph.plotPoints()
@@ -104,7 +106,6 @@ class Classifier extends BaseController
           "min": @canvasGraph.smallestX
           "max": @canvasGraph.largestX - @zoomRange
       
-
   onChangeScaleSlider: ->
     val = +@el.find("#ui-slider").val()
     # @focusCenter = +@el.find('#scale-slider').val() + @zoomRange/2
@@ -164,11 +165,6 @@ class Classifier extends BaseController
   onClickFinished: ->
     @finishSubject()
 
-    # fake classification counter
-    @course.count = @course.count + 1
-
-    console.log 'YOU\'VE MARKED ', @course.count, ' LIGHT CURVES!'
-
   onClickNextSubject: ->
     @noTransitsButton.show()
     @classifySummary.fadeOut(150)
@@ -182,16 +178,27 @@ class Classifier extends BaseController
     # show courses
     @course.showPrompt() if @course.getPref() isnt 'never' and @course.count % @course.rate is 0
 
-    @loadSubjectData()
+    @Subject.next()
+    # @loadSubjectData()
     
   finishSubject: ->
-    @showSummary()
+    # fake classification counter
+    @course.count = @course.count + 1
+    console.log 'YOU\'VE MARKED ', @course.count, ' LIGHT CURVES!'
+    
+    # TODO: fix this!!! why is there a circular reference? and where?
+    # for mark, i in [@canvasGraph.marks.all...]
+    #   console.log 'mark: ', mark
+    #   @classification.annotations[i] = mark
 
+    console.log JSON.stringify( @classification )
+
+    @classification.send()
+    @showSummary()
     @el.find("#toggle-zoom").removeClass("toggled")
     @el.find(".noUi-handle").hide()
     @isZoomed = false
-    console.log "SEND CLASSIFICATION HERE"
-
+    
   showSummary: ->
     @classifySummary.fadeIn(150)
     @nextSubjectButton.show()
