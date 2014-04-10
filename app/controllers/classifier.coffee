@@ -1,14 +1,12 @@
 BaseController = require 'zooniverse/controllers/base-controller'
 User           = require 'zooniverse/models/user'
 Subject        = require 'zooniverse/models/subject'
-Subject::selected_lightcuve = {}
-
 Classification = require 'zooniverse/models/classification'
 MiniCourse     = require '../lib/mini-course'
 NoUiSlider     = require "../lib/jquery.nouislider.min"
 
 $ = window.jQuery
-require '../lib/sample-data'
+# require '../lib/sample-data'
 
 {CanvasGraph, Marks, Mark} = require "../lib/canvas-graph"
 
@@ -60,20 +58,18 @@ class Classifier extends BaseController
     Subject.on 'select', @onSubjectSelect
     @Subject = Subject
 
-    @marksContainer = @el.find('#marks-container')[0]
-    @loadSubject(sampleData[0])
+    # create canvas
+    @canvas = document.createElement('canvas')
+    @canvas.id = 'graph'
+    @canvas.width = 1024
+    @canvas.height = 420
 
     $(document).on 'mark-change', => @updateButtons()
-    @drawSliderAxisNums()
+    @marksContainer = @el.find('#marks-container')[0]
 
     # mini course
     @course = new MiniCourse
     @course.setRate 3
-    @el.find("#ui-slider").noUiSlider
-      start: 0
-      range:
-        "min": @canvasGraph.smallestX
-        "max": @canvasGraph.largestX - @zoomRange
 
   onUserChange: (e, user) =>
     Subject.next() unless @classification?
@@ -83,23 +79,31 @@ class Classifier extends BaseController
 
   onSubjectSelect: (e, subject) =>
     console.log 'onSubjectSelect()'
+    @subject = subject
     @classification = new Classification {subject}
-    console.log 'subject: ', subject
-    # @loadSubject()
+    # console.log 'subject: ', subject
+    @loadSubjectData()
 
-  loadSubject: (data) ->
-    # create a new canvas
-    @canvas = document.createElement('canvas')
-    @canvas.id = 'graph'
-    @canvas.width = 1024
-    @canvas.height = 420
+  loadSubjectData: ->
+    console.log 'loading subject...'
+    jsonFile = @subject.location['1-0'] # read actual subject
+    # jsonFile = './offline/subject.json' # for debug only
+    $.getJSON jsonFile, (data) =>
+      # console.log 'x: ', data.x
+      # console.log 'y: ', data.y
 
-    @marksContainer.appendChild(@canvas)
-    @canvasGraph = new CanvasGraph(@canvas, data)
-    @canvasGraph.plotPoints()
-    @canvasGraph.enableMarking()
+      # load data into canvas
+      @marksContainer.appendChild(@canvas)
+      @canvasGraph = new CanvasGraph(@canvas, data)
+      @canvasGraph.plotPoints()
+      @canvasGraph.enableMarking()
+      @drawSliderAxisNums()
+      @el.find("#ui-slider").noUiSlider
+        start: 0
+        range:
+          "min": @canvasGraph.smallestX
+          "max": @canvasGraph.largestX - @zoomRange
 
-    window.canvasGraph = @canvasGraph
 
   onChangeScaleSlider: ->
     val = +@el.find("#ui-slider").val()
@@ -180,7 +184,8 @@ class Classifier extends BaseController
 
     console.log "LOAD NEW SUBJECT HERE"
     #fake it for now...
-    @loadSubject(sampleData[Math.round Math.random()*(sampleData.length-1)])
+    @loadSubxject()
+    # @loadSubject(sampleData[Math.round Math.random()*(sampleData.length-1)])
 
   finishSubject: ->
     @showSummary()

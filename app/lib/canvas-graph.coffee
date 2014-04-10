@@ -2,6 +2,8 @@ $ = window.jQuery
 
 class CanvasGraph
   constructor: (@canvas, @data) ->
+    console.log 'CanvasGraph.constructor()'
+    # debugger
     @ctx = @canvas.getContext('2d')
 
     @smallestX = Math.min @data.x...
@@ -9,6 +11,18 @@ class CanvasGraph
 
     @largestX = Math.max @data.x...
     @largestY = Math.max @data.y...
+
+    # for value in [@data.y...]
+    #   if value is +0
+    #     console.log 'ZERO!'
+    #     value = @smallestY
+
+    # for value in [@data.x...]
+    #   value = value - @smallestX
+
+
+    @normalize(@data.y)
+
 
     @dataLength = Math.min @data.x.length, @data.y.length
 
@@ -24,11 +38,13 @@ class CanvasGraph
     @xMin = xMin
     @xMax = xMax
     @clearCanvas()
+
+    # console.log 'points: ', {@data.x, @data.y}
     for i in [0...@dataLength]
       x = ((+@data.x[i] - xMin) / (xMax - xMin)) * @canvas.width
       y = ((+@data.y[i] - @largestY) / (@smallestY - @largestY)) * @canvas.height
       @ctx.fillStyle = "#fff"
-      @ctx.fillRect(x, y,2,2)
+      @ctx.fillRect(x,y,2,2)
 
     if @marks
       for mark in @marks.all
@@ -41,6 +57,18 @@ class CanvasGraph
         mark.save(scaledMin, scaledMax)
 
     @scale = (@largestX - @smallestX) / (@xMax - @xMin)
+
+  normalize: (values) ->
+    y_norm = []
+    # console.log 'y_values: ', @data.y
+    console.log 'yMin: ', @smallestY
+    console.log 'yMax: ', @largestY
+
+    for y, i in [@data.y...]
+      y_norm[i] =  ( parseFloat(y) - @yMin ) / ( @yMax - @yMin )
+    
+    console.log 'y: ', @data.y
+    console.log 'norm: ', y_norm
 
   zoomInTo: (wMin, wMax) ->
     [cMin, cMax] = [@xMin, @xMax]
