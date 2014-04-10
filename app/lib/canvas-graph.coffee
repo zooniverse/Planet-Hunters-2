@@ -5,6 +5,10 @@ class CanvasGraph
     console.log 'CanvasGraph.constructor()'
     @ctx = @canvas.getContext('2d')
 
+    # flip values
+    @ctx.translate(0,@canvas.height)
+    @ctx.scale(1,-1)
+
     @smallestX = Math.min @data.x...
     @smallestY = Math.min @data.y...
     @largestX = Math.max @data.x...
@@ -32,7 +36,7 @@ class CanvasGraph
     for i in [0...@dataLength]
       x = ((+@data.x[i] - xMin) / (xMax - xMin)) * @canvas.width
       # y = ((+@data.y[i] - @largestY) / (@smallestY - @largestY)) * @canvas.height
-      y = +@data.y[i] * @canvas.height
+      y = +@data.y[i] * @canvas.height# - @canvas.height
       @ctx.fillStyle = "#fff"
       @ctx.fillRect(x,y,2,2)
 
@@ -52,6 +56,7 @@ class CanvasGraph
     for y, idx in [@data.y...]
       # console.log 'y: ', ( parseFloat(y) - @smallestY ) / ( @largestY - @smallestY )
       y_norm[idx] =  ( parseFloat(y) - @smallestY ) / ( @largestY - @smallestY )
+      # y_norm[idx] = -y_norm[idx]
 
     # update max/min values
     @smallestX = Math.min @data.x...
