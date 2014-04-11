@@ -2,7 +2,6 @@ $ = window.jQuery
 
 class CanvasGraph
   constructor: (@canvas, @data) ->
-    console.log 'CanvasGraph.constructor()'
     @ctx = @canvas.getContext('2d')
 
     # flip values
@@ -116,6 +115,8 @@ class Marks
   destroyAll: ->
     mark.element.outerHTML = "" for mark in @all
     @all = []
+    document.getElementById('marks-container')
+
 
   sortedXCoords: ->
     allXPoints = ([mark.canvasXMin, mark.canvasXMax] for mark in @all)
@@ -252,6 +253,7 @@ class Mark
     window.removeEventListener 'mouseup', @onMouseUp
     window.removeEventListener 'touchmove', @onMouseMove
     window.removeEventListener 'touchend', @onMouseUp
+    
     @canvasGraph.marks.add(@) unless (@ in @canvasGraph.marks.all)
     @canvasGraph.marks.remove(@) if e.target.className is "top-bar" or e.target.className is "close-icon"
     for mark in @canvasGraph.marks.all

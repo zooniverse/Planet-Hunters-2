@@ -57,12 +57,6 @@ class Classifier extends BaseController
     Subject.on 'select', @onSubjectSelect
     @Subject = Subject
 
-    # create canvas
-    @canvas = document.createElement('canvas')
-    @canvas.id = 'graph'
-    @canvas.width = 1024
-    @canvas.height = 420
-
     $(document).on 'mark-change', => @updateButtons()
     @marksContainer = @el.find('#marks-container')[0]
 
@@ -84,16 +78,20 @@ class Classifier extends BaseController
     @loadSubjectData()
 
   loadSubjectData: ->
-    console.log 'loading subject...'
     jsonFile = @subject.location['14-1'] # read actual subject
     # jsonFile = './offline/subject.json' # for debug only
+
+    @canvas?.remove() # kill any previous canvas
+
+    # create new canvas
+    @canvas = document.createElement('canvas')
+    @canvas.id = 'graph'
+    @canvas.width = 1024
+    @canvas.height = 420
     
     $.getJSON jsonFile, (data) =>
-      if @canvas?
-        @canvas.remove()
-        # @canvasGraph.marks.remove()
+      @canvasGraph?.marks.destroyAll()  
 
-        # @el.find("#ui-slider").remove()
       @marksContainer.appendChild(@canvas)
       @canvasGraph = new CanvasGraph(@canvas, data)
       @canvasGraph.plotPoints()
@@ -113,14 +111,7 @@ class Classifier extends BaseController
     # xMax = @focusCenter+@zoomRange/2
 
     return unless @isZoomed
-
     @canvasGraph.plotPoints(val, (val + @zoomRange))
-
-    # console.log "data center: ", @focusCenters
-    # console.log 'data largestX : ', @canvasGraph.largestX
-    # console.log 'data smallestX: ', @canvasGraph.smallestX
-    # console.log 'Data domain  : [', @canvasGraph.toDataXCoord(xMin), ',', @canvasGraph.toDataXCoord(xMax), ']'
-    # console.log 'Canvas domain: [', xMin, ',', xMax, ']'
 
   onToggleZoom: ->
     @isZoomed = !@isZoomed
@@ -187,9 +178,12 @@ class Classifier extends BaseController
     console.log 'YOU\'VE MARKED ', @course.count, ' LIGHT CURVES!'
     
     # TODO: fix this!!! why is there a circular reference? and where?
-    # for mark, i in [@canvasGraph.marks.all...]
-    #   console.log 'mark: ', mark
-    #   @classification.annotations[i] = mark
+    for mark, i in [@canvasGraph.marks.all...]
+      console.log 'mark: ', mark
+      @classification.annotations[i] =
+        x_min: mark.dataXMin
+        x_max: mark.dataXMax
+
 
     console.log JSON.stringify( @classification )
 
