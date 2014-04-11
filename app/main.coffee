@@ -66,21 +66,38 @@ footer.el.appendTo footerContainer
 
 movePlanet = ->
   date = new Date
-  # planet = document.getElementsByClassName "bg-planet"
+  console.log "movePlanet(): ", date.getHours(), ':', date.getMinutes(), ':', date.getSeconds()
+  
 
-  for planet of @el.find(".bg-planet")
-    console.log  planet
-  # planet.attr 'left' date.getSeconds()
+  minuteFrac = ( date.getSeconds() / 60 )
+  hourFrac   = ( date.getMinutes() / 60 )
+  dayFrac    = ( date.getHours() / 24 )
 
-  console.log planet
+  console.log 'minuteFrac = ', minuteFrac
+  console.log 'hourFrac   = ', hourFrac
+  console.log 'dayFrac    = ', dayFrac
 
-  console.log 'DATE/TIME: '
-  console.log " date, hour: ", date.getHours()
-  console.log " date, minute: ", date.getMinutes()
-  console.log " date, second: ", date.getSeconds()
-  # setTimeout( movePlanet, 1000 )
+  scaleFactor = hourFrac
+  for planet in [$(".bg-planet")...]
+    # planet.style.bottom = Math.round(date.getSeconds()/60 * 730+50) + 'px'
+    # planet.style.left   = Math.round(date.getSeconds()/60 * 1138+530) + 'px'
+    planet.style.top    = Math.round( scaleFactor * 100) + '%'
+    planet.style.left   = Math.round( scaleFactor * 100) + '%'
+    planet.style.width  = Math.round( scaleFactor * 2*530) + 'px'
+    planet.style.height = Math.round( scaleFactor * 2*530) + 'px'
 
-# movePlanet()
+    # # DEBUG CODE
+    # console.log '-------------------------------'
+    # console.log 'planet.top: ',    planet.style.top
+    # console.log 'planet.left: ',   planet.style.left
+    # console.log 'planet.width: ',  planet.style.width
+    # console.log 'planet.height: ', planet.style.height
+
+  # setTimeout( movePlanet, 300000 ) # 5 min
+  # setTimeout( movePlanet, 5000 ) # 5 min
+
+movePlanet()
+# moveMoon()
 
 # bind app to window
 window.app = {api, siteNavigation, stack, topBar}
