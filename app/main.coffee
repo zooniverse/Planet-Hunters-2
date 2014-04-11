@@ -77,7 +77,7 @@ movePlanet = ->
   console.log 'hourFrac   = ', hourFrac
   console.log 'dayFrac    = ', dayFrac
 
-  scaleFactor = minuteFrac
+  scaleFactor = hourFrac
   for planet in [$(".bg-planet")...]
     # planet.style.bottom = Math.round(date.getSeconds()/60 * 730+50) + 'px'
     # planet.style.left   = Math.round(date.getSeconds()/60 * 1138+530) + 'px'
@@ -86,14 +86,15 @@ movePlanet = ->
     planet.style.width  = Math.round( scaleFactor * 2*530) + 'px'
     planet.style.height = Math.round( scaleFactor * 2*530) + 'px'
 
-    # DEBUG CODE
-    console.log '-------------------------------'
-    console.log 'planet.top: ',    planet.style.top
-    console.log 'planet.left: ',   planet.style.left
-    console.log 'planet.width: ',  planet.style.width
-    console.log 'planet.height: ', planet.style.height
+    # # DEBUG CODE
+    # console.log '-------------------------------'
+    # console.log 'planet.top: ',    planet.style.top
+    # console.log 'planet.left: ',   planet.style.left
+    # console.log 'planet.width: ',  planet.style.width
+    # console.log 'planet.height: ', planet.style.height
+
   # setTimeout( movePlanet, 300000 ) # 5 min
-  setTimeout( movePlanet, 5000 ) # 5 min
+  # setTimeout( movePlanet, 5000 ) # 5 min
 
 movePlanet()
 # moveMoon()
