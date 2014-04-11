@@ -2,45 +2,65 @@ $ = window.jQuery
 
 class CanvasGraph
   constructor: (@canvas, @data) ->
+    console.log 'CanvasGraph.constructor()'
     @ctx = @canvas.getContext('2d')
+
+    # flip values
+    @ctx.translate(0,@canvas.height)
+    @ctx.scale(1,-1)
 
     @smallestX = Math.min @data.x...
     @smallestY = Math.min @data.y...
-
-    @largestX = Math.max @data.x...
-    @largestY = Math.max @data.y...
+    @largestX  = Math.max @data.x...
+    @largestY  = Math.max @data.y...
 
     @dataLength = Math.min @data.x.length, @data.y.length
+
+    for xValue, idx in [@data.x...]
+      @data.x[idx] = xValue - @smallestX
+
+    # normalize data
+    @data.y = @normalize(@data.y)
 
   enableMarking: ->
     @marks = new Marks
     window.marks = @marks
-
     @canvas.addEventListener 'mousedown', (e) => @addMarkToGraph(e)
     @canvas.addEventListener 'touchstart', (e) => @addMarkToGraph(e)
-
 
   plotPoints: (xMin = @smallestX, xMax = @largestX) ->
     @xMin = xMin
     @xMax = xMax
     @clearCanvas()
+
     for i in [0...@dataLength]
       x = ((+@data.x[i] - xMin) / (xMax - xMin)) * @canvas.width
-      y = ((+@data.y[i] - @largestY) / (@smallestY - @largestY)) * @canvas.height
+      # y = ((+@data.y[i] - @largestY) / (@smallestY - @largestY)) * @canvas.height
+      y = +@data.y[i] * @canvas.height# - @canvas.height
       @ctx.fillStyle = "#fff"
-      @ctx.fillRect(x, y,2,2)
+      @ctx.fillRect(x,y,2,2)
 
     if @marks
       for mark in @marks.all
         scaledMin = ((mark.dataXMin - xMin) / (xMax - xMin)) * @canvas.width
         scaledMax = ((mark.dataXMax - xMin) / (xMax - xMin)) * @canvas.width
-
         mark.element.style.width = (scaledMax-scaledMin) + "px"
         mark.element.style.left = (scaledMin) + "px"
-
         mark.save(scaledMin, scaledMax)
 
     @scale = (@largestX - @smallestX) / (@xMax - @xMin)
+
+  normalize: (values) ->
+    y_norm = []
+    for y, idx in [@data.y...]
+      y_norm[idx] =  ( parseFloat(y) - @smallestY ) / ( @largestY - @smallestY )
+
+    # update max/min values (still needed?)
+    @smallestX = Math.min @data.x...
+    @smallestY = Math.min @data.y...
+    @largestX = Math.max @data.x...
+    @largestY = Math.max @data.y...
+    return y_norm
 
   zoomInTo: (wMin, wMax) ->
     [cMin, cMax] = [@xMin, @xMax]
@@ -74,7 +94,6 @@ class CanvasGraph
     @ctx.scale(1,-1)
 
   toCanvasXCoord: (dataPoint) -> ((dataPoint - @xMin) / (@xMax - @xMin)) * @canvas.width
-
   toDataXCoord: (canvasPoint) -> ((canvasPoint / @canvas.width) * (@xMax - @xMin)) + @xMin
 
   addMarkToGraph: (e) =>
@@ -87,9 +106,7 @@ class CanvasGraph
 
 class Marks
   constructor: -> @all = []
-
   create: (mark) -> document.getElementById('marks-container').appendChild(mark.element)
-
   add: (mark) -> @all.push(mark)
 
   remove: (mark) ->
@@ -107,9 +124,7 @@ class Marks
     # (allXPoints.reduce (a, b) -> a.concat b).sort (a, b) -> a - b
 
   closestXBelow: (xCoord) -> (@sortedXCoords().filter (i) -> i < xCoord).pop()
-
   closestXAbove: (xCoord) -> (@sortedXCoords().filter (i) -> i > xCoord).shift()
-
   toCanvasXPoint: (e) -> e.pageX - e.target.getBoundingClientRect().left - window.scrollX
 
   markTooCloseToAnotherMark: (e, scale) ->
@@ -150,16 +165,12 @@ class Mark
     @element.style.cursor = "move"
 
     @startingPoint = @toCanvasXPoint(e) - (@minWidth()/2)
-
     @dragging = true
-
     @element.addEventListener 'mousedown', @onMouseDown
     @element.addEventListener 'touchstart', @onMouseDown
 
-  minWidth: -> 15 * (@canvasGraph.scale || 1)
-
-  maxWidth: -> 150 * (@canvasGraph.scale || 1)
-
+  minWidth: ->    @canvasGraph.scale * 10 #15 * (@canvasGraph.scale || 1)
+  maxWidth: ->    @canvasGraph.scale * 75 #150 * (@canvasGraph.scale || 1)
   handleWidth: -> 16 * (@canvasGraph.scale || 1)
 
   draw: (e) ->

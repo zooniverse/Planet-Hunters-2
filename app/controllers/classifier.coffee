@@ -1,14 +1,11 @@
 BaseController = require 'zooniverse/controllers/base-controller'
 User           = require 'zooniverse/models/user'
 Subject        = require 'zooniverse/models/subject'
-Subject::selected_lightcuve = {}
-
 Classification = require 'zooniverse/models/classification'
 MiniCourse     = require '../lib/mini-course'
 NoUiSlider     = require "../lib/jquery.nouislider.min"
 
 $ = window.jQuery
-require '../lib/sample-data'
 
 {CanvasGraph, Marks, Mark} = require "../lib/canvas-graph"
 
@@ -60,20 +57,18 @@ class Classifier extends BaseController
     Subject.on 'select', @onSubjectSelect
     @Subject = Subject
 
-    @marksContainer = @el.find('#marks-container')[0]
-    @loadSubject(sampleData[0])
+    # create canvas
+    @canvas = document.createElement('canvas')
+    @canvas.id = 'graph'
+    @canvas.width = 1024
+    @canvas.height = 420
 
     $(document).on 'mark-change', => @updateButtons()
-    @drawSliderAxisNums()
+    @marksContainer = @el.find('#marks-container')[0]
 
     # mini course
     @course = new MiniCourse
     @course.setRate 3
-    @el.find("#ui-slider").noUiSlider
-      start: 0
-      range:
-        "min": @canvasGraph.smallestX
-        "max": @canvasGraph.largestX - @zoomRange
 
   onUserChange: (e, user) =>
     Subject.next() unless @classification?
@@ -83,24 +78,34 @@ class Classifier extends BaseController
 
   onSubjectSelect: (e, subject) =>
     console.log 'onSubjectSelect()'
+    @subject = subject
     @classification = new Classification {subject}
-    console.log 'subject: ', subject
-    # @loadSubject()
+    # console.log 'subject: ', subject
+    @loadSubjectData()
 
-  loadSubject: (data) ->
-    # create a new canvas
-    @canvas = document.createElement('canvas')
-    @canvas.id = 'graph'
-    @canvas.width = 1024
-    @canvas.height = 420
+  loadSubjectData: ->
+    console.log 'loading subject...'
+    jsonFile = @subject.location['14-1'] # read actual subject
+    # jsonFile = './offline/subject.json' # for debug only
+    
+    $.getJSON jsonFile, (data) =>
+      if @canvas?
+        @canvas.remove()
+        # @canvasGraph.marks.remove()
 
-    @marksContainer.appendChild(@canvas)
-    @canvasGraph = new CanvasGraph(@canvas, data)
-    @canvasGraph.plotPoints()
-    @canvasGraph.enableMarking()
+        # @el.find("#ui-slider").remove()
+      @marksContainer.appendChild(@canvas)
+      @canvasGraph = new CanvasGraph(@canvas, data)
+      @canvasGraph.plotPoints()
+      @canvasGraph.enableMarking()
+      @drawSliderAxisNums()
 
-    window.canvasGraph = @canvasGraph
-
+      @el.find("#ui-slider").noUiSlider
+        start: 0
+        range:
+          "min": @canvasGraph.smallestX
+          "max": @canvasGraph.largestX - @zoomRange
+      
   onChangeScaleSlider: ->
     val = +@el.find("#ui-slider").val()
     # @focusCenter = +@el.find('#scale-slider').val() + @zoomRange/2
@@ -160,11 +165,6 @@ class Classifier extends BaseController
   onClickFinished: ->
     @finishSubject()
 
-    # fake classification counter
-    @course.count = @course.count + 1
-
-    console.log 'YOU\'VE MARKED ', @course.count, ' LIGHT CURVES!'
-
   onClickNextSubject: ->
     @noTransitsButton.show()
     @classifySummary.fadeOut(150)
@@ -178,18 +178,27 @@ class Classifier extends BaseController
     # show courses
     @course.showPrompt() if @course.getPref() isnt 'never' and @course.count % @course.rate is 0
 
-    console.log "LOAD NEW SUBJECT HERE"
-    #fake it for now...
-    @loadSubject(sampleData[Math.round Math.random()*(sampleData.length-1)])
-
+    @Subject.next()
+    # @loadSubjectData()
+    
   finishSubject: ->
-    @showSummary()
+    # fake classification counter
+    @course.count = @course.count + 1
+    console.log 'YOU\'VE MARKED ', @course.count, ' LIGHT CURVES!'
+    
+    # TODO: fix this!!! why is there a circular reference? and where?
+    # for mark, i in [@canvasGraph.marks.all...]
+    #   console.log 'mark: ', mark
+    #   @classification.annotations[i] = mark
 
+    console.log JSON.stringify( @classification )
+
+    @classification.send()
+    @showSummary()
     @el.find("#toggle-zoom").removeClass("toggled")
     @el.find(".noUi-handle").hide()
     @isZoomed = false
-    console.log "SEND CLASSIFICATION HERE"
-
+    
   showSummary: ->
     @classifySummary.fadeIn(150)
     @nextSubjectButton.show()
@@ -224,6 +233,6 @@ class Classifier extends BaseController
     sliderNums = ""
     for num in [(Math.round @canvasGraph.smallestX + 1)..(Math.round @canvasGraph.largestX)]
       sliderNums += if num%2 is 0 then "<span class='slider-num'>#{num}</span>" else "<span class='slider-num'>&#x2022</span>"
-    @el.find("#numbers-container").append(sliderNums)
+    @el.find("#numbers-container").html sliderNums
 
 module.exports = Classifier
