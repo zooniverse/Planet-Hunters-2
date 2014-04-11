@@ -4,6 +4,8 @@
   font-weight 300
   overflow hidden
   height 50px
+  &.home
+    background-color transparent
   .content-container
     width SITE_WIDTH
     padding 75px
@@ -86,8 +88,19 @@
 .footer-container
   padding 20px
   .zooniverse-footer
-    float right
-    .logo
+    float none
+    .zooniverse-logo-container
+      width 100%
       transform scale(0.4)
-    .content
-      display inline
+      .zooniverse-logo
+         width 100%
+    .zooniverse-footer-content
+      width 100%
+      float none
+      .zooniverse-footer-heading
+        width 75%
+        margin 0 auto
+        text-align center
+    .zooniverse-footer-projects, .zooniverse-footer-general
+      width: 85%
+      margin: 30px auto

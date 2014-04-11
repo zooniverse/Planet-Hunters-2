@@ -1,14 +1,55 @@
-<div class="content-block">
-	<div class="content-container">
-		<div>
-			<h3>Education</h3>
-			<p>
-				Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-			</p>
-		</div>
-	</div>
+<div class="secondary-header">
+  <h1>Education</h1>
 </div>
 
+<div class="secondary-white">
+  <div class="secondary-content">
+    <nav class="sub-nav-education">
+      <button name="classroom">Classroom</button>
+      <button name="resources">Resources</button>
+      <button name="zooteach">Zooteach.org</button>
+    </nav>
+  </div>
+  <div class="secondary-content">
+    <div class="left-column">
+      <div class="content sub-nav-education-classroom">
+        <h1>In the Classroom</h1>
+        <h2>Can I use Planet Hunters 2 in the classroom?</h2>
+        <p>
+          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+        </p>
+
+        <h1>Resources</h1>
+        <h2>What resources are available for the classroom?</h2>
+        <p>
+          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+        </p>
+      </div>
+
+      <div class="content sub-nav-education-resources">
+        <h1>Resources</h1>
+        <p>This will be the content for the resources section</p>
+      </div>
+
+      <div class="content sub-nav-education-zooteach">
+        <h1>Zooteach</h1>
+        <p>This will be the content for the zooteach section</p>
+      </div>
+
+    </div>
+    <div class="right-column">
+      <div class="content">
+        <h1>Get Involved</h1>
+        <p>Join us in finding the many workds out there. Are you ready?</p>
+        <button class="std-btn big-btn yellow">Start Classifying</button>
+
+        <h1>Connect</h1>
+        <p>Follow the <a href="">Planet Hunters 2</a> Blog and <a href="">@planethunters</a> to keep current with the latest results</p>
+      </div>
+    </div>
+
+  </div>
+</div>
 <!-- PLANET TIME -->
 <div class="bg-starfield-sun"></div>
 <!-- <img class="bg-moon"   src="./images/moon.png"> -->

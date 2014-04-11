@@ -2,7 +2,8 @@
   color #bbbcc2
   font-size 20px
   font-weight 300
-  background-color #072034
+  // background-color #072034 // solid color bg option
+  background url("./images/starfield-planets.jpg")
 
   .title
     background-color #fc2738
@@ -14,42 +15,88 @@
   .container
     padding 10px
     text-align center
-    max-width 520px
     margin 0 auto
     img
       width 100%
       border-radius 5px
     p
       margin 10px 0
-    button
-      margin 10px 0
-      &[name="yes"]
-        width 48%
-        float left
-      &[name="no"]
-        background-color #fff
-        color #000
-        width 48%
-        float right
-      &[name="not-sure"]
-        width 100%
-      &[name="next-subject"]
-        display none
-        width 100%
-    #canvas-container
-      position relative
-      width 320px
+    #button-container
+      width 480px
+      height 200px
       margin 0 auto
-      display table
-      #verify-graph
-        background rgba(13,21,24,0.75)
-      #summary
-        display none
+      button
+        margin 10px 0
+        &[name="yes"]
+          width 48%
+          float left
+        &[name="no"]
+          background-color #fff
+          color #000
+          width 48%
+          float right
+        &[name="not-sure"]
+          width 100%
+          &:hover
+            background-color rgba(13,21,24,0.1)
+        &[name="next-subject"]
+          display none
+          width 100%
+    #canvas-container
+      margin 0 auto
+      height 330px
+      width 905px
+      position relative
+      canvas
+        border-radius 5px
+        border 2px solid black
+      :nth-child(1)
+        width 200px
+        height 200px
         position absolute
-        background-color rgba(13,21,24,0.75)
-        width 100%
-        height 100%
+        left 700px
+        background green
+        transition all 2s ease
+        opacity 0.7
+        z-index 0
+        top 50px
+        // background: url("./images/planet.png") // this could be a 'Good job' type image
+      :nth-child(2)
+        background rgba(13,21,24,0.75)
+        position absolute
+        left 300px
+        width 300px
+        height 300px
+        transition all 2s ease
+        z-index 100
         top 0px
-        h1
-          margin-top 120px
-          font-style italic
+      :nth-child(3)
+        width 200px
+        position absolute
+        left 0px
+        height 200px
+        transition all 2s ease
+        background red
+        opacity 0.7
+        z-index 0
+        top 50px
+
+@media screen and (max-width: 920px)
+  .verification
+    .container
+      #canvas-container
+        width auto
+        :nth-child(1)
+          display none
+        :nth-child(2)
+          position relative
+          margin 0 auto
+          left auto
+        :nth-child(3)
+          display none
+
+@media screen and (max-width: 520px)
+  .verification
+    .container
+      #button-container
+        width 100%

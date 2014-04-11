@@ -1,7 +1,7 @@
 BaseController = require 'zooniverse/controllers/base-controller'
 {CanvasGraph, Marks, Mark} = require "../lib/canvas-graph"
 $ = window.jQuery
-require '../lib/sample-data'
+# require '../lib/sample-data'
 
 class Verification extends BaseController
   className: 'verification'
@@ -12,7 +12,7 @@ class Verification extends BaseController
     'button[name="no"]' : 'noButton'
     'button[name="not-sure"]': 'notSureButton'
     'button[name="next-subject"]': 'nextSubjectButton'
-    '#summary'       : 'summary'
+    '#summary' :  'summary'
     '#user-message' : 'message'
     '#summary-message': 'summaryMessage'
 
@@ -24,12 +24,15 @@ class Verification extends BaseController
 
   constructor: ->
     super
-    @loadSubject(light_curve_data)
+    setTimeout =>
+      @loadSubject()
+      middleStart = @el.find('.verify-canvas:nth-child(2)')[0]
+      # startCanvas = new CanvasGraph(middleStart, sampleData[3]).plotPoints(2,4) # comment for now
 
-  loadSubject: (data) ->
-    @canvas = @el.find('#verify-graph')[0]
-    @canvasGraph = new CanvasGraph(@canvas, data)
-    @canvasGraph.plotPoints()
+  loadSubject: ->
+    @dataIndex ||= 0
+    canvas = @el.find('.verify-canvas:nth-child(3)')[0]
+    # @canvasGraph = new CanvasGraph(canvas, sampleData[@dataIndex]).plotPoints(2,4) # comment for now
     @message.html "Is this a proper transit?"
 
   onClickYesButton: -> @showSummary()
@@ -42,11 +45,19 @@ class Verification extends BaseController
     @summary.hide()
     @message.html "Is this a proper transit?"
 
+    @dataIndex += 1
+
+    canvasContainer = document.getElementById('canvas-container')
+    firstChild = canvasContainer.children[0]
+    canvasContainer.appendChild(firstChild)
+
+    @loadSubject()
+
   onClickNotSureButton: -> console.log "NOT SURE"
 
   showSummary: -> 
     @message.html "Ready to move on?"
-    @summaryMessage.html("#{num = Math.round Math.random()*100 + 1} other user#{if num > 1 then 's' else ''} agree")
+    @summaryMessage.html("") # place a post classify message to users here if desired
     @summary.show()
     @showNextSubjectButton()
 

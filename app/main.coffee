@@ -16,7 +16,7 @@ languageManager.on 'change-language', (e, code, strings) ->
 
 # api
 Api = require 'zooniverse/lib/api'
-api = new Api project: 'asteroid'
+api = new Api project: 'planet_hunter'
 
 # site navigation
 SiteNavigation = require './controllers/site-navigation'
@@ -29,7 +29,7 @@ stack = new StackOfPages
   '#/': require './controllers/home-page'
   '#/about': require './controllers/about-page'
   '#/classify': require './controllers/classifier'
-  '#/science': require './controllers/science-page'  
+  '#/science': require './controllers/science-page'
   '#/profile': require './controllers/profile'
   '#/education': require './controllers/education'
   '#/discuss': require './controllers/discuss'
@@ -59,7 +59,6 @@ Footer = require 'zooniverse/controllers/footer'
 footer = new Footer
 document.body.appendChild footerContainer
 footer.el.appendTo footerContainer
-
 
 # planet-time
 # refreshTime = ->

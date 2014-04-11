@@ -1,18 +1,38 @@
+<% translate = require 't7e' %>
 <div class="content-block">
+
+  <!-- COURSE  -->
+  <div id="course-container">
+    <!-- <div id="course-header">PH Mini-Course</div> -->
+    <div id="course-title"></div>
+    <div class="course-close">Close<img src="./images/icons/marking-closex.png">
+    </div>
+    <div id="course-body">
+      <div class="course-figure-container horizontal">
+        <img id="course-figure" src="">
+        <div class="course-figure-credits"></div>
+      </div>
+      <div class="course-text horizontal"></div>
+    </div>
+    <button name="course-close" class="course-close std-btn yellow">Close</button>
+  </div>
+  <!-- COURSE -->
+
   <div id="subject-container">
     <div class="subject-header">
       <h3>Do you see a transit?</h3>
       <p>If so, highlight it on the graph!</p>
 
-      <div id="lesson-prompt">
-        Lesson available! Become better at identifying transits. Interested?
-        <button class="lesson-button">Yes</button>
-        <button class="lesson-button">No</button>
-        <button class="lesson-button">Never</button>
-        <img id="lesson-close" class="lesson-close" src="./images/icons/marking-closex.png">
+      <div id="course-prompt">
+        <div id="course-message" class="course-message">
+          <%- translate 'course.prompt.login_message' %>
+        </div>
+        <button id="course-yes" name="course-yes" class="course-button">Yes</button>
+        <button id="course-no" name="course-no" class="course-button">No</button>
+        <button id="course-never" name="course-never" class="course-button">Never</button>
+        <img id="course-prompt-close" class="course-prompt-close" src="./images/icons/marking-closex.png">
       </div>
     </div>
-
     <div id="graph-container">
       <div id="marks-container">
         <!-- <canvas id="graph" width="1078" height="420"></canvas> -->
@@ -22,7 +42,7 @@
         <div class="three-column">
           <div class="content">
             <h1>Nice Work!</h1>
-            <p>Looks like you've found 2 potential transits!</p>
+            <p>Looks like you've found <span id="planet-num"></span> potential transits!</p>
             <p>Look to your right and see if anyone is talking about the star, or start a conversation of your own.</p>
             <p>Move on to the next subject when you're ready.</p>
           </div>
@@ -30,40 +50,67 @@
         <div class="three-column">
           <div class="content">
             <h2>Discussions about this star</h2>
-            <p>Some content for a comment</p>
-            <p>by someAuthor X minutes ago</p>
-            <button class="std-btn transparent">Open In Talk</button>
+            <div id="comments">
+              <div class="formatted-comment">
+                <p>Some content for a comment</p>
+                <p>by <strong>someAuthor</strong> X minutes ago</p>
+              </div>
+              <div class="formatted-comment">
+                <p>Some content for a comment</p>
+                <p>by <strong>someAuthor</strong> X minutes ago</p>
+              </div>
+              <div class="formatted-comment">
+                <p>Some content for a longer comment. Some content for a longer comment. Some content for a longer comment.</p>
+                <p>by <strong>someAuthor</strong> X minutes ago</p>
+              </div>
+            </div>
+            <button class="std-btn transparent" name="join-convo">Join the Conversation</button>
+
+            <div class="talk-pill">
+              <textarea placeholder="Type something..." name="talk-comment"></textarea>
+              <button name="submit-talk">Submit</button>
+            </div>
           </div>
         </div>
+
         <div class="three-column">
           <div class="content">
             <h2>Discussions about this star</h2>
-            <p>Some content for a comment</p>
-            <p>by someAuthor X minutes ago</p>
-            <button class="std-btn transparent">Open In Talk</button>
+            <div id="alt-comments">
+              <div class="formatted-comment">
+                <p>Some content for an alternate talk comment. Wow what a comment!</p>
+                <p>by <strong>someAuthor</strong> X minutes ago</p>
+              </div>
+            </div>
+            <button class="std-btn transparent" name="alt-join-convo">Join the Conversation</button>
+
+            <div class="talk-pill">
+              <textarea placeholder="Type something..." name="alt-talk-comment"></textarea>
+              <button name="alt-submit-talk">Submit</button>
+            </div>
           </div>
         </div>
       </div>
       <div id="tools">
         <h3>TOOLS</h3>
         <button class="tool-button" id="toggle-zoom">
-          <img src="images/icons/toolbar-zoomplus.png"/>
-          Zoom
+          <span>Zoom</span>
         </button>
         <button class="tool-button" id="toggle-fav">
-          <img src="images/icons/toolbar-fav-empty.png"/>
-          +Fav
+          <span>+Fav</span>
         </button>
         <button class="tool-button" id="help">
-          <img src="images/icons/toolbar-question-mark.png"/>
-          Help
+          <span>Help</span>
         </button>
         <button class="tool-button" id="tutorial">
-          <img src="images/icons/toolbar-cursor.png"/>
-          Tutorial
+          <span>Tutorial</span>
         </button>
       </div>
-      <input id="scale-slider" type="range" min="0" max="35"/>
+      <div id="slider-container">
+        <div id="axis-label">DAYS</div>
+        <div id="numbers-container"></div>
+        <div id="ui-slider"></div>
+      </div>
     </div>
 
     <button class="std-btn yellow" name="finished">Finished</button>

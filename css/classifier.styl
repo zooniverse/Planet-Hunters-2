@@ -1,5 +1,103 @@
 .classifier
   color inherit
+
+  .bg-overlay
+    background-color rgba(19,34,44,0.92)
+
+  #course-container
+    margin 0 auto
+    width 640px
+    height 400px
+    z-index 999
+
+    .course-figure-credits
+      text-align center
+      font-style italic
+      font-size 12px
+      padding-left 20px
+      padding-right 20px
+      padding-top 0px
+      padding-bottom 20px
+    button
+      margin 0 auto
+      margin-top 10px
+      align center
+    .course-close
+      margin 10px
+      display block     
+      float right 
+      color white
+      cursor pointer
+      // &:hover
+      //   text-shadow 0px 0px 5px red
+      img
+        padding-left 9px
+    #course-body
+      width inherit
+      height inherit
+      margin 0 auto
+      float left
+      color black
+      border-radius 15px
+      overflow hidden
+    #course-title
+      margin 0
+      display block
+      float left  
+      padding-left 20px
+      padding-right 20px
+      color white
+      font-size 16px
+    // #course-header
+    //   margin 0
+    //   display block
+    //   float left  
+    //   padding-left 20px
+    //   padding-right 20px
+    //   color white
+    //   font-size 16px
+    .course-figure-container
+      display block
+      background-color black
+      border-top-left-radius 15px
+      border-top-right-radius 15px
+      height 50%
+      width 100%
+      &.horizontal
+        border-top-left-radius 15px
+        border-top-right-radius 15px
+        height 50%
+        width 100%
+      &.vertical
+        // display block
+        float left
+        border-top-left-radius 15px
+        border-bottom-left-radius 15px
+        width 50%
+        // height 100%
+      img
+        display block
+        margin auto
+        max-height 100%
+        max-width 100%
+
+    .course-text
+      overflow visible
+      background-color white
+      font-size 14px
+      padding 20px
+      &.horizontal
+        border-bottom-left-radius 15px
+        border-bottom-right-radius 15px
+        // width 100%
+        height 50%
+      &.vertical
+        // display block
+        float right
+        border-top-right-radius 15px
+        border-bottom-right-radius 15px
+        width 50%
+
   #subject-container
     width 1090px
     margin 0 auto
@@ -8,10 +106,10 @@
         color white
       p, h3
         padding-left 20px
-      #lesson-prompt
+      #course-prompt
         height 25px
         margin-top 5px
-        margin-bottom 10px
+        // margin-bottom 10px
         padding-left 20px
         vertical-align middle
         font-size 1em
@@ -19,30 +117,37 @@
         background-color #3E89AF
         width inherit
         border-radius: 0.3em
-      .lesson-button
+      .course-message
+        line-height 25px
+        float left
+      .course-button
         padding 0px 5px 0px 5px
         height 100%
         margin auto
         color black
         border none
         transition 0.4s
+        float left
         &:hover
           color white
           background-color rgba(0,0,0,0.5)
           transition 0.4s
-      .lesson-close
+      .course-prompt-close
         padding 9px
         float right
 
     #graph-container
       float left
       position relative
+      margin-bottom 10px
+      margin-top 10px
 
       #graph
         float left
         border 1px solid rgb(50,50,50)
         background rgba(13,21,24,0.75)
         z-index 3
+        user-select none
 
       #marks-container
         height 420px
@@ -50,6 +155,7 @@
         overflow hidden
         float left
         position relative
+        user-select none
 
       #classify-summary
         display none
@@ -85,11 +191,54 @@
               text-transform uppercase
               font-size 14px
               line-height 36px
+            button
+              width 100%
+            .talk-pill
+              display none
+              button
+                vertical-align middle
+                border 2px solid #fff
+                height 64px
+                border-radius 0 5px 5px 0
+                margin-left -10px
+                width 33%
+                background-color #fff
+                color black
+                border-left none
+                &:active
+                  transform translateY(0px)
+              textarea
+                outline none
+                padding 0
+                border-right none
+                resize none
+                width 66%
+                vertical-align middle
+                height 60px
+                color #fff
+                background transparent
+                border 2px solid #fff
+                border-radius 5px 0 0 5px
+            #comments, #alt-comments
+              height 240px
+              overflow-y scroll
+              .formatted-comment
+                border-bottom 1px solid #848b92
+                margin-bottom 20px
+                word-wrap break-word
+                &:last-child
+                  border-bottom none
+                p
+                  &:not(:nth-child(1))
+                    font-size 10px
+                    font-style italic
+                    span
+                      color #fff
 
       #tools
-        float left
-        width 50px   // account for padding
-        height 430px // account for padding
+        float right
+        width 54px
+        height 432px
         padding 5px
         background-color rgb(50,50,50)
         h3
@@ -101,66 +250,115 @@
           text-align center
           font-size 0.75em
           opacity 0.5
+          span
+            top 20px
+            position relative
+            display inline-block
+            margin-bottom 10px
           &:active
             transform translateY(1px)
             box-shadow none
           &:hover
             opacity 1.0
-
+          &#toggle-zoom
+            background url("images/icons/toolbar-zoomplus.png") no-repeat 50% 35%
+            &.toggled
+              background #151a1b url("images/icons/toolbar-zoomminus.png") no-repeat 50% 35%
+          &#toggle-fav
+            background url("images/icons/toolbar-fav-empty.png") no-repeat 50% 35%
+            &.toggled
+              background #151a1b url("images/icons/toolbar-fav-filled.png") no-repeat 50% 35%
+          &#help
+            background url("images/icons/toolbar-question-mark.png") no-repeat 50% 35%
+          &#tutorial
+            background url("images/icons/toolbar-cursor.png/") no-repeat 50% 35%
         .tool-button
           border none
           color white
           background-color rgb(50,50,50)
           height 60px
-          width 50px
+          width 100%
           border-radius 0.3em
           transition 0.3s
           &:hover
             background-color #4C4C4C //#151A1B
             border-radius 0.3em
             opacity 1.0
-          
+
           &.toggled
             background-color #151A1B
             transition 0.3s
-
-      .faux-range-input
-        width 1024px
-        height 18px
-        vertical-align middle
-        background black //#25b4c5
-        cursor ew-resize
-        cursor -webkit-grab
-        top -20px
-        border 1px solid rgb(50,50,50)
-        &:before
-          content "1.2.3.4.5.6.7"
-          margin 0px
-          font-size 12px
-          top 0
-          letter-spacing 79px
-        .faux-range-track
-          width 768px // (1078-256px)
-        .faux-range-thumb
-          margin -1px 0 0 -8px
-          background rgba(50,50,50,0.75) //#1b7a85
-          outline none
-          border 1px solid #5e5e5e
-          width 256px
+      #slider-container
+        display inline-block
+        float left
+        height 22px
+        background rgba(13,21,24,0.75)
+        #ui-slider
+          width 964px
           height 20px
-          border-radius 4px
-          top 0px
-          &:before
-            text-align center
-            line-height 20px
-            content "III"
-            position absolute
-            margin 0px
-            font-size 12px
-            width 100%
-            z-index 5
-        .faux-range-tick
-          display none
+          position relative
+          float left
+          display inline-block
+          background none
+          &.noUi-background
+            border 1px solid #323232
+          &.noUi-target
+            border none
+            box-shadow none
+          .noUi-base
+            width 730px
+            margin-left 118px
+          .noUi-handle
+            border 1px solid #9a9ea2
+            background rgba(137, 137, 137, .6)
+            height 22px
+            top 0px
+            width 236px
+            left -118px
+            box-shadow none
+            display none
+            &:before
+              text-align center
+              color #9a9ea2
+              background none
+              content "III"
+              line-height 20px
+              height 20px
+              left 0px
+              top 0px
+              position relative
+              font-size 12px
+              width 100%
+              z-index 5
+            &:after
+              display none
+            &:hover
+              cursor -webkit-grab
+              cursor grab
+        #axis-label
+          width 60px
+          float left
+          height 100%
+          text-align center
+          font-weight 700
+          font-style italic
+          font 12px
+          background rgb(50,50,50)
+        #numbers-container
+          display inline
+          position absolute
+          background rgba(13,21,24,0.75)
+          width 954px
+          height 20px
+          text-align justify
+          display inline-table
+          padding-left 10px
+          color #525c5b
+          left 60px
+          border 1px solid #323232
+          span
+            width 10px
+            display table-cell
 
   button
     &[name="no-transits"]

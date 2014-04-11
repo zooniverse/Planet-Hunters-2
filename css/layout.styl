@@ -16,10 +16,9 @@ body
   background-color rgba(19,34,44,0.92)
   background-size cover
   position absolute
-  top 50px
+  top 0px
   width 100%
-  min-width: 1138px
-  height 730px
+  min-height 730px
   z-index -1
   overflow hidden
 
@@ -55,33 +54,32 @@ body
   width 75px
   height 75px
   z-index -1
-
   top 45%
   left 50% //700px
   // transition 60s
 
+
 .bg-starfield-sun
-  background-image url('images/field-sun.jpg'); 
+  background-image url('images/field-sun.jpg');
   background-size cover
   position absolute
-  top 50px
+  top 0px
   width 100%
-  min-width: 1138px
-  height 730px
+  min-height 730px
   z-index -1
 
 .content-block
-  width auto
-  height 730px
+  clearfix()
+  min-height 680px
   margin 0 auto
   z-index -5
-  padding: 50px 0
+  padding: 50px 10px 0 10px
 
   .content-container
     clearfix()
     margin 0 auto
     z-index 10
-    width 768px
+    max-width 768px
     h1, h2, h3
       text-transform uppercase
     .intro

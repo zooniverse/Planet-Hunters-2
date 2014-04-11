@@ -1,20 +1,15 @@
 <% translate = require 't7e' %>
 <div class="content-block">
-	<div class="content-container">
-	  <div class="call-to-action are-you-ready">
-	    Ready to discover new worlds?
-	  </div>
+  <div class="content-container">
+    <div class="call-to-action are-you-ready">
+      Ready to discover new worlds?
+    </div>
 
-	  <div class="call-to-action description">
-	   	Join the search for exoplanets with Planet Hunters
-	  	<button id="begin-classifying">
-	  		<%- translate 'a', 'home.header.beginClassifying', href: '#/classify' %>
-	  	</button>
-	  	<button id="learn-more">
-	  		<%- translate 'a', 'home.header.learnMore', href: '' %>
-	  	</button>
-	  </div>
-	</div>
+    <div class="call-to-action description">
+      Join the search for exoplanets with Planet Hunters
+      <%- translate 'a', 'home.header.beginClassifying', href: '#/classify', id: "begin-classifying" %>
+    </div>
+  </div>
 </div>
 
 <!-- PLANET TIME -->
