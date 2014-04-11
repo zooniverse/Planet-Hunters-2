@@ -103,11 +103,11 @@ class MiniCourse
       figure         = @content[@curr].material.figure
       figure_credits = @content[@curr].material.figure_credits
 
-    # DEBUG CODE
-    console.log 'title         : ', title
-    console.log 'text          : ', text
-    console.log 'figure        : ', figure
-    console.log 'figure_credits: ', figure_credits
+    # # DEBUG CODE
+    # console.log 'title         : ', title
+    # console.log 'text          : ', text
+    # console.log 'figure        : ', figure
+    # console.log 'figure_credits: ', figure_credits
 
     @course_el.find("#course-title").html title
     @course_el.find(".course-text").html text
