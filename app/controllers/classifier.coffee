@@ -32,7 +32,7 @@ class Classifier extends BaseController
     'textarea[name="alt-talk-comment"]' : 'altTalkComment'
 
   events:
-    'click button[id="toggle-zoom"]'       : 'onToggleZoom'
+    'click button[id="toggle-zoom"]'       : 'onClickZoom'
     'click button[id="toggle-fav"]'        : 'onToggleFav'
     'click button[id="help"]'              : 'onClickHelp'
     'click button[id="tutorial"]'          : 'onClickTutorial'
@@ -48,7 +48,11 @@ class Classifier extends BaseController
   constructor: ->
     super    
     window.classifier = @
-    @zoomRange = 15.00
+    
+    # zoom levels [days]: 2x, 10x, 20x
+    @zoomRange = 30 # set to first zoom level
+    @zoomRanges = []
+    @zoomLevel = 0
     isZoomed: false
     ifFaved: false
 
@@ -91,13 +95,14 @@ class Classifier extends BaseController
     
     $.getJSON jsonFile, (data) =>
       @canvasGraph?.marks.destroyAll()  
-
       @marksContainer.appendChild(@canvas)
       @canvasGraph = new CanvasGraph(@canvas, data)
       @canvasGraph.plotPoints()
       @canvasGraph.enableMarking()
       @drawSliderAxisNums()
 
+      @zoomRanges = [ @canvasGraph.largestX, (@canvasGraph.largestX * 10/@canvasGraph.largestX), @canvasGraph.largestX * 3/@canvasGraph.largestX ]
+      
       @el.find("#ui-slider").noUiSlider
         start: 0
         range:
@@ -105,27 +110,33 @@ class Classifier extends BaseController
           "max": @canvasGraph.largestX - @zoomRange
       
   onChangeScaleSlider: ->
+    console.log 'updating slider'
     val = +@el.find("#ui-slider").val()
     # @focusCenter = +@el.find('#scale-slider').val() + @zoomRange/2
     # xMin = @focusCenter-@zoomRange/2
     # xMax = @focusCenter+@zoomRange/2
 
-    return unless @isZoomed
-    @canvasGraph.plotPoints(val, (val + @zoomRange))
+    return if @zoomLevel is 0 or @zoomLevel > @zoomRanges.length
+    console.log 'FOO: ', val, ', ', @zoomRanges[@zoomLevel]
+    @canvasGraph.plotPoints( val, val + @zoomRanges[@zoomLevel] )
 
-  onToggleZoom: ->
-    @isZoomed = !@isZoomed
-    if @isZoomed
-      @canvasGraph.zoomInTo(0, @zoomRange)
-      @el.find("#toggle-zoom").addClass("toggled")
-      @el.find("#ui-slider").val(0)
-      @el.find(".noUi-handle").fadeIn(150)
-    else
-      @canvasGraph.zoomOut()
-      @el.find("#toggle-zoom").removeClass("toggled")
-      @el.find("#ui-slider").val(@canvasGraph.smallestX)
-      @el.find(".noUi-handle").fadeOut(150)
-
+  onClickZoom: ->
+    @zoomLevel = @zoomLevel + 1
+    if @zoomLevel is 0 or @zoomLevel > @zoomRanges.length-1
+        console.log 'not zoomed'
+        @canvasGraph.zoomOut()
+        @el.find("#toggle-zoom").removeClass("toggled")
+        @el.find("#ui-slider").val(0)
+        @el.find(".noUi-handle").fadeOut(150)
+        @zoomLevel = 0
+      else 
+        console.log 'zoom level: ', @zoomLevel
+        console.log 'zoom range: ', @zoomRanges[@zoomLevel]
+        @canvasGraph.zoomInTo(0, @zoomRanges[@zoomLevel])
+        @el.find("#toggle-zoom").addClass("toggled")
+        @el.find("#ui-slider").val(0)
+        @el.find(".noUi-handle").fadeIn(150)
+    
   onToggleFav: ->
     favButton = @el.find("#toggle-fav")[0]
     if @isFaved
