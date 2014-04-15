@@ -112,15 +112,10 @@ class Classifier extends BaseController
           "max": @canvasGraph.largestX - @zoomRange
       
   onChangeScaleSlider: ->
-    console.log 'updating slider'
+    console.log 'zoom-level: ', @zoomLevel
     val = +@el.find("#ui-slider").val()
-    # @focusCenter = +@el.find('#scale-slider').val() + @zoomRange/2
-    # xMin = @focusCenter-@zoomRange/2
-    # xMax = @focusCenter+@zoomRange/2
-
     return if @zoomLevel is 0 or @zoomLevel > @zoomRanges.length
-    console.log 'FOO: ', val, ', ', @zoomRange
-    @canvasGraph.plotPoints( val, val + @zoomRange )
+    @canvasGraph.plotPoints( val, val + @zoomRanges[@zoomLevel] )
 
   onClickZoom: ->
     @zoomLevel = @zoomLevel + 1
