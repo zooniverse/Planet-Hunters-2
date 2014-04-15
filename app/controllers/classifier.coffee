@@ -101,7 +101,7 @@ class Classifier extends BaseController
       @canvasGraph.enableMarking()
       @drawSliderAxisNums()
 
-      @zoomRanges = [ @canvasGraph.largestX, (@canvasGraph.largestX * 10/@canvasGraph.largestX), @canvasGraph.largestX * 3/@canvasGraph.largestX ]
+      @zoomRanges = [ @canvasGraph.largestX, @canvasGraph.largestX/10, @canvasGraph.largestX/20 ]
       @magnification = [ '1x', '10x', '20x' ]
       @showZoomMessage(@magnification[@zoomLevel])
 
@@ -212,6 +212,7 @@ class Classifier extends BaseController
     @el.find("#toggle-zoom").removeClass("toggled")
     @el.find(".noUi-handle").hide()
     @isZoomed = false
+    @zoomLevel = 0
     
   showSummary: ->
     @classifySummary.fadeIn(150)
