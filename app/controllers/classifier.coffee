@@ -102,7 +102,9 @@ class Classifier extends BaseController
       @drawSliderAxisNums()
 
       @zoomRanges = [ @canvasGraph.largestX, (@canvasGraph.largestX * 10/@canvasGraph.largestX), @canvasGraph.largestX * 3/@canvasGraph.largestX ]
-      
+      @magnification = [ '1x', '10x', '20x' ]
+      @showZoomMessage(@magnification[@zoomLevel])
+
       @el.find("#ui-slider").noUiSlider
         start: 0
         range:
@@ -123,19 +125,26 @@ class Classifier extends BaseController
   onClickZoom: ->
     @zoomLevel = @zoomLevel + 1
     if @zoomLevel is 0 or @zoomLevel > @zoomRanges.length-1
-        console.log 'not zoomed'
-        @canvasGraph.zoomOut()
-        @el.find("#toggle-zoom").removeClass("toggled")
-        @el.find("#ui-slider").val(0)
-        @el.find(".noUi-handle").fadeOut(150)
-        @zoomLevel = 0
-      else 
-        console.log 'zoom level: ', @zoomLevel
-        console.log 'zoom range: ', @zoomRanges[@zoomLevel]
-        @canvasGraph.zoomInTo(0, @zoomRanges[@zoomLevel])
-        @el.find("#toggle-zoom").addClass("toggled")
-        @el.find("#ui-slider").val(0)
-        @el.find(".noUi-handle").fadeIn(150)
+      console.log 'not zoomed'
+      @canvasGraph.zoomOut()
+      @el.find("#toggle-zoom").removeClass("toggled")
+      @el.find("#ui-slider").val(0)
+      @el.find(".noUi-handle").fadeOut(150)
+      @zoomLevel = 0
+    else 
+      console.log 'zoom level: ', @zoomLevel
+      console.log 'zoom range: ', @zoomRanges[@zoomLevel]
+      @canvasGraph.zoomInTo(0, @zoomRanges[@zoomLevel])
+      @el.find("#toggle-zoom").addClass("toggled")
+      @el.find("#ui-slider").val(0)
+      @el.find(".noUi-handle").fadeIn(150)
+    @showZoomMessage(@magnification[@zoomLevel])
+
+  
+  showZoomMessage: (message) =>
+    return if new Date().getTime() - @lastNotifyTime < 1000
+    @el.find('#zoom-notification').html(message).fadeIn(100).delay(1000).fadeOut()
+    @lastNotifyTime = new Date().getTime()
     
   onToggleFav: ->
     favButton = @el.find("#toggle-fav")[0]
