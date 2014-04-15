@@ -1,15 +1,30 @@
 .classifier
   color inherit
   .content-block
-    overflow-x scroll
+    overflow-x visible
   .bg-overlay
     background-color rgba(19,34,44,0.92)
 
   #course-container
-    margin 0 auto
+    position absolute
     width 640px
     height 400px
     z-index 999
+    margin-top 0
+    margin-bottom 0
+    margin-left -50%
+    margin-right auto
+    left -320px
+    transition margin 1s
+
+    &.visible
+      display visible
+      margin-top 0
+      margin-bottom 0
+      left -320px
+      margin-left 50%
+      margin-right auto
+      transition margin 1s
 
     .course-figure-credits
       text-align center
@@ -85,8 +100,32 @@
         width 50%
 
   #subject-container
+    position absolute
     width 1090px
-    margin 0 auto
+    height 400px
+    margin-top 0
+    margin-bottom 0
+    margin-left 50%
+    left -545px
+    transition margin 1s
+
+    &.hidden
+      position absolute
+      width 1090px
+      height 400px
+      z-index 999
+      margin-top 0
+      margin-bottom 0
+      margin-left 200%
+      left -545px
+      transition margin 1s
+      
+    // &.visible
+    //   display visible
+    //   transition margin 1s
+
+    // width 1090px
+    // margin 0 auto
     .subject-header
       h3
         color white
