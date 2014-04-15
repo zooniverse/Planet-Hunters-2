@@ -50,7 +50,7 @@ class Classifier extends BaseController
     window.classifier = @
     
     # zoom levels [days]: 2x, 10x, 20x
-    @zoomRange = 30 # set to first zoom level
+    @zoomRange = 15
     @zoomRanges = []
     @zoomLevel = 0
     isZoomed: false
@@ -101,7 +101,7 @@ class Classifier extends BaseController
       @canvasGraph.enableMarking()
       @drawSliderAxisNums()
 
-      @zoomRanges = [ @canvasGraph.largestX, @canvasGraph.largestX/10, @canvasGraph.largestX/20 ]
+      @zoomRanges = [15, 10, 2]#[ @canvasGraph.largestX, @canvasGraph.largestX/10, @canvasGraph.largestX/20 ]
       @magnification = [ '1x', '10x', '20x' ]
       @showZoomMessage(@magnification[@zoomLevel])
 
@@ -119,8 +119,8 @@ class Classifier extends BaseController
     # xMax = @focusCenter+@zoomRange/2
 
     return if @zoomLevel is 0 or @zoomLevel > @zoomRanges.length
-    console.log 'FOO: ', val, ', ', @zoomRanges[@zoomLevel]
-    @canvasGraph.plotPoints( val, val + @zoomRanges[@zoomLevel] )
+    console.log 'FOO: ', val, ', ', @zoomRange
+    @canvasGraph.plotPoints( val, val + @zoomRange )
 
   onClickZoom: ->
     @zoomLevel = @zoomLevel + 1
@@ -132,8 +132,6 @@ class Classifier extends BaseController
       @el.find(".noUi-handle").fadeOut(150)
       @zoomLevel = 0
     else 
-      console.log 'zoom level: ', @zoomLevel
-      console.log 'zoom range: ', @zoomRanges[@zoomLevel]
       @canvasGraph.zoomInTo(0, @zoomRanges[@zoomLevel])
       @el.find("#toggle-zoom").addClass("toggled")
       @el.find("#ui-slider").val(0)
