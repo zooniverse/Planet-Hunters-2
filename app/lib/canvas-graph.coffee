@@ -73,12 +73,6 @@ class CanvasGraph
         @ctx.strokeStyle = tickColor
         @ctx.stroke()
 
-        # #bottom
-        # @ctx.font = '10pt Arial'
-        # @ctx.textAlign = 'center'
-        # @ctx.fillStyle = textColor
-        # @ctx.fillText( i, tick_x, @canvas.height - tickMinorLength+5 )
-
       if i % tickMajorInterval is 0 and i isnt 0
         tick_x = ((+i - xMin) / (xMax - xMin)) * @canvas.width
         
@@ -101,14 +95,6 @@ class CanvasGraph
         @ctx.textAlign = 'center'
         @ctx.fillStyle = textColor
         @ctx.fillText( i, tick_x, @canvas.height - 10 )
-
-
-        # #bottom
-        # @ctx.font = '10pt Arial'
-        # @ctx.textAlign = 'center'
-        # @ctx.fillStyle = textColor
-        # @ctx.fillText( i, tick_x, @canvas.height - tickMajorLength+5 )
-
 
     @scale = (@largestX - @smallestX) / (@xMax - @xMin)
 

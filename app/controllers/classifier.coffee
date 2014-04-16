@@ -104,12 +104,6 @@ class Classifier extends BaseController
       @zoomRanges = [15, 10, 2]#[ @canvasGraph.largestX, @canvasGraph.largestX/10, @canvasGraph.largestX/20 ]
       @magnification = [ '1x', '10x', '20x' ]
       @showZoomMessage(@magnification[@zoomLevel])
-
-      @el.find("#ui-slider").noUiSlider
-        start: 0
-        range:
-          "min": @canvasGraph.smallestX
-          "max": @canvasGraph.largestX - @zoomRange
       
   onChangeScaleSlider: ->
     console.log 'zoom-level: ', @zoomLevel
@@ -118,6 +112,7 @@ class Classifier extends BaseController
     @canvasGraph.plotPoints( val, val + @zoomRanges[@zoomLevel] )
 
   onClickZoom: ->
+    console.log 'SLIDER: ', @el.find("#ui-slider").val()
     @zoomLevel = @zoomLevel + 1
     if @zoomLevel is 0 or @zoomLevel > @zoomRanges.length-1 # no zoom
       console.log 'not zoomed'
@@ -172,30 +167,22 @@ class Classifier extends BaseController
     @nextSubjectButton.hide()
     @canvasGraph.marks.destroyAll() #clear old marks
     @canvas.outerHTML = ""
-
     @resetTalkComment @talkComment
     @resetTalkComment @altTalkComment
-
     # show courses
     @course.showPrompt() if @course.getPref() isnt 'never' and @course.count % @course.rate is 0
-
     @Subject.next()
-    # @loadSubjectData()
     
   finishSubject: ->
     # fake classification counter
     @course.count = @course.count + 1
     console.log 'YOU\'VE MARKED ', @course.count, ' LIGHT CURVES!'
-    
-    # TODO: fix this!!! why is there a circular reference? and where?
     for mark, i in [@canvasGraph.marks.all...]
       console.log 'mark: ', mark
       @classification.annotations[i] =
         x_min: mark.dataXMin
         x_max: mark.dataXMax
-
     console.log JSON.stringify( @classification )
-
     @classification.send()
     @showSummary()
     @el.find("#toggle-zoom").removeClass("toggled")
@@ -211,7 +198,6 @@ class Classifier extends BaseController
     @finishedButton.hide()
 
   onClickJoinConvo: -> @joinConvoBtn.hide().siblings().show()
-
   onClickAltJoinConvo: -> @altJoinConvoBtn.hide().siblings().show()
 
   onClickSubmitTalk: ->
