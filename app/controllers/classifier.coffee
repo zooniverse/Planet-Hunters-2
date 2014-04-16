@@ -101,17 +101,29 @@ class Classifier extends BaseController
       @canvasGraph.enableMarking()
       @drawSliderAxisNums()
 
-      @zoomRanges = [15, 10, 2]#[ @canvasGraph.largestX, @canvasGraph.largestX/10, @canvasGraph.largestX/20 ]
+      @zoomRanges = [15, 10, 2] #[ @canvasGraph.largestX, @canvasGraph.largestX/10, @canvasGraph.largestX/20 ]
       @magnification = [ '1x', '10x', '20x' ]
       @showZoomMessage(@magnification[@zoomLevel])
+
+      console.log 'SETTING SLIDER RANGE: [', @canvasGraph.smallestX, ',', @canvasGraph.largestX - @zoomRanges[@zoomLevel], ']'
+      console.log 'smallestX: ', @canvasGraph.smallestX
+      console.log 'largestX : ', @canvasGraph.largestX
+      @el.find("#ui-slider").noUiSlider
+        start: 0
+        range:
+          min: @canvasGraph.smallestX
+          max: @canvasGraph.largestX - @zoomRange
       
   onChangeScaleSlider: ->
-    console.log 'zoom-level: ', @zoomLevel
+    console.log 'zoosdfsdl: ', @zoomRanges[@zoomLevel]
     val = +@el.find("#ui-slider").val()
-    return if @zoomLevel is 0 or @zoomLevel > @zoomRanges.length
+    # return if @zoomLevel is 0 or @zoomLevel > @zoomRanges.length
+    # @canvasGraph.plotPoints( val, val + 15 )
     @canvasGraph.plotPoints( val, val + @zoomRanges[@zoomLevel] )
 
   onClickZoom: ->
+    console.log 'ZOOM LEVEL: ', @zoomLevel
+    console.log 'ZOOM RANGE: ', @zoomRanges[@zoomLevel]
     console.log 'SLIDER: ', @el.find("#ui-slider").val()
     @zoomLevel = @zoomLevel + 1
     if @zoomLevel is 0 or @zoomLevel > @zoomRanges.length-1 # no zoom
@@ -126,6 +138,14 @@ class Classifier extends BaseController
       @el.find("#toggle-zoom").addClass("toggled")
       @el.find("#ui-slider").val(0)
       @el.find(".noUi-handle").fadeIn(150)
+
+      console.log 'SETTING SLIDER RANGE: [', @canvasGraph.smallestX, ',', @canvasGraph.largestX #[@zoomLevel], ']'
+      # @el.find("#ui-slider").noUiSlider
+      #   range:
+      #     min: @canvasGraph.smallestX
+      #     max: @canvasGraph.largestX - @zoomRanges[@zoomLevel]
+      # , true
+
     @showZoomMessage(@magnification[@zoomLevel])
   
   showZoomMessage: (message) =>
