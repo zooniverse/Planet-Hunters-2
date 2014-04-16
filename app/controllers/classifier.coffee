@@ -194,7 +194,6 @@ class Classifier extends BaseController
         x_min: mark.dataXMin
         x_max: mark.dataXMax
 
-
     console.log JSON.stringify( @classification )
 
     @classification.send()
