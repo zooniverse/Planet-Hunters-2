@@ -4,10 +4,6 @@ class CanvasGraph
   constructor: (@canvas, @data) ->
     @ctx = @canvas.getContext('2d')
 
-    # flip values
-    @ctx.translate(0,@canvas.height)
-    @ctx.scale(1,-1)
-
     @smallestX = Math.min @data.x...
     @smallestY = Math.min @data.y...
     @largestX  = Math.max @data.x...
@@ -15,6 +11,7 @@ class CanvasGraph
 
     @dataLength = Math.min @data.x.length, @data.y.length
 
+    @originalMin = @smallestX
     for xValue, idx in [@data.x...]
       @data.x[idx] = xValue - @smallestX
 
@@ -32,10 +29,11 @@ class CanvasGraph
     @xMax = xMax
     @clearCanvas()
 
+    # plot points
     for i in [0...@dataLength]
       x = ((+@data.x[i] - xMin) / (xMax - xMin)) * @canvas.width
-      # y = ((+@data.y[i] - @largestY) / (@smallestY - @largestY)) * @canvas.height
-      y = +@data.y[i] * @canvas.height# - @canvas.height
+      y = +@data.y[i] * @canvas.height
+      y = -y + @canvas.height # flip y-values
       @ctx.fillStyle = "#fff"
       @ctx.fillRect(x,y,2,2)
 
@@ -47,14 +45,78 @@ class CanvasGraph
         mark.element.style.left = (scaledMin) + "px"
         mark.save(scaledMin, scaledMax)
 
+    # draw scales
+    tickMinorInterval = 1
+    tickMajorInterval = 4
+    tickMinorLength = 5
+    tickMajorLength = 10
+    tickWidth = 1
+    tickColor = '#323232'
+    textColor = '#323232'
+
+    for i in [0...@dataLength]
+      if i % tickMinorInterval is 0 and i isnt 0
+        # top
+        tick_x = ((+i - xMin) / (xMax - xMin)) * @canvas.width
+        @ctx.beginPath()
+        @ctx.moveTo( tick_x, 0 )
+        @ctx.lineTo( tick_x, tickMinorLength )
+        @ctx.lineWidth = tickWidth
+        @ctx.strokeStyle = tickColor
+        @ctx.stroke()
+
+        # bottom tickmarks
+        @ctx.beginPath()
+        @ctx.moveTo( tick_x, @canvas.height )
+        @ctx.lineTo( tick_x, @canvas.height - tickMinorLength )
+        @ctx.lineWidth = tickWidth
+        @ctx.strokeStyle = tickColor
+        @ctx.stroke()
+
+        # #bottom
+        # @ctx.font = '10pt Arial'
+        # @ctx.textAlign = 'center'
+        # @ctx.fillStyle = textColor
+        # @ctx.fillText( i, tick_x, @canvas.height - tickMinorLength+5 )
+
+      if i % tickMajorInterval is 0 and i isnt 0
+        tick_x = ((+i - xMin) / (xMax - xMin)) * @canvas.width
+        
+        # top numbers
+        @ctx.font = '10pt Arial'
+        @ctx.textAlign = 'center'
+        @ctx.fillStyle = textColor
+        @ctx.fillText(i+Math.round(@originalMin),tick_x,tickMajorLength+5)
+
+        # top lines
+        @ctx.beginPath()
+        @ctx.moveTo( tick_x, @canvas.height )
+        @ctx.lineTo( tick_x, @canvas.height-tickMajorLength )
+        @ctx.lineWidth = tickWidth
+        @ctx.strokeStyle = tickColor
+        @ctx.stroke()
+
+        #bottom numbers
+        @ctx.font = '10pt Arial'
+        @ctx.textAlign = 'center'
+        @ctx.fillStyle = textColor
+        @ctx.fillText( i, tick_x, @canvas.height - 10 )
+
+
+        # #bottom
+        # @ctx.font = '10pt Arial'
+        # @ctx.textAlign = 'center'
+        # @ctx.fillStyle = textColor
+        # @ctx.fillText( i, tick_x, @canvas.height - tickMajorLength+5 )
+
+
     @scale = (@largestX - @smallestX) / (@xMax - @xMin)
 
   normalize: (values) ->
     y_norm = []
     for y, idx in [@data.y...]
       y_norm[idx] =  ( parseFloat(y) - @smallestY ) / ( @largestY - @smallestY )
-
-    # update max/min values (still needed?)
+    # update max/min values
     @smallestX = Math.min @data.x...
     @smallestY = Math.min @data.y...
     @largestX = Math.max @data.x...
@@ -88,10 +150,6 @@ class CanvasGraph
 
   clearCanvas: -> @ctx.clearRect(0,0,@canvas.width, @canvas.height)
 
-  mirrorVertically: ->
-    @ctx.translate(0,@canvas.height)
-    @ctx.scale(1,-1)
-
   toCanvasXCoord: (dataPoint) -> ((dataPoint - @xMin) / (@xMax - @xMin)) * @canvas.width
   toDataXCoord: (canvasPoint) -> ((canvasPoint / @canvas.width) * (@xMax - @xMin)) + @xMin
 
@@ -116,7 +174,6 @@ class Marks
     mark.element.outerHTML = "" for mark in @all
     @all = []
     document.getElementById('marks-container')
-
 
   sortedXCoords: ->
     allXPoints = ([mark.canvasXMin, mark.canvasXMax] for mark in @all)

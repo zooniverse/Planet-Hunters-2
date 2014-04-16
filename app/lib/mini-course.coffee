@@ -119,7 +119,8 @@ class MiniCourse
   onClickCourseYes: ->
     unless User.current is null
       User.current.setPreference 'course', 'yes'
-      @hidePrompt()
+      # @hidePrompt()
+      @prompt_el.fadeOut(0)
       @displayCourse()
 
   onClickCourseNo: ->
