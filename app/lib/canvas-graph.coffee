@@ -15,9 +15,9 @@ class CanvasGraph
 
     @dataLength = Math.min @data.x.length, @data.y.length
 
-    @data_orig = []
+    # @data_orig = []
     for xValue, idx in [@data.x...]
-      @data_orig[idx] = @data.x[idx]
+      # @data_orig[idx] = @data.x[idx]
       @data.x[idx] = xValue - @smallestX
 
     # normalize data
@@ -48,9 +48,18 @@ class CanvasGraph
     for i in [0...@dataLength]
       if i % tickMinorInterval is 0 and i isnt 0
         tick_x = ((+i - xMin) / (xMax - xMin)) * @canvas.width
+        # top tickmarks
         @ctx.beginPath()
         @ctx.moveTo(tick_x,0)
         @ctx.lineTo(tick_x,tickMinorLength)
+        @ctx.lineWidth = tickWidth
+        @ctx.strokeStyle = tickColor
+        @ctx.stroke()
+
+        # bottom tickmarks
+        @ctx.beginPath()
+        @ctx.moveTo(tick_x,@canvas.height)
+        @ctx.lineTo(tick_x,@canvas.height-tickMinorLength)
         @ctx.lineWidth = tickWidth
         @ctx.strokeStyle = tickColor
         @ctx.stroke()
@@ -62,10 +71,17 @@ class CanvasGraph
         @ctx.fillStyle = textColor
         @ctx.fillText(i,tick_x,tickMajorLength+5)
 
+        tick_x = ((+i - xMin) / (xMax - xMin)) * @canvas.width
+        @ctx.font = '10pt Arial'
+        @ctx.textAlign = 'center'
+        @ctx.fillStyle = textColor
+        @ctx.fillText( i, tick_x, @canvas.height - tickMajorLength+5 )
+
     for i in [0...@dataLength]
       x = ((+@data.x[i] - xMin) / (xMax - xMin)) * @canvas.width
       # y = ((+@data.y[i] - @largestY) / (@smallestY - @largestY)) * @canvas.height
       y = +@data.y[i] * @canvas.height# - @canvas.height
+      y=-y+@canvas.height
       @ctx.fillStyle = "#fff"
       @ctx.fillRect(x,y,2,2)
 
@@ -83,7 +99,6 @@ class CanvasGraph
     y_norm = []
     for y, idx in [@data.y...]
       y_norm[idx] =  ( parseFloat(y) - @smallestY ) / ( @largestY - @smallestY )
-
     # update max/min values (still needed?)
     @smallestX = Math.min @data.x...
     @smallestY = Math.min @data.y...
