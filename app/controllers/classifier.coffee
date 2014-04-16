@@ -236,8 +236,8 @@ class Classifier extends BaseController
 
   drawSliderAxisNums: ->
     sliderNums = ""
-    for num in [(Math.round @canvasGraph.smallestX + 1)..(Math.round @canvasGraph.largestX)]
-      sliderNums += if num%2 is 0 then "<span class='slider-num'>#{num}</span>" else "<span class='slider-num'>&#x2022</span>"
-    @el.find("#numbers-container").html sliderNums
+    # for num in [(Math.round @canvasGraph.smallestX + 1)..(Math.round @canvasGraph.largestX)]
+    #   sliderNums += if num%2 is 0 then "<span class='slider-num'>#{num}</span>" else "<span class='slider-num'>&#x2022</span>"
+    # @el.find("#numbers-container").html sliderNums
 
 module.exports = Classifier
