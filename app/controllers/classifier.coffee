@@ -82,7 +82,11 @@ class Classifier extends BaseController
     @loadSubjectData()
 
   loadSubjectData: ->
-    jsonFile = @subject.location['15-1'] # read actual subject
+    console.log 'NOUI-HANDLE: ', @el.find('.noUi-handle')
+    @el.find('#ui-slider').attr('disabled',true)
+    @el.find(".noUi-handle").fadeOut(150)
+
+    jsonFile = @subject.location['14-1'] # read actual subject
     # jsonFile = './offline/subject.json' # for debug only
 
     @canvas?.remove() # kill any previous canvas
@@ -113,12 +117,13 @@ class Classifier extends BaseController
         range:
           min: @canvasGraph.smallestX
           max: @canvasGraph.largestX - @zoomRange
+      @el.find(".noUi-handle").hide()
+
       
   onChangeScaleSlider: ->
-    console.log 'zoosdfsdl: ', @zoomRanges[@zoomLevel]
+    console.log 'onChangeScaleSlider(), zoomRange: ', @zoomRanges[@zoomLevel]
     val = +@el.find("#ui-slider").val()
-    # return if @zoomLevel is 0 or @zoomLevel > @zoomRanges.length
-    # @canvasGraph.plotPoints( val, val + 15 )
+    return if @zoomLevel is 0 or @zoomLevel > @zoomRanges.length
     @canvasGraph.plotPoints( val, val + @zoomRanges[@zoomLevel] )
 
   onClickZoom: ->
@@ -127,24 +132,32 @@ class Classifier extends BaseController
     console.log 'SLIDER: ', @el.find("#ui-slider").val()
     @zoomLevel = @zoomLevel + 1
     if @zoomLevel is 0 or @zoomLevel > @zoomRanges.length-1 # no zoom
-      console.log 'not zoomed'
+      console.log 'NOT zoomed'
       @canvasGraph.zoomOut()
       @el.find("#toggle-zoom").removeClass("toggled")
       @el.find("#ui-slider").val(0)
       @el.find(".noUi-handle").fadeOut(150)
       @zoomLevel = 0
+      @el.find('#ui-slider').attr('disabled',true)
+      @el.find('.noUi-handle').attr('disabled',true)
     else 
+      console.log 'ZOOMED!'
+      @el.find('#ui-slider').removeAttr('disabled')
       @canvasGraph.zoomInTo(0, @zoomRanges[@zoomLevel])
       @el.find("#toggle-zoom").addClass("toggled")
       @el.find("#ui-slider").val(0)
-      @el.find(".noUi-handle").fadeIn(150)
+      # @el.find(".noUi-handle").fadeIn(150)
 
-      console.log 'SETTING SLIDER RANGE: [', @canvasGraph.smallestX, ',', @canvasGraph.largestX #[@zoomLevel], ']'
-      # @el.find("#ui-slider").noUiSlider
-      #   range:
-      #     min: @canvasGraph.smallestX
-      #     max: @canvasGraph.largestX - @zoomRanges[@zoomLevel]
-      # , true
+      # rebuild slider
+      # @el.find(".noUi-handle").prop('display','inline-block')
+      # @el.find('.noUi-handle').toggleClass('zoomed')
+      console.log 'VAL IS: ', +@el.find("#ui-slider").val()
+      @el.find("#ui-slider").noUiSlider
+        start: +@el.find("#ui-slider").val()
+        range:
+          'min': @canvasGraph.smallestX,
+          'max': @canvasGraph.largestX - @zoomRanges[@zoomLevel]
+      , true
 
     @showZoomMessage(@magnification[@zoomLevel])
   
@@ -206,7 +219,7 @@ class Classifier extends BaseController
     @classification.send()
     @showSummary()
     @el.find("#toggle-zoom").removeClass("toggled")
-    @el.find(".noUi-handle").hide()
+    @el.find(".noUi-handle").attr('disabled',true)
     @isZoomed = false
     @zoomLevel = 0
     
