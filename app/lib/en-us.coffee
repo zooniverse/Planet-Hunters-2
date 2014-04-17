@@ -15,6 +15,8 @@ module.exports =
       title            : ''
       content          : ''
       start            : ''
+      callToAction     : 'Ready to discover new worlds?'
+      description      : 'Join the search for exoplanets with Planet Hunters'
       beginClassifying : 'Start Classifying'
       learnMore        : 'Learn More'
     whatDo:

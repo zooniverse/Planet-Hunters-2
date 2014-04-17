@@ -2,12 +2,13 @@
 <div class="content-block">
   <div class="content-container">
     <div class="call-to-action are-you-ready">
-      Ready to discover new worlds?
+      <%- translate 'home.header.callToAction' %>
     </div>
 
     <div class="call-to-action description">
-      Join the search for exoplanets with Planet Hunters
+      <%- translate 'home.header.description' %>
       <%- translate 'a', 'home.header.beginClassifying', href: '#/classify', id: "begin-classifying" %>
+      <%- translate 'a', 'home.header.learnMore', href: '#/classify', id: "learn-more" %>
     </div>
   </div>
 </div>
