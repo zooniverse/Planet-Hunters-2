@@ -99,11 +99,6 @@ class CanvasGraph
         @ctx.fillStyle = textColor
         @ctx.fillText(i+Math.round(@originalMin),tick_x,tickMajorLength+5)
 
-
-
-
-
-
     @scale = (@largestX - @smallestX) / (@xMax - @xMin)
 
   normalize: (values) ->

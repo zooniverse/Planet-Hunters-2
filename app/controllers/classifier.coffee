@@ -82,7 +82,7 @@ class Classifier extends BaseController
     @loadSubjectData()
 
   loadSubjectData: ->
-    jsonFile = @subject.location['14-1'] # read actual subject
+    jsonFile = @subject.location['15-1'] # read actual subject
     # jsonFile = './offline/subject.json' # for debug only
 
     @canvas?.remove() # kill any previous canvas
