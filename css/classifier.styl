@@ -129,7 +129,7 @@
       h3
         color white
       p, h3
-        padding-left 20px
+        // padding-left 20px
       #course-prompt
         height 25px
         margin-top 5px
@@ -294,8 +294,10 @@
             opacity 1.0
           &#toggle-zoom
             background url("images/icons/toolbar-zoomplus.png") no-repeat 50% 35%
-            &.toggled
+            &.allowZoomOut
               background #151a1b url("images/icons/toolbar-zoomminus.png") no-repeat 50% 35%
+            &.zoomed
+              background-color #151a1b
           &#toggle-fav
             background url("images/icons/toolbar-fav-empty.png") no-repeat 50% 35%
             &.toggled

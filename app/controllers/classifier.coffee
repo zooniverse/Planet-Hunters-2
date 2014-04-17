@@ -126,35 +126,34 @@ class Classifier extends BaseController
     @canvasGraph.plotPoints( val, val + @zoomRanges[@zoomLevel] )
 
   onClickZoom: ->
-    console.log 'ZOOM LEVEL: ', @zoomLevel
-    console.log 'ZOOM RANGE: ', @zoomRanges[@zoomLevel]
-    console.log 'SLIDER: ', @el.find("#ui-slider").val()
     @zoomLevel = @zoomLevel + 1
     if @zoomLevel is 0 or @zoomLevel > @zoomRanges.length-1 # no zoom
-      console.log 'NOT zoomed'
       @canvasGraph.zoomOut()
-      @el.find("#toggle-zoom").removeClass("toggled")
+      @el.find("#toggle-zoom").removeClass("zoomed")
       @el.find("#ui-slider").val(0)
       @el.find(".noUi-handle").fadeOut(150)
       @zoomLevel = 0
       @el.find('#ui-slider').attr('disabled',true)
+      @el.find("#toggle-zoom").removeClass("allowZoomOut")
+
     else 
-      console.log 'ZOOMED!'
+      console.log 'ZOOM LEVEL: ', @zoomLevel
       @el.find('#ui-slider').removeAttr('disabled')
       @canvasGraph.zoomInTo(0, @zoomRanges[@zoomLevel])
-      @el.find("#toggle-zoom").addClass("toggled")
+      @el.find("#toggle-zoom").addClass("zoomed")
       @el.find("#ui-slider").val(0)
-      # @el.find(".noUi-handle").fadeIn(150)
 
       # rebuild slider
-      console.log 'VAL IS: ', +@el.find("#ui-slider").val()
       @el.find("#ui-slider").noUiSlider
         start: +@el.find("#ui-slider").val()
         range:
           'min': @canvasGraph.smallestX,
           'max': @canvasGraph.largestX - @zoomRanges[@zoomLevel]
       , true
-
+      if @zoomLevel is @zoomRanges.length-1
+        @el.find("#toggle-zoom").addClass("allowZoomOut")
+      else
+        @el.find("#toggle-zoom").removeClass("allowZoomOut")
     @showZoomMessage(@magnification[@zoomLevel])
   
   showZoomMessage: (message) =>
@@ -214,7 +213,7 @@ class Classifier extends BaseController
     console.log JSON.stringify( @classification )
     @classification.send()
     @showSummary()
-    @el.find("#toggle-zoom").removeClass("toggled")
+    # @el.find("#toggle-zoom").removeClass("zoomed")
     @isZoomed = false
     @zoomLevel = 0
     
