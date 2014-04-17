@@ -55,6 +55,12 @@ class CanvasGraph
     textColor = '#323232'
     textSpacing = 15
 
+    # display 'days' label
+    @ctx.font = '10pt Arial'
+    @ctx.textAlign = 'left'
+    @ctx.fillStyle = textColor
+    @ctx.fillText( 'DAYS', 10, @canvas.height - textSpacing )
+
     for i in [0...@dataLength]
       if i % 1 is 0 and i isnt 0
         # top
