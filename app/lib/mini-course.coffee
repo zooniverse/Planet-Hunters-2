@@ -54,6 +54,7 @@ class MiniCourse
     @course_el = $(classifier.el).find("#course-container")
     @subject_el = $(classifier.el).find("#subject-container")
     @prompt_el.hide()
+    @course_el.hide()
 
     # keep track of courses
     @count = 0 # fake classification counter
@@ -134,6 +135,7 @@ class MiniCourse
 
   displayCourse: ->
     unless User.current is null
+      @course_el.show()
       User.current.setPreference 'prev_course', @prev
       @loadContent()
       # @course_el.fadeIn()
@@ -145,7 +147,8 @@ class MiniCourse
   hideCourse: ->
     @subject_el.toggleClass("hidden")
     @course_el.toggleClass("visible")
-    
+    @course_el.hide()
+
   showPrompt: ->
     @prompt_el.slideDown()
 
