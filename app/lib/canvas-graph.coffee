@@ -53,6 +53,7 @@ class CanvasGraph
     tickWidth = 1
     tickColor = '#323232'
     textColor = '#323232'
+    textSpacing = 15
 
     for i in [0...@dataLength]
       if i % 1 is 0 and i isnt 0
@@ -76,7 +77,7 @@ class CanvasGraph
       if i % 2 is 0 and i isnt 0
         tick_x = ((+i - xMin) / (xMax - xMin)) * @canvas.width
         
-        # top lines
+        # bottom lines
         @ctx.beginPath()
         @ctx.moveTo( tick_x, @canvas.height )
         @ctx.lineTo( tick_x, @canvas.height-tickMajorLength )
@@ -88,7 +89,7 @@ class CanvasGraph
         @ctx.font = '10pt Arial'
         @ctx.textAlign = 'center'
         @ctx.fillStyle = textColor
-        @ctx.fillText( i, tick_x, @canvas.height - 10 )
+        @ctx.fillText( i, tick_x, @canvas.height - textSpacing )
 
       if i % 4 is 0 and i isnt 0
         tick_x = ((+i - xMin) / (xMax - xMin)) * @canvas.width
@@ -97,7 +98,15 @@ class CanvasGraph
         @ctx.font = '10pt Arial'
         @ctx.textAlign = 'center'
         @ctx.fillStyle = textColor
-        @ctx.fillText(i+Math.round(@originalMin),tick_x,tickMajorLength+5)
+        @ctx.fillText(i+Math.round(@originalMin),tick_x,tickMajorLength+textSpacing)
+
+        # top lines
+        @ctx.beginPath()
+        @ctx.moveTo( tick_x, 0 )
+        @ctx.lineTo( tick_x, tickMajorLength )
+        @ctx.lineWidth = tickWidth
+        @ctx.strokeStyle = tickColor
+        @ctx.stroke()
 
     @scale = (@largestX - @smallestX) / (@xMax - @xMin)
 
