@@ -6,6 +6,7 @@
     background-color rgba(19,34,44,0.92)
 
   #course-container
+    opacity 0
     position absolute
     width 640px
     height 400px
@@ -15,16 +16,16 @@
     margin-right -50%
     margin-left auto
     right -320px
-    transition margin 1s
+    transition margin 1s, opacity 1s
 
     &.visible
-      display visible
+      opacity 1
       margin-top 0
       margin-bottom 0
       right -320px
       margin-right 50%
       margin-left auto
-      transition margin 1s
+      transition margin 1s, opacity 1s
 
     .course-figure-credits
       text-align center

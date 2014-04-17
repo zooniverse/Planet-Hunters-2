@@ -119,7 +119,6 @@ class MiniCourse
   onClickCourseYes: ->
     unless User.current is null
       User.current.setPreference 'course', 'yes'
-      # @hidePrompt()
       @prompt_el.fadeOut(0)
       @displayCourse()
 
@@ -137,20 +136,16 @@ class MiniCourse
     unless User.current is null
       User.current.setPreference 'prev_course', @prev
       @loadContent()
-      # @subject_el.fadeOut()
-      # @course_el.slideDown()
+      # @course_el.fadeIn()
       @subject_el.toggleClass("hidden")
       @course_el.toggleClass("visible")
       @prev = @curr
       @curr = +@curr + 1
 
   hideCourse: ->
-    # @course_el.slideUp()
-    @course_el.toggleClass("visible")
     @subject_el.toggleClass("hidden")
+    @course_el.toggleClass("visible")
     
-    # @subject_el.fadeIn()
-
   showPrompt: ->
     @prompt_el.slideDown()
 
