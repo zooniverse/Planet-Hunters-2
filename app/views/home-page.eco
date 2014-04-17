@@ -8,7 +8,7 @@
     <div class="call-to-action description">
       <%- translate 'home.header.description' %>
       <%- translate 'a', 'home.header.beginClassifying', href: '#/classify', id: "begin-classifying" %>
-      <%- translate 'a', 'home.header.learnMore', href: '#/classify', id: "learn-more" %>
+      <%- translate 'a', 'home.header.learnMore', href: '', id: "learn-more" %>
     </div>
   </div>
 </div>
