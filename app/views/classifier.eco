@@ -108,7 +108,7 @@
         </button>
       </div>
       <div id="slider-container">
-        <div id="axis-label">DAYS</div>
+        <!-- <div id="axis-label">DAYS</div> -->
         <div id="numbers-container"></div>
         <div id="ui-slider"></div>
       </div>
