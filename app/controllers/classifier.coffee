@@ -60,7 +60,6 @@ class Classifier extends BaseController
     Subject.on 'fetch', @onSubjectFetch
     Subject.on 'select', @onSubjectSelect
     @Subject = Subject
-    @el.find('#subject-container').addClass('loading')
 
     $(document).on 'mark-change', => @updateButtons()
     @marksContainer = @el.find('#marks-container')[0]
@@ -74,18 +73,19 @@ class Classifier extends BaseController
 
   onSubjectFetch: (e, user) =>
     console.log 'onSubjectFetch()'
+    @el.find('#loading-screen').show()
 
   onSubjectSelect: (e, subject) =>
     console.log 'onSubjectSelect()'
-
     @subject = subject
     @classification = new Classification {subject}
     # console.log 'subject: ', subject
     @loadSubjectData()
+    @el.find('#loading-screen').hide()
+
 
   loadSubjectData: ->
     console.log 'LOAD SUBJECT DATA!'
-    @el.find('#subject-container').addClass('loading')
     @el.find('#ui-slider').attr('disabled',true)
     @el.find(".noUi-handle").fadeOut(150)
 
@@ -122,7 +122,6 @@ class Classifier extends BaseController
           max: @canvasGraph.largestX - @zoomRange
       @el.find(".noUi-handle").hide()
       console.log 'SUBJECT LOADED!'
-      @el.find('#subject-container').removeClass('loading')
     @insertMetadata()
 
   insertMetadata: ->
@@ -213,8 +212,9 @@ class Classifier extends BaseController
     @resetTalkComment @altTalkComment
     # show courses
     @course.showPrompt() if @course.getPref() isnt 'never' and @course.count % @course.rate is 0
+    @el.find('#loading-screen').show()
     @Subject.next()
-    
+
   finishSubject: ->
     # fake classification counter
     @course.count = @course.count + 1
