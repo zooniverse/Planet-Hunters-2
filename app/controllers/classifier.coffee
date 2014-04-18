@@ -127,7 +127,7 @@ class Classifier extends BaseController
 
   insertMetadata: ->
     metadata = @Subject.current.metadata.magnitudes
-    @el.find('#star-id').html(@Subject.current.location['14-1'].split("\/").pop().split(".")[0])
+    @el.find('#star-id').html( @Subject.current.location['14-1'].split("\/").pop().split(".")[0].concat(" Information") )
     @el.find('#star-type').html(metadata.spec_type)
     @el.find('#magnitude').html(metadata.kepler)
     @el.find('#temperature').html metadata.eff_temp.toString().concat("(K)")
