@@ -114,6 +114,18 @@
       </div>
     </div>
 
+    <div id="subject-metadata">
+      <h3 id="star-id"> Information</h3>
+      <div class="meta-field">Star Type</div>
+        <div id="star-type" class="meta-value"></div>
+      <div class='meta-field'>Magnitude</div>
+        <div id="magnitude" class="meta-value"></div>
+      <div class='meta-field'>Temperature</div> 
+        <div id="temperature" class="meta-value"> (K)</div>
+      <div class='meta-field'>Radius</div> 
+        <div id="radius" class="meta-value">x Sol</div>
+    </div>
+
     <button class="std-btn yellow" name="finished">Finished</button>
     <button class="std-btn yellow" name="next-subject">Next Subject</button>
     <button id="no-transits" name="no-transits" class="std-btn white" id="tutorial">No Transits</button>
