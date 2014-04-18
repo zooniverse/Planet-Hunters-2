@@ -34,6 +34,7 @@
       </div>
     </div>
     <div id="graph-container">
+      <div id='loading-screen'></div>
       <div id="marks-container">
         <!-- <canvas id="graph" width="1078" height="420"></canvas> -->
         <!-- marks go here -->
