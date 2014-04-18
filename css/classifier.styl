@@ -1,12 +1,14 @@
 .classifier
   color inherit
   .content-block
-    overflow-x visible
+    // overflow-x scroll
+    overflow hidden
   .bg-overlay
     background-color rgba(19,34,44,0.92)
 
   #course-container
     opacity 0
+    display none
     position absolute
     width 640px
     height 400px
@@ -20,6 +22,7 @@
 
     &.visible
       opacity 1
+      display block
       position absolute
       width 640px
       height 400px

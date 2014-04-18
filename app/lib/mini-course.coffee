@@ -147,7 +147,10 @@ class MiniCourse
   hideCourse: ->
     @subject_el.toggleClass("hidden")
     @course_el.toggleClass("visible")
-    @course_el.hide()
+    # @course_el.hide()
+    $("#course-container").on "transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd", ->
+      @course_el.hide()
+      @course_el.style.display = "none" #('display','none')
 
   showPrompt: ->
     @prompt_el.slideDown()

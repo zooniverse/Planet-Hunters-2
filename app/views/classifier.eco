@@ -117,13 +117,13 @@
     <div id="subject-metadata">
       <h3 id="star-id"> Information</h3>
       <div class="meta-field">Star Type</div>
-        <div id="star-type" class="meta-value"></div>
+        <div id="star-type" class="meta-value">N/A</div>
       <div class='meta-field'>Magnitude</div>
-        <div id="magnitude" class="meta-value"></div>
+        <div id="magnitude" class="meta-value">N/A</div>
       <div class='meta-field'>Temperature</div> 
-        <div id="temperature" class="meta-value"> (K)</div>
+        <div id="temperature" class="meta-value">N/A</div>
       <div class='meta-field'>Radius</div> 
-        <div id="radius" class="meta-value">x Sol</div>
+        <div id="radius" class="meta-value">N/A</div>
     </div>
 
     <button class="std-btn yellow" name="finished">Finished</button>
