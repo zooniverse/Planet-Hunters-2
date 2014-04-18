@@ -60,6 +60,7 @@ class Classifier extends BaseController
     Subject.on 'fetch', @onSubjectFetch
     Subject.on 'select', @onSubjectSelect
     @Subject = Subject
+    @el.find('#subject-container').addClass('loading')
 
     $(document).on 'mark-change', => @updateButtons()
     @marksContainer = @el.find('#marks-container')[0]
@@ -76,13 +77,15 @@ class Classifier extends BaseController
 
   onSubjectSelect: (e, subject) =>
     console.log 'onSubjectSelect()'
+
     @subject = subject
     @classification = new Classification {subject}
     # console.log 'subject: ', subject
     @loadSubjectData()
 
   loadSubjectData: ->
-    console.log 'NOUI-HANDLE: ', @el.find('.noUi-handle')
+    console.log 'LOAD SUBJECT DATA!'
+    @el.find('#subject-container').addClass('loading')
     @el.find('#ui-slider').attr('disabled',true)
     @el.find(".noUi-handle").fadeOut(150)
 
@@ -105,7 +108,7 @@ class Classifier extends BaseController
       @canvasGraph.enableMarking()
       @drawSliderAxisNums()
 
-      @zoomRanges = [15, 10, 2] #[ @canvasGraph.largestX, @canvasGraph.largestX/10, @canvasGraph.largestX/20 ]
+      @zoomRanges = [15, 10, 2]
       @magnification = [ '1x', '10x', '20x' ]
       @showZoomMessage(@magnification[@zoomLevel])
 
@@ -118,6 +121,17 @@ class Classifier extends BaseController
           min: @canvasGraph.smallestX
           max: @canvasGraph.largestX - @zoomRange
       @el.find(".noUi-handle").hide()
+      console.log 'SUBJECT LOADED!'
+      @el.find('#subject-container').removeClass('loading')
+    @insertMetadata()
+
+  insertMetadata: ->
+    metadata = @Subject.current.metadata.magnitudes
+    @el.find('#star-id').html(@Subject.current.location['14-1'].split("\/").pop().split(".")[0])
+    @el.find('#star-type').html(metadata.spec_type)
+    @el.find('#magnitude').html(metadata.kepler)
+    @el.find('#temperature').html metadata.eff_temp.toString().concat("(K)")
+    @el.find('#radius').html metadata.stellar_rad.toString().concat("x Sol")
 
   onChangeScaleSlider: ->
     console.log 'onChangeScaleSlider(), zoomRange: ', @zoomRanges[@zoomLevel]
