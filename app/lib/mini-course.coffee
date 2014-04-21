@@ -122,17 +122,23 @@ class MiniCourse
   onClickCourseYes: ->
     unless User.current is null
       User.current.setPreference 'course', 'yes'
+      $('.course-button').removeClass('selected')
+      $('#course-yes').addClass('selected')
       @prompt_el.fadeOut(0)
       @displayCourse()
 
   onClickCourseNo: ->
     unless User.current is null
       User.current.setPreference 'course', 'no'
+      $('.course-button').removeClass('selected')
+      $('#course-no').addClass('selected')
       @hidePrompt()
 
   onClickCourseNever: ->
     unless User.current is null
       User.current.setPreference 'course', 'never'
+      $('.course-button').removeClass('selected')
+      $('#course-never').addClass('selected')
       @hidePrompt()
 
   displayCourse: ->
