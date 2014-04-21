@@ -3,10 +3,13 @@
   font-family MAIN_FONT_FAMILY
   -webkit-font-smoothing: antialiased;
 
-  .content-container
-    margin 0 auto
-    min-width 1090px
-    
+  .content-block
+    display table
+    .content-container
+      display table-row
+      margin 0 auto
+      min-width 1090px
+
   .call-to-action
     margin-bottom 50px
     font-size 65px
@@ -19,8 +22,8 @@
     @extends #_STANDARD_BUTTON
     font-size 14px
     color #000
-    height 30px
-    line-height 30px
+    height 40px
+    line-height 40px
     &#begin-classifying
       margin-left 25px
       color #fff
