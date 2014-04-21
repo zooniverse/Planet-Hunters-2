@@ -1,40 +1,44 @@
 .home-page
-  color inherit
+  color #fff
+  font-family MAIN_FONT_FAMILY
 
   .content-container
     margin 0 auto
-    margin-top 10%
     min-width 1090px
     
   .call-to-action
-    float left
-    font-family MAIN_FONT_FAMILY
+    margin-bottom 50px
+    font-size 65px
     font-weight 300
-    color #fff
-  .are-you-ready
-    font-size 42px
-    margin-bottom 40px
   .description
     font-size 18px
+    font-weight 200
 
   a
     @extends #_STANDARD_BUTTON
-    font-family MAIN_FONT_FAMILY
     font-size 14px
     color #000
+    height 30px
+    line-height 30px
     &#begin-classifying
+      margin-left 25px
+      color #fff
       background-color #e4c460
-      border none
+      border-color #e4c460
+      border-width 1px
+      border-radius 4px 
+      font-weight 700
       @media screen and (max-width: 430px)
         display block
-        text-align center
-        height 40px
-        line-height 40px
         margin 100px 0 0 0
-        color #fff
+        height 30px
         font-size 22px
+        text-align center
+        line-height 30px
     &#learn-more
       background-color none
       color #fff
-
+      font-weight 300
+      font-size 14px
+      
 

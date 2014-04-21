@@ -1,11 +1,11 @@
 <% translate = require 't7e' %>
 <div class="content-block">
   <div class="content-container">
-    <div class="call-to-action are-you-ready">
+    <div class="call-to-action">
       <%- translate 'home.header.callToAction' %>
     </div>
 
-    <div class="call-to-action description">
+    <div class="description">
       <%- translate 'home.header.description' %>
       <%- translate 'a', 'home.header.beginClassifying', href: '#/classify', id: "begin-classifying" %>
       <%- translate 'a', 'home.header.learnMore', href: '', id: "learn-more" %>
