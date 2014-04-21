@@ -106,7 +106,7 @@ class Classifier extends BaseController
       @canvasGraph.enableMarking()
       @drawSliderAxisNums()
       @zoomRanges = [15, 10, 2]
-      @magnification = [ '1x', '10x', '20x' ]
+      @magnification = [ '1x (all days)', '10 days', '2 days' ]
       @showZoomMessage(@magnification[@zoomLevel])
       @el.find("#ui-slider").noUiSlider
         start: 0
