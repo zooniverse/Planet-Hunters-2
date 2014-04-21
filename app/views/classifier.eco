@@ -22,8 +22,9 @@
     <div class="subject-header">
       <h3>Do you see a transit?</h3>
       <p>If so, highlight it on the graph!</p>
-
       <div id="course-prompt">
+        <img id="course-alert" src="./images/icons/alert.png" />
+
         <div id="course-message" class="course-message">
           <%- translate 'course.prompt.login_message' %>
         </div>
