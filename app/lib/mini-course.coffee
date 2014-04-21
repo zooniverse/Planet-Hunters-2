@@ -49,6 +49,8 @@ jsonData = '
 
 class MiniCourse
 
+  @transitionTime = 1000
+
   constructor: ->
     @prompt_el = $(classifier.el).find("#course-prompt")
     @course_el = $(classifier.el).find("#course-container")
@@ -135,22 +137,24 @@ class MiniCourse
 
   displayCourse: ->
     unless User.current is null
-      @course_el.show()
+      # @course_el.show()
       User.current.setPreference 'prev_course', @prev
       @loadContent()
-      # @course_el.fadeIn()
+      @course_el.fadeIn(@transitionTime)
+      @subject_el.fadeOut(@transitionTime)
       @subject_el.toggleClass("hidden")
       @course_el.toggleClass("visible")
       @prev = @curr
       @curr = +@curr + 1
 
   hideCourse: ->
+    @subject_el.fadeIn(@transitionTime)
+    @course_el.fadeOut(@transitionTime)
     @subject_el.toggleClass("hidden")
     @course_el.toggleClass("visible")
-    # @course_el.hide()
-    $("#course-container").on "transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd", ->
-      @course_el.hide()
-      @course_el.style.display = "none" #('display','none')
+    # $("#course-container").on "transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd", ->
+    #   @course_el.fadeOut()
+    #   @course_el.style.display = "none" #('display','none')
 
   showPrompt: ->
     @prompt_el.slideDown()
