@@ -79,16 +79,14 @@ class Classifier extends BaseController
     console.log 'onSubjectSelect()'
     @subject = subject
     @classification = new Classification {subject}
-    # console.log 'subject: ', subject
     @loadSubjectData()
     @el.find('#loading-screen').hide()
 
-
   loadSubjectData: ->
-    console.log 'LOAD SUBJECT DATA!'
     @el.find('#ui-slider').attr('disabled',true)
     @el.find(".noUi-handle").fadeOut(150)
 
+    # TODO: use Subject data to choose the right lightcurve
     jsonFile = @subject.location['14-1'] # read actual subject
     # jsonFile = './offline/subject.json' # for debug only
 
@@ -107,21 +105,15 @@ class Classifier extends BaseController
       @canvasGraph.plotPoints()
       @canvasGraph.enableMarking()
       @drawSliderAxisNums()
-
       @zoomRanges = [15, 10, 2]
       @magnification = [ '1x', '10x', '20x' ]
       @showZoomMessage(@magnification[@zoomLevel])
-
-      console.log 'SETTING SLIDER RANGE: [', @canvasGraph.smallestX, ',', @canvasGraph.largestX - @zoomRanges[@zoomLevel], ']'
-      console.log 'smallestX: ', @canvasGraph.smallestX
-      console.log 'largestX : ', @canvasGraph.largestX
       @el.find("#ui-slider").noUiSlider
         start: 0
         range:
           min: @canvasGraph.smallestX
           max: @canvasGraph.largestX - @zoomRange
       @el.find(".noUi-handle").hide()
-      console.log 'SUBJECT LOADED!'
     @insertMetadata()
 
   insertMetadata: ->
@@ -133,7 +125,6 @@ class Classifier extends BaseController
     @el.find('#radius').html metadata.stellar_rad.toString().concat("x Sol")
 
   onChangeScaleSlider: ->
-    console.log 'onChangeScaleSlider(), zoomRange: ', @zoomRanges[@zoomLevel]
     val = +@el.find("#ui-slider").val()
     return if @zoomLevel is 0 or @zoomLevel > @zoomRanges.length
     @canvasGraph.plotPoints( val, val + @zoomRanges[@zoomLevel] )
@@ -150,7 +141,6 @@ class Classifier extends BaseController
       @el.find("#toggle-zoom").removeClass("allowZoomOut")
 
     else 
-      console.log 'ZOOM LEVEL: ', @zoomLevel
       @el.find('#ui-slider').removeAttr('disabled')
       @canvasGraph.zoomInTo(0, @zoomRanges[@zoomLevel])
       @el.find("#toggle-zoom").addClass("zoomed")
