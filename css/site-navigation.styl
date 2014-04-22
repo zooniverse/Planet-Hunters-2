@@ -52,6 +52,10 @@
       &.active
         background rgb(252,69,65)
         opacity 1.0
+        &:after
+          background rgb(252,69,65)
+          top 100%
+          transition .2s
       &:after
         background transparent
         content ""
@@ -67,10 +71,10 @@
           height 4px
           background rgb(252,69,65)
           top 100%
-      &.active:after
-        background rgb(252,69,65)
-        top 100%
-        transition .2s
+      // &.active:after
+      //   background rgb(252,69,65)
+      //   top 100%
+      //   transition .2s
 
 .zooniverse-top-bar
   background transparent
