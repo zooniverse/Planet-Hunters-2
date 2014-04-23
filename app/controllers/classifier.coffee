@@ -163,6 +163,7 @@ class Classifier extends BaseController
     @el.find('#zoom-notification').html(message).fadeIn(100).delay(1000).fadeOut()
     
   notify: (message) =>
+    @course.hidePrompt(0)
     @el.find('#notification-message').html(message).fadeIn(100).delay(2000).fadeOut()
 
   onToggleFav: ->
