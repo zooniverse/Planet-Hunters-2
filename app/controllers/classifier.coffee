@@ -162,6 +162,9 @@ class Classifier extends BaseController
   showZoomMessage: (message) =>
     @el.find('#zoom-notification').html(message).fadeIn(100).delay(1000).fadeOut()
     
+  notify: (message) =>
+    @el.find('#notification-message').html(message).fadeIn(100).delay(2000).fadeOut()
+
   onToggleFav: ->
     favButton = @el.find("#toggle-fav")[0]
     if @isFaved
@@ -177,6 +180,7 @@ class Classifier extends BaseController
 
   onClickTutorial: ->
     console.log 'onClickTutorial()'
+    @notify('Any messages or notifications will show up here.')
 
   updateButtons: ->
     if @canvasGraph.marks.all.length > 0

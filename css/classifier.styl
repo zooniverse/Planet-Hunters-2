@@ -133,16 +133,14 @@
         color white
       p, h3
         // padding-left 20px
+
       #course-prompt
-        height 25px
+        height inherit
         margin-top 5px
-        // margin-bottom 10px
-        // padding-left 20px
         vertical-align middle
         font-size 1em
         color white
         background-color #3E89AF
-        width inherit
         border-radius: 0.3em
       .course-message
         line-height 25px
@@ -176,11 +174,27 @@
         height 20px
         padding 5px
 
+      #notification
+        height 25px
+        margin-top 5px
+        vertical-align middle
+        font-size 1em
+        color white
+        // background-color #323232
+        // opacity 0.5
+        border-radius 0.3em
+        // border 1px solid black
+        #notification-message
+          color #fc4541
+          line-height 25px
+          // padding-left 10px
+          // padding-right 10px
+
     #graph-container
       float left
       position relative
-      margin-bottom 10px
-      margin-top 10px
+      // margin-bottom 10px
+      // margin-top 5px
 
       #loading-screen
         position absolute
@@ -423,28 +437,39 @@
             display table-cell
 
     #subject-metadata
-      // float left
-      h3
-        margin-top 5px
-        margin-bottom 5px
-      div
+      display inline-block
+      width 1090px
+      height 40px
+      margin-top 12px
+      // padding-top 5px
+      // padding-bottom 5px
+      .meta
+        font-size 12px
+        line-height 24px
+      #star-id
+        font-weight 700
+      .meta-field
         float left
-        margin-right 5px
       .meta-value
+        float left
+        margin-left 5px
+        margin-right 35px
         color rgb(252,69,65)
         font-style bold
-        margin-right 40px
+      
+  #button-container
+    float right
+    display inline-block
+    transform translateY(-50%)
+    text-sp
 
   button
     &[name="no-transits"]
-      float right
       opacity 0.5
       font-weight bold
       &:hover
         opacity .9
     &[name="finished"]
       display none
-      float right
     &[name="next-subject"]
       display none
-      float right

@@ -159,7 +159,10 @@ class CanvasGraph
 
   addMarkToGraph: (e) =>
     e.preventDefault()
-    unless @marks.markTooCloseToAnotherMark(e, @scale)
+    if @marks.markTooCloseToAnotherMark(e, @scale)
+      classifier.notify 'Marks too close to each other!'
+      $('#graph-container').effect( "shake", {times:4, distance: 5}, 500 ) # eventually remove jquery ui dependency
+    else
       @mark = new Mark(e, @)
       @marks.create(@mark)
       @mark.draw(e)
