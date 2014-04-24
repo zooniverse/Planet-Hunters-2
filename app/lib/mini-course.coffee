@@ -162,7 +162,7 @@ class MiniCourse
     #   @course_el.fadeOut()
     #   @course_el.style.display = "none" #('display','none')
 
-  showPrompt: ->
+  showPrompt: ->    
     @prompt_el.slideDown(@transitionTime)
 
   hidePrompt: (delay) ->

@@ -181,6 +181,7 @@ class Classifier extends BaseController
 
   onClickHelp: ->
     console.log 'onClickHelp()'
+    @el.find('#notification-message').hide() # get any notification out of the way
     @el.find('#course-prompt').slideDown()
 
   onClickTutorial: ->
@@ -210,7 +211,9 @@ class Classifier extends BaseController
     @resetTalkComment @talkComment
     @resetTalkComment @altTalkComment
     # show courses
-    @course.showPrompt() if @course.getPref() isnt 'never' and @course.count % @course.rate is 0
+    if @course.getPref() isnt 'never' and @course.count % @course.rate is 0
+      @el.find('#notification-message').hide() # get any notification out of the way
+      @course.showPrompt() 
     @el.find('#loading-screen').show()
     @Subject.next()
 
