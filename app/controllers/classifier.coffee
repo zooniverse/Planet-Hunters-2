@@ -85,13 +85,11 @@ class Classifier extends BaseController
           attachment: 'center center #graph-container center center'
           next: 'theData2'
 
-
         theData2: new Step
           header:      translate 'span', 'tutorial.theData2.header'
           details:     translate 'span', 'tutorial.theData2.details'
           attachment: 'center center #graph-container center center'
           next: 'theData3'
-
 
         theData3: new Step
           header:      translate 'span', 'tutorial.theData3.header'
@@ -139,7 +137,6 @@ class Classifier extends BaseController
           header:      translate 'span', 'tutorial.thanks.header'
           details:     translate 'span', 'tutorial.thanks.details'
           attachment: 'center center #graph-container center center'
-
 
     # mini course
     @course = new MiniCourse
