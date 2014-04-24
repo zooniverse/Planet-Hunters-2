@@ -76,7 +76,7 @@ class Classifier extends BaseController
         welcome: new Step
           header:      translate 'span', 'tutorial.welcome.header'
           details:     translate 'span', 'tutorial.welcome.details'
-          attachment: 'center center #surfaces-container center center'
+          attachment: 'center center #graph-container center center'
     
 
     # mini course
