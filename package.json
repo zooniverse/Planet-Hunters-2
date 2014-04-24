@@ -7,7 +7,7 @@
     "stack-of-pages": "0.0.11",
     "t7e": "~0.2.3",
     "zooniverse": "~0.6.0",
-    "zootorial": "~0.4.12"
+    "zootorial": "~0.3.6"
   },
   "scripts": {
     "start": "haw serve --port 3416",

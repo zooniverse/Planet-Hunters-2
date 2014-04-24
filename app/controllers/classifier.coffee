@@ -5,6 +5,12 @@ Classification = require 'zooniverse/models/classification'
 MiniCourse     = require '../lib/mini-course'
 NoUiSlider     = require "../lib/jquery.nouislider.min"
 
+translate      = require 't7e'
+{Tutorial}     = require 'zootorial'
+{Step}         = require 'zootorial'
+# tutorialSteps  = require '../lib/tutorial-steps'
+
+
 $ = window.jQuery
 
 {CanvasGraph, Marks, Mark} = require "../lib/canvas-graph"
@@ -63,6 +69,15 @@ class Classifier extends BaseController
 
     $(document).on 'mark-change', => @updateButtons()
     @marksContainer = @el.find('#marks-container')[0]
+
+    @tutorial = new Tutorial
+      firstStep: 'welcome'
+      steps:
+        welcome: new Step
+          header:      translate 'span', 'tutorial.welcome.header'
+          details:     translate 'span', 'tutorial.welcome.details'
+          attachment: 'center center #surfaces-container center center'
+    
 
     # mini course
     @course = new MiniCourse
@@ -186,7 +201,9 @@ class Classifier extends BaseController
 
   onClickTutorial: ->
     console.log 'onClickTutorial()'
-    @notify('Any messages or notifications will show up here.')
+    @notify('Loading tutorial...')
+    @tutorial.start()
+
 
   updateButtons: ->
     if @canvasGraph.marks.all.length > 0

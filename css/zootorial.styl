@@ -1,0 +1,176 @@
+.zootorial-dialog
+  background: #000
+  border: 0
+  border-radius: 5px
+  box-shadow: 0 3px 5px rgba(#000, 0.67)
+  color: #FFF
+  max-width: 33%
+  text-align center
+  margin 5px
+  max-width 450px
+  z-index 1000
+
+  &.arrow-right > .dialog-arrow
+    border-top 10px solid transparent
+    border-bottom 10px solid transparent
+    border-left 10px solid #000
+    position absolute
+    right -10px
+    top 45%
+
+  &.arrow-left > .dialog-arrow
+    border-top 10px solid transparent
+    border-bottom 10px solid transparent
+    border-right 10px solid #000
+    position absolute
+    left -10px
+    top 45%
+
+  &.arrow-top > .dialog-arrow
+    border-left 10px solid transparent
+    border-right 10px solid transparent
+    border-bottom 10px solid #000
+    position absolute
+    left 45%
+    top -10px
+
+  &.arrow-bottom > .dialog-arrow
+    border-left 10px solid transparent
+    border-right 10px solid transparent
+    border-top 10px solid #000
+    position absolute
+    left 45%
+    bottom -10px
+
+  .dialog-arrow
+    width 0
+    height 0
+
+  button[name="close-dialog"]
+    background: transparent
+    border: 0
+    color: #999
+    cursor: pointer
+    font: 16px Arial, sans-serif
+    height: 1em
+    line-height: 1em
+    padding: 0
+    position: absolute
+    right: 5px
+    top: 5px
+    width: 1em
+
+  .header
+    display: none
+    font-size: 20px
+    margin-bottom: -10px
+    padding: 15px 25px 0 20px
+    font-weight bold
+
+    &.defined
+      display: block
+
+  .details
+    display: none
+    padding: 15px 25px 15px 20px
+    font-size 14px
+    line-height 22px
+
+    &.defined
+      display: block
+
+  .instruction
+    color: #319cae
+    display: none
+    padding: 15px 20px 5px 20px
+
+    &.defined
+      display: block
+
+    &.attention
+      animation: 1s zootorial-throb ease-in-out infinite
+
+    button
+      border: 0
+      border-radius: 5px
+      border 1px solid #fff
+      color: #fff
+      margin-top 5px
+      cursor: pointer
+      padding: 0px 10px
+      position: relative
+
+      &[disabled]
+        opacity: 0.5
+
+  .buttons
+    background: greenish
+    display: none
+    padding: 10px
+    text-align: center
+
+    &.defined
+      display: block
+
+    button
+      background: #38b3c5
+      border: 0
+      border-radius: 5px
+      color: inherit
+      cursor: pointer
+      font-weight: bold
+      padding: 3px 15px
+      position: relative
+
+      &:active
+        top: 1px
+
+  .progress
+    display: none
+
+    &.defined
+      display: block
+
+    .track
+      background: #ccc
+      border-radius: 5px
+      box-shadow: 0 1px 1px #999 inset
+      height: 5px
+      margin: 5px 10px
+      overflow: hidden
+      position: relative
+
+      .fill
+        background: greenish
+        height: 100%
+        left: 0
+        position: absolute
+        top: 0
+        transition: width 0.5s ease-in-out
+        width: 0%
+
+    .steps
+      line-height: 0
+      margin: 5px 10px
+      text-align: center
+
+      .step
+        border: 1px solid #999
+        border-radius: 50%
+        display: inline-block
+        height: 5px
+        margin: 0 2px
+        width: 5px
+
+        &.passed
+          background: #999
+
+        &.active
+          background: greenish
+          border-color: greenish
+
+.zootorial-focuser
+  background #6E6E6E
+
+.actionable
+  animation: 1s zootorial-glow ease-in-out infinite
