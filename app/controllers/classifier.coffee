@@ -163,8 +163,12 @@ class Classifier extends BaseController
     @el.find('#zoom-notification').html(message).fadeIn(100).delay(1000).fadeOut()
     
   notify: (message) =>
-    @course.hidePrompt(0)
-    @el.find('#notification-message').html(message).fadeIn(100).delay(2000).fadeOut()
+    @course.hidePrompt(0) # get the prompt out of the way
+    return if @el.find('#notification').hasClass('notifying')
+    @el.find('#notification').addClass('notifying')
+    @el.find('#notification-message').html(message).fadeIn(100).delay(2000).fadeOut( 400, 'swing', =>
+      console.log 'removing notify flag'
+      @el.find('#notification').removeClass('notifying') )
 
   onToggleFav: ->
     favButton = @el.find("#toggle-fav")[0]
