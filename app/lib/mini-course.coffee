@@ -143,7 +143,6 @@ class MiniCourse
 
   displayCourse: ->
     unless User.current is null
-      # @course_el.show()
       User.current.setPreference 'prev_course', @prev
       @loadContent()
       @course_el.fadeIn(@transitionTime)
@@ -158,9 +157,7 @@ class MiniCourse
     @course_el.fadeOut(@transitionTime)
     @subject_el.toggleClass("hidden")
     @course_el.toggleClass("visible")
-    # $("#course-container").on "transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd", ->
-    #   @course_el.fadeOut()
-    #   @course_el.style.display = "none" #('display','none')
+
 
   showPrompt: ->    
     @prompt_el.slideDown(@transitionTime)

@@ -3,7 +3,6 @@
 
   <!-- COURSE  -->
   <div id="course-container">
-    <!-- <div id="course-header">PH Mini-Course</div> -->
     <div id="course-title"></div>
     <div class="course-close">Close<img src="./images/icons/marking-closex.png">
     </div>
@@ -49,8 +48,6 @@
         <h3>Loading...</h3>
       </div>
       <div id="marks-container">
-        <!-- <canvas id="graph" width="1078" height="420"></canvas> -->
-        <!-- marks go here -->
       </div>
       <div id="zoom-notification"></div>
       <div id="classify-summary">
@@ -122,7 +119,6 @@
         </button>
       </div>
       <div id="slider-container">
-        <!-- <div id="axis-label">DAYS</div> -->
         <div id="numbers-container"></div>
         <div id="ui-slider"></div>
       </div>

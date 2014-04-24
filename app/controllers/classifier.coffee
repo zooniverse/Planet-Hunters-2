@@ -167,7 +167,6 @@ class Classifier extends BaseController
     return if @el.find('#notification').hasClass('notifying')
     @el.find('#notification').addClass('notifying')
     @el.find('#notification-message').html(message).fadeIn(100).delay(2000).fadeOut( 400, 'swing', =>
-      console.log 'removing notify flag'
       @el.find('#notification').removeClass('notifying') )
 
   onToggleFav: ->
@@ -222,7 +221,6 @@ class Classifier extends BaseController
     @course.count = @course.count + 1
     console.log 'YOU\'VE MARKED ', @course.count, ' LIGHT CURVES!'
     for mark, i in [@canvasGraph.marks.all...]
-      console.log 'mark: ', mark
       @classification.annotations[i] =
         x_min: mark.dataXMin
         x_max: mark.dataXMax

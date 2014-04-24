@@ -174,7 +174,7 @@ class CanvasGraph
     graph.addClass('shaking') 
     graph.effect( "shake", {times:4, distance: 5}, 500, =>
         graph.removeClass('shaking')
-      ) # eventually remove jquery ui dependency
+      ) # eventually remove jquery ui dependency?
 
 
 class Marks
