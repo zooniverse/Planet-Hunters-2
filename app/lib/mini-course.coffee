@@ -160,10 +160,10 @@ class MiniCourse
 
 
   showPrompt: ->    
-    @prompt_el.slideDown(@transitionTime)
+    @prompt_el.fadeIn(@transitionTime)
 
   hidePrompt: (delay) ->
-    @prompt_el.slideUp(delay)
+    @prompt_el.fadeOut(delay)
 
   getPref: ->
     @pref = User.current?.preferences[Api.current.project]['course']

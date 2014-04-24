@@ -181,7 +181,8 @@ class Classifier extends BaseController
   onClickHelp: ->
     console.log 'onClickHelp()'
     @el.find('#notification-message').hide() # get any notification out of the way
-    @el.find('#course-prompt').slideDown()
+    # @el.find('#course-prompt').slideDown()
+    @course.showPrompt()
 
   onClickTutorial: ->
     console.log 'onClickTutorial()'
