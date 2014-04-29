@@ -1,4 +1,4 @@
-$ = window.jQuery
+# $ = window.jQuery
 
 class CanvasGraph
   constructor: (@canvas, @data) ->
@@ -24,9 +24,11 @@ class CanvasGraph
     @canvas.addEventListener 'mousedown', (e) => @addMarkToGraph(e)
     @canvas.addEventListener 'touchstart', (e) => @addMarkToGraph(e)
 
-  plotPoints: (xMin = @smallestX, xMax = @largestX) ->
+  plotPoints: (xMin = @smallestX, xMax = @largestX, yMin = @smallestY, yMax = @largestY) ->
     @xMin = xMin
     @xMax = xMax
+    @yMin = yMin
+    @yMax = yMax
     @clearCanvas()
 
     # plot points
@@ -61,6 +63,34 @@ class CanvasGraph
     @ctx.fillStyle = textColor
     @ctx.fillText( 'DAYS', 10, @canvas.height - textSpacing )
 
+    # intensity values
+    # for i in [Math.round(yMin)...Math.round(yMax)]
+      # tick_y = Math.round ( (( +i - yMin) / (yMax - yMin)) * @canvas.height )
+
+    for i in [0...20]
+      continue unless i isnt 19
+      continue unless i isnt 0
+      tick_y = Math.round ( (( +i - 0) / (20 - 0)) * @canvas.height )
+      console.log '------------------------------------'
+      console.log 'i  : ', i
+      console.log 'tick_y: ', tick_y
+      console.log 'yMin  : ', yMin
+      console.log 'yMax  : ', yMax
+      console.log 'hei   : ', @canvas.height
+      console.log 'y     : ', @toDataYCoord(tick_y)
+      @ctx.beginPath()
+      @ctx.moveTo( 0, tick_y )
+      @ctx.lineTo( 0+tickMajorLength, tick_y )
+      @ctx.lineWidth = tickWidth
+      @ctx.strokeStyle = tickColor
+      @ctx.stroke()
+
+      # top numbers
+      @ctx.font = '10pt Arial'
+      @ctx.textAlign = 'center'
+      @ctx.fillStyle = textColor
+      @ctx.fillText( i, 0+tickMajorLength+textSpacing, tick_y+5 )
+
     for i in [0...@dataLength]
       if i % 1 is 0 and i isnt 0
         # top
@@ -81,7 +111,7 @@ class CanvasGraph
         @ctx.stroke()
 
       if i % 2 is 0 and i isnt 0
-        tick_x = ((+i - xMin) / (xMax - xMin)) * @canvas.width
+        # tick_x = ((+i - xMin) / (xMax - xMin)) * @canvas.width
         
         # bottom lines
         @ctx.beginPath()
@@ -95,7 +125,7 @@ class CanvasGraph
         @ctx.font = '10pt Arial'
         @ctx.textAlign = 'center'
         @ctx.fillStyle = textColor
-        @ctx.fillText( i, tick_x, @canvas.height - textSpacing )
+        @ctx.fillText( @toDataXCoord(tick_x).toFixed(), tick_x, @canvas.height - textSpacing )
 
       if i % 4 is 0 and i isnt 0
         tick_x = ((+i - xMin) / (xMax - xMin)) * @canvas.width
@@ -156,6 +186,8 @@ class CanvasGraph
 
   toCanvasXCoord: (dataPoint) -> ((dataPoint - @xMin) / (@xMax - @xMin)) * @canvas.width
   toDataXCoord: (canvasPoint) -> ((canvasPoint / @canvas.width) * (@xMax - @xMin)) + @xMin
+  toDataYCoord: (canvasPoint) -> ((canvasPoint / @canvas.height) * (@yMax - @yMin)) + @yMin
+
 
   addMarkToGraph: (e) =>
     e.preventDefault()
