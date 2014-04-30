@@ -299,10 +299,10 @@ class Classifier extends BaseController
     console.log 'YOU\'VE MARKED ', @course.count, ' LIGHT CURVES!'
     for mark, i in [@canvasGraph.marks.all...]
       @classification.annotations[i] =
-        xMinRelative: mark.dataXMin
-        xMaxRelative: mark.dataXMax
-        xMinGlobal: mark.dataMin + Math.round(@canvasGraph.originalMin)
-        xMaxGlobal: mark.dataMax + Math.round(@canvasGraph.originalMin)
+        xMinRelative: mark.dataXMinRel
+        xMaxRelative: mark.dataXMaxRel
+        xMinGlobal: mark.dataXMinGlobal
+        xMaxGlobal: mark.dataXMaxGlobal
     console.log JSON.stringify( @classification )
     @classification.send()
     @showSummary()
