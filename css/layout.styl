@@ -4,24 +4,23 @@ html
   font 14px MAIN_FONT_FAMILY
   font-weight 400
   height 100%
-  overflow-x scroll
+  overflow-x auto
   overflow-y scroll
   position relative
   width 100%
 
 body
   margin 0
-
+  width 100%
 .bg-overlay
   background-color rgba(19,34,44,0.75)
   background-size cover
   position absolute
   top 0px
-  width 100%
+  width 2000px
   min-height 730px
   z-index -1
   overflow hidden
-
 .bg-planet-container
   background-size cover
   position absolute
@@ -31,7 +30,6 @@ body
   height 730px
   z-index -1
   overflow hidden
-  
 .bg-planet
   background-repeat no-repeat
   position absolute
@@ -41,7 +39,6 @@ body
   left 60%
   transition-duration 5s
   transition-timing-function linear
-
 .bg-starfield-sun
   background-image url('images/field-sun.jpg');
   background-size cover
@@ -51,7 +48,6 @@ body
   min-height 730px
   z-index -1
   overflow hidden
-
 .content-block
   clearfix()
   min-height 630px

@@ -36,7 +36,7 @@ class CanvasGraph
       x = ((+@data.x[i] - xMin) / (xMax - xMin)) * @canvas.width
       y = +@data.y[i] * @canvas.height
       y = -y + @canvas.height # flip y-values
-      @ctx.fillStyle = "#fff"
+      @ctx.fillStyle = "#fff" #fc4541" #"#fff"
       @ctx.fillRect(x,y,2,2)
 
     if @marks
@@ -57,16 +57,6 @@ class CanvasGraph
     textColor = '#323232'
     textSpacing = 15
 
-    # display 'days' label
-    @ctx.font = '10pt Arial'
-    @ctx.textAlign = 'left'
-    @ctx.fillStyle = textColor
-    @ctx.fillText( 'DAYS', 10, @canvas.height - textSpacing )
-
-    # intensity values
-    # for i in [Math.round(yMin)...Math.round(yMax)]
-      # tick_y = Math.round ( (( +i - yMin) / (yMax - yMin)) * @canvas.height )
-
     for i in [0...20]
       continue unless i isnt 19
       continue unless i isnt 0
@@ -85,12 +75,22 @@ class CanvasGraph
       @ctx.strokeStyle = tickColor
       @ctx.stroke()
 
+      continue unless i % 2 isnt 0
+
       # top numbers
       @ctx.font = '10pt Arial'
       @ctx.textAlign = 'center'
       @ctx.fillStyle = textColor
-      @ctx.fillText( i, 0+tickMajorLength+textSpacing, tick_y+5 )
+      y_scaled = 1 - +i/20
+      @ctx.fillText( y_scaled.toFixed(2), 0+tickMajorLength+textSpacing, tick_y+5 )
 
+    # X-AXIS
+
+    # display 'days' label
+    @ctx.font = '10pt Arial'
+    @ctx.textAlign = 'left'
+    @ctx.fillStyle = textColor
+    @ctx.fillText( 'DAYS', 10, @canvas.height - textSpacing )
     for i in [0...@dataLength]
       if i % 1 is 0 and i isnt 0
         # top
@@ -134,7 +134,7 @@ class CanvasGraph
         @ctx.font = '10pt Arial'
         @ctx.textAlign = 'center'
         @ctx.fillStyle = textColor
-        @ctx.fillText(i+Math.round(@originalMin),tick_x,tickMajorLength+textSpacing)
+        @ctx.fillText(@toDataXCoord(tick_x)+Math.round(@originalMin),tick_x,tickMajorLength+textSpacing)
 
         # top lines
         @ctx.beginPath()
