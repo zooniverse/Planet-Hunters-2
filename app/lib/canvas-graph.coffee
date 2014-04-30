@@ -92,14 +92,18 @@ class CanvasGraph
 
     if @marks
       for mark in @marks.all
-        scaledMin = ((mark.dataXMin - xMin) / (xMax - xMin)) * @canvas.width
-        scaledMax = ((mark.dataXMax - xMin) / (xMax - xMin)) * @canvas.width
+        scaledMin = ((mark.dataXMinRel - xMin) / (xMax - xMin)) * @canvas.width
+        scaledMax = ((mark.dataXMaxRel - xMin) / (xMax - xMin)) * @canvas.width
         mark.element.style.width = (scaledMax-scaledMin) + "px"
         mark.element.style.left = (scaledMin) + "px"
         mark.save(scaledMin, scaledMax)
 
     @drawYTickMarks([0..20], [0..@canvas.height], 1, 2)
+    @drawXTickMarks(xMin, xMax)
 
+    @scale = (@largestX - @smallestX) / (@xMax - @xMin)
+
+  drawXTickMarks: (xMin, xMax) ->
     tickMinorInterval = 1
     tickMajorInterval = 4
     tickMinorLength = 5
@@ -159,7 +163,8 @@ class CanvasGraph
         @ctx.font = '10pt Arial'
         @ctx.textAlign = 'center'
         @ctx.fillStyle = textColor
-        @ctx.fillText(@toDataXCoord(tick_x)+Math.round(@originalMin),tick_x,tickMajorLength+textSpacing)
+        x_value = @toDataXCoord(tick_x)+Math.round(@originalMin)
+        @ctx.fillText( x_value, tick_x, tickMajorLength+textSpacing )
 
         # top lines
         @ctx.beginPath()
@@ -168,8 +173,6 @@ class CanvasGraph
         @ctx.lineWidth = tickWidth
         @ctx.strokeStyle = tickColor
         @ctx.stroke()
-
-    @scale = (@largestX - @smallestX) / (@xMax - @xMin)
 
   normalize: (values) ->
     norm = []
@@ -211,11 +214,11 @@ class CanvasGraph
 
   addMarkToGraph: (e) =>
     e.preventDefault()
-    if @marks.markTooCloseToAnotherMark(e, @scale)
+    if @marks.markTooCloseToAnotherMark(e, @scale, @originalMin)
       classifier.notify 'Marks too close to each other!'
       @shakeGraph()
     else
-      @mark = new Mark(e, @)
+      @mark = new Mark(e, @, @originalMin)
       @marks.create(@mark)
       @mark.draw(e)
       @mark.onMouseDown(e)
@@ -261,7 +264,7 @@ class Marks
     markBelow < (22*scale) or markAbove < (22*scale) or mouseLocation in @sortedXCoords()
 
 class Mark
-  constructor: (e, @canvasGraph) ->
+  constructor: (e, @canvasGraph, @originalMin) ->
     @canvas = @canvasGraph.canvas
 
     @element = document.createElement('div')
@@ -342,8 +345,10 @@ class Mark
     @canvasXMax = markRightX
 
     #data coords
-    @dataXMin = @canvasGraph.toDataXCoord(@canvasXMin)
-    @dataXMax = @canvasGraph.toDataXCoord(@canvasXMax)
+    @dataXMinRel = @canvasGraph.toDataXCoord(@canvasXMin)
+    @dataXMaxRel = @canvasGraph.toDataXCoord(@canvasXMax)
+    @dataXMinGlobal = @dataXMinRel + @originalMin    
+    @dataXMaxGlobal = @dataXMaxRel + @originalMin
 
   onMouseMove: (e) =>
     e.preventDefault()
