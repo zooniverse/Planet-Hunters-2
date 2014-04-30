@@ -18,11 +18,62 @@ class CanvasGraph
     # normalize data
     @data.y = @normalize(@data.y)
 
+    # update min/max values
+    @smallestX = Math.min @data.x...
+    @smallestY = Math.min @data.y...
+    @largestX = Math.max  @data.x...
+    @largestY = Math.max  @data.y...
+
   enableMarking: ->
     @marks = new Marks
     window.marks = @marks
     @canvas.addEventListener 'mousedown', (e) => @addMarkToGraph(e)
     @canvas.addEventListener 'touchstart', (e) => @addMarkToGraph(e)
+
+  drawYTickMarks: (domain, range, minorInt, majorInt) ->
+    # draw scales
+    tickMinorInterval = minorInt
+    tickMajorInterval = majorInt
+    tickMinorLength = 5
+    tickMajorLength = 10
+    tickWidth = 1
+    tickColor = '#323232'
+    textColor = '#323232'
+    textSpacing = 15
+
+    domainMin = Math.min(domain...)
+    domainMax = Math.max(domain...)
+    rangeMin = Math.min(range...)
+    rangeMax = Math.max(range...)
+
+    for i in domain
+      # do not draw first, last tickmarks
+      continue unless i isnt +Math.max(domain...)-1
+      continue unless i isnt +Math.min(domain...)+1
+  
+      # draw minor tickmarks
+      tick_y = Math.round ( (( +i - domainMin) / (domainMax - domainMin)) * rangeMax )
+      if i % majorInt is 0
+        @ctx.beginPath()
+        @ctx.moveTo( rangeMin, tick_y )
+        @ctx.lineTo( rangeMin+tickMajorLength, tick_y )
+        @ctx.lineWidth = tickWidth
+        @ctx.strokeStyle = tickColor
+        @ctx.stroke()
+      else if i % minorInt is 0
+        @ctx.beginPath()
+        @ctx.moveTo( rangeMin, tick_y )
+        @ctx.lineTo( rangeMin+tickMinorLength, tick_y )
+        @ctx.lineWidth = tickWidth
+        @ctx.strokeStyle = tickColor
+        @ctx.stroke()
+        # print labels
+        @ctx.font = '10pt Arial'
+        @ctx.textAlign = 'center'
+        @ctx.fillStyle = textColor
+        y_scaled = 1 - +i/domainMax
+        @ctx.fillText( y_scaled.toFixed(2), rangeMin+tickMajorLength+textSpacing, tick_y+tickMinorLength )
+
 
   plotPoints: (xMin = @smallestX, xMax = @largestX, yMin = @smallestY, yMax = @largestY) ->
     @xMin = xMin
@@ -47,7 +98,8 @@ class CanvasGraph
         mark.element.style.left = (scaledMin) + "px"
         mark.save(scaledMin, scaledMax)
 
-    # draw scales
+    @drawYTickMarks([0..20], [0..@canvas.height], 1, 2)
+
     tickMinorInterval = 1
     tickMajorInterval = 4
     tickMinorLength = 5
@@ -56,33 +108,6 @@ class CanvasGraph
     tickColor = '#323232'
     textColor = '#323232'
     textSpacing = 15
-
-    for i in [0...20]
-      continue unless i isnt 19
-      continue unless i isnt 0
-      tick_y = Math.round ( (( +i - 0) / (20 - 0)) * @canvas.height )
-      console.log '------------------------------------'
-      console.log 'i  : ', i
-      console.log 'tick_y: ', tick_y
-      console.log 'yMin  : ', yMin
-      console.log 'yMax  : ', yMax
-      console.log 'hei   : ', @canvas.height
-      console.log 'y     : ', @toDataYCoord(tick_y)
-      @ctx.beginPath()
-      @ctx.moveTo( 0, tick_y )
-      @ctx.lineTo( 0+tickMajorLength, tick_y )
-      @ctx.lineWidth = tickWidth
-      @ctx.strokeStyle = tickColor
-      @ctx.stroke()
-
-      continue unless i % 2 isnt 0
-
-      # top numbers
-      @ctx.font = '10pt Arial'
-      @ctx.textAlign = 'center'
-      @ctx.fillStyle = textColor
-      y_scaled = 1 - +i/20
-      @ctx.fillText( y_scaled.toFixed(2), 0+tickMajorLength+textSpacing, tick_y+5 )
 
     # X-AXIS
 
@@ -147,15 +172,10 @@ class CanvasGraph
     @scale = (@largestX - @smallestX) / (@xMax - @xMin)
 
   normalize: (values) ->
-    y_norm = []
-    for y, idx in [@data.y...]
-      y_norm[idx] =  ( parseFloat(y) - @smallestY ) / ( @largestY - @smallestY )
-    # update max/min values
-    @smallestX = Math.min @data.x...
-    @smallestY = Math.min @data.y...
-    @largestX = Math.max @data.x...
-    @largestY = Math.max @data.y...
-    return y_norm
+    norm = []
+    for value, idx in [values...]
+      norm[idx] =  ( parseFloat(value) - Math.min(values...) ) / ( Math.max(values...) - Math.min(values...) )
+    return norm
 
   zoomInTo: (wMin, wMax) ->
     [cMin, cMax] = [@xMin, @xMax]
