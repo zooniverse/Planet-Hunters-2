@@ -189,6 +189,7 @@ class Classifier extends BaseController
           max: @canvasGraph.largestX - @zoomRange
       @el.find(".noUi-handle").hide()
     @insertMetadata()
+    @el.find('.do-you-see-a-transit').fadeIn()
 
   insertMetadata: ->
     metadata = @Subject.current.metadata.magnitudes
@@ -311,6 +312,7 @@ class Classifier extends BaseController
     @zoomLevel = 0
     
   showSummary: ->
+    @el.find('.do-you-see-a-transit').fadeOut()
     @classifySummary.fadeIn(150)
     @nextSubjectButton.show()
     @planetNum.html @canvasGraph.marks.all.length # number of marks

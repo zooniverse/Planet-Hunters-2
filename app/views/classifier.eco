@@ -19,9 +19,10 @@
 
   <div id="subject-container">
     <div class="subject-header">
-      <h3>Do you see a transit?</h3>
-      <p>If so, highlight it on the graph!</p>
-      
+      <div class="do-you-see-a-transit">
+        <h3>Do you see a transit?</h3>
+        <p>If so, highlight it on the graph!</p>
+      </div>
       <div id="notification">
         <div id="notification-message"></div>
         <div id="course-prompt">
