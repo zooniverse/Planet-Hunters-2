@@ -54,6 +54,8 @@ class Classifier extends BaseController
   constructor: ->
     super    
     window.classifier = @
+
+    @el.find('#star-id').hide()
     
     # zoom levels [days]: 2x, 10x, 20x
     @zoomRange = 15

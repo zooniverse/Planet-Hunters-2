@@ -4,7 +4,6 @@
     overflow-x visible
   .bg-overlay
     background-color rgba(19,34,44,0.92)
-
   #course-container
     position absolute
     top 96px
@@ -17,11 +16,9 @@
     margin-left auto
     right -320px
     transition margin 1s
-
     &.visible
       margin-right 50%
       transition margin 1s
-
     .course-figure-credits
       text-align center
       font-style italic
@@ -80,7 +77,6 @@
         margin auto
         max-height 100%
         max-width 100%
-
     .course-text
       overflow visible
       background-color white
@@ -94,7 +90,6 @@
         border-top-right-radius 15px
         border-bottom-right-radius 15px
         width 50%
-
   #subject-container
     position relative
     width 1090px
@@ -106,12 +101,10 @@
     right 0%
     z-index 999
     transition right 1s
-
     &.hidden
       margin-right auto
       right 100%
       transition right 1s
-
     .subject-header
       // margin-top 20px
       // padding-top 20px
@@ -158,11 +151,9 @@
         cursor pointer
         &:active
           transform translateY(1px)
-        
       #course-alert
         float left
         padding 5px
-
       #notification
         height 25px
         width inherit
@@ -177,11 +168,9 @@
         #notification-message
           color #fc4541
           line-height 25px
-
     #graph-container
       float left
       position relative
-
       #loading-screen
         position absolute
         width 1024px
@@ -192,14 +181,12 @@
         // background-image url('./images/loading.gif')
         h3
           padding 20px
-
       #graph
         float left
         border 1px solid rgb(50,50,50)
         background rgba(13,21,24,0.75)
         z-index 3
         user-select none
-
       #marks-container
         height 420px
         width 1026px
@@ -207,20 +194,18 @@
         float left
         position relative
         user-select none
-
       #zoom-notification
         position absolute
         font-size 72px
         font-weight bold
         padding 20px
         opacity 0.5
-
       #classify-summary
         display none
         position absolute
         top 0px
-        height 450px
-        width 100%
+        height 442px
+        width 1090px
         z-index 100
         border-radius 5px
         .three-column
@@ -292,7 +277,6 @@
                     font-style italic
                     span
                       color #fff
-
       #tools
         float right
         width 54px
@@ -344,7 +328,6 @@
             background-color #4C4C4C
             border-radius 0.3em
             opacity 1.0
-
           &.toggled
             background-color #151A1B
             transition 0.3s
@@ -416,7 +399,6 @@
           border 1px solid #323232
           span
             display table-cell
-
     #subject-metadata
       position relative
       display inline-block
