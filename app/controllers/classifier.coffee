@@ -3,16 +3,12 @@ User           = require 'zooniverse/models/user'
 Subject        = require 'zooniverse/models/subject'
 Classification = require 'zooniverse/models/classification'
 MiniCourse     = require '../lib/mini-course'
-NoUiSlider     = require "../lib/jquery.nouislider.min"
-
+NoUiSlider     = require '../lib/jquery.nouislider.min'
 translate      = require 't7e'
 {Tutorial}     = require 'zootorial'
 {Step}         = require 'zootorial'
 tutorialSteps  = require '../lib/tutorial-steps'
-
-
 $ = window.jQuery
-
 {CanvasGraph, Marks, Mark} = require "../lib/canvas-graph"
 
 class Classifier extends BaseController
@@ -75,7 +71,7 @@ class Classifier extends BaseController
     @tutorial = new Tutorial
       steps: tutorialSteps
       firstStep: 'welcome'
-      
+
     # mini course
     @course = new MiniCourse
     @course.setRate 3
@@ -101,8 +97,12 @@ class Classifier extends BaseController
 
     # TODO: use Subject data to choose the right lightcurve
     jsonFile = @subject.location['14-1'] # read actual subject
-    # jsonFile = './offline/subject.json' # for debug only
 
+    # DEBUG CODE
+    # jsonFile = 'http://demo.zooniverse.org.s3.amazonaws.com/planet_hunter/subjects/APHE1000232.json'
+    # jsonFile = './offline/subject.json' # for debug only
+    console.log 'json_file: ', jsonFile
+    
     @canvas?.remove() # kill any previous canvas
 
     # create new canvas

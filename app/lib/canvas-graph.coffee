@@ -15,7 +15,8 @@ class CanvasGraph
     for xValue, idx in [@data.x...]
       @data.x[idx] = xValue - @smallestX
 
-    # normalize data
+    # remove outliers and normalize
+    @data.y = @removeOutliers(@data.y,3)
     @data.y = @normalize(@data.y)
 
     # update min/max values
@@ -74,6 +75,28 @@ class CanvasGraph
         y_scaled = 1 - +i/domainMax
         @ctx.fillText( y_scaled.toFixed(2), rangeMin+tickMajorLength+textSpacing, tick_y+tickMinorLength )
 
+  removeOutliers: (data, nsigma) ->
+    # normalize first (to avoid overflow errors in outlier rejection)
+    data = @normalize(data)
+    mean = @mean(data)
+    std = @std(data)
+    for value, i in data
+      if Math.pow( value - mean, 2 ) > nsigma * std
+        data.splice(i,1)  # remove outlier
+    return data 
+
+  std: (data) ->
+    mean = @mean(data)
+    sum = 0
+    for value in data
+      sum = sum + Math.pow( Math.abs(mean-value), 2 )
+    return Math.sqrt( sum / data.length )
+
+  mean: (data) ->
+    sum = 0
+    for value in data
+      sum = sum + value
+    return sum / data.length
 
   plotPoints: (xMin = @smallestX, xMax = @largestX, yMin = @smallestY, yMax = @largestY) ->
     @xMin = xMin
@@ -87,7 +110,7 @@ class CanvasGraph
       x = ((+@data.x[i] - xMin) / (xMax - xMin)) * @canvas.width
       y = +@data.y[i] * @canvas.height
       y = -y + @canvas.height # flip y-values
-      @ctx.fillStyle = "#fff" #fc4541" #"#fff"
+      @ctx.fillStyle = "#fff" #fc4541"
       @ctx.fillRect(x,y,2,2)
 
     if @marks
