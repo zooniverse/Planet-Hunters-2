@@ -7,6 +7,7 @@
 
   #course-container
     position absolute
+    top 96px
     width 640px
     height 400px
     z-index 999
@@ -417,6 +418,7 @@
             display table-cell
 
     #subject-metadata
+      position relative
       display inline-block
       width 1090px
       height 40px
@@ -434,20 +436,20 @@
         margin-right 35px
         color rgb(252,69,65)
         font-style bold
-      
-  #button-container
-    float right
-    display inline-block
-    transform translateY(-50%)
-    text-sp
-
-  button
-    &[name="no-transits"]
-      opacity 0.5
-      font-weight bold
-      &:hover
-        opacity .9
-    &[name="finished"]
-      display none
-    &[name="next-subject"]
-      display none
+      #button-container
+        position absolute
+        top 20px
+        right 0px
+        display inline-block
+        transform translateY(-50%)
+        text-sp
+        button
+          &[name="no-transits"]
+            opacity 0.5
+            font-weight bold
+            &:hover
+              opacity .9
+          &[name="finished"]
+            display none
+          &[name="next-subject"]
+            display none

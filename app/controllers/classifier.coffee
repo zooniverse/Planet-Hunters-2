@@ -150,6 +150,7 @@ class Classifier extends BaseController
     @el.find('#loading-screen').show()
 
   onSubjectSelect: (e, subject) =>
+    @el.find('#star-id').hide()
     console.log 'onSubjectSelect()'
     @subject = subject
     @classification = new Classification {subject}
@@ -313,6 +314,7 @@ class Classifier extends BaseController
     
   showSummary: ->
     @el.find('.do-you-see-a-transit').fadeOut()
+    @el.find('#star-id').fadeIn()
     @classifySummary.fadeIn(150)
     @nextSubjectButton.show()
     @planetNum.html @canvasGraph.marks.all.length # number of marks
