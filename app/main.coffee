@@ -69,7 +69,7 @@ movePlanet = ->
   console.log 'hourFrac   = ', hourFrac
   console.log 'dayFrac    = ', dayFrac
 
-  scaleFactor = hourFrac
+  scaleFactor = dayFrac
   for planet in [$(".bg-planet")...]
     # planet.style.bottom = Math.round(date.getSeconds()/60 * 730+50) + 'px'
     # planet.style.left   = Math.round(date.getSeconds()/60 * 1138+530) + 'px'

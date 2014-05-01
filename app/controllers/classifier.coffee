@@ -76,6 +76,8 @@ class Classifier extends BaseController
     @course = new MiniCourse
     @course.setRate 3
 
+    @recordedClickEvents = []
+
   onUserChange: (e, user) =>
     Subject.next() unless @classification?
 
@@ -237,6 +239,7 @@ class Classifier extends BaseController
     # fake classification counter
     @course.count = @course.count + 1
     console.log 'YOU\'VE MARKED ', @course.count, ' LIGHT CURVES!'
+    @classification.set 'recordedClickEvents', [@recordedClickEvents...]
     for mark, i in [@canvasGraph.marks.all...]
       @classification.annotations[i] =
         xMinRelative: mark.dataXMinRel
@@ -249,6 +252,7 @@ class Classifier extends BaseController
     # @el.find("#toggle-zoom").removeClass("zoomed")
     @isZoomed = false
     @zoomLevel = 0
+    @recordedClickEvents = []
     
   showSummary: ->
     @el.find('.do-you-see-a-transit').fadeOut()

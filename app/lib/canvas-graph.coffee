@@ -294,6 +294,7 @@ class Mark
     @element.className = "mark"
 
     bgColor = "#fc4541"
+
     @element.innerHTML = """
       <div class="top-bar" style="position: relative; width:100%; height: 13px; top 0px; background-color: #{bgColor}; cursor: pointer;">
         <img class="close-icon" src="./images/icons/marking-closex.png" style="position: relative; bottom: 4px;">
@@ -401,6 +402,7 @@ class Mark
     @closestXAbove = @canvasGraph.marks.closestXAbove(@canvasXMax)
 
   onMouseUp: (e) =>
+    console.log 'MOUSE UP!'
     e.preventDefault()
     window.removeEventListener 'mousemove', @onMouseMove
     window.removeEventListener 'mouseup', @onMouseUp
