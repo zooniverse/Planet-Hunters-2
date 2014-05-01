@@ -174,6 +174,7 @@ class Classifier extends BaseController
       else
         @el.find("#toggle-zoom").removeClass("allowZoomOut")
     @showZoomMessage(@magnification[@zoomLevel])
+    @recordedClickEvents.push { event: 'clickedZoomLevel'+@zoomLevel, timestamp: (new Date).toUTCString() }
   
   showZoomMessage: (message) =>
     @el.find('#zoom-notification').html(message).fadeIn(100).delay(1000).fadeOut()
