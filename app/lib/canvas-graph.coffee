@@ -307,11 +307,14 @@ class Mark
       </div>
     """
 
+    # @element.getElementsByClassName('.left-handle').fadeOut()
+    # # @element.find('.right-handle').fadeOut()
+
     @element.style.left = @toCanvasXPoint(e) + "px"
     @element.style.position = 'absolute'
     @element.style.top = e.target.offsetTop + "px"
     @element.style.height = (@canvas.height - 2) + 'px'
-    @element.style.backgroundColor = 'rgba(252,69,65,.6)'
+    @element.style.backgroundColor = 'rgba(252,69,65,.4)'
     @element.style.borderBottom = "2px solid #{bgColor}"
     @element.style.pointerEvents = 'auto'
     @element.style.textAlign = 'center'
@@ -321,6 +324,9 @@ class Mark
     @dragging = true
     @element.addEventListener 'mousedown', @onMouseDown
     @element.addEventListener 'touchstart', @onMouseDown
+    @element.addEventListener 'mouseover', @onMouseOver
+    @element.addEventListener 'mouseout', @onMouseOut
+    
 
   minWidth: ->    @canvasGraph.scale * 10 #15 * (@canvasGraph.scale || 1)
   maxWidth: ->    @canvasGraph.scale * 75 #150 * (@canvasGraph.scale || 1)
@@ -373,6 +379,18 @@ class Mark
     @dataXMaxRel = @canvasGraph.toDataXCoord(@canvasXMax)
     @dataXMinGlobal = @dataXMinRel + @originalMin    
     @dataXMaxGlobal = @dataXMaxRel + @originalMin
+
+  onMouseOver: (e) =>
+    console.log 'mouse over!'
+    @element.style.backgroundColor = 'rgba(252,69,65,.6)'
+    console.log @element.children[1].children[0].style.visibility = "visible"
+    console.log @element.children[2].children[0].style.visibility = "visible"
+
+  onMouseOut: (e) =>
+    console.log 'mouse over!'
+    @element.style.backgroundColor = 'rgba(252,69,65,.4)'
+    console.log @element.children[1].children[0].style.visibility = "hidden"
+    console.log @element.children[2].children[0].style.visibility = "hidden"
 
   onMouseMove: (e) =>
     e.preventDefault()
