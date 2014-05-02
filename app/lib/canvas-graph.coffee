@@ -121,7 +121,7 @@ class CanvasGraph
         mark.element.style.left = (scaledMin) + "px"
         mark.save(scaledMin, scaledMax)
 
-    @drawYTickMarks([-1..1], [0..@canvas.height], 1, 2)
+    @drawYTickMarks([0..20], [0..@canvas.height], 1, 2)
     @drawXTickMarks(xMin, xMax)
 
     @scale = (@largestX - @smallestX) / (@xMax - @xMin)
