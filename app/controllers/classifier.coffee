@@ -10,6 +10,7 @@ translate      = require 't7e'
 tutorialSteps  = require '../lib/tutorial-steps'
 $ = window.jQuery
 {CanvasGraph, Marks, Mark} = require "../lib/canvas-graph"
+loginDialog    = require 'zooniverse/controllers/login-dialog'
 
 class Classifier extends BaseController
   className: 'classifier'
@@ -200,7 +201,7 @@ class Classifier extends BaseController
     @el.find('#notification-message').hide() # get any notification out of the way
     # @el.find('#course-prompt').slideDown()
     @course.showPrompt()
-
+    
   onClickTutorial: ->
     console.log 'onClickTutorial()'
     @notify('Loading tutorial...')
