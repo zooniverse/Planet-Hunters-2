@@ -10,7 +10,6 @@ translate      = require 't7e'
 tutorialSteps  = require '../lib/tutorial-steps'
 $ = window.jQuery
 {CanvasGraph, Marks, Mark} = require "../lib/canvas-graph"
-loginDialog    = require 'zooniverse/controllers/login-dialog'
 
 class Classifier extends BaseController
   className: 'classifier'

@@ -26,7 +26,7 @@ module.exports =
   course:
     prompt:
       login_message    : 'Mini-course available! Learn more about planet hunting. Interested?'
-      nologin_message  : 'Please sign in to receive credit for your discoveries and to participate in the Planet Hunters mini-course'
+      nologin_message  : 'Please sign in to receive credit for your discoveries and to participate in the Planet Hunters mini-course.'
       yes              : 'Yes'
       no               : 'No'
       never            : 'Never'
