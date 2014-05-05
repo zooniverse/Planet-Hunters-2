@@ -2,7 +2,7 @@
   "name": "web-app-template",
   "version": "0.0.1",
   "dependencies": {
-    "haw": "~0.4.7"
+    "haw": "~0.4.8",
     "publisssh": "~0.2.1",
     "stack-of-pages": "0.0.11",
     "t7e": "~0.2.3",

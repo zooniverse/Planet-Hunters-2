@@ -31,15 +31,16 @@
     text-align center
     a
       font-size 12px
+      color rgb(117,117,117)
       display inline-block
       position relative
-      opacity 0.5
       padding 0 20px
       @media screen and (min-width: 1300px)
         padding 0 30px
+      
       &.active
         background rgb(252,69,65)
-        opacity 1.0
+        color #fff
         &:after
           background rgb(252,69,65)
           top 100%
@@ -54,7 +55,8 @@
         top 67%
         width 100%
       &:hover
-        opacity 1.0
+        // opacity 1.0
+        color #fff
         &:after
           height 4px
           background rgb(252,69,65)
