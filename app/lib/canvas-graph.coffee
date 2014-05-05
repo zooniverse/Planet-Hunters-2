@@ -381,16 +381,14 @@ class Mark
     @dataXMaxGlobal = @dataXMaxRel + @originalMin
 
   onMouseOver: (e) =>
-    console.log 'mouse over!'
     @element.style.backgroundColor = 'rgba(252,69,65,.6)'
-    console.log @element.children[1].children[0].style.visibility = "visible"
-    console.log @element.children[2].children[0].style.visibility = "visible"
+    @element.children[1].children[0].style.visibility = "visible"
+    @element.children[2].children[0].style.visibility = "visible"
 
   onMouseOut: (e) =>
-    console.log 'mouse over!'
     @element.style.backgroundColor = 'rgba(252,69,65,.4)'
-    console.log @element.children[1].children[0].style.visibility = "hidden"
-    console.log @element.children[2].children[0].style.visibility = "hidden"
+    @element.children[1].children[0].style.visibility = "hidden"
+    @element.children[2].children[0].style.visibility = "hidden"
 
   onMouseMove: (e) =>
     e.preventDefault()
@@ -420,7 +418,6 @@ class Mark
     @closestXAbove = @canvasGraph.marks.closestXAbove(@canvasXMax)
 
   onMouseUp: (e) =>
-    console.log 'MOUSE UP!'
     e.preventDefault()
     window.removeEventListener 'mousemove', @onMouseMove
     window.removeEventListener 'mouseup', @onMouseUp
