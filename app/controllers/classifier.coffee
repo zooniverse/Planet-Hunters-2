@@ -101,6 +101,7 @@ class Classifier extends BaseController
     jsonFile = @subject.location['14-1'] # read actual subject
 
     # DEBUG CODE
+    jsonFile = 'http://demo.zooniverse.org.s3.amazonaws.com/planet_hunter/subjects/APHE100025p.json'
     # jsonFile = 'http://demo.zooniverse.org.s3.amazonaws.com/planet_hunter/subjects/APHE1000232.json'
     # jsonFile = './offline/subject.json' # for debug only
     console.log 'json_file: ', jsonFile

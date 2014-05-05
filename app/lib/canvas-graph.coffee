@@ -16,8 +16,10 @@ class CanvasGraph
       @data.x[idx] = xValue - @smallestX
 
     # remove outliers and normalize
-    @data.y = @removeOutliers(@data.y,3)
+
+    @removeOutliers(3)
     @data.y = @normalize(@data.y)
+
 
     # update min/max values
     @smallestX = Math.min @data.x...
@@ -75,15 +77,19 @@ class CanvasGraph
         y_scaled = 1 - +i/domainMax
         @ctx.fillText( y_scaled.toFixed(2), rangeMin+tickMajorLength+textSpacing, tick_y+tickMinorLength )
 
-  removeOutliers: (data, nsigma) ->
-    # normalize first (to avoid overflow errors in outlier rejection)
-    data = @normalize(data)
-    mean = @mean(data)
-    std = @std(data)
-    for value, i in data
-      if Math.pow( value - mean, 2 ) > nsigma * std
-        data.splice(i,1)  # remove outlier
-    return data 
+  removeOutliers: (nsigma) ->
+    mean = @mean(@data.y)
+    std = @std(@data.y)
+    x_new = []
+    y_new = []
+    for value, i in [@data.y...]
+      if Math.sqrt( Math.pow( value - mean, 2 ) ) > nsigma * std
+        continue
+      else
+        x_new.push @data.x[i]
+        y_new.push @data.y[i]
+    @data.x = x_new
+    @data.y = y_new
 
   std: (data) ->
     mean = @mean(data)
@@ -234,7 +240,6 @@ class CanvasGraph
   toDataXCoord: (canvasPoint) -> ((canvasPoint / @canvas.width) * (@xMax - @xMin)) + @xMin
   toDataYCoord: (canvasPoint) -> ((canvasPoint / @canvas.height) * (@yMax - @yMin)) + @yMin
 
-
   addMarkToGraph: (e) =>
     e.preventDefault()
     if @marks.markTooCloseToAnotherMark(e, @scale, @originalMin)
@@ -253,7 +258,6 @@ class CanvasGraph
     graph.effect( "shake", {times:4, distance: 5}, 500, =>
         graph.removeClass('shaking')
       ) # eventually remove jquery ui dependency?
-
 
 class Marks
   constructor: -> @all = []
