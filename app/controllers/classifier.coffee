@@ -225,11 +225,12 @@ class Classifier extends BaseController
 
   onClickFinishedMarking: ->
     console.log 'onClickFinishedMarking()'
-    @giveFeedback()
     @finishedMarkingButton.hide()
-    @finishedFeedbackButton.show()
+    @giveFeedback()
 
+    
   giveFeedback: ->
+    @finishedFeedbackButton.show()
     console.log 'giveFeedback()'
     if @canvasGraph.showFakePrevMarks() <= 0
       @notify('Loading summary page...')
@@ -238,7 +239,6 @@ class Classifier extends BaseController
     else
       @notify('Here\'s what others have marked...')
       @el.find(".mark").fadeOut(1000)
-
 
   onClickFinishedFeedback: ->
     console.log 'onClickFinishedFeedback()'
