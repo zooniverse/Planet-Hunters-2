@@ -26,7 +26,8 @@ class Classifier extends BaseController
     '#planet-num'                       : 'planetNum'
     '#alt-comments'                     : 'altComments'
     'button[name="no-transits"]'        : 'noTransitsButton'
-    'button[name="finished"]'           : 'finishedButton'
+    'button[name="finished-marking"]'   : 'finishedMarkingButton'
+    'button[name="finished-feedback"]'  : 'finishedFeedbackButton'
     'button[name="next-subject"]'       : 'nextSubjectButton'
     'button[name="join-convo"]'         : 'joinConvoBtn'
     'button[name="alt-join-convo"]'     : 'altJoinConvoBtn'
@@ -34,18 +35,19 @@ class Classifier extends BaseController
     'textarea[name="alt-talk-comment"]' : 'altTalkComment'
 
   events:
-    'click button[id="toggle-zoom"]'       : 'onClickZoom'
-    'click button[id="toggle-fav"]'        : 'onToggleFav'
-    'click button[id="help"]'              : 'onClickHelp'
-    'click button[id="tutorial"]'          : 'onClickTutorial'
-    'click button[name="no-transits"]'     : 'onClickNoTransits'
-    'click button[name="next-subject"]'    : 'onClickNextSubject'
-    'click button[name="finished"]'        : 'onClickFinished'
-    'slide #ui-slider'                     : 'onChangeScaleSlider'
-    'click button[name="join-convo"]'      : 'onClickJoinConvo'
-    'click button[name="alt-join-convo"]'  : 'onClickAltJoinConvo'
-    'click button[name="submit-talk"]'     : 'onClickSubmitTalk'
-    'click button[name="alt-submit-talk"]' : 'onClickSubmitTalkAlt'
+    'click button[id="toggle-zoom"]'         : 'onClickZoom'
+    'click button[id="toggle-fav"]'          : 'onToggleFav'
+    'click button[id="help"]'                : 'onClickHelp'
+    'click button[id="tutorial"]'            : 'onClickTutorial'
+    'click button[name="no-transits"]'       : 'onClickNoTransits'
+    'click button[name="next-subject"]'      : 'onClickNextSubject'
+    'click button[name="finished-marking"]'  : 'onClickFinishedMarking'
+    'click button[name="finished-feedback"]' : 'onClickFinishedFeedback'
+    'slide #ui-slider'                       : 'onChangeScaleSlider'
+    'click button[name="join-convo"]'        : 'onClickJoinConvo'
+    'click button[name="alt-join-convo"]'    : 'onClickAltJoinConvo'
+    'click button[name="submit-talk"]'       : 'onClickSubmitTalk'
+    'click button[name="alt-submit-talk"]'   : 'onClickSubmitTalkAlt'
 
   constructor: ->
     super    
@@ -207,22 +209,44 @@ class Classifier extends BaseController
     @notify('Loading tutorial...')
     @tutorial.start()
 
-
   updateButtons: ->
+    console.log 'updateButtons()'
     if @canvasGraph.marks.all.length > 0
       @noTransitsButton.hide()
-      @finishedButton.show()
+      @finishedMarkingButton.show()
     else
-      @finishedButton.hide()
+      @finishedMarkingButton.hide()
       @noTransitsButton.show()
 
   onClickNoTransits: ->
+    console.log 'onClickNoTransits()'
+    # giveFeedback() 
     @finishSubject()
 
-  onClickFinished: ->
+  onClickFinishedMarking: ->
+    console.log 'onClickFinishedMarking()'
+    @giveFeedback()
+    @finishedMarkingButton.hide()
+    @finishedFeedbackButton.show()
+
+  giveFeedback: ->
+    console.log 'giveFeedback()'
+    if @canvasGraph.showFakePrevMarks() <= 0
+      @notify('Loading summary page...')
+      @finishedFeedbackButton.hide()
+      @finishSubject()
+    else
+      @notify('Here\'s what others have marked...')
+      @el.find(".mark").fadeOut(1000)
+
+
+  onClickFinishedFeedback: ->
+    console.log 'onClickFinishedFeedback()'
+    # @finishedFeedbackButton.hide()
     @finishSubject()
 
   onClickNextSubject: ->
+    console.log 'onClickNextSubject()'
     @noTransitsButton.show()
     @classifySummary.fadeOut(150)
     @nextSubjectButton.hide()
@@ -238,6 +262,7 @@ class Classifier extends BaseController
     @Subject.next()
 
   finishSubject: ->
+    @finishedFeedbackButton.hide()
     # fake classification counter
     @course.count = @course.count + 1
     console.log 'YOU\'VE MARKED ', @course.count, ' LIGHT CURVES!'
@@ -250,21 +275,21 @@ class Classifier extends BaseController
         xMaxGlobal: mark.dataXMaxGlobal
     console.log JSON.stringify( @classification )
     @classification.send()
-    @showSummary()
-    # @el.find("#toggle-zoom").removeClass("zoomed")
-    @isZoomed = false
-    @zoomLevel = 0
-    @recordedClickEvents = []
-    
-  showSummary: ->
+
+    # show summary
     @el.find('.do-you-see-a-transit').fadeOut()
     @el.find('#star-id').fadeIn()
     @classifySummary.fadeIn(150)
     @nextSubjectButton.show()
     @planetNum.html @canvasGraph.marks.all.length # number of marks
     @noTransitsButton.hide()
-    @finishedButton.hide()
+    @finishedMarkingButton.hide()
 
+    # @el.find("#toggle-zoom").removeClass("zoomed")
+    @isZoomed = false
+    @zoomLevel = 0
+    @recordedClickEvents = []
+    
   onClickJoinConvo: -> @joinConvoBtn.hide().siblings().show()
   onClickAltJoinConvo: -> @altJoinConvoBtn.hide().siblings().show()
 

@@ -103,17 +103,20 @@ class CanvasGraph
     return sum / data.length
 
   showFakePrevMarks: () ->
-    howMany = Math.floor( Math.random() * (10-1) + 1 )
-    console.log 'generating ', howMany, ' (fake) marks'
+    maxMarks = 2
+    minMarks = 0 
+    howMany = Math.floor( Math.random() * (maxMarks-minMarks) + minMarks )
+    console.log 'randomly generating ', howMany, ' (fake) marks'
     @generateFakePrevMarks( howMany )
     for entry in [@prevMarks...]
       console.log '[',entry.xL,',',entry.xR,']'
       @highlightCurve(entry.xL,entry.xR)
 
+    return howMany
+
   generateFakePrevMarks: (n) ->
     minWid = 0.5 # [days]
     maxWid = 3.0
-    console.log 'generateFakePrevMarks()'
     xPos = []
     wid = []
     @prevMarks = []
