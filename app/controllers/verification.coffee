@@ -1,7 +1,7 @@
 BaseController = require 'zooniverse/controllers/base-controller'
 {CanvasGraph, Marks, Mark} = require "../lib/canvas-graph"
 $ = window.jQuery
-# require '../lib/sample-data'
+require '../lib/sample-data'
 
 class Verification extends BaseController
   className: 'verification'
@@ -27,12 +27,12 @@ class Verification extends BaseController
     setTimeout =>
       @loadSubject()
       middleStart = @el.find('.verify-canvas:nth-child(2)')[0]
-      # startCanvas = new CanvasGraph(middleStart, sampleData[3]).plotPoints(2,4) # comment for now
+      startCanvas = new CanvasGraph(middleStart, sampleData[3]).plotPoints(2,4) # comment for now
 
   loadSubject: ->
     @dataIndex ||= 0
     canvas = @el.find('.verify-canvas:nth-child(3)')[0]
-    # @canvasGraph = new CanvasGraph(canvas, sampleData[@dataIndex]).plotPoints(2,4) # comment for now
+    @canvasGraph = new CanvasGraph(canvas, sampleData[@dataIndex]).plotPoints(2,4) # comment for now
     @message.html "Is this a proper transit?"
 
   onClickYesButton: -> @showSummary()
