@@ -102,6 +102,15 @@ class CanvasGraph
       sum = sum + value
     return sum / data.length
 
+  highlightCurve: (xLeft,xRight) ->
+    for i in [0...@dataLength]
+      if @data.x[i] >= xLeft and @data.x[i] <= xRight
+        x = ((+@data.x[i]-@xMin)/(@xMax-@xMin)) * @canvas.width
+        y = ((+@data.y[i]-@yMin)/(@yMax-@yMin)) * @canvas.height
+        y = -y + @canvas.height # flip y-values
+        @ctx.fillStyle = "#fc4541"
+        @ctx.fillRect(x,y,2,2)
+
   plotPoints: (xMin = @smallestX, xMax = @largestX, yMin = @smallestY, yMax = @largestY) ->
     @xMin = xMin
     @xMax = xMax
@@ -128,6 +137,9 @@ class CanvasGraph
         mark.element.style.width = (scaledMax-scaledMin) + "px"
         mark.element.style.left = (scaledMin) + "px"
         mark.save(scaledMin, scaledMax)
+
+    # @highlightCurve(10,14) # test
+
 
     @scale = (@largestX - @smallestX) / (@xMax - @xMin)
 
