@@ -102,14 +102,42 @@ class CanvasGraph
       sum = sum + value
     return sum / data.length
 
+  showFakePrevMarks: () ->
+    howMany = Math.floor( Math.random() * (10-1) + 1 )
+    console.log 'generating ', howMany, ' (fake) marks'
+    @generateFakePrevMarks( howMany )
+    for entry in [@prevMarks...]
+      console.log '[',entry.xL,',',entry.xR,']'
+      @highlightCurve(entry.xL,entry.xR)
+
+  generateFakePrevMarks: (n) ->
+    minWid = 0.5 # [days]
+    maxWid = 3.0
+    console.log 'generateFakePrevMarks()'
+    xPos = []
+    wid = []
+    @prevMarks = []
+    for i in [0...n]
+      wid[i] = Math.random() * ( maxWid - minWid ) + minWid
+      xPos[i] = Math.random() * (36-1) + 1
+      # console.log wid[i], xPos[i]
+      # console.log '[',xPos[i]-wid[i]/2,',',xPos[i]+wid[i]/2,']' 
+      @prevMarks[i] = { xL: xPos[i]-wid[i]/2, xR: xPos[i]+wid[i]/2 }
+
+  showPrevMarks: ->
+    for entry in [@prevMarks...]
+      console.log '[',entry.xL,',',entry.xR,']'
+      @highlightCurve(entry.xL,entry.xR)
+
   highlightCurve: (xLeft,xRight) ->
     for i in [0...@dataLength]
       if @data.x[i] >= xLeft and @data.x[i] <= xRight
         x = ((+@data.x[i]-@xMin)/(@xMax-@xMin)) * @canvas.width
         y = ((+@data.y[i]-@yMin)/(@yMax-@yMin)) * @canvas.height
         y = -y + @canvas.height # flip y-values
-        @ctx.fillStyle = "#fc4541"
+        @ctx.fillStyle = "rgba(252, 69, 65, 0.65)" #"#fc4541"
         @ctx.fillRect(x,y,2,2)
+    return
 
   plotPoints: (xMin = @smallestX, xMax = @largestX, yMin = @smallestY, yMax = @largestY) ->
     @xMin = xMin
@@ -129,7 +157,6 @@ class CanvasGraph
       y = -y + @canvas.height # flip y-values
       @ctx.fillStyle = "#fff" #fc4541"
       @ctx.fillRect(x,y,2,2)
-
     if @marks
       for mark in @marks.all
         scaledMin = ((mark.dataXMinRel - xMin) / (xMax - xMin)) * @canvas.width
@@ -137,11 +164,9 @@ class CanvasGraph
         mark.element.style.width = (scaledMax-scaledMin) + "px"
         mark.element.style.left = (scaledMin) + "px"
         mark.save(scaledMin, scaledMax)
-
     # @highlightCurve(10,14) # test
-
-
     @scale = (@largestX - @smallestX) / (@xMax - @xMin)
+    return
 
   drawXTickMarks: (xMin, xMax) ->
     tickMinorInterval = 1
