@@ -16,10 +16,8 @@ class CanvasGraph
       @data.x[idx] = xValue - @smallestX
 
     # remove outliers and normalize
-
     @removeOutliers(3)
-    @data.y = @normalize(@data.y)
-
+    # @data.y = @normalize(@data.y)
 
     # update min/max values
     @smallestX = Math.min @data.x...
@@ -111,10 +109,14 @@ class CanvasGraph
     @yMax = yMax
     @clearCanvas()
 
+    # lightcurve on top of tickmarks?
+    @drawYTickMarks([0..20], [0..@canvas.height], 1, 2)
+    @drawXTickMarks(xMin, xMax)
+
     # plot points
     for i in [0...@dataLength]
-      x = ((+@data.x[i] - xMin) / (xMax - xMin)) * @canvas.width
-      y = +@data.y[i] * @canvas.height
+      x = ((+@data.x[i]-xMin)/(xMax-xMin)) * @canvas.width
+      y = ((+@data.y[i]-yMin)/(yMax-yMin)) * @canvas.height
       y = -y + @canvas.height # flip y-values
       @ctx.fillStyle = "#fff" #fc4541"
       @ctx.fillRect(x,y,2,2)
@@ -126,9 +128,6 @@ class CanvasGraph
         mark.element.style.width = (scaledMax-scaledMin) + "px"
         mark.element.style.left = (scaledMin) + "px"
         mark.save(scaledMin, scaledMax)
-
-    @drawYTickMarks([0..20], [0..@canvas.height], 1, 2)
-    @drawXTickMarks(xMin, xMax)
 
     @scale = (@largestX - @smallestX) / (@xMax - @xMin)
 
@@ -202,12 +201,6 @@ class CanvasGraph
         @ctx.lineWidth = tickWidth
         @ctx.strokeStyle = tickColor
         @ctx.stroke()
-
-  normalize: (values) ->
-    norm = []
-    for value, idx in [values...]
-      norm[idx] =  ( parseFloat(value) - Math.min(values...) ) / ( Math.max(values...) - Math.min(values...) )
-    return norm
 
   zoomInTo: (wMin, wMax) ->
     [cMin, cMax] = [@xMin, @xMax]
@@ -330,7 +323,6 @@ class Mark
     @element.addEventListener 'touchstart', @onMouseDown
     @element.addEventListener 'mouseover', @onMouseOver
     @element.addEventListener 'mouseout', @onMouseOut
-    
 
   minWidth: ->    @canvasGraph.scale * 10 #15 * (@canvasGraph.scale || 1)
   maxWidth: ->    @canvasGraph.scale * 75 #150 * (@canvasGraph.scale || 1)

@@ -83,7 +83,7 @@ class Classifier extends BaseController
 
   onSubjectFetch: (e, user) =>
     console.log 'onSubjectFetch()'
-    @el.find('#loading-screen').show()
+    @el.find('#loading-screen').show() # TODO: uncomment
 
   onSubjectSelect: (e, subject) =>
     @el.find('#star-id').hide()
@@ -91,7 +91,7 @@ class Classifier extends BaseController
     @subject = subject
     @classification = new Classification {subject}
     @loadSubjectData()
-    @el.find('#loading-screen').hide()
+    @el.find('#loading-screen').hide() # TODO: uncomment
 
   loadSubjectData: ->
     @el.find('#ui-slider').attr('disabled',true)
@@ -234,7 +234,7 @@ class Classifier extends BaseController
     if @course.getPref() isnt 'never' and @course.count % @course.rate is 0
       @el.find('#notification-message').hide() # get any notification out of the way
       @course.showPrompt() 
-    @el.find('#loading-screen').show()
+    @el.find('#loading-screen').show() # TODO: uncomment
     @Subject.next()
 
   finishSubject: ->
