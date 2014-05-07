@@ -109,8 +109,8 @@ class CanvasGraph
   showFakePrevMarks: () ->
     # console.log 'showFakePrevMarks()'
     @zoomOut( =>
-      maxMarks = 2
-      minMarks = 0 
+      maxMarks = 5
+      minMarks = 1 
       howMany = Math.floor( Math.random() * (maxMarks-minMarks) + minMarks )
       # console.log 'randomly generating ', howMany, ' (fake) marks' # DEBUG
       @generateFakePrevMarks( howMany )
@@ -289,11 +289,14 @@ class CanvasGraph
     if @marks.markTooCloseToAnotherMark(e, @scale, @originalMin)
       classifier.notify 'Marks too close to each other!'
       @shakeGraph()
-    else
-      @mark = new Mark(e, @, @originalMin)
-      @marks.create(@mark)
-      @mark.draw(e)
-      @mark.onMouseDown(e)
+      return
+
+    # create new mark
+    @mark = new Mark(e, @, @originalMin)
+    # return unless @mark.containsPoints()
+    @marks.appendElement(@mark)
+    @mark.draw(e)
+    @mark.onMouseDown(e)
 
   shakeGraph: ->
     graph = $('#graph-container')
@@ -305,7 +308,7 @@ class CanvasGraph
 
 class Marks
   constructor: -> @all = []
-  create: (mark) -> document.getElementById('marks-container').appendChild(mark.element)
+  appendElement: (mark) -> document.getElementById('marks-container').appendChild(mark.element)
   add: (mark) -> @all.push(mark)
 
   remove: (mark) ->
@@ -334,6 +337,9 @@ class Marks
     # 22 is width of mark plus some room on each side
     markBelow < (22*scale) or markAbove < (22*scale) or mouseLocation in @sortedXCoords()
 
+# -------------------------
+#  MARK CLASS
+# -------------------------
 class Mark
   constructor: (e, @canvasGraph, @originalMin) ->
     @canvas = @canvasGraph.canvas
@@ -399,7 +405,6 @@ class Mark
 
     @element.style.left = markLeftX + "px"
     @element.style.width = width + "px"
-
     @save(markLeftX, markLeftX+width)
 
   move: (e) ->
@@ -447,7 +452,7 @@ class Mark
     window.addEventListener 'mousemove', @onMouseMove
     window.addEventListener 'mouseup', @onMouseUp
     window.addEventListener 'touchmove', @onMouseMove
-    window.addEventListener 'touchend' , @onMouseUp
+    window.addEventListener 'touchend' , @onTouchEnd
 
     @element.parentNode.appendChild(@element) #move to end of container for z index
 
@@ -464,12 +469,12 @@ class Mark
     @closestXBelow = @canvasGraph.marks.closestXBelow(@canvasXMin)
     @closestXAbove = @canvasGraph.marks.closestXAbove(@canvasXMax)
 
-  onMouseUp: (e) =>
+  onTouchEnd: (e) => # for touch devices
     e.preventDefault()
     window.removeEventListener 'mousemove', @onMouseMove
     window.removeEventListener 'mouseup', @onMouseUp
     window.removeEventListener 'touchmove', @onMouseMove
-    window.removeEventListener 'touchend', @onMouseUp
+    window.removeEventListener 'touchend', @onTouchEnd
     
     @canvasGraph.marks.add(@) unless (@ in @canvasGraph.marks.all)
     @canvasGraph.marks.remove(@) if e.target.className is "top-bar" or e.target.className is "close-icon"
@@ -477,7 +482,31 @@ class Mark
       mark.dragging = false
       mark.moving = false
 
+  onMouseUp: (e) =>
+    @onTouchEnd(e)
+
+    if @containsPoints(@canvasGraph.data.x)
+      # console.log @canvasGraph.data.x
+      console.log 'CONTAINS POINTS!' 
+    else
+      console.log 'NO POINTS IN HERE!'
+      marks.remove(@)
+      classifier.notify 'There are no points in the mark.'
+      @canvasGraph.shakeGraph()
+    
     $(document).trigger("mark-change")
+
+  containsPoints: (xValues) =>
+    console.log 'containsPoints()'
+    # console.log 'xValues: ', xValues
+    
+    # console.log 'this (mark): ', @, '[',@dataXMinRel,',',@dataXMaxRel,']'
+    # # console.log 'data: ', data
+    for value in xValues
+      # console.log 'POINT: ', value
+      if value <= @dataXMaxRel and value >= @dataXMinRel
+        return true
+    return false
 
   toCanvasXPoint: (e) -> e.pageX - @canvas.getBoundingClientRect().left - window.scrollX
 
