@@ -484,26 +484,15 @@ class Mark
 
   onMouseUp: (e) =>
     @onTouchEnd(e)
-
-    if @containsPoints(@canvasGraph.data.x)
-      # console.log @canvasGraph.data.x
-      console.log 'CONTAINS POINTS!' 
-    else
-      console.log 'NO POINTS IN HERE!'
+    # ensure points inside mark (otherwise delete)
+    unless @containsPoints(@canvasGraph.data.x)
       marks.remove(@)
-      classifier.notify 'There are no points in the mark.'
+      classifier.notify 'Marks must contains points!'
       @canvasGraph.shakeGraph()
-    
     $(document).trigger("mark-change")
 
   containsPoints: (xValues) =>
-    console.log 'containsPoints()'
-    # console.log 'xValues: ', xValues
-    
-    # console.log 'this (mark): ', @, '[',@dataXMinRel,',',@dataXMaxRel,']'
-    # # console.log 'data: ', data
     for value in xValues
-      # console.log 'POINT: ', value
       if value <= @dataXMaxRel and value >= @dataXMinRel
         return true
     return false
