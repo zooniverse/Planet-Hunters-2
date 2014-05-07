@@ -287,7 +287,7 @@ class CanvasGraph
     return if @markingDisabled
     e.preventDefault()
     if @marks.markTooCloseToAnotherMark(e, @scale, @originalMin)
-      classifier.notify 'Marks too close to each other!'
+      classifier.notify 'Marks may not overlap!'
       @shakeGraph()
       return
 
