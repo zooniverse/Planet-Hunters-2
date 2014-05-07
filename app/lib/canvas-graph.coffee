@@ -25,7 +25,12 @@ class CanvasGraph
     @largestX = Math.max  @data.x...
     @largestY = Math.max  @data.y...
 
+
+  disableMarking: ->
+    @markingDisabled = true
+
   enableMarking: ->
+    @markingDisabled = false
     @marks = new Marks
     window.marks = @marks
     @canvas.addEventListener 'mousedown', (e) => @addMarkToGraph(e)
@@ -103,16 +108,19 @@ class CanvasGraph
     return sum / data.length
 
   showFakePrevMarks: () ->
-    maxMarks = 2
-    minMarks = 0 
-    howMany = Math.floor( Math.random() * (maxMarks-minMarks) + minMarks )
-    console.log 'randomly generating ', howMany, ' (fake) marks'
-    @generateFakePrevMarks( howMany )
-    for entry in [@prevMarks...]
-      console.log '[',entry.xL,',',entry.xR,']'
-      @highlightCurve(entry.xL,entry.xR)
-
-    return howMany
+    console.log 'showFakePrevMarks()'
+    @zoomOut( =>
+      console.log 'executing zoomOut callback procedures...'
+      maxMarks = 2
+      minMarks = 0 
+      howMany = Math.floor( Math.random() * (maxMarks-minMarks) + minMarks )
+      console.log 'randomly generating ', howMany, ' (fake) marks'
+      @generateFakePrevMarks( howMany )
+      for entry in [@prevMarks...]
+        console.log '[',entry.xL,',',entry.xR,']'
+        @highlightCurve(entry.xL,entry.xR)
+      return howMany
+    )
 
   generateFakePrevMarks: (n) ->
     minWid = 0.5 # [days]
@@ -254,18 +262,24 @@ class CanvasGraph
         @plotPoints(wMin,wMax)
     ), 30
 
-  zoomOut: ->
+  zoomOut: (callback) ->
     [cMin, cMax] = [@xMin, @xMax]
     [wMin, wMax] = [@smallestX, @largestX]
-
     zoom = setInterval (=>
       @plotPoints(cMin,cMax)
       cMin -= 1.5 unless cMin <= wMin
       cMax += 1.5 unless cMax >= wMax
-      if cMin <= wMin and cMax >= wMax
+      if cMin <= wMin and cMax >= wMax  # finished zooming
         clearInterval zoom
         @plotPoints(wMin, wMax)
+        unless callback is undefined 
+          callback.apply()
+          classifier.el.find("#toggle-zoom").removeClass("zoomed")
+          classifier.el.find("#toggle-zoom").removeClass("allowZoomOut") # for last zoom level
+          classifier.el.find('#ui-slider').attr('disabled',true)
+          classifier.el.find('.noUi-handle').fadeOut(150)
     ), 30
+    return
 
   clearCanvas: -> @ctx.clearRect(0,0,@canvas.width, @canvas.height)
 
@@ -274,6 +288,7 @@ class CanvasGraph
   toDataYCoord: (canvasPoint) -> ((canvasPoint / @canvas.height) * (@yMax - @yMin)) + @yMin
 
   addMarkToGraph: (e) =>
+    return if @markingDisabled
     e.preventDefault()
     if @marks.markTooCloseToAnotherMark(e, @scale, @originalMin)
       classifier.notify 'Marks too close to each other!'

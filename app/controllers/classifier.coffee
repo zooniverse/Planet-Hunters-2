@@ -227,18 +227,23 @@ class Classifier extends BaseController
     console.log 'onClickFinishedMarking()'
     @finishedMarkingButton.hide()
     @giveFeedback()
-
     
   giveFeedback: ->
-    @finishedFeedbackButton.show()
     console.log 'giveFeedback()'
-    if @canvasGraph.showFakePrevMarks() <= 0
-      @notify('Loading summary page...')
-      @finishedFeedbackButton.hide()
-      @finishSubject()
-    else
-      @notify('Here\'s what others have marked...')
-      @el.find(".mark").fadeOut(1000)
+    @finishedFeedbackButton.show()
+    @canvasGraph.disableMarking()
+    @canvasGraph.showFakePrevMarks()
+    # numMarksGenerated = @canvasGraph.showFakePrevMarks()
+    # console.log 'found ', numMarksGenerated, ' previous marks'
+    # if numMarksGenerated <= 0 # no marks generated
+    #   @notify('Loading summary page...')
+    #   @finishedFeedbackButton.hide()
+    #   @finishSubject()
+    # else
+    #   @notify('Here\'s what others have marked...')
+    #   @el.find(".mark").fadeOut(1000)
+    @notify('Here\'s what others have marked...')
+    @el.find(".mark").fadeOut(1000)
 
   onClickFinishedFeedback: ->
     console.log 'onClickFinishedFeedback()'
@@ -262,6 +267,7 @@ class Classifier extends BaseController
     @Subject.next()
 
   finishSubject: ->
+    console.log 'finishSubject()'
     @finishedFeedbackButton.hide()
     # fake classification counter
     @course.count = @course.count + 1
@@ -277,6 +283,7 @@ class Classifier extends BaseController
     @classification.send()
 
     # show summary
+    console.log 'showing summary...'
     @el.find('.do-you-see-a-transit').fadeOut()
     @el.find('#star-id').fadeIn()
     @classifySummary.fadeIn(150)
