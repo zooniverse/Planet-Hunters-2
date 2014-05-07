@@ -25,7 +25,6 @@ class CanvasGraph
     @largestX = Math.max  @data.x...
     @largestY = Math.max  @data.y...
 
-
   disableMarking: ->
     @markingDisabled = true
 
@@ -108,16 +107,15 @@ class CanvasGraph
     return sum / data.length
 
   showFakePrevMarks: () ->
-    console.log 'showFakePrevMarks()'
+    # console.log 'showFakePrevMarks()'
     @zoomOut( =>
-      console.log 'executing zoomOut callback procedures...'
       maxMarks = 2
       minMarks = 0 
       howMany = Math.floor( Math.random() * (maxMarks-minMarks) + minMarks )
-      console.log 'randomly generating ', howMany, ' (fake) marks'
+      # console.log 'randomly generating ', howMany, ' (fake) marks' # DEBUG
       @generateFakePrevMarks( howMany )
       for entry in [@prevMarks...]
-        console.log '[',entry.xL,',',entry.xR,']'
+        # console.log '[',entry.xL,',',entry.xR,']' # DEBUG
         @highlightCurve(entry.xL,entry.xR)
       return howMany
     )
@@ -131,13 +129,11 @@ class CanvasGraph
     for i in [0...n]
       wid[i] = Math.random() * ( maxWid - minWid ) + minWid
       xPos[i] = Math.random() * (36-1) + 1
-      # console.log wid[i], xPos[i]
-      # console.log '[',xPos[i]-wid[i]/2,',',xPos[i]+wid[i]/2,']' 
       @prevMarks[i] = { xL: xPos[i]-wid[i]/2, xR: xPos[i]+wid[i]/2 }
 
   showPrevMarks: ->
     for entry in [@prevMarks...]
-      console.log '[',entry.xL,',',entry.xR,']'
+      # console.log '[',entry.xL,',',entry.xR,']' # DEBUG
       @highlightCurve(entry.xL,entry.xR)
 
   highlightCurve: (xLeft,xRight) ->

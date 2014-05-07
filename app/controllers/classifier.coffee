@@ -84,12 +84,12 @@ class Classifier extends BaseController
     Subject.next() unless @classification?
 
   onSubjectFetch: (e, user) =>
-    console.log 'onSubjectFetch()'
+    # console.log 'onSubjectFetch()'
     @el.find('#loading-screen').show() # TODO: uncomment
 
   onSubjectSelect: (e, subject) =>
     @el.find('#star-id').hide()
-    console.log 'onSubjectSelect()'
+    # console.log 'onSubjectSelect()'
     @subject = subject
     @classification = new Classification {subject}
     @loadSubjectData()
@@ -158,7 +158,6 @@ class Classifier extends BaseController
       @zoomLevel = 0
       @el.find('#ui-slider').attr('disabled',true)
       @el.find("#toggle-zoom").removeClass("allowZoomOut")
-
     else 
       @el.find('#ui-slider').removeAttr('disabled')
       @canvasGraph.zoomInTo(0, @zoomRanges[@zoomLevel])
@@ -210,7 +209,7 @@ class Classifier extends BaseController
     @tutorial.start()
 
   updateButtons: ->
-    console.log 'updateButtons()'
+    # console.log 'updateButtons()'
     if @canvasGraph.marks.all.length > 0
       @noTransitsButton.hide()
       @finishedMarkingButton.show()
@@ -219,17 +218,17 @@ class Classifier extends BaseController
       @noTransitsButton.show()
 
   onClickNoTransits: ->
-    console.log 'onClickNoTransits()'
+    # console.log 'onClickNoTransits()'
     # giveFeedback() 
     @finishSubject()
 
   onClickFinishedMarking: ->
-    console.log 'onClickFinishedMarking()'
+    # console.log 'onClickFinishedMarking()'
     @finishedMarkingButton.hide()
     @giveFeedback()
     
   giveFeedback: ->
-    console.log 'giveFeedback()'
+    # console.log 'giveFeedback()'
     @finishedFeedbackButton.show()
     @canvasGraph.disableMarking()
     @canvasGraph.showFakePrevMarks()
@@ -246,12 +245,12 @@ class Classifier extends BaseController
     @el.find(".mark").fadeOut(1000)
 
   onClickFinishedFeedback: ->
-    console.log 'onClickFinishedFeedback()'
+    # console.log 'onClickFinishedFeedback()'
     # @finishedFeedbackButton.hide()
     @finishSubject()
 
   onClickNextSubject: ->
-    console.log 'onClickNextSubject()'
+    # console.log 'onClickNextSubject()'
     @noTransitsButton.show()
     @classifySummary.fadeOut(150)
     @nextSubjectButton.hide()
@@ -267,7 +266,7 @@ class Classifier extends BaseController
     @Subject.next()
 
   finishSubject: ->
-    console.log 'finishSubject()'
+    # console.log 'finishSubject()'
     @finishedFeedbackButton.hide()
     # fake classification counter
     @course.count = @course.count + 1
@@ -283,7 +282,6 @@ class Classifier extends BaseController
     @classification.send()
 
     # show summary
-    console.log 'showing summary...'
     @el.find('.do-you-see-a-transit').fadeOut()
     @el.find('#star-id').fadeIn()
     @classifySummary.fadeIn(150)
