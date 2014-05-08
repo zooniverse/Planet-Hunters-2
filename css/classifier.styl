@@ -1,4 +1,7 @@
 .classifier
+  button
+    &[name="close-dialog"]
+      display none
   color inherit
   .content-block
     overflow-x visible
@@ -200,6 +203,9 @@
         font-weight bold
         padding 20px
         opacity 0.5
+
+      #summary-tools
+        
       #classify-summary
         display none
         position absolute
@@ -285,11 +291,12 @@
         width 54px
         height 432px
         padding 5px
-        background-color rgb(50,50,50)
+        // background-color rgb(50,50,50)
         h3
           font-style italic
           font-size 0.9em
         button
+          display inline-block
           padding 5px
           margin 5px 0px 5px 0px
           text-align center
@@ -312,13 +319,15 @@
             &.zoomed
               background-color #151a1b
           &#toggle-fav
-            background url("images/icons/toolbar-fav-empty.png") no-repeat 50% 35%
+            // background url("images/icons/toolbar-fav-empty.png") no-repeat 50% 35%
+            background url("images/icons/favorite-nofill.svg") no-repeat 50% 35%
             &.toggled
-              background #151a1b url("images/icons/toolbar-fav-filled.png") no-repeat 50% 35%
+              background #151a1b url("images/icons/favorite-filled.svg") no-repeat 50% 35%
+
           &#help
-            background url("images/icons/toolbar-question-mark.png") no-repeat 50% 35%
+            background url("images/icons/guide-icon.svg") no-repeat 50% 35%
           &#tutorial
-            background url("images/icons/toolbar-cursor.png") no-repeat 50% 35%
+            background url("images/icons/tut-icon.svg") no-repeat 50% 35%
         .tool-button
           border none
           color white

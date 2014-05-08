@@ -100,6 +100,7 @@
             </div>
             <div id="summary-tools">
               <button class="tool-button toggle-fav">Add to favorites</button>
+              <button class="tool-button toggle-fav">Add to favorites</button>
             </div>
 <!--             <h2>Discussions about this star</h2>
             <div id="alt-comments">
@@ -117,6 +118,7 @@
           </div>
         </div>
       </div>
+
       <div id="tools">
         <h3>TOOLS</h3>
         <button class="tool-button" id="toggle-zoom">
@@ -132,6 +134,7 @@
           <span>Tutorial</span>
         </button>
       </div>
+
       <div id="slider-container">
         <div id="numbers-container"></div>
         <div id="ui-slider"></div>
