@@ -87,8 +87,6 @@
         </div>
 
         <div class="three-column">
-          <!-- DEBUG ONLY -->
-          <div id="foo"></div>
           <div class="content">
             <div id=".ukirt">
               Additional light curve information: <br>
@@ -99,8 +97,8 @@
               </ul>
             </div>
             <div id="summary-tools">
-              <button class="tool-button toggle-fav">Add to favorites</button>
-              <button class="tool-button toggle-fav">Add to favorites</button>
+              <button id="fav-button">Add to favorites</button>
+              <button id="talk-button">Talk about this</button>
             </div>
 <!--             <h2>Discussions about this star</h2>
             <div id="alt-comments">
@@ -121,7 +119,7 @@
 
       <div id="tools">
         <h3>TOOLS</h3>
-        <button class="tool-button" id="toggle-zoom">
+        <button class="tool-button" id="zoom-button">
           <span>Zoom</span>
         </button>
         <button class="tool-button" id="toggle-fav">
