@@ -136,12 +136,17 @@ class Classifier extends BaseController
     @el.find('.do-you-see-a-transit').fadeIn()
 
   insertMetadata: ->
+    @ra      = @subject.coords[0]
+    @dec     = @subject.coords[1]
+    ukirtUrl = "http://surveys.roe.ac.uk:8080/wsa/GetImage?ra=" + @ra + "&dec=" + @dec + "&database=wserv4v20101019&frameType=stack&obsType=object&programmeID=10209&mode=show&archive=%20wsa&project=wserv4"
+    console.log 'ukirtUrl: ', ukirtUrl
     metadata = @Subject.current.metadata.magnitudes
     @el.find('#star-id').html( @Subject.current.location['14-1'].split("\/").pop().split(".")[0].concat(" Information") )
     @el.find('#star-type').html(metadata.spec_type)
     @el.find('#magnitude').html(metadata.kepler)
     @el.find('#temperature').html metadata.eff_temp.toString().concat("(K)")
     @el.find('#radius').html metadata.stellar_rad.toString().concat("x Sol")
+    @el.find('#ukirt-url').attr("href", ukirtUrl)
 
   onChangeScaleSlider: ->
     val = +@el.find("#ui-slider").val()
