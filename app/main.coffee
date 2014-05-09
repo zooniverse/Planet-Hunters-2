@@ -59,6 +59,15 @@ footer = new Footer
 document.body.appendChild footerContainer
 footer.el.appendTo footerContainer
 
+$("<div id='social-media'>
+    Zooniverse: The universe is too big to explore without you.
+    <div id='social-icons'>
+      <a href='http://www.facebook.com'><img src='./images/social-media/facebook.svg'></a>
+      <a href='http://www.googleplus.com'><img src='./images/social-media/googplus.svg'></a>
+      <a href='http://www.twitter.com'><img src='./images/social-media/twit.svg'></a>
+    </div>
+  </div>").appendTo footerContainer
+
 movePlanet = ->
   date = new Date
   console.log "movePlanet(): ", date.getHours(), ':', date.getMinutes(), ':', date.getSeconds()
