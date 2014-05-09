@@ -1,4 +1,4 @@
-.zootorial-dialog
+.zootorial-dialog.tutorial
   background: #000
   border: 0
   border-radius: 5px
@@ -9,6 +9,9 @@
   margin 5px
   max-width 450px
   z-index 1000
+  display none
+  &.open
+    display inline-block
 
   &.arrow-right > .dialog-arrow
     border-top 10px solid transparent
