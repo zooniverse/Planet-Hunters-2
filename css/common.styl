@@ -78,7 +78,9 @@ button
       vertical-align middle
       &:hover
         opacity 1.0
-
+  @media screen and (max-width: 720px)
+    span
+      display none
 // Manual griddage
 // Set something like {float: left; margin-right: unit(GUTTER_WIDTH, 'px'); width: columns(4);}
 COLUMNS = 16
