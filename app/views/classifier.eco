@@ -103,8 +103,12 @@
               </ul>
             </div>
             <div id="summary-tools">
-              <button id="fav-button">Add to favorites</button>
-              <button id="talk-button">Talk about this</button>
+              <button class="summary-button" id="summary-fav-button">
+                <span>Add to favorites</span>
+              </button>
+              <button class="summary-button" id="summary-talk-button">
+                <span>Talk about this</span>
+              </button>
             </div>
 <!--             <h2>Discussions about this star</h2>
             <div id="alt-comments">

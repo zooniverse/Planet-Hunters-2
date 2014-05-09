@@ -203,8 +203,6 @@
         font-weight bold
         padding 20px
         opacity 0.5
-
-      #summary-tools
         
       #classify-summary
         display none
@@ -287,16 +285,23 @@
                     span
                       color #fff
 
-      // #summary-tools
-      //   width 100%
-      //   .fav-button, .talk-button
-      //     border none
-      //     color white
-      //     background-color rgb(50,50,50)
-      //     height 60px
-      //     width 60px
-      //     border-radius 0.3em
-      //     transition 0.3s
+      .summary-button
+        width 60px
+        height 60px
+        border-radius 0.3em
+        // transition 0.3s
+        background-color rgb(50,50,50)
+        span
+          top 20px
+          position relative
+          display inline-block
+          margin-bottom 10px
+        &#summary-fav-button
+          background url("images/icons/favorite-nofill.svg") no-repeat 50% 35%
+          &:hover
+            background #323232 url("images/icons/favorite-nofill.svg") no-repeat 50% 35%
+          &:active
+            background #151a1b url("images/icons/favorite-filled.svg") no-repeat 50% 35%
         
       #tools
         float right
