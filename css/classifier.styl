@@ -200,6 +200,7 @@
         font-weight bold
         padding 20px
         opacity 0.5
+        
       #classify-summary
         display none
         position absolute
@@ -208,6 +209,9 @@
         width 1090px
         z-index 100
         border-radius 5px
+        #ukirt-url
+          text-decoration underline
+          
         .three-column
           margin 0
           padding 0
@@ -277,6 +281,32 @@
                     font-style italic
                     span
                       color #fff
+
+      .summary-button
+        width 60px
+        height 60px
+        border-radius 0.3em
+        // transition 0.3s
+        background-color rgb(50,50,50)
+        span
+          top 20px
+          position relative
+          display inline-block
+          margin-bottom 10px
+        &#summary-fav-button
+          background url("images/icons/favorite-nofill.svg") no-repeat 50% 35%
+          &:hover
+            background #323232 url("images/icons/favorite-nofill.svg") no-repeat 50% 35%
+          &:active
+            background #151a1b url("images/icons/favorite-filled.svg") no-repeat 50% 35%
+        &#summary-talk-button
+          background url("images/icons/talk-icon.svg") no-repeat 50% 35%
+          &:hover
+            background #323232 url("images/icons/talk-icon.svg") no-repeat 50% 35%
+          &:active
+            background #151a1b url("images/icons/talk-icon.svg") no-repeat 50% 35%
+        
+
       #tools
         float right
         width 54px
@@ -286,37 +316,13 @@
         h3
           font-style italic
           font-size 0.9em
-        button
+        .tool-button
+          display inline-block
           padding 5px
           margin 5px 0px 5px 0px
           text-align center
           font-size 0.75em
           opacity 0.5
-          span
-            top 20px
-            position relative
-            display inline-block
-            margin-bottom 10px
-          &:active
-            transform translateY(1px)
-            box-shadow none
-          &:hover
-            opacity 1.0
-          &#toggle-zoom
-            background url("images/icons/zoom-in.svg") no-repeat 50% 35%
-            &.allowZoomOut
-              background #151a1b url("images/icons/zoom-out.svg") no-repeat 50% 35%
-            &.zoomed
-              background-color #151a1b
-          &#toggle-fav
-            background url("images/icons/toolbar-fav-empty.png") no-repeat 50% 35%
-            &.toggled
-              background #151a1b url("images/icons/toolbar-fav-filled.png") no-repeat 50% 35%
-          &#help
-            background url("images/icons/toolbar-question-mark.png") no-repeat 50% 35%
-          &#tutorial
-            background url("images/icons/toolbar-cursor.png") no-repeat 50% 35%
-        .tool-button
           border none
           color white
           background-color rgb(50,50,50)
@@ -331,6 +337,31 @@
           &.toggled
             background-color #151A1B
             transition 0.3s
+          span
+            top 20px
+            position relative
+            display inline-block
+            margin-bottom 10px
+          &:active
+            transform translateY(1px)
+            box-shadow none
+          &:hover
+            opacity 1.0
+          &#zoom-button
+            background url("images/icons/zoom-in.svg") no-repeat 50% 35%
+            &.allowZoomOut
+              background #151a1b url("images/icons/zoom-out.svg") no-repeat 50% 35%
+            &.zoomed
+              background-color #151a1b
+          &#toggle-fav
+            background url("images/icons/favorite-nofill.svg") no-repeat 50% 35%
+            &.toggled
+              background #151a1b url("images/icons/favorite-filled.svg") no-repeat 50% 35%
+          &#help
+            background url("images/icons/guide-icon.svg") no-repeat 50% 35%
+          &#tutorial
+            background url("images/icons/tut-icon.svg") no-repeat 50% 35%
+            
       #slider-container
         display inline-block
         float left

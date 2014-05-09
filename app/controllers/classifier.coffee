@@ -16,7 +16,7 @@ class Classifier extends BaseController
   template: require '../views/classifier'
 
   elements:
-    '#toggle-zoom'                      : 'zoomButton'
+    '#zoom-button'                      : 'zoomButton'
     '#toggle-fav'                       : 'favButton'
     '#help'                             : 'helpButton'
     '#tutorial'                         : 'tutorialButton'
@@ -35,7 +35,7 @@ class Classifier extends BaseController
     'textarea[name="alt-talk-comment"]' : 'altTalkComment'
 
   events:
-    'click button[id="toggle-zoom"]'         : 'onClickZoom'
+    'click button[id="zoom-button"]'         : 'onClickZoom'
     'click button[id="toggle-fav"]'          : 'onToggleFav'
     'click button[id="help"]'                : 'onClickHelp'
     'click button[id="tutorial"]'            : 'onClickTutorial'
@@ -136,12 +136,17 @@ class Classifier extends BaseController
     @el.find('.do-you-see-a-transit').fadeIn()
 
   insertMetadata: ->
+    @ra      = @subject.coords[0]
+    @dec     = @subject.coords[1]
+    ukirtUrl = "http://surveys.roe.ac.uk:8080/wsa/GetImage?ra=" + @ra + "&dec=" + @dec + "&database=wserv4v20101019&frameType=stack&obsType=object&programmeID=10209&mode=show&archive=%20wsa&project=wserv4"
+    console.log 'ukirtUrl: ', ukirtUrl
     metadata = @Subject.current.metadata.magnitudes
     @el.find('#star-id').html( @Subject.current.location['14-1'].split("\/").pop().split(".")[0].concat(" Information") )
     @el.find('#star-type').html(metadata.spec_type)
     @el.find('#magnitude').html(metadata.kepler)
     @el.find('#temperature').html metadata.eff_temp.toString().concat("(K)")
     @el.find('#radius').html metadata.stellar_rad.toString().concat("x Sol")
+    @el.find('#ukirt-url').attr("href", ukirtUrl)
 
   onChangeScaleSlider: ->
     val = +@el.find("#ui-slider").val()
@@ -152,16 +157,16 @@ class Classifier extends BaseController
     @zoomLevel = @zoomLevel + 1
     if @zoomLevel is 0 or @zoomLevel > @zoomRanges.length-1 # no zoom
       @canvasGraph.zoomOut()
-      @el.find("#toggle-zoom").removeClass("zoomed")
+      @el.find("#zoom-button").removeClass("zoomed")
       @el.find("#ui-slider").val(0)
       @el.find(".noUi-handle").fadeOut(150)
       @zoomLevel = 0
       @el.find('#ui-slider').attr('disabled',true)
-      @el.find("#toggle-zoom").removeClass("allowZoomOut")
+      @el.find("#zoom-button").removeClass("allowZoomOut")
     else 
       @el.find('#ui-slider').removeAttr('disabled')
       @canvasGraph.zoomInTo(0, @zoomRanges[@zoomLevel])
-      @el.find("#toggle-zoom").addClass("zoomed")
+      @el.find("#zoom-button").addClass("zoomed")
       @el.find("#ui-slider").val(0)
 
       # rebuild slider
@@ -172,9 +177,9 @@ class Classifier extends BaseController
           'max': @canvasGraph.largestX - @zoomRanges[@zoomLevel]
       , true
       if @zoomLevel is @zoomRanges.length-1
-        @el.find("#toggle-zoom").addClass("allowZoomOut")
+        @el.find("#zoom-button").addClass("allowZoomOut")
       else
-        @el.find("#toggle-zoom").removeClass("allowZoomOut")
+        @el.find("#zoom-button").removeClass("allowZoomOut")
     @showZoomMessage(@magnification[@zoomLevel])
     @recordedClickEvents.push { event: 'clickedZoomLevel'+@zoomLevel, timestamp: (new Date).toUTCString() }
   
@@ -290,7 +295,7 @@ class Classifier extends BaseController
     @noTransitsButton.hide()
     @finishedMarkingButton.hide()
 
-    # @el.find("#toggle-zoom").removeClass("zoomed")
+    # @el.find("#zoom-button").removeClass("zoomed")
     @isZoomed = false
     @zoomLevel = 0
     @recordedClickEvents = []
