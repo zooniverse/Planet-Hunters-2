@@ -1,7 +1,4 @@
 .classifier
-  button
-    &[name="close-dialog"]
-      display none
   color inherit
   .content-block
     overflow-x visible
@@ -302,7 +299,14 @@
             background #323232 url("images/icons/favorite-nofill.svg") no-repeat 50% 35%
           &:active
             background #151a1b url("images/icons/favorite-filled.svg") no-repeat 50% 35%
+        &#summary-talk-button
+          background url("images/icons/talk-icon.svg") no-repeat 50% 35%
+          &:hover
+            background #323232 url("images/icons/talk-icon.svg") no-repeat 50% 35%
+          &:active
+            background #151a1b url("images/icons/talk-icon.svg") no-repeat 50% 35%
         
+
       #tools
         float right
         width 54px
