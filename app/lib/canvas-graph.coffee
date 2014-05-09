@@ -270,8 +270,8 @@ class CanvasGraph
         @plotPoints(wMin, wMax)
         unless callback is undefined 
           callback.apply()
-          classifier.el.find("#toggle-zoom").removeClass("zoomed")
-          classifier.el.find("#toggle-zoom").removeClass("allowZoomOut") # for last zoom level
+          classifier.el.find("#zoom-button").removeClass("zoomed")
+          classifier.el.find("#zoom-button").removeClass("allowZoomOut") # for last zoom level
           classifier.el.find('#ui-slider').attr('disabled',true)
           classifier.el.find('.noUi-handle').fadeOut(150)
     ), 30

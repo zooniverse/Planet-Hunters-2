@@ -4,7 +4,13 @@
   <!-- COURSE  -->
   <div id="course-container">
     <div id="course-title"></div>
-    <div class="course-close">Close<img src="./images/icons/marking-closex.png">
+    <div class="course-close">
+      Close
+      <!-- <img src="./images/icons/marking-closex.png"> -->
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="8px" height="8px">
+        <defs></defs>
+        <path fill-rule="evenodd" fill="rgb(255,255,255)" d=" M8.01144 1.38207 C8.01144 1.38207 6.63064 0.00572705 6.63064 0.00572705 C6.63064 0.00572705 4.00746 2.62077 4.00746 2.62077 C4.00746 2.62077 1.38411 0.00572705 1.38411 0.00572705 C1.38411 0.00572705 0.00340843 1.38207 0.00340843 1.38207 C0.00340843 1.38207 2.62685 3.99735 2.62685 3.99735 C2.62685 3.99735 0.00340843 6.61246 0.00340843 6.61246 C0.00340843 6.61246 1.38411 7.9888 1.38411 7.9888 C1.38411 7.9888 4.00746 5.37378 4.00746 5.37378 C4.00746 5.37378 6.63064 7.9888 6.63064 7.9888 C6.63064 7.9888 8.01144 6.61246 8.01144 6.61246 C8.01144 6.61246 5.38809 3.99735 5.38809 3.99735 C5.38809 3.99735 8.01144 1.38207 8.01144 1.38207 Z"/>
+      </svg>
     </div>
     <div id="course-body">
       <div class="course-figure-container horizontal">
@@ -62,7 +68,7 @@
         </div>
         <div class="three-column">
           <div class="content">
-            <h2>Discussions about this star</h2>
+<!--             <h2>Discussions about this star</h2>
             <div id="comments">
               <div class="formatted-comment">
                 <p>Some content for a comment</p>
@@ -82,13 +88,29 @@
             <div class="talk-pill">
               <textarea placeholder="Type something..." name="talk-comment"></textarea>
               <button name="submit-talk">Submit</button>
-            </div>
+            </div> -->
           </div>
         </div>
 
         <div class="three-column">
           <div class="content">
-            <h2>Discussions about this star</h2>
+            <div id=".ukirt">
+              Additional light curve information: <br>
+              <ul>
+                <li>
+                  <a id="ukirt-url" href="">UKIRT Source</a>
+                </li>
+              </ul>
+            </div>
+            <div id="summary-tools">
+              <button class="summary-button" id="summary-fav-button">
+                <span>Add to favorites</span>
+              </button>
+              <button class="summary-button" id="summary-talk-button">
+                <span>Talk about this</span>
+              </button>
+            </div>
+<!--             <h2>Discussions about this star</h2>
             <div id="alt-comments">
               <div class="formatted-comment">
                 <p>Some content for an alternate talk comment. Wow what a comment!</p>
@@ -100,13 +122,14 @@
             <div class="talk-pill">
               <textarea placeholder="Type something..." name="alt-talk-comment"></textarea>
               <button name="alt-submit-talk">Submit</button>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
+
       <div id="tools">
         <h3>TOOLS</h3>
-        <button class="tool-button" id="toggle-zoom">
+        <button class="tool-button" id="zoom-button">
           <span>Zoom</span>
         </button>
         <button class="tool-button" id="toggle-fav">
@@ -119,6 +142,7 @@
           <span>Tutorial</span>
         </button>
       </div>
+
       <div id="slider-container">
         <div id="numbers-container"></div>
         <div id="ui-slider"></div>
