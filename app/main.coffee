@@ -70,18 +70,18 @@ $("<div id='social-media'>
 
 movePlanet = ->
   date = new Date
-  console.log "movePlanet(): ", date.getHours(), ':', date.getMinutes(), ':', date.getSeconds()
+  # DEBUG CODE
+  # console.log "movePlanet(): ", date.getHours(), ':', date.getMinutes(), ':', date.getSeconds()
   minuteFrac = ( date.getSeconds() / 60 )
   hourFrac   = ( date.getMinutes() / 60 )
   dayFrac    = ( date.getHours() / 24 )
-  console.log 'minuteFrac = ', minuteFrac
-  console.log 'hourFrac   = ', hourFrac
-  console.log 'dayFrac    = ', dayFrac
+  # DEBUG CODE
+  # console.log 'minuteFrac = ', minuteFrac
+  # console.log 'hourFrac   = ', hourFrac
+  # console.log 'dayFrac    = ', dayFrac
 
   scaleFactor = dayFrac
   for planet in [$(".bg-planet")...]
-    # planet.style.bottom = Math.round(date.getSeconds()/60 * 730+50) + 'px'
-    # planet.style.left   = Math.round(date.getSeconds()/60 * 1138+530) + 'px'
     planet.style.top    = Math.round( scaleFactor * 100) + '%'
     planet.style.left   = Math.round( scaleFactor * 100) + '%'
     planet.style.width  = Math.round( scaleFactor * 2*530) + 'px'

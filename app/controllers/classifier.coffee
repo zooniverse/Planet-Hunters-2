@@ -103,6 +103,7 @@ class Classifier extends BaseController
     jsonFile = @subject.location['14-1'] # read actual subject
 
     # DEBUG CODE
+    jsonFile = 'http://demo.zooniverse.org.s3.amazonaws.com/planet_hunter/subjects/APHE1000213.json'
     # jsonFile = 'http://demo.zooniverse.org.s3.amazonaws.com/planet_hunter/subjects/APHE100025p.json'
     # jsonFile = 'http://demo.zooniverse.org.s3.amazonaws.com/planet_hunter/subjects/APHE1000232.json'
     # jsonFile = './offline/subject.json' # for debug only
@@ -122,7 +123,6 @@ class Classifier extends BaseController
       @canvasGraph = new CanvasGraph(@canvas, data)
       @canvasGraph.plotPoints()
       @canvasGraph.enableMarking()
-      @drawSliderAxisNums()
       @zoomRanges = [15, 10, 2]
       @magnification = [ '1x (all days)', '10 days', '2 days' ]
       @showZoomMessage(@magnification[@zoomLevel])
@@ -321,11 +321,5 @@ class Classifier extends BaseController
       </div>
     """).animate({ scrollTop: container[0].scrollHeight}, 1000)
     @resetTalkComment comment
-
-  drawSliderAxisNums: ->
-    sliderNums = ""
-    # for num in [(Math.round @canvasGraph.smallestX + 1)..(Math.round @canvasGraph.largestX)]
-    #   sliderNums += if num%2 is 0 then "<span class='slider-num'>#{num}</span>" else "<span class='slider-num'>&#x2022</span>"
-    # @el.find("#numbers-container").html sliderNums
 
 module.exports = Classifier

@@ -16,8 +16,7 @@ class CanvasGraph
       @data.x[idx] = xValue - @smallestX
 
     # remove outliers and normalize
-    @removeOutliers(3)
-    # @data.y = @normalize(@data.y)
+    @removeOutliers(nsigma=3)
 
     # update min/max values
     @smallestX = Math.min @data.x...
@@ -35,50 +34,6 @@ class CanvasGraph
     @canvas.addEventListener 'mousedown', (e) => @addMarkToGraph(e)
     @canvas.addEventListener 'touchstart', (e) => @addMarkToGraph(e)
 
-  drawYTickMarks: (domain, range, minorInt, majorInt) ->
-    # draw scales
-    tickMinorInterval = minorInt
-    tickMajorInterval = majorInt
-    tickMinorLength = 5
-    tickMajorLength = 10
-    tickWidth = 1
-    tickColor = '#323232'
-    textColor = '#323232'
-    textSpacing = 15
-
-    domainMin = Math.min(domain...)
-    domainMax = Math.max(domain...)
-    rangeMin = Math.min(range...)
-    rangeMax = Math.max(range...)
-
-    for i in domain
-      # do not draw first, last tickmarks
-      continue unless i isnt +Math.max(domain...)-1
-      continue unless i isnt +Math.min(domain...)+1
-  
-      # draw minor tickmarks
-      tick_y = Math.round ( (( +i - domainMin) / (domainMax - domainMin)) * rangeMax )
-      if i % majorInt is 0
-        @ctx.beginPath()
-        @ctx.moveTo( rangeMin, tick_y )
-        @ctx.lineTo( rangeMin+tickMajorLength, tick_y )
-        @ctx.lineWidth = tickWidth
-        @ctx.strokeStyle = tickColor
-        @ctx.stroke()
-      else if i % minorInt is 0
-        @ctx.beginPath()
-        @ctx.moveTo( rangeMin, tick_y )
-        @ctx.lineTo( rangeMin+tickMinorLength, tick_y )
-        @ctx.lineWidth = tickWidth
-        @ctx.strokeStyle = tickColor
-        @ctx.stroke()
-        # print labels
-        @ctx.font = '10pt Arial'
-        @ctx.textAlign = 'center'
-        @ctx.fillStyle = textColor
-        y_scaled = 1 - +i/domainMax
-        @ctx.fillText( y_scaled.toFixed(2), rangeMin+tickMajorLength+textSpacing, tick_y+tickMinorLength )
-
   removeOutliers: (nsigma) ->
     mean = @mean(@data.y)
     std = @std(@data.y)
@@ -86,10 +41,19 @@ class CanvasGraph
     y_new = []
     for value, i in [@data.y...]
       if Math.sqrt( Math.pow( value - mean, 2 ) ) > nsigma * std
+        console.log 'removed outlier!'
         continue
       else
         x_new.push @data.x[i]
         y_new.push @data.y[i]
+
+    # normalize
+    yMax = Math.max y_new...
+    yMin = Math.min y_new...
+    # yMean = @mean(y_new)
+    for y, i in [ y_new... ]
+      y_new[i] = (y-yMin)/(yMax-yMin)
+      # y_new[i] = y_new[i] / yMean
     @data.x = x_new
     @data.y = y_new
 
@@ -101,6 +65,8 @@ class CanvasGraph
     return Math.sqrt( sum / data.length )
 
   mean: (data) ->
+    # console.log 'mean()'
+    # console.log 'length: ', data.length
     sum = 0
     for value in data
       sum = sum + value
@@ -153,10 +119,10 @@ class CanvasGraph
     @yMax = yMax
     @clearCanvas()
 
-    # lightcurve on top of tickmarks?
-    @drawYTickMarks([0..20], [0..@canvas.height], 1, 2)
+    # draw axes
     @drawXTickMarks(xMin, xMax)
-
+    @drawYTickMarks(yMin, yMax)
+    
     # plot points
     for i in [0...@dataLength]
       x = ((+@data.x[i]-xMin)/(xMax-xMin)) * @canvas.width
@@ -176,8 +142,7 @@ class CanvasGraph
     return
 
   drawXTickMarks: (xMin, xMax) ->
-    tickMinorInterval = 1
-    tickMajorInterval = 4
+    # tick/text properties
     tickMinorLength = 5
     tickMajorLength = 10
     tickWidth = 1
@@ -185,66 +150,143 @@ class CanvasGraph
     textColor = '#323232'
     textSpacing = 15
 
-    # X-AXIS
+    # determine intervals
+    xMag = Math.round( Math.abs(xMin-xMax) )
+    if xMag <= 2 # days
+      majorTickInterval = 4
+      minorTickInterval = 16
+      textInterval = 8
+    else if xMag <= 10 # days
+      majorTickInterval = 4
+      minorTickInterval = 4
+      textInterval = 4
+    else # all days
+      majorTickInterval = 2
+      minorTickInterval = 1
+      textInterval = 2
 
-    # display 'days' label
-    @ctx.font = '10pt Arial'
-    @ctx.textAlign = 'left'
-    @ctx.fillStyle = textColor
-    @ctx.fillText( 'DAYS', 10, @canvas.height - textSpacing )
-    for i in [0...@dataLength]
-      if i % 1 is 0 and i isnt 0
-        # top
-        tick_x = ((+i - xMin) / (xMax - xMin)) * @canvas.width
-        @ctx.beginPath()
-        @ctx.moveTo( tick_x, 0 )
-        @ctx.lineTo( tick_x, tickMinorLength )
-        @ctx.lineWidth = tickWidth
-        @ctx.strokeStyle = tickColor
-        @ctx.stroke()
+    # generate intervals
+    xTicks = []
+    xStep = 1/minorTickInterval
+    i = 0
+    xVal = Math.floor(xMin)
+    while xVal <= Math.ceil(xMax)
+      for j in [0...minorTickInterval]
+        tick = xVal + j*xStep;
+        unless tick > Math.ceil(xMax)
+          xTicks.push tick
+      i++
+      xVal++
 
-        # bottom tickmarks
-        @ctx.beginPath()
-        @ctx.moveTo( tick_x, @canvas.height )
-        @ctx.lineTo( tick_x, @canvas.height - tickMinorLength )
-        @ctx.lineWidth = tickWidth
-        @ctx.strokeStyle = tickColor
-        @ctx.stroke()
+    for tick, i in [xTicks...]
+      continue if i is 0 # skip first value
 
-      if i % 2 is 0 and i isnt 0
-        # tick_x = ((+i - xMin) / (xMax - xMin)) * @canvas.width
-        
-        # bottom lines
-        @ctx.beginPath()
-        @ctx.moveTo( tick_x, @canvas.height )
-        @ctx.lineTo( tick_x, @canvas.height-tickMajorLength )
-        @ctx.lineWidth = tickWidth
-        @ctx.strokeStyle = tickColor
-        @ctx.stroke()
+      # draw ticks (bottom)
+      @ctx.beginPath() 
+      @ctx.moveTo( @toCanvasXCoord(tick), @canvas.height )
+      if i % majorTickInterval is 0
+        @ctx.lineTo( @toCanvasXCoord(tick), @canvas.height - tickMajorLength ) # major tick
+      else
+        @ctx.lineTo( @toCanvasXCoord(tick), @canvas.height - tickMinorLength ) # minor tick
+      @ctx.lineWidth = tickWidth
+      @ctx.strokeStyle = tickColor
+      @ctx.stroke()
 
-        #bottom numbers
-        @ctx.font = '10pt Arial'
-        @ctx.textAlign = 'center'
-        @ctx.fillStyle = textColor
-        @ctx.fillText( @toDataXCoord(tick_x).toFixed(), tick_x, @canvas.height - textSpacing )
+      @ctx.font = '10pt Arial'
+      @ctx.textAlign = 'center'
+      @ctx.fillStyle = textColor
 
-      if i % 4 is 0 and i isnt 0
-        tick_x = ((+i - xMin) / (xMax - xMin)) * @canvas.width
-        
-        # top numbers
-        @ctx.font = '10pt Arial'
-        @ctx.textAlign = 'center'
-        @ctx.fillStyle = textColor
-        x_value = @toDataXCoord(tick_x)+Math.round(@originalMin)
-        @ctx.fillText( x_value, tick_x, tickMajorLength+textSpacing )
+      # draw numbers (bottom)
+      if (i % majorTickInterval) is 0 # zoomed out
+        @ctx.fillText( tick, @toCanvasXCoord(tick), @canvas.height - textSpacing )
+      else if (i % majorTickInterval) is 0
+        @ctx.fillText( tick, @toCanvasXCoord(tick), @canvas.height - textSpacing )
+      else if (i % majorTickInterval) is 0
+        @ctx.fillText( tick, @toCanvasXCoord(tick), @canvas.height - textSpacing )
 
-        # top lines
-        @ctx.beginPath()
-        @ctx.moveTo( tick_x, 0 )
-        @ctx.lineTo( tick_x, tickMajorLength )
-        @ctx.lineWidth = tickWidth
-        @ctx.strokeStyle = tickColor
-        @ctx.stroke()
+      # draw ticks (top)
+      @ctx.beginPath() 
+      @ctx.moveTo( @toCanvasXCoord(tick), 0 )
+      if i % majorTickInterval is 0
+        @ctx.lineTo( @toCanvasXCoord(tick), 0 + tickMajorLength ) # major tick
+      else
+        @ctx.lineTo( @toCanvasXCoord(tick), 0 + tickMinorLength ) # minor tick
+      @ctx.lineWidth = tickWidth
+      @ctx.strokeStyle = tickColor
+      @ctx.stroke()
+
+      # top numbers
+      if (i % 4) is 0 # zoomed out
+        @ctx.fillText( (tick + @originalMin).toFixed(2), @toCanvasXCoord(tick), 0 + textSpacing+10 )
+      
+  drawYTickMarks: (yMin, yMax, nIntervals) ->
+    
+    tickMinorLength = 5
+    tickMajorLength = 10
+    tickWidth = 1
+    tickColor = '#323232' #rgba(200,20,20,1)' #'#323232'
+    textColor = '#323232' #'rgba(200,20,20,1)' #'#323232'
+    textSpacing = 15
+
+    # console.log 'yLimits: [',yMin,',',yMax,']'
+    # generate intervals
+    yTicks = []
+    nIntervals = 20
+
+    majorTickInterval = 2
+    minorTickInterval = 1
+    textInterval = 2
+
+    yStep = 1/nIntervals
+    i = 0
+    yVal = yMin
+    while yVal <= yMax
+      for j in [0...nIntervals]
+        tick = yVal + j*yStep;
+        unless tick > yMax
+          yTicks.push tick
+      i++
+      yVal++
+
+    # REQUIRED FOR MEAN NORMALIZATION
+    # yMean = @mean(@data.y)
+    # console.log 'yMean: ', yMean
+
+    # DRAW MEAN LINE
+    # yPos = -@toCanvasYCoord(yMean) + @canvas.height
+    # @ctx.moveTo( 0, yPos )
+    # @ctx.lineTo( @canvas.width, yPos ) # minor tick
+    # @ctx.lineWidth = 1
+    # @ctx.strokeStyle = tickColor
+    # @ctx.stroke()
+
+    for tick, i in [yTicks...]
+      continue if i is 0               # skip first value
+      continue if i is yTicks.length-1 # skip last value
+
+      # TODO: MEAN NORMALIZATION (NOT CORRECT YET!)
+      # tick = tick + (0.5-yMean)           # translate tick so mean brightness is 1
+      # console.log '    > TICK: ', tick
+      # console.log '    > MEAN: ', yMean
+
+      tickPos = @toCanvasYCoord(tick)     # transform to canvas coordinate
+      tickPos = -tickPos + @canvas.height # flip y-axis
+
+      # draw axis
+      @ctx.font = '10pt Arial'
+      @ctx.textAlign = 'center'
+      @ctx.fillStyle = textColor
+      @ctx.beginPath() 
+      @ctx.moveTo( 0, tickPos )
+      if i % majorTickInterval is 0
+        @ctx.lineTo( tickMajorLength, tickPos ) # major tick
+        @ctx.fillText( tick.toFixed(2), 0+textSpacing+10, tickPos+5 )
+
+      else
+        @ctx.lineTo( tickMinorLength, tickPos ) # minor tick
+      @ctx.lineWidth = tickWidth
+      @ctx.strokeStyle = tickColor
+      @ctx.stroke()
 
   zoomInTo: (wMin, wMax) ->
     [cMin, cMax] = [@xMin, @xMax]
@@ -280,6 +322,7 @@ class CanvasGraph
   clearCanvas: -> @ctx.clearRect(0,0,@canvas.width, @canvas.height)
 
   toCanvasXCoord: (dataPoint) -> ((dataPoint - @xMin) / (@xMax - @xMin)) * @canvas.width
+  toCanvasYCoord: (dataPoint) -> ((dataPoint - @yMin) / (@yMax - @yMin)) * @canvas.height
   toDataXCoord: (canvasPoint) -> ((canvasPoint / @canvas.width) * (@xMax - @xMin)) + @xMin
   toDataYCoord: (canvasPoint) -> ((canvasPoint / @canvas.height) * (@yMax - @yMin)) + @yMin
 
