@@ -103,6 +103,7 @@ class Classifier extends BaseController
     jsonFile = @subject.location['14-1'] # read actual subject
 
     # DEBUG CODE
+    jsonFile = 'http://demo.zooniverse.org.s3.amazonaws.com/planet_hunter/subjects/APHE1000213.json'
     # jsonFile = 'http://demo.zooniverse.org.s3.amazonaws.com/planet_hunter/subjects/APHE100025p.json'
     # jsonFile = 'http://demo.zooniverse.org.s3.amazonaws.com/planet_hunter/subjects/APHE1000232.json'
     # jsonFile = './offline/subject.json' # for debug only
@@ -149,6 +150,7 @@ class Classifier extends BaseController
 
   onChangeScaleSlider: ->
     val = +@el.find("#ui-slider").val()
+    console.log 'SLIDER VALUE: ', val
     return if @zoomLevel is 0 or @zoomLevel > @zoomRanges.length
     @canvasGraph.plotPoints( val, val + @zoomRanges[@zoomLevel] )
 
