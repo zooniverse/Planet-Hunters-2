@@ -174,7 +174,7 @@ class CanvasGraph
     # lightcurve on top of tickmarks?
     # @drawYTickMarks([0..20], [0..@canvas.height], 1, 2)
     # console.log 'LIMITS: [',xMin,',',xMax,']' 
-    @drawXTickMarks(xMin, xMax)
+    # @drawXTickMarks(xMin, xMax)
     @drawYTickMarks(yMin, yMax)
     
     # plot points
@@ -217,15 +217,15 @@ class CanvasGraph
     textColor = '#323232'
     textSpacing = 15
 
-    for tickPos, i in [xTicks...]
+    for tick, i in [xTicks...]
       continue if i is 0 # skip first value
       # draw ticks
       @ctx.beginPath() 
-      @ctx.moveTo( @toCanvasXCoord(tickPos), @canvas.height )
+      @ctx.moveTo( @toCanvasXCoord(tick), @canvas.height )
       if i % nIntervals is 0
-        @ctx.lineTo( @toCanvasXCoord(tickPos), @canvas.height - tickMajorLength ) # major tick
+        @ctx.lineTo( @toCanvasXCoord(tick), @canvas.height - tickMajorLength ) # major tick
       else
-        @ctx.lineTo( @toCanvasXCoord(tickPos), @canvas.height - tickMinorLength ) # minor tick
+        @ctx.lineTo( @toCanvasXCoord(tick), @canvas.height - tickMinorLength ) # minor tick
       @ctx.lineWidth = tickWidth
       @ctx.strokeStyle = tickColor
       @ctx.stroke()
@@ -235,7 +235,7 @@ class CanvasGraph
         @ctx.font = '10pt Arial'
         @ctx.textAlign = 'center'
         @ctx.fillStyle = textColor
-        @ctx.fillText( tickPos, @toCanvasXCoord(tickPos), @canvas.height - textSpacing )
+        @ctx.fillText( tick, @toCanvasXCoord(tick), @canvas.height - textSpacing )
 
   drawYTickMarks: (yMin, yMax, nIntervals) ->
     console.log 'yLimits: [',yMin,',',yMax,']'
@@ -261,15 +261,20 @@ class CanvasGraph
     textColor = '#323232'
     textSpacing = 15
 
-    for tickPos, i in [yTicks...]
-      continue if i is 0 # skip first value
+    for tick, i in [yTicks...]
+      # continue if i is 0 # skip first value
+      console.log 'tick: ', tick
+
+      tickPos = @toCanvasYCoord(tick)       # transform to canvas coordinate
+      tickPos = -tickPos + @canvas.height   # flip y-axis
+
       # draw ticks
       @ctx.beginPath() 
-      @ctx.moveTo( 0, @toCanvasYCoord(tickPos) )
+      @ctx.moveTo( 0, tickPos )
       if i % nIntervals is 0
-        @ctx.lineTo( tickMajorLength, @toCanvasYCoord(tickPos) ) # major tick
+        @ctx.lineTo( tickMajorLength, tickPos ) # major tick
       else
-        @ctx.lineTo( tickMinorLength, @toCanvasYCoord(tickPos) ) # minor tick
+        @ctx.lineTo( tickMinorLength, tickPos ) # minor tick
       @ctx.lineWidth = tickWidth
       @ctx.strokeStyle = tickColor
       @ctx.stroke()
@@ -279,9 +284,9 @@ class CanvasGraph
       @ctx.font = '10pt Arial'
       @ctx.textAlign = 'center'
       @ctx.fillStyle = textColor
-      # @ctx.fillText( tickPos.toFixed(2), 0+textSpacing+10, -(@toCanvasYCoord(tickPos)+5)+@canvas.height )
+      # @ctx.fillText( tick.toFixed(2), 0+textSpacing+10, -(@toCanvasYCoord(tick)+5)+@canvas.height )
       # flip about y-axis
-      @ctx.fillText( tickPos.toFixed(2), 0+textSpacing+10, @toCanvasYCoord(tickPos)+5 )
+      @ctx.fillText( tick.toFixed(2), 0+textSpacing+10, tickPos+5 )
 
     # # X-AXIS
     # # display 'days' label
