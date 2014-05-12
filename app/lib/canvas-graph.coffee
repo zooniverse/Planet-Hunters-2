@@ -224,28 +224,33 @@ class CanvasGraph
         @ctx.fillText( (tick + @originalMin).toFixed(2), @toCanvasXCoord(tick), 0 + textSpacing+10 )
       
   drawYTickMarks: (yMin, yMax, nIntervals) ->
-    # console.log 'yLimits: [',yMin,',',yMax,']'
-    # generate intervals
-    yTicks = []
-    nIntervals = 10
-    yStep = 1/nIntervals
-    i = 0
-    yVal = yMin
-    while yVal <= yMax
-      for j in [0...nIntervals]
-        tick = yVal + j*yStep;
-        # console.log 'tick: ', tick, ' -> ', @toCanvasYCoord(tick)
-        unless tick > yMax
-          yTicks.push tick
-      i++
-      yVal++
-
+    
     tickMinorLength = 5
     tickMajorLength = 10
     tickWidth = 1
     tickColor = '#323232' #rgba(200,20,20,1)' #'#323232'
     textColor = '#323232' #'rgba(200,20,20,1)' #'#323232'
     textSpacing = 15
+
+    # console.log 'yLimits: [',yMin,',',yMax,']'
+    # generate intervals
+    yTicks = []
+    nIntervals = 20
+
+    majorTickInterval = 2
+    minorTickInterval = 1
+    textInterval = 2
+
+    yStep = 1/nIntervals
+    i = 0
+    yVal = yMin
+    while yVal <= yMax
+      for j in [0...nIntervals]
+        tick = yVal + j*yStep;
+        unless tick > yMax
+          yTicks.push tick
+      i++
+      yVal++
 
     # REQUIRED FOR MEAN NORMALIZATION
     # yMean = @mean(@data.y)
@@ -271,86 +276,21 @@ class CanvasGraph
       tickPos = @toCanvasYCoord(tick)     # transform to canvas coordinate
       tickPos = -tickPos + @canvas.height # flip y-axis
 
-      # draw ticks
+      # draw axis
+      @ctx.font = '10pt Arial'
+      @ctx.textAlign = 'center'
+      @ctx.fillStyle = textColor
       @ctx.beginPath() 
       @ctx.moveTo( 0, tickPos )
-      if i % nIntervals is 0
+      if i % majorTickInterval is 0
         @ctx.lineTo( tickMajorLength, tickPos ) # major tick
+        @ctx.fillText( tick.toFixed(2), 0+textSpacing+10, tickPos+5 )
+
       else
         @ctx.lineTo( tickMinorLength, tickPos ) # minor tick
       @ctx.lineWidth = tickWidth
       @ctx.strokeStyle = tickColor
       @ctx.stroke()
-
-      # draw numbers
-      # if i % nIntervals is 0
-      @ctx.font = '10pt Arial'
-      @ctx.textAlign = 'center'
-      @ctx.fillStyle = textColor
-      # @ctx.fillText( tick.toFixed(2), 0+textSpacing+10, -(@toCanvasYCoord(tick)+5)+@canvas.height )
-      # flip about y-axis
-      # tick = tick/yMean # FOR MEAN NORMALIZATION (NOT CORRECT YET!)
-      @ctx.fillText( tick.toFixed(2), 0+textSpacing+10, tickPos+5 )
-
-    # # X-AXIS
-    # # display 'days' label
-    # @ctx.font = '10pt Arial'
-    # @ctx.textAlign = 'left'
-    # @ctx.fillStyle = textColor
-    # @ctx.fillText( 'DAYS', 10, @canvas.height - textSpacing )
-    # for i in [0...@dataLength]
-    #   if i % 1 is 0 and i isnt 0
-    #     # top
-    #     tick_x = ((+i - xMin) / (xMax - xMin)) * @canvas.width
-    #     @ctx.beginPath()
-    #     @ctx.moveTo( tick_x, 0 )
-    #     @ctx.lineTo( tick_x, tickMinorLength )
-    #     @ctx.lineWidth = tickWidth
-    #     @ctx.strokeStyle = tickColor
-    #     @ctx.stroke()
-
-    #     # bottom tickmarks
-    #     @ctx.beginPath()
-    #     @ctx.moveTo( tick_x, @canvas.height )
-    #     @ctx.lineTo( tick_x, @canvas.height - tickMinorLength )
-    #     @ctx.lineWidth = tickWidth
-    #     @ctx.strokeStyle = tickColor
-    #     @ctx.stroke()
-
-    #   if i % 2 is 0 and i isnt 0
-    #     # tick_x = ((+i - xMin) / (xMax - xMin)) * @canvas.width
-        
-    #     # bottom lines
-    #     @ctx.beginPath()
-    #     @ctx.moveTo( tick_x, @canvas.height )
-    #     @ctx.lineTo( tick_x, @canvas.height-tickMajorLength )
-    #     @ctx.lineWidth = tickWidth
-    #     @ctx.strokeStyle = tickColor
-    #     @ctx.stroke()
-
-    #     #bottom numbers
-    #     @ctx.font = '10pt Arial'
-    #     @ctx.textAlign = 'center'
-    #     @ctx.fillStyle = textColor
-    #     @ctx.fillText( @toDataXCoord(tick_x).toFixed(), tick_x, @canvas.height - textSpacing )
-
-    #   if i % 4 is 0 and i isnt 0
-    #     tick_x = ((+i - xMin) / (xMax - xMin)) * @canvas.width
-        
-    #     # top numbers
-    #     @ctx.font = '10pt Arial'
-    #     @ctx.textAlign = 'center'
-    #     @ctx.fillStyle = textColor
-    #     x_value = @toDataXCoord(tick_x)+Math.round(@originalMin)
-    #     @ctx.fillText( x_value, tick_x, tickMajorLength+textSpacing )
-
-    #     # top lines
-    #     @ctx.beginPath()
-    #     @ctx.moveTo( tick_x, 0 )
-    #     @ctx.lineTo( tick_x, tickMajorLength )
-    #     @ctx.lineWidth = tickWidth
-    #     @ctx.strokeStyle = tickColor
-    #     @ctx.stroke()
 
   zoomInTo: (wMin, wMax) ->
     [cMin, cMax] = [@xMin, @xMax]
