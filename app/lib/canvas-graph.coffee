@@ -17,14 +17,27 @@ class CanvasGraph
 
     # remove outliers and normalize
     @removeOutliers(3)
-    # @data.y = @normalize(@data.y)
+    @data.y = @normalize(@data.y)
+
+
+
+
+
+    # # normalize
+    # yNorm = []
+    # yMin = Math.min @data.y...
+    # yMax = Math.max @data.y...
+    # for yValue, i in [ @data.y... ]
+    #   yNorm[i] = (+yValue-yMin)/(yMax-yMin)
+    # @data.y = yNorm
+
 
     # normalize y values to unity mean
     yMean = @mean(@data.y)
     console.log 'yMean: ', yMean
 
-    for yValue, i in [ @data.y... ]
-      @data.y[i] =  (@data.y[i]-@smallestY) / (@largestY-@smallestY)
+    # for yValue, i in [ @data.y... ]
+    #   @data.y[i] =  (@data.y[i]-@smallestY) / (@largestY-@smallestY)
       # console.log 'y: ', @data.y[i]
 
     # for yValue, i in [ @data.y... ]
@@ -37,6 +50,16 @@ class CanvasGraph
     @smallestY = Math.min @data.y...
     @largestX = Math.max  @data.x...
     @largestY = Math.max  @data.y...
+
+  normalize: (values) ->
+    vMax = Math.max values...
+    vMin = Math.min values...
+    vMean = @mean(values)
+    v_norm = []
+    for v, i in [ values... ]
+      v_norm[i] = (v-vMin)/(vMax-vMin)
+      # v_norm[i] = v_norm[i] / vMean
+    return v_norm 
 
   disableMarking: ->
     @markingDisabled = true
@@ -106,10 +129,6 @@ class CanvasGraph
         y_new.push @data.y[i]
     @data.x = x_new
     @data.y = y_new
-
-    # # normalize
-    # for yValue in [ @data.y... ]
-    #   yValue = (+yValue-@smallestY)/(@largestY-@smallestY)
 
   std: (data) ->
     mean = @mean(data)
