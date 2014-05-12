@@ -122,7 +122,6 @@ class Classifier extends BaseController
       @canvasGraph = new CanvasGraph(@canvas, data)
       @canvasGraph.plotPoints()
       @canvasGraph.enableMarking()
-      @drawSliderAxisNums()
       @zoomRanges = [15, 10, 2]
       @magnification = [ '1x (all days)', '10 days', '2 days' ]
       @showZoomMessage(@magnification[@zoomLevel])
@@ -321,11 +320,5 @@ class Classifier extends BaseController
       </div>
     """).animate({ scrollTop: container[0].scrollHeight}, 1000)
     @resetTalkComment comment
-
-  drawSliderAxisNums: ->
-    sliderNums = ""
-    # for num in [(Math.round @canvasGraph.smallestX + 1)..(Math.round @canvasGraph.largestX)]
-    #   sliderNums += if num%2 is 0 then "<span class='slider-num'>#{num}</span>" else "<span class='slider-num'>&#x2022</span>"
-    # @el.find("#numbers-container").html sliderNums
 
 module.exports = Classifier
