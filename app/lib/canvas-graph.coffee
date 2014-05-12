@@ -65,7 +65,7 @@ class CanvasGraph
     return Math.sqrt( sum / data.length )
 
   mean: (data) ->
-    console.log 'mean()'
+    # console.log 'mean()'
     # console.log 'length: ', data.length
     sum = 0
     for value in data
@@ -192,10 +192,11 @@ class CanvasGraph
       @ctx.strokeStyle = tickColor
       @ctx.stroke()
 
-      # draw numbers (bottom)
       @ctx.font = '10pt Arial'
       @ctx.textAlign = 'center'
       @ctx.fillStyle = textColor
+
+      # draw numbers (bottom)
       if (i % majorTickInterval) is 0 # zoomed out
         @ctx.fillText( tick, @toCanvasXCoord(tick), @canvas.height - textSpacing )
       else if (i % majorTickInterval) is 0
@@ -214,13 +215,8 @@ class CanvasGraph
       @ctx.strokeStyle = tickColor
       @ctx.stroke()
 
-      # draw numbers (top)
-      @ctx.font = '10pt Arial'
-      @ctx.textAlign = 'center'
-      @ctx.fillStyle = textColor
-
+      # top numbers
       if (i % 4) is 0 # zoomed out
-        console.log 'ZOOMED OUT'
         @ctx.fillText( (tick + @originalMin).toFixed(2), @toCanvasXCoord(tick), 0 + textSpacing+10 )
       
   drawYTickMarks: (yMin, yMax, nIntervals) ->

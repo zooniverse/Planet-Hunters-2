@@ -150,7 +150,6 @@ class Classifier extends BaseController
 
   onChangeScaleSlider: ->
     val = +@el.find("#ui-slider").val()
-    console.log 'SLIDER VALUE: ', val
     return if @zoomLevel is 0 or @zoomLevel > @zoomRanges.length
     @canvasGraph.plotPoints( val, val + @zoomRanges[@zoomLevel] )
 
