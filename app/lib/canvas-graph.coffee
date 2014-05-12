@@ -16,50 +16,13 @@ class CanvasGraph
       @data.x[idx] = xValue - @smallestX
 
     # remove outliers and normalize
-    @removeOutliers(3)
-    @data.y = @normalize(@data.y)
-
-
-
-
-
-    # # normalize
-    # yNorm = []
-    # yMin = Math.min @data.y...
-    # yMax = Math.max @data.y...
-    # for yValue, i in [ @data.y... ]
-    #   yNorm[i] = (+yValue-yMin)/(yMax-yMin)
-    # @data.y = yNorm
-
-
-    # normalize y values to unity mean
-    yMean = @mean(@data.y)
-    console.log 'yMean: ', yMean
-
-    # for yValue, i in [ @data.y... ]
-    #   @data.y[i] =  (@data.y[i]-@smallestY) / (@largestY-@smallestY)
-      # console.log 'y: ', @data.y[i]
-
-    # for yValue, i in [ @data.y... ]
-    #   @data.y[i] = @data.y[i] / yMean
-    #   console.log 'y: ', @data.y[i]
-
+    @removeOutliers(nsigma=3)
 
     # update min/max values
     @smallestX = Math.min @data.x...
     @smallestY = Math.min @data.y...
     @largestX = Math.max  @data.x...
     @largestY = Math.max  @data.y...
-
-  normalize: (values) ->
-    vMax = Math.max values...
-    vMin = Math.min values...
-    vMean = @mean(values)
-    v_norm = []
-    for v, i in [ values... ]
-      v_norm[i] = (v-vMin)/(vMax-vMin)
-      # v_norm[i] = v_norm[i] / vMean
-    return v_norm 
 
   disableMarking: ->
     @markingDisabled = true
@@ -70,50 +33,6 @@ class CanvasGraph
     window.marks = @marks
     @canvas.addEventListener 'mousedown', (e) => @addMarkToGraph(e)
     @canvas.addEventListener 'touchstart', (e) => @addMarkToGraph(e)
-
-  # drawYTickMarks: (domain, range, minorInt, majorInt) ->
-  #   # draw scales
-  #   tickMinorInterval = minorInt
-  #   tickMajorInterval = majorInt
-  #   tickMinorLength = 5
-  #   tickMajorLength = 10
-  #   tickWidth = 1
-  #   tickColor = '#323232'
-  #   textColor = '#323232'
-  #   textSpacing = 15
-
-  #   domainMin = Math.min(domain...)
-  #   domainMax = Math.max(domain...)
-  #   rangeMin = Math.min(range...)
-  #   rangeMax = Math.max(range...)
-
-  #   for i in domain
-  #     # do not draw first, last tickmarks
-  #     continue unless i isnt +Math.max(domain...)-1
-  #     continue unless i isnt +Math.min(domain...)+1
-  
-  #     # draw minor tickmarks
-  #     tick_y = Math.round ( (( +i - domainMin) / (domainMax - domainMin)) * rangeMax )
-  #     if i % majorInt is 0
-  #       @ctx.beginPath()
-  #       @ctx.moveTo( rangeMin, tick_y )
-  #       @ctx.lineTo( rangeMin+tickMajorLength, tick_y )
-  #       @ctx.lineWidth = tickWidth
-  #       @ctx.strokeStyle = tickColor
-  #       @ctx.stroke()
-  #     else if i % minorInt is 0
-  #       @ctx.beginPath()
-  #       @ctx.moveTo( rangeMin, tick_y )
-  #       @ctx.lineTo( rangeMin+tickMinorLength, tick_y )
-  #       @ctx.lineWidth = tickWidth
-  #       @ctx.strokeStyle = tickColor
-  #       @ctx.stroke()
-  #       # print labels
-  #       @ctx.font = '10pt Arial'
-  #       @ctx.textAlign = 'center'
-  #       @ctx.fillStyle = textColor
-  #       y_scaled = 1 - +i/domainMax
-  #       @ctx.fillText( y_scaled.toFixed(2), rangeMin+tickMajorLength+textSpacing, tick_y+tickMinorLength )
 
   removeOutliers: (nsigma) ->
     mean = @mean(@data.y)
@@ -127,8 +46,18 @@ class CanvasGraph
       else
         x_new.push @data.x[i]
         y_new.push @data.y[i]
+
+    # normalize
+    yMax = Math.max y_new...
+    yMin = Math.min y_new...
+    yMean = @mean(y_new)
+    for y, i in [ y_new... ]
+      y_new[i] = (y-yMin)/(yMax-yMin)
+    # y_new[i] = y_new[i] / yMean
+
     @data.x = x_new
     @data.y = y_new
+
 
   std: (data) ->
     mean = @mean(data)
