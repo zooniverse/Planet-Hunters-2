@@ -54,8 +54,8 @@ class CanvasGraph
     mean = @mean(y_new)
     std = @std(y_new)
 
-    # console.log 'MEAN: ', mean
-    # console.log 'STD: ', std
+    console.log 'MEAN: ', mean
+    console.log 'STD : ', std
 
     for y, i in [ y_new... ]
       y_new[i] = (y-1)/(std)
@@ -63,6 +63,7 @@ class CanvasGraph
      
     @data.x = x_new
     @data.y = y_new
+
 
   std: (data) ->
     mean = @mean(data)
@@ -226,40 +227,43 @@ class CanvasGraph
       if (i % 4) is 0 # zoomed out
         @ctx.fillText( (tick + @originalMin).toFixed(2), @toCanvasXCoord(tick), 0 + textSpacing+10 )
       
-  drawYTickMarks: (yMin, yMax, nIntervals) ->
+  drawYTickMarks: (yMin, yMax) ->
+
+    console.log 'LIMITS [',yMin,',',yMax,']'
     
+    # generate intervals
+    yTicks = []
+    yStep = Math.abs(yMin-yMax)/20
+    meanTickIndexIsEven = false
+    tickIdx = 0
+    for stepFactor in [-10..10]
+      tickValue = 1+stepFactor*yStep
+      unless tickValue >= yMax or tickValue <=yMin
+        if tickValue is 1.0 
+          if (tickIdx%2 is 0)
+            meanTickIndexIsEven = true
+        yTicks.push tickValue
+        tickIdx++
+
+    if yStep < 0.001
+      textDecimals = 4
+    else
+      textDecimals = 3
+
     tickMinorLength = 5
     tickMajorLength = 10
     tickWidth = 1
-    tickColor = '#323232' #rgba(200,20,20,1)' #'#323232'
-    textColor = '#323232' #'rgba(200,20,20,1)' #'#323232'
+    tickColor = '#323232' #'rgba(200,20,20,1)' 
+    textColor = '#323232'
     textSpacing = 15
-
-    console.log 'yLimits: [',yMin,',',yMax,']'
-    # generate intervals
-    yTicks = []
-    nIntervals = 20
-
     majorTickInterval = 2
     minorTickInterval = 1
     textInterval = 2
 
-    yStep = 1/nIntervals
-    i = 0
-    yVal = yMin
-    while yVal <= yMax
-      for j in [0...nIntervals]
-        tick = yVal + j*yStep;
-        unless tick > yMax
-          yTicks.push tick
-      i++
-      yVal++
-
     # REQUIRED FOR MEAN NORMALIZATION
-    # yMean = @mean(@data.y)
-    # console.log 'yMean: ', yMean
+    yMean = @mean(@data.y)
 
-    # DRAW MEAN LINE
+    # # DRAW MEAN LINE (DEBUG PURPOSE)
     # yPos = -@toCanvasYCoord(yMean) + @canvas.height
     # @ctx.moveTo( 0, yPos )
     # @ctx.lineTo( @canvas.width, yPos ) # minor tick
@@ -271,11 +275,6 @@ class CanvasGraph
       continue if i is 0               # skip first value
       continue if i is yTicks.length-1 # skip last value
 
-      # TODO: MEAN NORMALIZATION (NOT CORRECT YET!)
-      # tick = tick + (0.5-yMean)           # translate tick so mean brightness is 1
-      # console.log '    > TICK: ', tick
-      # console.log '    > MEAN: ', yMean
-
       tickPos = @toCanvasYCoord(tick)     # transform to canvas coordinate
       tickPos = -tickPos + @canvas.height # flip y-axis
 
@@ -285,12 +284,23 @@ class CanvasGraph
       @ctx.fillStyle = textColor
       @ctx.beginPath() 
       @ctx.moveTo( 0, tickPos )
-      if i % majorTickInterval is 0
-        @ctx.lineTo( tickMajorLength, tickPos ) # major tick
-        @ctx.fillText( tick.toFixed(2), 0+textSpacing+10, tickPos+5 )
 
+      # make sure 1.00 (mean) tickmark is labeled
+      if meanTickIndexIsEven
+        if i % majorTickInterval is 0
+          @ctx.lineTo( tickMajorLength, tickPos ) # major tick
+          @ctx.fillText( tick.toFixed(textDecimals), 0+textSpacing+15, tickPos+5 )
+
+        else
+          @ctx.lineTo( tickMinorLength, tickPos ) # minor tick
       else
-        @ctx.lineTo( tickMinorLength, tickPos ) # minor tick
+        if i % majorTickInterval-1 is 0
+          @ctx.lineTo( tickMajorLength, tickPos ) # major tick
+          @ctx.fillText( tick.toFixed(textDecimals), 0+textSpacing+15, tickPos+5 )
+
+        else
+          @ctx.lineTo( tickMinorLength, tickPos ) # minor tick
+
       @ctx.lineWidth = tickWidth
       @ctx.strokeStyle = tickColor
       @ctx.stroke()
