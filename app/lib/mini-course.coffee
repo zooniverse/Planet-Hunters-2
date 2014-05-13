@@ -1,6 +1,7 @@
 User           = require 'zooniverse/models/user'
 Api            = require 'zooniverse/lib/api'
 loginDialog    = require 'zooniverse/controllers/login-dialog'
+signupDialog   = require 'zooniverse/controllers/signup-dialog'
 
 require '../lib/en-us'
 $ = window.jQuery
@@ -75,7 +76,7 @@ class MiniCourse
       else
         @prompt_el.toggleClass 'signed-in'
         @prompt_el.find('.course-button').hide()
-        @prompt_el.find('#course-message').html 'Please <button style="text-decoration: underline" class="sign-in">sign in</button> to receive credit for your discoveries and to participate in the Planet Hunters mini-course.'
+        @prompt_el.find('#course-message').html 'Please <button style="text-decoration: underline" class="sign-in">sign in</button> or <button style="text-decoration: underline" class="sign-up">sign up</button> to receive credit for your discoveries and to participate in the Planet Hunters mini-course.'
 
     # event callbacks
     @prompt_el.on "click", "#course-yes", (e) => @onClickCourseYes()
@@ -84,6 +85,8 @@ class MiniCourse
     @prompt_el.on "click", "#course-prompt-close", (e) => @hidePrompt()
     @course_el.on "click", ".course-close", (e) => @hideCourse()
     $(classifier.el).on "click", ".sign-in", (e) => loginDialog.show() 
+    $(classifier.el).on "click", ".sign-up", (e) => signupDialog.show() 
+
     @loadCourseContent()
 
   loadCourseContent: ->
