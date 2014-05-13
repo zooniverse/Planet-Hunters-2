@@ -50,10 +50,17 @@ class CanvasGraph
     # normalize
     yMax = Math.max y_new...
     yMin = Math.min y_new...
-    # yMean = @mean(y_new)
+
+    mean = @mean(y_new)
+    std = @std(y_new)
+
+    # console.log 'MEAN: ', mean
+    # console.log 'STD: ', std
+
     for y, i in [ y_new... ]
-      y_new[i] = (y-yMin)/(yMax-yMin)
-      # y_new[i] = y_new[i] / yMean
+      y_new[i] = (y-1)/(std)
+      y_new[i] = y/(mean)
+     
     @data.x = x_new
     @data.y = y_new
 
@@ -228,7 +235,7 @@ class CanvasGraph
     textColor = '#323232' #'rgba(200,20,20,1)' #'#323232'
     textSpacing = 15
 
-    # console.log 'yLimits: [',yMin,',',yMax,']'
+    console.log 'yLimits: [',yMin,',',yMax,']'
     # generate intervals
     yTicks = []
     nIntervals = 20
