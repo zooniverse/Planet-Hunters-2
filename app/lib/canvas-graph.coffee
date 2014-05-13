@@ -212,6 +212,9 @@ class CanvasGraph
       else if (i % majorTickInterval) is 0
         @ctx.fillText( tick, @toCanvasXCoord(tick), @canvas.height - textSpacing )
 
+      # axis header
+      @ctx.fillText( 'DAYS', textSpacing+10, @canvas.height - textSpacing )
+
       # draw ticks (top)
       @ctx.beginPath() 
       @ctx.moveTo( @toCanvasXCoord(tick), 0 )
