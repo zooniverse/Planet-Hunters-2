@@ -80,16 +80,21 @@ class Classifier extends BaseController
 
     @recordedClickEvents = []
 
+    @el.find('#no-transits').hide() #prop('disabled',true)
+    @el.find('#finished-marking').hide() #prop('disabled',true)
+    @el.find('#finished-feedback').hide() #prop('disabled',true)
+    console.log '*** DISABLED ***'
+
   onUserChange: (e, user) =>
     Subject.next() unless @classification?
 
   onSubjectFetch: (e, user) =>
-    # console.log 'onSubjectFetch()'
+    console.log 'onSubjectFetch()'
     @el.find('#loading-screen').show() # TODO: uncomment
 
   onSubjectSelect: (e, subject) =>
     @el.find('#star-id').hide()
-    # console.log 'onSubjectSelect()'
+    console.log 'onSubjectSelect()'
     @subject = subject
     @classification = new Classification {subject}
     @loadSubjectData()
@@ -98,6 +103,7 @@ class Classifier extends BaseController
   loadSubjectData: ->
     @el.find('#ui-slider').attr('disabled',true)
     @el.find(".noUi-handle").fadeOut(150)
+
 
     # TODO: use Subject data to choose the right lightcurve
     jsonFile = @subject.location['14-1'] # read actual subject
@@ -131,16 +137,21 @@ class Classifier extends BaseController
         start: 0
         range:
           min: @canvasGraph.smallestX
-          max: @canvasGraph.largestX - @zoomRange
-      @el.find(".noUi-handle").hide()
+          max: @canvasGraph.largestX #- @zoomRange
+    
+    @el.find(".noUi-handle").hide()
     @insertMetadata()
     @el.find('.do-you-see-a-transit').fadeIn()
+    @el.find('#no-transits').fadeIn() #prop('disabled',false)
+    @el.find('#finished-marking').fadeIn() #prop('disabled',false)
+    @el.find('#finished-feedback').fadeIn() #prop('disabled',false)
+    console.log '*** ENABLED ***'
 
   insertMetadata: ->
     @ra      = @subject.coords[0]
     @dec     = @subject.coords[1]
     ukirtUrl = "http://surveys.roe.ac.uk:8080/wsa/GetImage?ra=" + @ra + "&dec=" + @dec + "&database=wserv4v20101019&frameType=stack&obsType=object&programmeID=10209&mode=show&archive=%20wsa&project=wserv4"
-    console.log 'ukirtUrl: ', ukirtUrl
+    # console.log 'ukirtUrl: ', ukirtUrl
     metadata = @Subject.current.metadata.magnitudes
     @el.find('#star-id').html( @Subject.current.location['14-1'].split("\/").pop().split(".")[0].concat(" Information") )
     @el.find('#star-type').html(metadata.spec_type)
@@ -153,6 +164,10 @@ class Classifier extends BaseController
     val = +@el.find("#ui-slider").val()
     return if @zoomLevel is 0 or @zoomLevel > @zoomRanges.length
     @canvasGraph.plotPoints( val, val + @zoomRanges[@zoomLevel] )
+    console.log 'SLIDER VALUE: ', val
+    console.log 'PLOT RANGE [',val,',',val+@zoomRanges[@zoomLevel],']'
+    console.log 'LIGHTCURVE LIMITS [',@canvasGraph.smallestX,',',@canvasGraph.largestX,']'
+    console.log '---------------------------------------------'
 
   onClickZoom: ->
     @zoomLevel = @zoomLevel + 1
@@ -172,10 +187,10 @@ class Classifier extends BaseController
 
       # rebuild slider
       @el.find("#ui-slider").noUiSlider
-        start: +@el.find("#ui-slider").val()
+        start: 0 #+@el.find("#ui-slider").val()
         range:
           'min': @canvasGraph.smallestX,
-          'max': @canvasGraph.largestX - @zoomRanges[@zoomLevel]
+          'max': @canvasGraph.largestX #- @zoomRanges[@zoomLevel]
       , true
       if @zoomLevel is @zoomRanges.length-1
         @el.find("#zoom-button").addClass("allowZoomOut")
@@ -257,7 +272,7 @@ class Classifier extends BaseController
 
   onClickNextSubject: ->
     # console.log 'onClickNextSubject()'
-    @noTransitsButton.show()
+    # @noTransitsButton.show()
     @classifySummary.fadeOut(150)
     @nextSubjectButton.hide()
     @canvasGraph.marks.destroyAll() #clear old marks
@@ -284,8 +299,15 @@ class Classifier extends BaseController
         xMaxRelative: mark.dataXMaxRel
         xMinGlobal: mark.dataXMinGlobal
         xMaxGlobal: mark.dataXMaxGlobal
-    console.log JSON.stringify( @classification )
+    # DEBUG CODE
+    # console.log JSON.stringify( @classification )
     @classification.send()
+
+    # disable buttons until next lightcurve is loaded
+    @el.find('#no-transits').hide() #prop('disabled',true)
+    @el.find('#finished-marking').hide() #prop('disabled',true)
+    @el.find('#finished-feedback').hide() #prop('disabled',true)
+    console.log '*** DISABLED ***'
 
     # show summary
     @el.find('.do-you-see-a-transit').fadeOut()
@@ -293,7 +315,7 @@ class Classifier extends BaseController
     @classifySummary.fadeIn(150)
     @nextSubjectButton.show()
     @planetNum.html @canvasGraph.marks.all.length # number of marks
-    @noTransitsButton.hide()
+    # @noTransitsButton.hide()
     @finishedMarkingButton.hide()
 
     # @el.find("#zoom-button").removeClass("zoomed")

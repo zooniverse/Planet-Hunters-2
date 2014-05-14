@@ -173,7 +173,7 @@ class MiniCourse
 
   getPref: ->
     @pref = User.current?.preferences[Api.current.project]['course']
-    console.log 'course preference: ', @pref
+    # console.log 'course preference: ', @pref # DEBUG CODE
     return @pref
 
   resetCourse: ->

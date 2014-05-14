@@ -283,7 +283,7 @@ class CanvasGraph
 
       # draw axis
       @ctx.font = '10pt Arial'
-      @ctx.textAlign = 'center'
+      @ctx.textAlign = 'left'
       @ctx.fillStyle = textColor
       @ctx.beginPath() 
       @ctx.moveTo( 0, tickPos )
@@ -292,14 +292,14 @@ class CanvasGraph
       if meanTickIndexIsEven
         if i % majorTickInterval is 0
           @ctx.lineTo( tickMajorLength, tickPos ) # major tick
-          @ctx.fillText( tick.toFixed(textDecimals), 0+textSpacing+15, tickPos+5 )
+          @ctx.fillText( tick.toFixed(textDecimals), 0+textSpacing, tickPos+5 )
 
         else
           @ctx.lineTo( tickMinorLength, tickPos ) # minor tick
       else
         if i % majorTickInterval-1 is 0
           @ctx.lineTo( tickMajorLength, tickPos ) # major tick
-          @ctx.fillText( tick.toFixed(textDecimals), 0+textSpacing+15, tickPos+5 )
+          @ctx.fillText( tick.toFixed(textDecimals), 0+textSpacing, tickPos+5 )
 
         else
           @ctx.lineTo( tickMinorLength, tickPos ) # minor tick
