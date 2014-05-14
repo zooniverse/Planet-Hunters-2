@@ -135,8 +135,8 @@ class Classifier extends BaseController
         range:
           min: @canvasGraph.smallestX
           max: @canvasGraph.largestX #- @zoomRange
-    
-    @el.find(".noUi-handle").hide()
+      @el.find(".noUi-handle").hide()
+      
     @insertMetadata()
     @el.find('.do-you-see-a-transit').fadeIn()
     @el.find('#no-transits').fadeIn() #prop('disabled',false)
