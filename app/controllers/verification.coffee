@@ -27,12 +27,18 @@ class Verification extends BaseController
     setTimeout =>
       @loadSubject()
       middleStart = @el.find('.verify-canvas:nth-child(2)')[0]
-      startCanvas = new CanvasGraph(middleStart, sampleData[3]).plotPoints(2,4) # comment for now
+      middleStart.width = 300
+      middleStart.height = 300
+      startCanvas = new CanvasGraph(middleStart, sampleData[3])
+      startCanvas.plotPoints() # comment for now
 
   loadSubject: ->
     @dataIndex ||= 0
     canvas = @el.find('.verify-canvas:nth-child(3)')[0]
-    @canvasGraph = new CanvasGraph(canvas, sampleData[@dataIndex]).plotPoints(2,4) # comment for now
+    canvas.width = 300
+    canvas.height = 300
+    @canvasGraph = new CanvasGraph(canvas, sampleData[@dataIndex])
+    @canvasGraph.plotPoints() # comment for now
     @message.html "Is this a proper transit?"
 
   onClickYesButton: -> @showSummary()

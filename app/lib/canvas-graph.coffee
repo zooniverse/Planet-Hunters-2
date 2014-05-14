@@ -41,7 +41,7 @@ class CanvasGraph
     y_new = []
     for value, i in [@data.y...]
       if Math.sqrt( Math.pow( value - mean, 2 ) ) > nsigma * std
-        console.log 'removed outlier!'
+        # console.log 'removed outlier!'
         continue
       else
         x_new.push @data.x[i]
@@ -54,8 +54,8 @@ class CanvasGraph
     mean = @mean(y_new)
     std = @std(y_new)
 
-    console.log 'MEAN: ', mean
-    console.log 'STD : ', std
+    # console.log 'MEAN: ', mean
+    # console.log 'STD : ', std
 
     for y, i in [ y_new... ]
       y_new[i] = (y-1)/(std)
@@ -232,7 +232,7 @@ class CanvasGraph
       
   drawYTickMarks: (yMin, yMax) ->
 
-    console.log 'LIMITS [',yMin,',',yMax,']'
+    # console.log 'LIMITS [',yMin,',',yMax,']'
     
     # generate intervals
     yTicks = []

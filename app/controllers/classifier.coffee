@@ -90,15 +90,16 @@ class Classifier extends BaseController
 
   onSubjectFetch: (e, user) =>
     console.log 'onSubjectFetch()'
-    @el.find('#loading-screen').show() # TODO: uncomment
 
   onSubjectSelect: (e, subject) =>
+    @el.find('#loading-screen').show() # TODO: uncomment
     @el.find('#star-id').hide()
     console.log 'onSubjectSelect()'
     @subject = subject
     @classification = new Classification {subject}
     @loadSubjectData()
     @el.find('#loading-screen').hide() # TODO: uncomment
+
 
   loadSubjectData: ->
     @el.find('#ui-slider').attr('disabled',true)
@@ -109,10 +110,6 @@ class Classifier extends BaseController
     jsonFile = @subject.location['14-1'] # read actual subject
 
     # DEBUG CODE
-    # jsonFile='http://demo.zooniverse.org.s3.amazonaws.com/planet_hunter/subjects/APHE10001x3.json'
-    # jsonFile='http://demo.zooniverse.org.s3.amazonaws.com/planet_hunter/subjects/APHE100021g.json'
-    # jsonFile = 'http://demo.zooniverse.org.s3.amazonaws.com/planet_hunter/subjects/APHE10001wz.json'    # jsonFile = 'http://demo.zooniverse.org.s3.amazonaws.com/planet_hunter/subjects/APHE100025p.json'
-    # jsonFile = 'http://demo.zooniverse.org.s3.amazonaws.com/planet_hunter/subjects/APHE1000232.json'
     # jsonFile = './offline/subject.json' # for debug only
     console.log 'json_file: ', jsonFile
     
@@ -302,6 +299,7 @@ class Classifier extends BaseController
     # DEBUG CODE
     # console.log JSON.stringify( @classification )
     @classification.send()
+    console.log '********************************************'
 
     # disable buttons until next lightcurve is loaded
     @el.find('#no-transits').hide() #prop('disabled',true)
