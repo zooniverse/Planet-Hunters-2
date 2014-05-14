@@ -41,7 +41,7 @@ class CanvasGraph
     y_new = []
     for value, i in [@data.y...]
       if Math.sqrt( Math.pow( value - mean, 2 ) ) > nsigma * std
-        console.log 'removed outlier!'
+        # console.log 'removed outlier!'
         continue
       else
         x_new.push @data.x[i]
@@ -54,8 +54,8 @@ class CanvasGraph
     mean = @mean(y_new)
     std = @std(y_new)
 
-    console.log 'MEAN: ', mean
-    console.log 'STD : ', std
+    # console.log 'MEAN: ', mean
+    # console.log 'STD : ', std
 
     for y, i in [ y_new... ]
       y_new[i] = (y-1)/(std)
@@ -212,6 +212,9 @@ class CanvasGraph
       else if (i % majorTickInterval) is 0
         @ctx.fillText( tick, @toCanvasXCoord(tick), @canvas.height - textSpacing )
 
+      # axis header
+      @ctx.fillText( 'DAYS', textSpacing+10, @canvas.height - textSpacing )
+
       # draw ticks (top)
       @ctx.beginPath() 
       @ctx.moveTo( @toCanvasXCoord(tick), 0 )
@@ -229,7 +232,7 @@ class CanvasGraph
       
   drawYTickMarks: (yMin, yMax) ->
 
-    console.log 'LIMITS [',yMin,',',yMax,']'
+    # console.log 'LIMITS [',yMin,',',yMax,']'
     
     # generate intervals
     yTicks = []
@@ -280,7 +283,7 @@ class CanvasGraph
 
       # draw axis
       @ctx.font = '10pt Arial'
-      @ctx.textAlign = 'center'
+      @ctx.textAlign = 'left'
       @ctx.fillStyle = textColor
       @ctx.beginPath() 
       @ctx.moveTo( 0, tickPos )
@@ -289,14 +292,14 @@ class CanvasGraph
       if meanTickIndexIsEven
         if i % majorTickInterval is 0
           @ctx.lineTo( tickMajorLength, tickPos ) # major tick
-          @ctx.fillText( tick.toFixed(textDecimals), 0+textSpacing+15, tickPos+5 )
+          @ctx.fillText( tick.toFixed(textDecimals), 0+textSpacing, tickPos+5 )
 
         else
           @ctx.lineTo( tickMinorLength, tickPos ) # minor tick
       else
         if i % majorTickInterval-1 is 0
           @ctx.lineTo( tickMajorLength, tickPos ) # major tick
-          @ctx.fillText( tick.toFixed(textDecimals), 0+textSpacing+15, tickPos+5 )
+          @ctx.fillText( tick.toFixed(textDecimals), 0+textSpacing, tickPos+5 )
 
         else
           @ctx.lineTo( tickMinorLength, tickPos ) # minor tick
