@@ -31,8 +31,9 @@ class CanvasGraph
     @markingDisabled = false
     @marks = new Marks
     window.marks = @marks
-    @canvas.addEventListener 'mousedown', (e) => @addMarkToGraph(e)
+    @canvas.addEventListener 'mousedown', (e) => @onMouseDown(e)
     @canvas.addEventListener 'touchstart', (e) => @addMarkToGraph(e)
+    @canvas.addEventListener 'mousemove', (e) => @onMouseMove(e)
 
   removeOutliers: (nsigma) ->
     mean = @mean(@data.y)
@@ -345,6 +346,47 @@ class CanvasGraph
   toCanvasYCoord: (dataPoint) -> ((dataPoint - @yMin) / (@yMax - @yMin)) * @canvas.height
   toDataXCoord: (canvasPoint) -> ((canvasPoint / @canvas.width) * (@xMax - @xMin)) + @xMin
   toDataYCoord: (canvasPoint) -> ((canvasPoint / @canvas.height) * (@yMax - @yMin)) + @yMin
+
+  onMouseDown: (e) =>
+    console.log 'onMouseDown()'
+    xClick = e.pageX - e.target.getBoundingClientRect().left - window.scrollX
+    return if xClick < 80 # display line instead 
+    @addMarkToGraph(e)
+
+  onMouseMove: (e) =>
+    console.log 'onMouseMove()'
+    
+    zoomLevel = classifier.zoomLevel
+    zoomRanges = classifier.zoomRanges
+    val = +classifier.el.find("#ui-slider").val()
+    
+    console.log 'ZOOM LEVEL: ', zoomLevel
+    console.log 'PLOT RANGE [',val,',',val+zoomRanges[zoomLevel],']'
+    console.log '--------------------------------------------------'
+    xClick = e.pageX - e.target.getBoundingClientRect().left - window.scrollX
+    yClick = e.pageY - e.target.getBoundingClientRect().top - window.scrollY
+
+    # @plotPoints( val, val + classifier.zoomRanges[classifier.zoomLevel-1] )
+    @plotPoints()
+    # @zoomInTo(0, classifier.zoomRanges[classifier.zoomLevel])
+
+
+    if xClick < 80
+      # @plotPoints( val, val + classifier.zoomRanges[@zoomLevel] )
+      @plotPoints()
+      @ctx.font = '10pt Arial'
+      @ctx.textAlign = 'left'
+      @ctx.fillStyle = '#FC4542'      
+      @ctx.lineWidth = 1
+      @ctx.strokeStyle = 'rgba(252,69,66,0.5)'
+      @ctx.beginPath() 
+      @ctx.moveTo( 60, yClick )
+      @ctx.lineTo( @canvas.width, yClick )
+      @ctx.moveTo( 0, yClick )
+      @ctx.lineTo( 10, yClick )
+      @ctx.fillText( @toDataYCoord((-yClick+@canvas.height)).toFixed(4), 15, yClick+5 ) # don't forget to flip y-axis values
+      @ctx.stroke()
+      # return
 
   addMarkToGraph: (e) =>
     return if @markingDisabled
