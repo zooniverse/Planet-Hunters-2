@@ -187,7 +187,7 @@ class Classifier extends BaseController
         start: 0 #+@el.find("#ui-slider").val()
         range:
           'min': @canvasGraph.smallestX,
-          'max': @canvasGraph.largestX #- @zoomRanges[@zoomLevel]
+          'max': @canvasGraph.largestX - @zoomRanges[@zoomLevel]
       , true
       if @zoomLevel is @zoomRanges.length-1
         @el.find("#zoom-button").addClass("allowZoomOut")
@@ -259,7 +259,7 @@ class Classifier extends BaseController
     # else
     #   @notify('Here\'s what others have marked...')
     #   @el.find(".mark").fadeOut(1000)
-    @notify('Here\'s what others have marked...')
+    @notify('<a style="color: rgb(20,100,200)">Here are the locations of known transits and/or simulalations...</a>')
     @el.find(".mark").fadeOut(1000)
 
   onClickFinishedFeedback: ->

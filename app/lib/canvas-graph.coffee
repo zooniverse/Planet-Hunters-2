@@ -365,7 +365,7 @@ class CanvasGraph
     graph = $('#graph-container')
     return if graph.hasClass('shaking')
     graph.addClass('shaking') 
-    graph.effect( "shake", {times:4, distance: 5}, 500, =>
+    graph.effect( "shake", {times:4, distance: 2}, 700, =>
         graph.removeClass('shaking')
       ) # eventually remove jquery ui dependency?
 
@@ -550,7 +550,7 @@ class Mark
     # ensure points inside mark (otherwise delete)
     unless @containsPoints(@canvasGraph.data.x)
       marks.remove(@)
-      classifier.notify 'Marks must contains points!'
+      classifier.notify 'You\'ve marked a gap (where we have no data about the star). Please ignore those regions.'
       @canvasGraph.shakeGraph()
     $(document).trigger("mark-change")
 
