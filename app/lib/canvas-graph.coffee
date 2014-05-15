@@ -38,6 +38,45 @@ class CanvasGraph
     @canvas.addEventListener 'touchstart', (e) => @addMarkToGraph(e)
     @canvas.addEventListener 'mousemove', (e) => @onMouseMove(e) # TODO: FIX (disabled for now)
 
+  onMouseDown: (e) =>
+    console.log 'onMouseDown()'
+    xClick = e.pageX - e.target.getBoundingClientRect().left - window.scrollX
+    return if xClick < 80 # display line instead 
+    @addMarkToGraph(e)
+
+  onMouseMove: (e) =>
+    # e.preventDefault()
+    console.log 'onMouseMove()'
+
+    return if classifier.el.find('#graph').hasClass('is-zooming')
+    
+    zoomLevel = classifier.zoomLevel
+    zoomRanges = classifier.zoomRanges
+    val = +classifier.el.find("#ui-slider").val()
+    
+    # console.log 'ZOOM LEVEL: ', zoomLevel
+    # console.log 'PLOT RANGE [',val,',',val+zoomRanges[zoomLevel],']'
+    # console.log '--------------------------------------------------'
+    xClick = e.pageX - e.target.getBoundingClientRect().left - window.scrollX
+    yClick = e.pageY - e.target.getBoundingClientRect().top - window.scrollY
+
+    @plotPoints(classifier.prevZoomMin, classifier.prevZoomMax)
+
+    if xClick < 80
+      # @plotPoints(classifier.prevZoomMin, classifier.prevZoomMax)
+      @ctx.font = '10pt Arial'
+      @ctx.textAlign = 'left'
+      @ctx.fillStyle = '#FC4542'      
+      @ctx.lineWidth = 1
+      @ctx.strokeStyle = 'rgba(252,69,66,0.5)'
+      @ctx.beginPath() 
+      @ctx.moveTo( 60, yClick )
+      @ctx.lineTo( @canvas.width, yClick )
+      @ctx.moveTo( 0, yClick )
+      @ctx.lineTo( 10, yClick )
+      @ctx.fillText( @toDataYCoord((-yClick+@canvas.height)).toFixed(4), 15, yClick+5 ) # don't forget to flip y-axis values
+      @ctx.stroke()
+
   removeOutliers: (nsigma) ->
     mean = @mean(@data.y)
     std = @std(@data.y)
@@ -363,49 +402,6 @@ class CanvasGraph
   toDataXCoord: (canvasPoint) -> ((canvasPoint / @canvas.width) * (@xMax - @xMin)) + @xMin
   toDataYCoord: (canvasPoint) -> ((canvasPoint / @canvas.height) * (@yMax - @yMin)) + @yMin
 
-  onMouseDown: (e) =>
-    console.log 'onMouseDown()'
-    xClick = e.pageX - e.target.getBoundingClientRect().left - window.scrollX
-    return if xClick < 80 # display line instead 
-    @addMarkToGraph(e)
-
-  onMouseMove: (e) =>
-    console.log 'onMouseMove()'
-
-    e.preventDefault()
-    @draw(e) if @dragging
-    @move(e) if @moving
-
-    return if classifier.el.find('#graph').hasClass('is-zooming')
-    
-    zoomLevel = classifier.zoomLevel
-    zoomRanges = classifier.zoomRanges
-    val = +classifier.el.find("#ui-slider").val()
-    
-    # console.log 'ZOOM LEVEL: ', zoomLevel
-    # console.log 'PLOT RANGE [',val,',',val+zoomRanges[zoomLevel],']'
-    # console.log '--------------------------------------------------'
-    xClick = e.pageX - e.target.getBoundingClientRect().left - window.scrollX
-    yClick = e.pageY - e.target.getBoundingClientRect().top - window.scrollY
-
-    @plotPoints(classifier.prevZoomMin, classifier.prevZoomMax)
-
-    if xClick < 80
-      # @plotPoints(classifier.prevZoomMin, classifier.prevZoomMax)
-      @ctx.font = '10pt Arial'
-      @ctx.textAlign = 'left'
-      @ctx.fillStyle = '#FC4542'      
-      @ctx.lineWidth = 1
-      @ctx.strokeStyle = 'rgba(252,69,66,0.5)'
-      @ctx.beginPath() 
-      @ctx.moveTo( 60, yClick )
-      @ctx.lineTo( @canvas.width, yClick )
-      @ctx.moveTo( 0, yClick )
-      @ctx.lineTo( 10, yClick )
-      @ctx.fillText( @toDataYCoord((-yClick+@canvas.height)).toFixed(4), 15, yClick+5 ) # don't forget to flip y-axis values
-      @ctx.stroke()
-
-
   addMarkToGraph: (e) =>
     return if @markingDisabled
     e.preventDefault()
@@ -586,6 +582,11 @@ class Mark
 
     @closestXBelow = @canvasGraph.marks.closestXBelow(@canvasXMin)
     @closestXAbove = @canvasGraph.marks.closestXAbove(@canvasXMax)
+
+  onMouseMove: (e) =>
+    e.preventDefault()
+    @draw(e) if @dragging
+    @move(e) if @moving
 
   onTouchEnd: (e) => # for touch devices
     e.preventDefault()
