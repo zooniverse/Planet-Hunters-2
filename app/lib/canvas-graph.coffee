@@ -322,19 +322,21 @@ class CanvasGraph
       @ctx.stroke()
 
   zoomInTo: (wMin, wMax) ->
-    
+    classifier.el.find('#graph').addClass('is-zooming')
     [cMin, cMax] = [@xMin, @xMax]
 
     zoom = setInterval (=>
       @plotPoints(cMin,cMax)
       cMin += 1.5 unless cMin >= wMin
       cMax -= 1.5 unless cMax <= wMax
-      if cMin >= wMin and cMax <= wMax
+      if cMin >= wMin and cMax <= wMax # when 'animation' is done...
         clearInterval zoom
+        classifier.el.find('#graph').removeClass('is-zooming')
         @plotPoints(wMin,wMax)
     ), 30
 
   zoomOut: (callback) ->
+    classifier.el.find('#graph').addClass('is-zooming')
     [cMin, cMax] = [@xMin, @xMax]
     [wMin, wMax] = [@smallestX, @largestX]
     zoom = setInterval (=>
@@ -343,6 +345,7 @@ class CanvasGraph
       cMax += 1.5 unless cMax >= wMax
       if cMin <= wMin and cMax >= wMax  # finished zooming
         clearInterval zoom
+        classifier.el.find('#graph').removeClass('is-zooming')
         @plotPoints(wMin, wMax)
         unless callback is undefined 
           callback.apply()
@@ -368,6 +371,12 @@ class CanvasGraph
 
   onMouseMove: (e) =>
     console.log 'onMouseMove()'
+
+    e.preventDefault()
+    @draw(e) if @dragging
+    @move(e) if @moving
+
+    return if classifier.el.find('#graph').hasClass('is-zooming')
     
     zoomLevel = classifier.zoomLevel
     zoomRanges = classifier.zoomRanges
@@ -381,9 +390,8 @@ class CanvasGraph
 
     @plotPoints(classifier.prevZoomMin, classifier.prevZoomMax)
 
-
     if xClick < 80
-      @plotPoints(classifier.prevZoomMin, classifier.prevZoomMax)
+      # @plotPoints(classifier.prevZoomMin, classifier.prevZoomMax)
       @ctx.font = '10pt Arial'
       @ctx.textAlign = 'left'
       @ctx.fillStyle = '#FC4542'      
@@ -556,11 +564,6 @@ class Mark
     @element.style.backgroundColor = 'rgba(252,69,65,.4)'
     @element.children[1].children[0].style.visibility = "hidden"
     @element.children[2].children[0].style.visibility = "hidden"
-
-  onMouseMove: (e) =>
-    e.preventDefault()
-    @draw(e) if @dragging
-    @move(e) if @moving
 
   onMouseDown: (e) =>
     e.preventDefault()
