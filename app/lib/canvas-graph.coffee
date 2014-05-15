@@ -63,10 +63,24 @@ class CanvasGraph
     @plotPoints(classifier.prevZoomMin, classifier.prevZoomMax)
 
     if xClick < 80
+
+      @ctx.fillStyle = '#FC4542'      
+
+      # draw triangle
+      w = 10
+      s = w*Math.tan(60)
+
+      @ctx.beginPath()
+      @ctx.moveTo(w,yClick)
+      @ctx.lineTo(0,yClick+s)
+      @ctx.lineTo(0,yClick-s)
+      @ctx.fill()
+
+
+
       # @plotPoints(classifier.prevZoomMin, classifier.prevZoomMax)
       @ctx.font = '10pt Arial'
       @ctx.textAlign = 'left'
-      @ctx.fillStyle = '#FC4542'      
       @ctx.lineWidth = 1
       @ctx.strokeStyle = 'rgba(252,69,66,0.5)'
       @ctx.beginPath() 
