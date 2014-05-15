@@ -52,7 +52,14 @@ class CanvasGraph
     val = +classifier.el.find("#ui-slider").val()
     xClick = e.pageX - e.target.getBoundingClientRect().left - window.scrollX
     yClick = e.pageY - e.target.getBoundingClientRect().top - window.scrollY
-    @plotPoints(classifier.prevZoomMin, classifier.prevZoomMax)
+    
+    # @plotPoints(classifier.prevZoomMin, classifier.prevZoomMax)
+    @plotPoints(val, val+zoomRanges[zoomLevel])
+
+    console.log 'onClickZoom(): '
+    console.log 'SLIDER VALUE: ', val
+    console.log 'PLOT RANGE [', val, ',', val+zoomRanges[zoomLevel], ']'
+    console.log '--------------------------------------------------------'
 
     if xClick < 80
       @ctx.fillStyle = '#FC4542'      
