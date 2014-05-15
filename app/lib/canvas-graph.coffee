@@ -24,6 +24,9 @@ class CanvasGraph
     @largestX = Math.max  @data.x...
     @largestY = Math.max  @data.y...
 
+    @prevZoomMin = @smallestX
+    @prevZoomMax = @largestX
+
   disableMarking: ->
     @markingDisabled = true
 
@@ -33,7 +36,7 @@ class CanvasGraph
     window.marks = @marks
     @canvas.addEventListener 'mousedown', (e) => @onMouseDown(e)
     @canvas.addEventListener 'touchstart', (e) => @addMarkToGraph(e)
-    @canvas.addEventListener 'mousemove', (e) => @onMouseMove(e)
+    @canvas.addEventListener 'mousemove', (e) => @onMouseMove(e) # TODO: FIX (disabled for now)
 
   removeOutliers: (nsigma) ->
     mean = @mean(@data.y)
@@ -127,6 +130,15 @@ class CanvasGraph
     @yMin = yMin
     @yMax = yMax
     @clearCanvas()
+
+    val = classifier.el.find('#ui-slider').val()
+    zoomRanges = classifier.zoomRanges
+    zoomLevel  = classifier.zoomLevel
+    # console.log 'PLOT POINTS: '
+    # console.log 'SLIDER VALUE: ', val
+    # console.log 'PLOT RANGE [',val,',',val+zoomRanges[zoomLevel],']'
+    # console.log '---------------------------------------------'
+
 
     # draw axes
     @drawXTickMarks(xMin, xMax)
@@ -310,6 +322,7 @@ class CanvasGraph
       @ctx.stroke()
 
   zoomInTo: (wMin, wMax) ->
+    
     [cMin, cMax] = [@xMin, @xMax]
 
     zoom = setInterval (=>
@@ -360,20 +373,17 @@ class CanvasGraph
     zoomRanges = classifier.zoomRanges
     val = +classifier.el.find("#ui-slider").val()
     
-    console.log 'ZOOM LEVEL: ', zoomLevel
-    console.log 'PLOT RANGE [',val,',',val+zoomRanges[zoomLevel],']'
-    console.log '--------------------------------------------------'
+    # console.log 'ZOOM LEVEL: ', zoomLevel
+    # console.log 'PLOT RANGE [',val,',',val+zoomRanges[zoomLevel],']'
+    # console.log '--------------------------------------------------'
     xClick = e.pageX - e.target.getBoundingClientRect().left - window.scrollX
     yClick = e.pageY - e.target.getBoundingClientRect().top - window.scrollY
 
-    # @plotPoints( val, val + classifier.zoomRanges[classifier.zoomLevel-1] )
-    @plotPoints()
-    # @zoomInTo(0, classifier.zoomRanges[classifier.zoomLevel])
+    @plotPoints(classifier.prevZoomMin, classifier.prevZoomMax)
 
 
     if xClick < 80
-      # @plotPoints( val, val + classifier.zoomRanges[@zoomLevel] )
-      @plotPoints()
+      @plotPoints(classifier.prevZoomMin, classifier.prevZoomMax)
       @ctx.font = '10pt Arial'
       @ctx.textAlign = 'left'
       @ctx.fillStyle = '#FC4542'      
@@ -386,7 +396,7 @@ class CanvasGraph
       @ctx.lineTo( 10, yClick )
       @ctx.fillText( @toDataYCoord((-yClick+@canvas.height)).toFixed(4), 15, yClick+5 ) # don't forget to flip y-axis values
       @ctx.stroke()
-      # return
+
 
   addMarkToGraph: (e) =>
     return if @markingDisabled
