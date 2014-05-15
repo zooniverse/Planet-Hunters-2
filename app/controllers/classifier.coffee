@@ -127,7 +127,7 @@ class Classifier extends BaseController
       @canvasGraph = new CanvasGraph(@canvas, data)
       @canvasGraph.plotPoints()
       @canvasGraph.enableMarking()
-      @zoomRanges = [15, 10, 2]
+      @zoomRanges = [@canvasGraph.largestX, 10, 2]
       @magnification = [ '1x (all days)', '10 days', '2 days' ]
       @showZoomMessage(@magnification[@zoomLevel])
       @el.find("#ui-slider").noUiSlider
@@ -161,27 +161,30 @@ class Classifier extends BaseController
     val = +@el.find("#ui-slider").val()
     return if @zoomLevel is 0 or @zoomLevel > @zoomRanges.length
     @canvasGraph.plotPoints( val, val + @zoomRanges[@zoomLevel] )
+    console.log 'onChangeScaleSlider(): '
     console.log 'SLIDER VALUE: ', val
     console.log 'PLOT RANGE [',val,',',val+@zoomRanges[@zoomLevel],']'
     console.log 'LIGHTCURVE LIMITS [',@canvasGraph.smallestX,',',@canvasGraph.largestX,']'
     console.log '---------------------------------------------'
 
   onClickZoom: ->
+
+    val = +@el.find("#ui-slider").val()
     @zoomLevel = @zoomLevel + 1
     if @zoomLevel is 0 or @zoomLevel > @zoomRanges.length-1 # no zoom
       @canvasGraph.zoomOut()
       @el.find("#zoom-button").removeClass("zoomed")
-      @el.find("#ui-slider").val(0)
+      @el.find("#ui-slider").val(val)
       @el.find(".noUi-handle").fadeOut(150)
       @zoomLevel = 0
       @el.find('#ui-slider').attr('disabled',true)
       @el.find("#zoom-button").removeClass("allowZoomOut")
     else 
       @el.find('#ui-slider').removeAttr('disabled')
+      console.log 'ZOOMING IN TO: [',0,',',@zoomRanges[@zoomLevel],']'
       @canvasGraph.zoomInTo(0, @zoomRanges[@zoomLevel])
       @el.find("#zoom-button").addClass("zoomed")
-      @el.find("#ui-slider").val(0)
-
+      @el.find("#ui-slider").val(val)
       # rebuild slider
       @el.find("#ui-slider").noUiSlider
         start: 0 #+@el.find("#ui-slider").val()
@@ -193,6 +196,17 @@ class Classifier extends BaseController
         @el.find("#zoom-button").addClass("allowZoomOut")
       else
         @el.find("#zoom-button").removeClass("allowZoomOut")
+  
+    console.log 'onClickZoom(): '
+    console.log 'SLIDER VALUE: ', val
+    console.log 'PLOT RANGE [', val, ',', val+@zoomRanges[@zoomLevel], ']'
+    console.log '---------------------------------------------'
+    console.log '*********************************************'
+
+    @prevZoomMin = 0
+    @prevZoomMax = @zoomRanges[@zoomLevel]
+    # console.log 'PREV ZOOM WINDOW: [',@prevZoomMin,',',,']'
+
     @showZoomMessage(@magnification[@zoomLevel])
     @recordedClickEvents.push { event: 'clickedZoomLevel'+@zoomLevel, timestamp: (new Date).toUTCString() }
   

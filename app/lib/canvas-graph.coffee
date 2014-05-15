@@ -24,6 +24,9 @@ class CanvasGraph
     @largestX = Math.max  @data.x...
     @largestY = Math.max  @data.y...
 
+    @prevZoomMin = @smallestX
+    @prevZoomMax = @largestX
+
   disableMarking: ->
     @markingDisabled = true
 
@@ -31,8 +34,47 @@ class CanvasGraph
     @markingDisabled = false
     @marks = new Marks
     window.marks = @marks
-    @canvas.addEventListener 'mousedown', (e) => @addMarkToGraph(e)
+    @canvas.addEventListener 'mousedown', (e) => @onMouseDown(e)
     @canvas.addEventListener 'touchstart', (e) => @addMarkToGraph(e)
+    @canvas.addEventListener 'mousemove', (e) => @onMouseMove(e) # TODO: FIX (disabled for now)
+
+  onMouseDown: (e) =>
+    console.log 'onMouseDown()'
+    xClick = e.pageX - e.target.getBoundingClientRect().left - window.scrollX
+    return if xClick < 80 # display line instead 
+    @addMarkToGraph(e)
+
+  onMouseMove: (e) =>
+    # console.log 'onMouseMove()'
+    return if classifier.el.find('#graph').hasClass('is-zooming')
+    zoomLevel = classifier.zoomLevel
+    zoomRanges = classifier.zoomRanges
+    val = +classifier.el.find("#ui-slider").val()
+    xClick = e.pageX - e.target.getBoundingClientRect().left - window.scrollX
+    yClick = e.pageY - e.target.getBoundingClientRect().top - window.scrollY
+    @plotPoints(classifier.prevZoomMin, classifier.prevZoomMax)
+
+    if xClick < 80
+      @ctx.fillStyle = '#FC4542'      
+      # draw triangle
+      w = 10
+      s = w*Math.tan(60)
+      @ctx.beginPath()
+      @ctx.moveTo(w,yClick)
+      @ctx.lineTo(0,yClick+s)
+      @ctx.lineTo(0,yClick-s)
+      @ctx.fill()
+      @ctx.font = '10pt Arial'
+      @ctx.textAlign = 'left'
+      @ctx.lineWidth = 1
+      @ctx.strokeStyle = 'rgba(252,69,66,0.5)'
+      @ctx.beginPath() 
+      @ctx.moveTo( 60, yClick )
+      @ctx.lineTo( @canvas.width, yClick )
+      @ctx.moveTo( 0, yClick )
+      @ctx.lineTo( 10, yClick )
+      @ctx.fillText( @toDataYCoord((-yClick+@canvas.height)).toFixed(4), 15, yClick+5 ) # don't forget to flip y-axis values
+      @ctx.stroke()
 
   removeOutliers: (nsigma) ->
     mean = @mean(@data.y)
@@ -126,6 +168,15 @@ class CanvasGraph
     @yMin = yMin
     @yMax = yMax
     @clearCanvas()
+
+    val = classifier.el.find('#ui-slider').val()
+    zoomRanges = classifier.zoomRanges
+    zoomLevel  = classifier.zoomLevel
+    # console.log 'PLOT POINTS: '
+    # console.log 'SLIDER VALUE: ', val
+    # console.log 'PLOT RANGE [',val,',',val+zoomRanges[zoomLevel],']'
+    # console.log '---------------------------------------------'
+
 
     # draw axes
     @drawXTickMarks(xMin, xMax)
@@ -309,18 +360,21 @@ class CanvasGraph
       @ctx.stroke()
 
   zoomInTo: (wMin, wMax) ->
+    classifier.el.find('#graph').addClass('is-zooming')
     [cMin, cMax] = [@xMin, @xMax]
 
     zoom = setInterval (=>
       @plotPoints(cMin,cMax)
       cMin += 1.5 unless cMin >= wMin
       cMax -= 1.5 unless cMax <= wMax
-      if cMin >= wMin and cMax <= wMax
+      if cMin >= wMin and cMax <= wMax # when 'animation' is done...
         clearInterval zoom
+        classifier.el.find('#graph').removeClass('is-zooming')
         @plotPoints(wMin,wMax)
     ), 30
 
   zoomOut: (callback) ->
+    classifier.el.find('#graph').addClass('is-zooming')
     [cMin, cMax] = [@xMin, @xMax]
     [wMin, wMax] = [@smallestX, @largestX]
     zoom = setInterval (=>
@@ -329,6 +383,7 @@ class CanvasGraph
       cMax += 1.5 unless cMax >= wMax
       if cMin <= wMin and cMax >= wMax  # finished zooming
         clearInterval zoom
+        classifier.el.find('#graph').removeClass('is-zooming')
         @plotPoints(wMin, wMax)
         unless callback is undefined 
           callback.apply()
@@ -505,11 +560,6 @@ class Mark
     @element.children[1].children[0].style.visibility = "hidden"
     @element.children[2].children[0].style.visibility = "hidden"
 
-  onMouseMove: (e) =>
-    e.preventDefault()
-    @draw(e) if @dragging
-    @move(e) if @moving
-
   onMouseDown: (e) =>
     e.preventDefault()
     window.addEventListener 'mousemove', @onMouseMove
@@ -531,6 +581,11 @@ class Mark
 
     @closestXBelow = @canvasGraph.marks.closestXBelow(@canvasXMin)
     @closestXAbove = @canvasGraph.marks.closestXAbove(@canvasXMax)
+
+  onMouseMove: (e) =>
+    e.preventDefault()
+    @draw(e) if @dragging
+    @move(e) if @moving
 
   onTouchEnd: (e) => # for touch devices
     e.preventDefault()
