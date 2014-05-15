@@ -45,40 +45,25 @@ class CanvasGraph
     @addMarkToGraph(e)
 
   onMouseMove: (e) =>
-    # e.preventDefault()
-    console.log 'onMouseMove()'
-
+    # console.log 'onMouseMove()'
     return if classifier.el.find('#graph').hasClass('is-zooming')
-    
     zoomLevel = classifier.zoomLevel
     zoomRanges = classifier.zoomRanges
     val = +classifier.el.find("#ui-slider").val()
-    
-    # console.log 'ZOOM LEVEL: ', zoomLevel
-    # console.log 'PLOT RANGE [',val,',',val+zoomRanges[zoomLevel],']'
-    # console.log '--------------------------------------------------'
     xClick = e.pageX - e.target.getBoundingClientRect().left - window.scrollX
     yClick = e.pageY - e.target.getBoundingClientRect().top - window.scrollY
-
     @plotPoints(classifier.prevZoomMin, classifier.prevZoomMax)
 
     if xClick < 80
-
       @ctx.fillStyle = '#FC4542'      
-
       # draw triangle
       w = 10
       s = w*Math.tan(60)
-
       @ctx.beginPath()
       @ctx.moveTo(w,yClick)
       @ctx.lineTo(0,yClick+s)
       @ctx.lineTo(0,yClick-s)
       @ctx.fill()
-
-
-
-      # @plotPoints(classifier.prevZoomMin, classifier.prevZoomMax)
       @ctx.font = '10pt Arial'
       @ctx.textAlign = 'left'
       @ctx.lineWidth = 1
