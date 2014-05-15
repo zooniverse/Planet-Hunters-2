@@ -331,6 +331,7 @@ class Classifier extends BaseController
     @finishedMarkingButton.hide()
 
     @el.find("#zoom-button").removeClass("zoomed")
+    @el.find("#zoom-button").removeClass("allowZoomOut")
     @el.find("#toggle-fav").removeClass("toggled")
     
     @isZoomed = false
