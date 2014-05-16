@@ -27,6 +27,8 @@ class CanvasGraph
     @prevZoomMin = @smallestX
     @prevZoomMax = @largestX
 
+    @leftPadding = 60
+
   disableMarking: ->
     @markingDisabled = true
 
@@ -167,7 +169,7 @@ class CanvasGraph
         y = ((+@data.y[i]-@yMin)/(@yMax-@yMin)) * @canvas.height
         y = -y + @canvas.height # flip y-values
         @ctx.fillStyle = "rgba(252, 69, 65, 0.65)" #"#fc4541"
-        @ctx.fillRect(x,y,2,2)
+        @ctx.fillRect(x+@leftPadding,y,2,2)
     return
 
   plotPoints: (xMin = @smallestX, xMax = @largestX, yMin = @smallestY, yMax = @largestY) ->
@@ -191,7 +193,7 @@ class CanvasGraph
       y = ((+@data.y[i]-yMin)/(yMax-yMin)) * @canvas.height
       y = -y + @canvas.height # flip y-values
       @ctx.fillStyle = "#fff" #fc4541"
-      @ctx.fillRect(x,y,2,2)
+      @ctx.fillRect(x+@leftPadding,y,2,2)
     if @marks
       for mark in @marks.all
         scaledMin = ((mark.dataXMinRel - xMin) / (xMax - xMin)) * @canvas.width
@@ -245,11 +247,11 @@ class CanvasGraph
 
       # draw ticks (bottom)
       @ctx.beginPath() 
-      @ctx.moveTo( @toCanvasXCoord(tick), @canvas.height )
+      @ctx.moveTo( @toCanvasXCoord(tick)+@leftPadding, @canvas.height )
       if i % majorTickInterval is 0
-        @ctx.lineTo( @toCanvasXCoord(tick), @canvas.height - tickMajorLength ) # major tick
+        @ctx.lineTo( @toCanvasXCoord(tick)+@leftPadding, @canvas.height - tickMajorLength ) # major tick
       else
-        @ctx.lineTo( @toCanvasXCoord(tick), @canvas.height - tickMinorLength ) # minor tick
+        @ctx.lineTo( @toCanvasXCoord(tick)+@leftPadding, @canvas.height - tickMinorLength ) # minor tick
       @ctx.lineWidth = tickWidth
       @ctx.strokeStyle = tickColor
       @ctx.stroke()
@@ -262,27 +264,27 @@ class CanvasGraph
       if (i % majorTickInterval) is 0 # zoomed out
         @ctx.fillText( tick, @toCanvasXCoord(tick), @canvas.height - textSpacing )
       else if (i % majorTickInterval) is 0
-        @ctx.fillText( tick, @toCanvasXCoord(tick), @canvas.height - textSpacing )
+        @ctx.fillText( tick, @toCanvasXCoord(tick)+@leftPadding, @canvas.height - textSpacing )
       else if (i % majorTickInterval) is 0
-        @ctx.fillText( tick, @toCanvasXCoord(tick), @canvas.height - textSpacing )
+        @ctx.fillText( tick, @toCanvasXCoord(tick)+@leftPadding, @canvas.height - textSpacing )
 
       # axis header
-      @ctx.fillText( 'DAYS', textSpacing+10, @canvas.height - textSpacing )
+      @ctx.fillText( 'DAYS', textSpacing+10+@leftPadding, @canvas.height - textSpacing )
 
       # draw ticks (top)
       @ctx.beginPath() 
-      @ctx.moveTo( @toCanvasXCoord(tick), 0 )
+      @ctx.moveTo( @toCanvasXCoord(tick)+@leftPadding, 0 )
       if i % majorTickInterval is 0
-        @ctx.lineTo( @toCanvasXCoord(tick), 0 + tickMajorLength ) # major tick
+        @ctx.lineTo( @toCanvasXCoord(tick)+@leftPadding, 0 + tickMajorLength ) # major tick
       else
-        @ctx.lineTo( @toCanvasXCoord(tick), 0 + tickMinorLength ) # minor tick
+        @ctx.lineTo( @toCanvasXCoord(tick)+@leftPadding, 0 + tickMinorLength ) # minor tick
       @ctx.lineWidth = tickWidth
       @ctx.strokeStyle = tickColor
       @ctx.stroke()
 
       # top numbers
       if (i % 4) is 0 # zoomed out
-        @ctx.fillText( (tick + @originalMin).toFixed(2), @toCanvasXCoord(tick), 0 + textSpacing+10 )
+        @ctx.fillText( (tick + @originalMin).toFixed(2), @toCanvasXCoord(tick)+@leftPadding, 0 + textSpacing+10 )
       
   drawYTickMarks: (yMin, yMax) ->
 
