@@ -56,10 +56,11 @@ class CanvasGraph
     # @plotPoints(classifier.prevZoomMin, classifier.prevZoomMax)
     @plotPoints(val, val+zoomRanges[zoomLevel])
 
-    console.log 'onClickZoom(): '
-    console.log 'SLIDER VALUE: ', val
-    console.log 'PLOT RANGE [', val, ',', val+zoomRanges[zoomLevel], ']'
-    console.log '--------------------------------------------------------'
+    # # DEBUG CODE
+    # console.log 'onClickZoom(): '
+    # console.log 'SLIDER VALUE: ', val
+    # console.log 'PLOT RANGE [', val, ',', val+zoomRanges[zoomLevel], ']'
+    # console.log '--------------------------------------------------------'
 
     if xClick < 80
       @ctx.fillStyle = '#FC4542'      
@@ -179,11 +180,6 @@ class CanvasGraph
     val = classifier.el.find('#ui-slider').val()
     zoomRanges = classifier.zoomRanges
     zoomLevel  = classifier.zoomLevel
-    # console.log 'PLOT POINTS: '
-    # console.log 'SLIDER VALUE: ', val
-    # console.log 'PLOT RANGE [',val,',',val+zoomRanges[zoomLevel],']'
-    # console.log '---------------------------------------------'
-
 
     # draw axes
     @drawXTickMarks(xMin, xMax)

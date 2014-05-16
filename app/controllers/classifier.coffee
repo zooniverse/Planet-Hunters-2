@@ -161,52 +161,30 @@ class Classifier extends BaseController
     val = +@el.find("#ui-slider").val()
     return if @zoomLevel is 0 or @zoomLevel > @zoomRanges.length
     @canvasGraph.plotPoints( val, val + @zoomRanges[@zoomLevel] )
-    console.log 'onChangeScaleSlider(): '
-    console.log 'SLIDER VALUE: ', val
-    console.log 'PLOT RANGE [',val,',',val+@zoomRanges[@zoomLevel],']'
-    console.log '-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-'
+    # # DEBUG CODE
+    # console.log 'onChangeScaleSlider(): '
+    # console.log 'SLIDER VALUE: ', val
+    # console.log 'PLOT RANGE [',val,',',val+@zoomRanges[@zoomLevel],']'
+    # console.log '-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-'
 
   onClickZoom: ->
     @prevZoomLevel = @zoomLevel
-    console.log '*** PREV ZOOM LEVEL: ',@prevZoomLevel,' ***'
+    # console.log '*** PREV ZOOM LEVEL: ',@prevZoomLevel,' ***'
     
     val = +@el.find("#ui-slider").val()
     @zoomLevel = @zoomLevel + 1
 
     if @zoomLevel is 0 or @zoomLevel > @zoomRanges.length-1 # no zoom
-      
-      # reset zoom (but NOT slider)
-      @canvasGraph.zoomOut()
-      @zoomLevel = 0
-
-      # update attributes/properties
-      @el.find(".noUi-handle").fadeOut(150)
-      @el.find('#ui-slider').attr('disabled',true)
-      @el.find("#zoom-button").removeClass("allowZoomOut")
-      @el.find("#zoom-button").removeClass("zoomed")
-    
+      # console.log 'PREV ZOOM LEVEL: ', @prevZoomLevel
+      @zoomReset()      
     else 
 
-      # if @zoomLevel is 1 and val isnt 0
-      #   console.log 'ZOOM LEVEL IS 1'
-      #   # set slider value
-      #   val = val
-      # else if @zoomLevel is 2 and val isnt 0
-      #   console.log 'ZOOM LEVEL IS 2'
-      #   val = val
-      # else
-      #   val = val
-
-      # if @prevZoomLevel is 1 and val isnt 0
+      # set slider for current zoom level
       if val isnt 0 and @prevZoomLevel isnt 2
         val = val + 0.5*( @zoomRanges[@prevZoomLevel] - @zoomRanges[@zoomLevel] )
-
       if @prevZoomLevel is 2
         val = 0
-
-      @el.find("#ui-slider").val(val) # TODO: this value needs to change based on zoom level!!!
-
-
+      @el.find("#ui-slider").val(val) 
 
       # zoom in to new range
       @canvasGraph.zoomInTo(val, val+@zoomRanges[@zoomLevel])
@@ -226,14 +204,12 @@ class Classifier extends BaseController
         @el.find("#zoom-button").addClass("allowZoomOut")
       else
         @el.find("#zoom-button").removeClass("allowZoomOut")
-        
 
-
-  
-    console.log 'onClickZoom(): '
-    console.log 'SLIDER VALUE: ', val
-    console.log 'PLOT RANGE [', val, ',', val+@zoomRanges[@zoomLevel], ']'
-    console.log '******************************************************************************************'
+    # # DEBUG CODE        
+    # console.log 'onClickZoom(): '
+    # console.log 'SLIDER VALUE: ', val
+    # console.log 'PLOT RANGE [', val, ',', val+@zoomRanges[@zoomLevel], ']'
+    # console.log '******************************************************************************************'
 
     @prevZoomMin = 0
     @prevZoomMax = @zoomRanges[@zoomLevel]
