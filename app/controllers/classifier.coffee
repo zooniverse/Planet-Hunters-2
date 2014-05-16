@@ -167,23 +167,50 @@ class Classifier extends BaseController
     console.log '-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-'
 
   onClickZoom: ->
-
+    @prevZoomLevel = @zoomLevel
+    console.log '*** PREV ZOOM LEVEL: ',@prevZoomLevel,' ***'
+    
     val = +@el.find("#ui-slider").val()
     @zoomLevel = @zoomLevel + 1
+
     if @zoomLevel is 0 or @zoomLevel > @zoomRanges.length-1 # no zoom
+      
+      # reset zoom (but NOT slider)
       @canvasGraph.zoomOut()
-      @el.find("#zoom-button").removeClass("zoomed")
-      @el.find("#ui-slider").val(0)
-      @el.find(".noUi-handle").fadeOut(150)
       @zoomLevel = 0
+
+      # update attributes/properties
+      @el.find(".noUi-handle").fadeOut(150)
       @el.find('#ui-slider').attr('disabled',true)
       @el.find("#zoom-button").removeClass("allowZoomOut")
+      @el.find("#zoom-button").removeClass("zoomed")
+    
     else 
-      @el.find('#ui-slider').removeAttr('disabled')
-      console.log 'ZOOMING IN TO: [',0,',',@zoomRanges[@zoomLevel],']'
-      @canvasGraph.zoomInTo(0, @zoomRanges[@zoomLevel])
-      @el.find("#zoom-button").addClass("zoomed")
-      @el.find("#ui-slider").val(0)
+
+      # if @zoomLevel is 1 and val isnt 0
+      #   console.log 'ZOOM LEVEL IS 1'
+      #   # set slider value
+      #   val = val
+      # else if @zoomLevel is 2 and val isnt 0
+      #   console.log 'ZOOM LEVEL IS 2'
+      #   val = val
+      # else
+      #   val = val
+
+      # if @prevZoomLevel is 1 and val isnt 0
+      if val isnt 0 and @prevZoomLevel isnt 2
+        val = val + 0.5*( @zoomRanges[@prevZoomLevel] - @zoomRanges[@zoomLevel] )
+
+      if @prevZoomLevel is 2
+        val = 0
+
+      @el.find("#ui-slider").val(val) # TODO: this value needs to change based on zoom level!!!
+
+
+
+      # zoom in to new range
+      @canvasGraph.zoomInTo(val, val+@zoomRanges[@zoomLevel])
+    
       # rebuild slider
       @el.find("#ui-slider").noUiSlider
         start: 0 #+@el.find("#ui-slider").val()
@@ -191,10 +218,17 @@ class Classifier extends BaseController
           'min': @canvasGraph.smallestX,
           'max': @canvasGraph.largestX - @zoomRanges[@zoomLevel]
       , true
-      if @zoomLevel is @zoomRanges.length-1
+      
+      # update attributes/properties
+      @el.find('#ui-slider').removeAttr('disabled')
+      @el.find("#zoom-button").addClass("zoomed")
+      if @zoomLevel is @zoomRanges.length-1 # last zoom level
         @el.find("#zoom-button").addClass("allowZoomOut")
       else
         @el.find("#zoom-button").removeClass("allowZoomOut")
+        
+
+
   
     console.log 'onClickZoom(): '
     console.log 'SLIDER VALUE: ', val
@@ -208,6 +242,23 @@ class Classifier extends BaseController
     @showZoomMessage(@magnification[@zoomLevel])
     @recordedClickEvents.push { event: 'clickedZoomLevel'+@zoomLevel, timestamp: (new Date).toUTCString() }
   
+  zoomReset: =>
+    # reset slider value
+    @el.find('#ui-slider').val(0)
+
+    # don't need slider when zoomed out
+    @el.find('#ui-slider').attr('disabled',true)
+    @el.find(".noUi-handle").fadeOut(150)
+
+    @canvasGraph.zoomOut()
+    @isZoomed = false
+    @zoomLevel = 0
+
+    # update buttons
+    @el.find("#zoom-button").removeClass("zoomed")
+    @el.find("#zoom-button").removeClass("allowZoomOut")
+    @el.find("#toggle-fav").removeClass("toggled")
+
   showZoomMessage: (message) =>
     @el.find('#zoom-notification').html(message).fadeIn(100).delay(1000).fadeOut()
     
@@ -329,14 +380,8 @@ class Classifier extends BaseController
     @finishedMarkingButton.hide()
 
     # reset zoom parameters
-    @el.find('#ui-slider').val(0)
-    @canvasGraph.zoomOut()
-    @el.find("#zoom-button").removeClass("zoomed")
-    @el.find("#zoom-button").removeClass("allowZoomOut")
-    @el.find("#toggle-fav").removeClass("toggled")
-    
-    @isZoomed = false
-    @zoomLevel = 0
+    @zoomReset()
+
     @recordedClickEvents = []
     
   onClickJoinConvo: -> @joinConvoBtn.hide().siblings().show()
