@@ -548,7 +548,8 @@ class Mark
 
     # no overlapping of marks or moving out of canvas bounds
     leftXPos = Math.max (@toCanvasXPoint(e) - @pointerOffset),
-                        (@closestXBelow || -@handleWidth()) + @handleWidth()
+                        (@closestXBelow || -@handleWidth()) + @handleWidth(),
+                        @canvasGraph.leftPadding
     leftXPos = Math.min leftXPos,
                         ((@closestXAbove || @canvas.width + @handleWidth()) - markWidth) - @handleWidth()
 
