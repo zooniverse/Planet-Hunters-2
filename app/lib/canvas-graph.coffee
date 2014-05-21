@@ -189,7 +189,7 @@ class CanvasGraph
     
     # plot points
     for i in [0...@dataLength]
-      x = ((+@data.x[i]-xMin)/(xMax-xMin)) * @canvas.width
+      x = ((+@data.x[i]-xMin)/(xMax-xMin)) * (@canvas.width-@leftPadding)
       y = ((+@data.y[i]-yMin)/(yMax-yMin)) * @canvas.height
       y = -y + @canvas.height # flip y-values
       @ctx.fillStyle = "#fff" #fc4541"
@@ -210,8 +210,8 @@ class CanvasGraph
     tickMinorLength = 5
     tickMajorLength = 10
     tickWidth = 1
-    tickColor = '#323232'
-    textColor = '#323232'
+    tickColor = '#fc4541'#323232'
+    textColor = '#fc4541'#323232'
     textSpacing = 15
 
     # determine intervals
@@ -262,7 +262,7 @@ class CanvasGraph
 
       # draw numbers (bottom)
       if (i % majorTickInterval) is 0 # zoomed out
-        @ctx.fillText( tick, @toCanvasXCoord(tick), @canvas.height - textSpacing )
+        @ctx.fillText( tick, @toCanvasXCoord(tick)+@leftPadding, @canvas.height - textSpacing )
       else if (i % majorTickInterval) is 0
         @ctx.fillText( tick, @toCanvasXCoord(tick)+@leftPadding, @canvas.height - textSpacing )
       else if (i % majorTickInterval) is 0
@@ -312,8 +312,8 @@ class CanvasGraph
     tickMinorLength = 5
     tickMajorLength = 10
     tickWidth = 1
-    tickColor = '#323232' #'rgba(200,20,20,1)' 
-    textColor = '#323232'
+    tickColor = '#fc454'#323232' #'rgba(200,20,20,1)' 
+    textColor = '#fc4541'#'#323232'
     textSpacing = 15
     majorTickInterval = 2
     minorTickInterval = 1
