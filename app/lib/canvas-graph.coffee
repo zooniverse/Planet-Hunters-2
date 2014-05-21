@@ -64,10 +64,10 @@ class CanvasGraph
     # console.log 'PLOT RANGE [', val, ',', val+zoomRanges[zoomLevel], ']'
     # console.log '--------------------------------------------------------'
 
-    if xClick < 80
+    if xClick < @leftPadding
       # draw triangle
       w = 10
-      s = w*Math.tan(60)
+      s = w*Math.tan(@leftPadding)
       
       @ctx.beginPath()
       @ctx.moveTo(w,yClick)
@@ -203,8 +203,8 @@ class CanvasGraph
         scaledMax = ((mark.dataXMaxRel - xMin) / (xMax - xMin)) * (@canvas.width-@leftPadding)
         mark.element.style.width = (scaledMax-scaledMin) + "px"
         mark.element.style.left = (scaledMin) + "px"
+        console.log 'SCAALED [',scaledMin,',',scaledMax,']'
         mark.save(scaledMin, scaledMax)
-    # @highlightCurve(10,14) # test
 
     gradient = @ctx.createLinearGradient(0,0,60,0);
     gradient.addColorStop(0,'rgba(0,0,0,1.0)');
@@ -553,9 +553,7 @@ class Mark
                         @canvasGraph.leftPadding
     leftXPos = Math.min leftXPos,
                         ((@closestXAbove || @canvas.width + @handleWidth()) - markWidth) - @handleWidth()
-
     markRightX = leftXPos + markWidth
-
     @element.style.left = leftXPos + "px"
     @save(leftXPos, markRightX)
 
