@@ -65,27 +65,31 @@ class CanvasGraph
     # console.log '--------------------------------------------------------'
 
     if xClick < 80
-      @ctx.fillStyle = '#FC4542'      
       # draw triangle
       w = 10
       s = w*Math.tan(60)
+      
       @ctx.beginPath()
       @ctx.moveTo(w,yClick)
       @ctx.lineTo(0,yClick+s)
       @ctx.lineTo(0,yClick-s)
+      @ctx.fillStyle = '#FC4542'      
       @ctx.fill()
-      @ctx.font = '10pt Arial'
-      @ctx.textAlign = 'left'
+
+      @ctx.beginPath()
+      @ctx.moveTo(w,yClick)
       @ctx.lineWidth = 1
-      @ctx.strokeStyle = 'rgba(252,69,66,0.5)'
-      @ctx.beginPath() 
+      @ctx.strokeStyle = 'rgba(252,69,66,0.9)'
       @ctx.moveTo( 60, yClick )
       @ctx.lineTo( @canvas.width, yClick )
       @ctx.moveTo( 0, yClick )
       @ctx.lineTo( 10, yClick )
-      @ctx.fillText( @toDataYCoord((-yClick+@canvas.height)).toFixed(4), 15, yClick+5 ) # don't forget to flip y-axis values
       @ctx.stroke()
 
+      @ctx.font = '10pt Arial'
+      @ctx.textAlign = 'left'
+      @ctx.fillText( @toDataYCoord((-yClick+@canvas.height)).toFixed(4), 15, yClick+5 ) # don't forget to flip y-axis values
+      
   removeOutliers: (nsigma) ->
     mean = @mean(@data.y)
     std = @std(@data.y)
@@ -184,10 +188,6 @@ class CanvasGraph
     val = classifier.el.find('#ui-slider').val()
     zoomRanges = classifier.zoomRanges
     zoomLevel  = classifier.zoomLevel
-
-    # draw axes
-    @drawXTickMarks(xMin, xMax)
-    @drawYTickMarks(yMin, yMax)
     
     # plot points
     for i in [0...@dataLength]
@@ -198,12 +198,23 @@ class CanvasGraph
       @ctx.fillRect(x+@leftPadding,y,2,2)
     if @marks
       for mark in @marks.all
-        scaledMin = ((mark.dataXMinRel - xMin) / (xMax - xMin)) * @canvas.width
-        scaledMax = ((mark.dataXMaxRel - xMin) / (xMax - xMin)) * @canvas.width
+        scaledMin = ((mark.dataXMinRel - xMin) / (xMax - xMin)) * (@canvas.width-@leftPadding)
+        scaledMax = ((mark.dataXMaxRel - xMin) / (xMax - xMin)) * (@canvas.width-@leftPadding)
         mark.element.style.width = (scaledMax-scaledMin) + "px"
         mark.element.style.left = (scaledMin) + "px"
         mark.save(scaledMin, scaledMax)
     # @highlightCurve(10,14) # test
+
+    gradient = @ctx.createLinearGradient(0,0,60,0);
+    gradient.addColorStop(0,'rgba(0,0,0,1.0)');
+    gradient.addColorStop(1,'rgba(0,0,0,0.0');
+    @ctx.fillStyle = gradient
+    @ctx.fillRect(0,0,60,@canvas.height)
+
+    # draw axes
+    @drawXTickMarks(xMin, xMax)
+    @drawYTickMarks(yMin, yMax)
+
     @scale = (@largestX - @smallestX) / (@xMax - @xMin)
     return
 
@@ -212,8 +223,8 @@ class CanvasGraph
     tickMinorLength = 5
     tickMajorLength = 10
     tickWidth = 1
-    tickColor = '#fc4541'#323232'
-    textColor = '#fc4541'#323232'
+    tickColor = '#323232'
+    textColor = '#323232'
     textSpacing = 15
 
     # determine intervals
@@ -314,8 +325,8 @@ class CanvasGraph
     tickMinorLength = 5
     tickMajorLength = 10
     tickWidth = 1
-    tickColor = '#fc454'#323232' #'rgba(200,20,20,1)' 
-    textColor = '#fc4541'#'#323232'
+    tickColor = '#323232' #'rgba(200,20,20,1)' 
+    textColor = '#323232'
     textSpacing = 15
     majorTickInterval = 2
     minorTickInterval = 1
@@ -547,6 +558,7 @@ class Mark
     @save(leftXPos, markRightX)
 
   save: (markLeftX, markRightX) ->
+
     #canvas coords
     @canvasXMin = markLeftX
     @canvasXMax = markRightX
