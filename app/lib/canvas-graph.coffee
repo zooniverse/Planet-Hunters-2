@@ -179,6 +179,8 @@ class CanvasGraph
     @yMax = yMax
     @clearCanvas()
 
+    console.log 'PLOT RANGE [',xMin,',',xMax,']'
+
     val = classifier.el.find('#ui-slider').val()
     zoomRanges = classifier.zoomRanges
     zoomLevel  = classifier.zoomLevel
@@ -401,9 +403,9 @@ class CanvasGraph
 
   clearCanvas: -> @ctx.clearRect(0,0,@canvas.width, @canvas.height)
 
-  toCanvasXCoord: (dataPoint) -> ((dataPoint - @xMin) / (@xMax - @xMin)) * @canvas.width
+  toCanvasXCoord: (dataPoint) -> ((dataPoint - @xMin) / (@xMax - @xMin)) * (@canvas.width-@leftPadding)
   toCanvasYCoord: (dataPoint) -> ((dataPoint - @yMin) / (@yMax - @yMin)) * @canvas.height
-  toDataXCoord: (canvasPoint) -> ((canvasPoint / @canvas.width) * (@xMax - @xMin)) + @xMin
+  toDataXCoord: (canvasPoint) -> ((canvasPoint / (@canvas.width-@leftPadding)) * (@xMax - @xMin)) + @xMin
   toDataYCoord: (canvasPoint) -> ((canvasPoint / @canvas.height) * (@yMax - @yMin)) + @yMin
 
   addMarkToGraph: (e) =>
