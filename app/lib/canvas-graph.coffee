@@ -199,8 +199,8 @@ class CanvasGraph
       @ctx.fillRect(x+@leftPadding,y,2,2)
     if @marks
       for mark in @marks.all
-        scaledMin = ((mark.dataXMinRel - xMin) / (xMax - xMin)) * (@canvas.width-@leftPadding)
-        scaledMax = ((mark.dataXMaxRel - xMin) / (xMax - xMin)) * (@canvas.width-@leftPadding)
+        scaledMin = ((mark.dataXMinRel + @toDataXCoord(@leftPadding) - xMin) / (xMax - xMin)) * (@canvas.width-@leftPadding)
+        scaledMax = ((mark.dataXMaxRel + @toDataXCoord(@leftPadding) - xMin) / (xMax - xMin)) * (@canvas.width-@leftPadding)
         mark.element.style.width = (scaledMax-scaledMin) + "px"
         mark.element.style.left = (scaledMin) + "px"
         console.log 'SCAALED [',scaledMin,',',scaledMax,']'
@@ -558,16 +558,18 @@ class Mark
     @save(leftXPos, markRightX)
 
   save: (markLeftX, markRightX) ->
+    console.log 'save(): [',markLeftX-@canvasGraph.leftPadding,',',markRightX-@canvasGraph.leftPadding,']'
 
     #canvas coords
     @canvasXMin = markLeftX
     @canvasXMax = markRightX
 
     #data coords
-    @dataXMinRel = @canvasGraph.toDataXCoord(@canvasXMin)
-    @dataXMaxRel = @canvasGraph.toDataXCoord(@canvasXMax)
+    @dataXMinRel = @canvasGraph.toDataXCoord(@canvasXMin-@canvasGraph.leftPadding)
+    @dataXMaxRel = @canvasGraph.toDataXCoord(@canvasXMax-@canvasGraph.leftPadding)
     @dataXMinGlobal = @dataXMinRel + @originalMin    
     @dataXMaxGlobal = @dataXMaxRel + @originalMin
+
 
   onMouseOver: (e) =>
     @element.style.backgroundColor = 'rgba(252,69,65,.6)'
@@ -633,6 +635,7 @@ class Mark
       if value <= @dataXMaxRel and value >= @dataXMinRel
         return true
     return false
+
 
   toCanvasXPoint: (e) -> e.pageX - @canvas.getBoundingClientRect().left - window.scrollX
 
