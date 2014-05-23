@@ -192,6 +192,9 @@ class CanvasGraph
     val = classifier.el.find('#ui-slider').val()
     zoomRanges = classifier.zoomRanges
     zoomLevel  = classifier.zoomLevel
+
+    if val > 0.0
+      console.log 'SLIDER MOVED!!!'
     
     # plot points
     for i in [0...@dataLength]
@@ -203,16 +206,17 @@ class CanvasGraph
       @ctx.fillRect(x+@leftPadding,y,2,2)
     if @marks
       for mark in @marks.all
-        scaledMin = ((mark.dataXMinRel + @toDataXCoord(@leftPadding) - xMin) / (xMax - xMin)) * (@canvas.width-@leftPadding)
-        scaledMax = ((mark.dataXMaxRel + @toDataXCoord(@leftPadding) - xMin) / (xMax - xMin)) * (@canvas.width-@leftPadding)
+        scaledMin = ((mark.dataXMinRel + @toDataXCoord(@leftPadding) - xMin - val) / (xMax - xMin)) * (@canvas.width-@leftPadding)
+        scaledMax = ((mark.dataXMaxRel + @toDataXCoord(@leftPadding) - xMin - val) / (xMax - xMin)) * (@canvas.width-@leftPadding)
         mark.element.style.width = (scaledMax-scaledMin) + "px"
-        mark.element.style.left = (scaledMin) + "px"
+        mark.element.style.left = ( scaledMin ) + "px"
         console.log 'SCAALED [',scaledMin,',',scaledMax,']'
         mark.save(scaledMin, scaledMax)
 
         console.log """
                       -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
                       ----------------- DEBUG REPORT ----------------
+                                            val: #{val}  <--- slider value
                               canvasGraph.scale: #{@scale}
                                            xMin: #{xMin}  <------------- lightcurve display limits                    
                                            xMax: #{xMax}    
