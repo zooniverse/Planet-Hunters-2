@@ -59,14 +59,7 @@ class CanvasGraph
     xClick = e.pageX - e.target.getBoundingClientRect().left - window.scrollX
     yClick = e.pageY - e.target.getBoundingClientRect().top - window.scrollY
     
-    # @plotPoints(classifier.prevZoomMin, classifier.prevZoomMax)
     @plotPoints(val, val+zoomRanges[zoomLevel])
-
-    # # DEBUG CODE
-    # console.log 'onClickZoom(): '
-    # console.log 'SLIDER VALUE: ', val
-    # console.log 'PLOT RANGE [', val, ',', val+zoomRanges[zoomLevel], ']'
-    # console.log '--------------------------------------------------------'
 
     if xClick < @leftPadding
       # draw triangle
@@ -171,11 +164,13 @@ class CanvasGraph
       @highlightCurve(entry.xL,entry.xR)
 
   highlightCurve: (xLeft,xRight) ->
+    $('#graph-container').addClass('showing-prev-data')
     for i in [0...@dataLength]
       if @data.x[i] >= xLeft and @data.x[i] <= xRight
         x = ((+@data.x[i]+@toDataXCoord(@leftPadding)-@xMin)/(@xMax-@xMin)) * (@canvas.width-@leftPadding)
         y = ((+@data.y[i]-@yMin)/(@yMax-@yMin)) * @canvas.height
         y = -y + @canvas.height # flip y-values
+        @ctx.beginPath()
         @ctx.fillStyle = "rgba(252, 69, 65, 0.65)" #"#fc4541"
         @ctx.fillRect(x,y,2,2)
     return
@@ -187,14 +182,11 @@ class CanvasGraph
     @yMax = yMax
     @clearCanvas()
 
-    console.log 'PLOT RANGE [',xMin,',',xMax,']'
+    # console.log 'PLOT RANGE [',xMin,',',xMax,']'
 
     val = classifier.el.find('#ui-slider').val()
     zoomRanges = classifier.zoomRanges
     zoomLevel  = classifier.zoomLevel
-
-    if val > 0.0
-      console.log 'SLIDER MOVED!!!'
     
     # plot points
     for i in [0...@dataLength]
@@ -208,9 +200,9 @@ class CanvasGraph
       for mark in @marks.all
         scaledMin = ((mark.dataXMinRel + @toDataXCoord(@leftPadding) - xMin - val) / (xMax - xMin)) * (@canvas.width-@leftPadding)
         scaledMax = ((mark.dataXMaxRel + @toDataXCoord(@leftPadding) - xMin - val) / (xMax - xMin)) * (@canvas.width-@leftPadding)
-        mark.element.style.width = (scaledMax-scaledMin) + "px"
+        mark.element.style.width = parseFloat(scaledMax-scaledMin) + "px"
         mark.element.style.left = ( scaledMin ) + "px"
-        console.log 'SCAALED [',scaledMin,',',scaledMax,']'
+        # console.log 'SCAALED [',scaledMin,',',scaledMax,']'
         mark.save(scaledMin, scaledMax)
 
         console.log """
@@ -225,8 +217,6 @@ class CanvasGraph
                                mark.dataXMinRel: #{mark.dataXMinRel} <-- data limits        
                                mark.dataXMaxRel: #{mark.dataXMaxRel}   
                               mark width (data): #{(mark.dataXMaxRel-mark.dataXMinRel)}
-                                    leftPadding: #{@leftPadding}
-                      toDataXCoord(leftPadding): #{@toDataXCoord(@leftPadding)}
                             mark width (canvas): #{mark.element.style.width}       <----- CSS style    
                         mark.element.style.left: #{mark.element.style.left}
                       -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
@@ -237,6 +227,9 @@ class CanvasGraph
     gradient.addColorStop(1,'rgba(0,0,0,0.0');
     @ctx.fillStyle = gradient
     @ctx.fillRect(0,0,60,@canvas.height)
+
+    if $('#graph-container').hasClass('showing-prev-data')
+      @showPrevMarks()
 
     # draw axes
     @drawXTickMarks(xMin, xMax)
@@ -584,7 +577,7 @@ class Mark
     @save(leftXPos, markRightX)
 
   save: (markLeftX, markRightX) ->
-    console.log 'save(): [',markLeftX-@canvasGraph.leftPadding,',',markRightX-@canvasGraph.leftPadding,']'
+    # console.log 'save(): [',markLeftX-@canvasGraph.leftPadding,',',markRightX-@canvasGraph.leftPadding,']'
 
     #canvas coords
     @canvasXMin = markLeftX

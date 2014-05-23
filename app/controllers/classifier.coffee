@@ -282,8 +282,9 @@ class Classifier extends BaseController
   onClickFinishedMarking: ->
     # console.log 'onClickFinishedMarking()'
     @finishedMarkingButton.hide()
+    @el.find('#zoom-button').attr('disabled',true)
     @giveFeedback()
-    
+  
   giveFeedback: ->
     # console.log 'giveFeedback()'
     @finishedFeedbackButton.show()
@@ -304,6 +305,12 @@ class Classifier extends BaseController
   onClickFinishedFeedback: ->
     # console.log 'onClickFinishedFeedback()'
     # @finishedFeedbackButton.hide()
+
+    # keep drawing highlighted points while displaying previous data
+    # remove when not needed
+    # TODO: fix, kindda cluegy
+    $("#graph-container").removeClass('showing-prev-data')    
+
     @finishSubject()
 
   onClickNextSubject: ->
@@ -339,6 +346,10 @@ class Classifier extends BaseController
     # console.log JSON.stringify( @classification )
     @classification.send()
     console.log '********************************************'
+
+    # re-enable zoom button (after feedback)
+    @el.find('#zoom-button').attr('disabled',false)
+
 
     # disable buttons until next lightcurve is loaded
     @el.find('#no-transits').hide() #prop('disabled',true)
