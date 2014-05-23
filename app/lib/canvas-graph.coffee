@@ -173,11 +173,11 @@ class CanvasGraph
   highlightCurve: (xLeft,xRight) ->
     for i in [0...@dataLength]
       if @data.x[i] >= xLeft and @data.x[i] <= xRight
-        x = ((+@data.x[i]-@xMin)/(@xMax-@xMin)) * @canvas.width
+        x = ((+@data.x[i]+@toDataXCoord(@leftPadding)-@xMin)/(@xMax-@xMin)) * (@canvas.width-@leftPadding)
         y = ((+@data.y[i]-@yMin)/(@yMax-@yMin)) * @canvas.height
         y = -y + @canvas.height # flip y-values
         @ctx.fillStyle = "rgba(252, 69, 65, 0.65)" #"#fc4541"
-        @ctx.fillRect(x+@leftPadding,y,2,2)
+        @ctx.fillRect(x,y,2,2)
     return
 
   plotPoints: (xMin = @smallestX, xMax = @largestX, yMin = @smallestY, yMax = @largestY) ->
