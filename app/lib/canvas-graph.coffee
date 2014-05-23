@@ -199,6 +199,29 @@ class CanvasGraph
         mark.element.style.width = (scaledMax-scaledMin) + "px"
         mark.element.style.left = (scaledMin) + "px"
         mark.save(scaledMin, scaledMax)
+
+        console.log """
+                      -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+                      ----------------- DEBUG REPORT ----------------
+                              canvasGraph.scale: #{@scale}
+                                           xMin: #{xMin}  <------------- lightcurve display limits                    
+                                           xMax: #{xMax}    
+                                      scaledMin: #{scaledMin} <---/------ mark limits
+                                      scaledMax: #{scaledMax} <--/ 
+                               mark.dataXMinRel: #{mark.dataXMinRel} <-- data limits        
+                               mark.dataXMaxRel: #{mark.dataXMaxRel}   
+                              mark width (data): #{(mark.dataXMaxRel-mark.dataXMinRel)}
+                                    leftPadding: #{@leftPadding}
+                      toDataXCoord(leftPadding): #{@toDataXCoord(@leftPadding)}
+                            mark width (canvas): #{mark.element.style.width}       <----- CSS style    
+                        mark.element.style.left: #{mark.element.style.left}
+                      -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+                    """
+
+
+
+
+        
     # @highlightCurve(10,14) # test
     @scale = (@largestX - @smallestX) / (@xMax - @xMin)
     return
