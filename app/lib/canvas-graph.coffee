@@ -9,11 +9,15 @@ class CanvasGraph
     @largestX  = Math.max @data.x...
     @largestY  = Math.max @data.y...
 
+    console.log 'ORIGINAL MIN: ', @smallestX
+
     @dataLength = Math.min @data.x.length, @data.y.length
 
     @originalMin = @smallestX
     for xValue, idx in [@data.x...]
       @data.x[idx] = xValue - @smallestX
+
+    console.log 'CURRENT MIN:', @data.x[0]
 
     # remove outliers and normalize
     @removeOutliers(nsigma=3)
@@ -199,6 +203,17 @@ class CanvasGraph
       @ctx.fillRect(x+@leftPadding,y,2,2)
     if @marks
       for mark in @marks.all
+        console.log """
+                      -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+                      ----------------- DEBUG REPORT ----------------
+                                          xMin: #{xMin}                      
+                                          xMax: #{xMax}          
+                              mark.dataXMinRel: #{mark.dataXMinRel}          
+                              mark.dataXMaxRel: #{mark.dataXMaxRel}          
+                                   leftPadding: #{@leftPadding}
+                     toDataXCoord(leftPadding): #{@toDataXCoord(@leftPadding)}
+                      -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+                    """
         scaledMin = ((mark.dataXMinRel + @toDataXCoord(@leftPadding) - xMin) / (xMax - xMin)) * (@canvas.width-@leftPadding)
         scaledMax = ((mark.dataXMaxRel + @toDataXCoord(@leftPadding) - xMin) / (xMax - xMin)) * (@canvas.width-@leftPadding)
         mark.element.style.width = (scaledMax-scaledMin) + "px"
