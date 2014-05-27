@@ -525,8 +525,8 @@ class Mark
     @element.addEventListener 'mouseover', @onMouseOver
     @element.addEventListener 'mouseout', @onMouseOut
 
-  minWidth: ->    @canvasGraph.scale * 10 #15 * (@canvasGraph.scale || 1)
-  maxWidth: ->    @canvasGraph.scale * 75 #150 * (@canvasGraph.scale || 1)
+  minWidth: ->    @canvasGraph.scale * @canvasGraph.toCanvasXCoord(0.5) #15 * (@canvasGraph.scale || 1)
+  maxWidth: ->    @canvasGraph.scale * @canvasGraph.toCanvasXCoord(3) #150 * (@canvasGraph.scale || 1)
   handleWidth: -> 16 * (@canvasGraph.scale || 1)
 
   draw: (e) ->
