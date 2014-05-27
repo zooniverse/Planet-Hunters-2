@@ -51,7 +51,8 @@ class CanvasGraph
     @addMarkToGraph(e)
 
   onMouseMove: (e) =>
-    # console.log 'onMouseMove()'
+    console.log 'onMouseMove()'
+    # return # just for now
     return if classifier.el.find('#graph').hasClass('is-zooming')
     zoomLevel = classifier.zoomLevel
     zoomRanges = classifier.zoomRanges
@@ -59,6 +60,8 @@ class CanvasGraph
     xClick = e.pageX - e.target.getBoundingClientRect().left - window.scrollX
     yClick = e.pageY - e.target.getBoundingClientRect().top - window.scrollY
     
+    # console.log 'PLOT RANGE: [',val,',',val+zoomRanges[zoomLevel],']'
+
     @plotPoints(val, val+zoomRanges[zoomLevel])
 
     if xClick < @leftPadding
@@ -184,49 +187,26 @@ class CanvasGraph
 
     # console.log 'PLOT RANGE [',xMin,',',xMax,']'
 
-    val = classifier.el.find('#ui-slider').val()
+    # get necessary values from classifier
+    val = +classifier.el.find('#ui-slider').val()
     zoomRanges = classifier.zoomRanges
     zoomLevel  = classifier.zoomLevel
     
-    # plot points
+    # draw points
     for i in [0...@dataLength]
       x = ((+@data.x[i]-xMin)/(xMax-xMin)) * (@canvas.width-@leftPadding)
-      continue if x < 0
+      continue if x < 0 # don't plot points past margin
       y = ((+@data.y[i]-yMin)/(yMax-yMin)) * @canvas.height
       y = -y + @canvas.height # flip y-values
       @ctx.fillStyle = "#fff" #fc4541"
       @ctx.fillRect(x+@leftPadding,y,2,2)
-    if @marks
-      for mark in @marks.all
-        scaledMin = ((mark.dataXMinRel + @toDataXCoord(@leftPadding) - xMin - val) / (xMax - xMin)) * (@canvas.width-@leftPadding)
-        scaledMax = ((mark.dataXMaxRel + @toDataXCoord(@leftPadding) - xMin - val) / (xMax - xMin)) * (@canvas.width-@leftPadding)
-        mark.element.style.width = parseFloat(scaledMax-scaledMin) + "px"
-        mark.element.style.left = ( scaledMin ) + "px"
-        # console.log 'SCAALED [',scaledMin,',',scaledMax,']'
-        mark.save(scaledMin, scaledMax)
 
-        console.log """
-                      -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-                      ----------------- DEBUG REPORT ----------------
-                                            val: #{val}  <--- slider value
-                              canvasGraph.scale: #{@scale}
-                                           xMin: #{xMin}  <------------- lightcurve display limits                    
-                                           xMax: #{xMax}    
-                                      scaledMin: #{scaledMin} <---/------ mark limits
-                                      scaledMax: #{scaledMax} <--/ 
-                               mark.dataXMinRel: #{mark.dataXMinRel} <-- data limits        
-                               mark.dataXMaxRel: #{mark.dataXMaxRel}   
-                              mark width (data): #{(mark.dataXMaxRel-mark.dataXMinRel)}
-                            mark width (canvas): #{mark.element.style.width}       <----- CSS style    
-                        mark.element.style.left: #{mark.element.style.left}
-                      -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-                    """
-
-    gradient = @ctx.createLinearGradient(0,0,60,0);
-    gradient.addColorStop(0,'rgba(0,0,0,1.0)');
-    gradient.addColorStop(1,'rgba(0,0,0,0.0');
-    @ctx.fillStyle = gradient
-    @ctx.fillRect(0,0,60,@canvas.height)
+    # # draw y-axis gradient
+    # gradient = @ctx.createLinearGradient(0,0,60,0);
+    # gradient.addColorStop(0,'rgba(0,0,0,1.0)');
+    # gradient.addColorStop(1,'rgba(0,0,0,0.0');
+    # @ctx.fillStyle = gradient
+    # @ctx.fillRect(0,0,60,@canvas.height)
 
     if $('#graph-container').hasClass('showing-prev-data')
       @showPrevMarks()
@@ -236,7 +216,39 @@ class CanvasGraph
     @drawYTickMarks(yMin, yMax)
 
     @scale = (@largestX - @smallestX) / (@xMax - @xMin)
+    # console.log 'SCALE: ', @scale
     return
+
+  rescaleMarks: (xMin, xMax) ->
+    console.log 'RESCALING MARKS.....'
+    val = +classifier.el.find('#ui-slider').val()
+    # draw marks
+    if @marks
+      for mark in @marks.all
+        scaledMin = ((parseFloat(mark.dataXMinRel) + parseFloat(@toDataXCoord(@leftPadding)) - parseFloat(xMin) - parseFloat(val) ) / (parseFloat(xMax) - parseFloat(xMin)) ) * parseFloat(@canvas.width-@leftPadding)
+        scaledMax = ((parseFloat(mark.dataXMaxRel) + parseFloat(@toDataXCoord(@leftPadding)) - parseFloat(xMin) - parseFloat(val) ) / (parseFloat(xMax) - parseFloat(xMin)) ) * parseFloat(@canvas.width-@leftPadding)
+        #                                ^ prevents from moving towards left                          ^ prevents marks from moving towards right
+        mark.element.style.width = parseFloat(scaledMax)-parseFloat(scaledMin) + "px"
+        mark.element.style.left = parseFloat(scaledMin) + "px"
+        mark.save(scaledMin, scaledMax)
+
+        # console.log """
+        #               -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+        #               ----------------- DEBUG REPORT ----------------
+        #                                     val: #{val}  <--- slider value
+        #                       canvasGraph.scale: #{@scale}
+        #                                    xMin: #{xMin}  <------------- lightcurve display limits                    
+        #                                    xMax: #{xMax}    
+        #                               scaledMin: #{scaledMin} <---/------ mark limits
+        #                               scaledMax: #{scaledMax} <--/ 
+        #                        mark.dataXMinRel: #{mark.dataXMinRel} <-- data limits        
+        #                        mark.dataXMaxRel: #{mark.dataXMaxRel}   
+        #                       mark width (data): #{(mark.dataXMaxRel-mark.dataXMinRel)}
+        #                     mark width (canvas): #{mark.element.style.width}       <----- CSS style    
+        #                 mark.element.style.left: #{mark.element.style.left}
+        #               -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+        #             """
+
 
   drawXTickMarks: (xMin, xMax) ->
     # tick/text properties
@@ -403,26 +415,50 @@ class CanvasGraph
 
     zoom = setInterval (=>
       @plotPoints(cMin,cMax)
+      @rescaleMarks(cMin,cMax)
       cMin += 1.5 unless cMin >= wMin
       cMax -= 1.5 unless cMax <= wMax
       if cMin >= wMin and cMax <= wMax # when 'animation' is done...
         clearInterval zoom
         classifier.el.find('#graph').removeClass('is-zooming')
         @plotPoints(wMin,wMax)
+        @rescaleMarks(wMin,wMax)
     ), 30
 
   zoomOut: (callback) ->
     classifier.el.find('#graph').addClass('is-zooming')
+
+    classifier.el.find('#ui-slider').val(0) # reset slider
+
+
+    classifier.zoomLevel = 0 # reset zoom level index
+
     [cMin, cMax] = [@xMin, @xMax]
     [wMin, wMax] = [@smallestX, @largestX]
+
+    # # temporary fix (no animation)
+    # @plotPoints(wMin, wMax)
+    # unless callback is undefined
+    #   callback.apply()
+    #   classifier.el.find("#zoom-button").removeClass("zoomed")
+    #   classifier.el.find("#zoom-button").removeClass("allowZoomOut") # for last zoom level
+    #   classifier.el.find('#ui-slider').attr('disabled',true)
+    #   classifier.el.find('.noUi-handle').fadeOut(150)
+
+    # TODO: why doesn't this work?
     zoom = setInterval (=>
+      console.log '*********** [',cMin.toFixed(4),',',cMax.toFixed(4),'] *********** (still animating)'
+      # debugger
       @plotPoints(cMin,cMax)
-      cMin -= 1.5 unless cMin <= wMin
-      cMax += 1.5 unless cMax >= wMax
+      @rescaleMarks(cMin,cMax)
+      cMin -= 1.0 unless cMin <= wMin
+      cMax += 1.0 unless cMax >= wMax
       if cMin <= wMin and cMax >= wMax  # finished zooming
         clearInterval zoom
         classifier.el.find('#graph').removeClass('is-zooming')
+        # console.log '*********** [',wMin,',',wMax,'] *********** (done with animation)'
         @plotPoints(wMin, wMax)
+        @rescaleMarks(wMin, wMax)
         unless callback is undefined 
           callback.apply()
           classifier.el.find("#zoom-button").removeClass("zoomed")
@@ -430,6 +466,7 @@ class CanvasGraph
           classifier.el.find('#ui-slider').attr('disabled',true)
           classifier.el.find('.noUi-handle').fadeOut(150)
     ), 30
+
     return
 
   clearCanvas: -> @ctx.clearRect(0,0,@canvas.width, @canvas.height)
@@ -520,7 +557,7 @@ class Mark
     # @element.getElementsByClassName('.left-handle').fadeOut()
     # # @element.find('.right-handle').fadeOut()
 
-    @element.style.left = @toCanvasXPoint(e) + "px"
+    # @element.style.left = @toCanvasXPoint(e) + "px"
     @element.style.position = 'absolute'
     @element.style.top = e.target.offsetTop + "px"
     @element.style.height = (@canvas.height - 2) + 'px'
@@ -530,22 +567,26 @@ class Mark
     @element.style.textAlign = 'center'
     @element.style.cursor = "move"
 
-    @startingPoint = @toCanvasXPoint(e) - (@minWidth()/2)
+    @initialLeft = @toCanvasXPoint(e) - (@minWidth()/2)
     @dragging = true
+
+    # create event listeners
     @element.addEventListener 'mousedown', @onMouseDown
     @element.addEventListener 'touchstart', @onMouseDown
     @element.addEventListener 'mouseover', @onMouseOver
     @element.addEventListener 'mouseout', @onMouseOut
 
-  minWidth: ->    @canvasGraph.scale * 10 #15 * (@canvasGraph.scale || 1)
-  maxWidth: ->    @canvasGraph.scale * 75 #150 * (@canvasGraph.scale || 1)
+  minWidth: ->    @canvasGraph.scale * @canvasGraph.toCanvasXCoord(0.5) #15 * (@canvasGraph.scale || 1)
+  maxWidth: ->    @canvasGraph.scale * @canvasGraph.toCanvasXCoord(3)# * (@canvasGraph.scale || 1)
   handleWidth: -> 16 * (@canvasGraph.scale || 1)
 
   draw: (e) ->
-    markLeftX = Math.max @startingPoint + @minWidth() - @maxWidth(),
-                         Math.min @startingPoint, @toCanvasXPoint(e)
+    markLeftX = Math.max @initialLeft + @minWidth() - @maxWidth(),
+                         Math.min @initialLeft, 
+                         @toCanvasXPoint(e)
 
-    markRightX = Math.max @startingPoint + @minWidth(), @toCanvasXPoint(e)
+    markRightX = Math.max @initialLeft + @minWidth(), 
+                          @toCanvasXPoint(e)
 
     # no overlapping of marks
     markLeftX = Math.max markLeftX,
@@ -557,14 +598,16 @@ class Mark
                          (@canvasGraph.toCanvasXCoord(@canvasGraph.largestX))
 
     # max and min width on creating / resizing marks
-    width = (Math.min (Math.max (Math.abs markRightX - markLeftX), @minWidth()), @maxWidth())
+    width = (Math.min (Math.max (Math.abs parseFloat(markRightX - markLeftX)), @minWidth()), @maxWidth())
 
     @element.style.left = markLeftX + "px"
-    @element.style.width = width + "px"
-    @save(markLeftX, markLeftX+width)
+    @element.style.width = parseFloat(width) + "px"
+    @save( markLeftX, markLeftX+width )
 
   move: (e) ->
-    markWidth = parseInt(@element.style.width, 10)
+    console.log 'WIDTH: ', @element.style.width
+    markWidth = parseFloat(@element.style.width)
+    console.log 'WIDTH: ', markWidth
 
     # no overlapping of marks or moving out of canvas bounds
     leftXPos = Math.max (@toCanvasXPoint(e) - @pointerOffset),
@@ -577,8 +620,6 @@ class Mark
     @save(leftXPos, markRightX)
 
   save: (markLeftX, markRightX) ->
-    # console.log 'save(): [',markLeftX-@canvasGraph.leftPadding,',',markRightX-@canvasGraph.leftPadding,']'
-
     #canvas coords
     @canvasXMin = markLeftX
     @canvasXMax = markRightX
@@ -588,6 +629,20 @@ class Mark
     @dataXMaxRel = @canvasGraph.toDataXCoord(@canvasXMax-@canvasGraph.leftPadding)
     @dataXMinGlobal = @dataXMinRel + @originalMin    
     @dataXMaxGlobal = @dataXMaxRel + @originalMin
+
+    val = +classifier.el.find("#ui-slider").val()
+
+    console.log """
+                -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+                ----------------- DEBUG REPORT ----------------
+                                      val: #{val}
+                         mark.dataXMinRel: #{@dataXMinRel} <-- data limits        
+                         mark.dataXMaxRel: #{@dataXMaxRel}   
+                        mark width (data): #{(@dataXMaxRel-@dataXMinRel)}
+                      mark width (canvas): #{@element.style.width}       <----- CSS style    
+                  mark.element.style.left: #{@element.style.left}
+                -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+              """
 
 
   onMouseOver: (e) =>
@@ -610,10 +665,10 @@ class Mark
     @element.parentNode.appendChild(@element) #move to end of container for z index
 
     if e.target.className is "right-border" or e.target.className is "right-handle"
-      @startingPoint = @canvasXMin
+      @initialLeft = @canvasXMin
       @dragging = true
     else if e.target.className is "left-border" or e.target.className is "left-handle"
-      @startingPoint = @canvasXMax - @minWidth()
+      @initialLeft = @canvasXMax - @minWidth()
       @dragging = true
     else if e.target.className is "mark"
       @moving = true

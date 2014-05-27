@@ -161,6 +161,7 @@ class Classifier extends BaseController
     val = +@el.find("#ui-slider").val()
     return if @zoomLevel is 0 or @zoomLevel > @zoomRanges.length
     @canvasGraph.plotPoints( val, val + @zoomRanges[@zoomLevel] )
+    @canvasGraph.rescaleMarks(val, val + @zoomRanges[@zoomLevel])
     # DEBUG CODE
     console.log 'onChangeScaleSlider(): '
     console.log 'SLIDER VALUE: ', val
@@ -168,7 +169,10 @@ class Classifier extends BaseController
     console.log '-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-'
 
   onClickZoom: ->
+    console.log 'onClickZoom()'
+    # DO WE NEED THIS?
     @prevZoomLevel = @zoomLevel
+
     # console.log '*** PREV ZOOM LEVEL: ',@prevZoomLevel,' ***'
     
     val = +@el.find("#ui-slider").val()
@@ -176,9 +180,16 @@ class Classifier extends BaseController
 
     if @zoomLevel is 0 or @zoomLevel > @zoomRanges.length-1 # no zoom
       # console.log 'PREV ZOOM LEVEL: ', @prevZoomLevel
+      console.log '******** ZOOMING OUT *********'
+
       @zoomReset()      
     else 
 
+      console.log '******** ZOOMING IN *********'
+      console.log '* zoomLevel: ', @zoomLevel, '*'
+      console.log '*****************************'
+
+      # DO WE NEED THIS?
       # set slider for current zoom level
       if val isnt 0 and @prevZoomLevel isnt 2
         val = val + 0.5*( @zoomRanges[@prevZoomLevel] - @zoomRanges[@zoomLevel] )
@@ -206,13 +217,15 @@ class Classifier extends BaseController
         @el.find("#zoom-button").removeClass("allowZoomOut")
 
     # DEBUG CODE        
-    console.log 'onClickZoom(): '
+    # console.log 'onClickZoom(): '
     console.log 'SLIDER VALUE: ', val
     console.log 'PLOT RANGE [', val, ',', val+@zoomRanges[@zoomLevel], ']'
     console.log '******************************************************************************************'
 
+    # DO WE NEED THIS?
     @prevZoomMin = 0
     @prevZoomMax = @zoomRanges[@zoomLevel]
+
     # console.log 'PREV ZOOM WINDOW: [',@prevZoomMin,',',,']'
 
     @showZoomMessage(@magnification[@zoomLevel])
@@ -281,12 +294,17 @@ class Classifier extends BaseController
 
   onClickFinishedMarking: ->
     # console.log 'onClickFinishedMarking()'
+
+    # first make sure graph is zoomed out
+    @canvasGraph.zoomOut()
+    
     @finishedMarkingButton.hide()
     @el.find('#zoom-button').attr('disabled',true)
     @giveFeedback()
   
   giveFeedback: ->
     # console.log 'giveFeedback()'
+
     @finishedFeedbackButton.show()
     @canvasGraph.disableMarking()
     @canvasGraph.showFakePrevMarks()
