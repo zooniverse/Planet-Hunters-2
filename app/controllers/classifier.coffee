@@ -181,10 +181,8 @@ class Classifier extends BaseController
     if @zoomLevel is 0 or @zoomLevel > @zoomRanges.length-1 # no zoom
       # console.log 'PREV ZOOM LEVEL: ', @prevZoomLevel
       console.log '******** ZOOMING OUT *********'
-
       @zoomReset()      
     else 
-
       console.log '******** ZOOMING IN *********'
       console.log '* zoomLevel: ', @zoomLevel, '*'
       console.log '*****************************'

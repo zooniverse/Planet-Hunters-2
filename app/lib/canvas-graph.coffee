@@ -45,13 +45,13 @@ class CanvasGraph
     @canvas.addEventListener 'mousemove', (e) => @onMouseMove(e) # TODO: FIX (disabled for now)
 
   onMouseDown: (e) =>
-    console.log 'onMouseDown()'
+    # console.log 'onMouseDown()'
     xClick = e.pageX - e.target.getBoundingClientRect().left - window.scrollX
     return if xClick < 80 # display line instead 
     @addMarkToGraph(e)
 
   onMouseMove: (e) =>
-    console.log 'onMouseMove()'
+    # console.log 'onMouseMove()'
     # return # just for now
     return if classifier.el.find('#graph').hasClass('is-zooming')
     zoomLevel = classifier.zoomLevel
@@ -217,10 +217,13 @@ class CanvasGraph
 
     @scale = (@largestX - @smallestX) / (@xMax - @xMin)
     # console.log 'SCALE: ', @scale
+
+    @rescaleMarks(xMin, xMax)
+
     return
 
   rescaleMarks: (xMin, xMax) ->
-    console.log 'RESCALING MARKS.....'
+    # console.log 'RESCALING MARKS.....'
     val = +classifier.el.find('#ui-slider').val()
     # draw marks
     if @marks
@@ -230,24 +233,24 @@ class CanvasGraph
         #                                ^ prevents from moving towards left                          ^ prevents marks from moving towards right
         mark.element.style.width = parseFloat(scaledMax)-parseFloat(scaledMin) + "px"
         mark.element.style.left = parseFloat(scaledMin) + "px"
-        mark.save(scaledMin, scaledMax)
+        # mark.save(scaledMin, scaledMax)
 
-        # console.log """
-        #               -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-        #               ----------------- DEBUG REPORT ----------------
-        #                                     val: #{val}  <--- slider value
-        #                       canvasGraph.scale: #{@scale}
-        #                                    xMin: #{xMin}  <------------- lightcurve display limits                    
-        #                                    xMax: #{xMax}    
-        #                               scaledMin: #{scaledMin} <---/------ mark limits
-        #                               scaledMax: #{scaledMax} <--/ 
-        #                        mark.dataXMinRel: #{mark.dataXMinRel} <-- data limits        
-        #                        mark.dataXMaxRel: #{mark.dataXMaxRel}   
-        #                       mark width (data): #{(mark.dataXMaxRel-mark.dataXMinRel)}
-        #                     mark width (canvas): #{mark.element.style.width}       <----- CSS style    
-        #                 mark.element.style.left: #{mark.element.style.left}
-        #               -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-        #             """
+        console.log """
+                      -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+                      ----------------- DEBUG REPORT ----------------
+                                            val: #{val}  <--- slider value
+                              canvasGraph.scale: #{@scale}
+                                           xMin: #{xMin}  <------------- lightcurve display limits                    
+                                           xMax: #{xMax}    
+                                      scaledMin: #{scaledMin} <---/------ mark limits
+                                      scaledMax: #{scaledMax} <--/ 
+                               mark.dataXMinRel: #{mark.dataXMinRel} <-- data limits        
+                               mark.dataXMaxRel: #{mark.dataXMaxRel}   
+                              mark width (data): #{(mark.dataXMaxRel-mark.dataXMinRel)}
+                            mark width (canvas): #{mark.element.style.width}       <----- CSS style    
+                        mark.element.style.left: #{mark.element.style.left}
+                      -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+                    """
 
 
   drawXTickMarks: (xMin, xMax) ->
@@ -427,30 +430,15 @@ class CanvasGraph
 
   zoomOut: (callback) ->
     classifier.el.find('#graph').addClass('is-zooming')
-
     classifier.el.find('#ui-slider').val(0) # reset slider
-
-
     classifier.zoomLevel = 0 # reset zoom level index
 
     [cMin, cMax] = [@xMin, @xMax]
     [wMin, wMax] = [@smallestX, @largestX]
 
-    # # temporary fix (no animation)
-    # @plotPoints(wMin, wMax)
-    # unless callback is undefined
-    #   callback.apply()
-    #   classifier.el.find("#zoom-button").removeClass("zoomed")
-    #   classifier.el.find("#zoom-button").removeClass("allowZoomOut") # for last zoom level
-    #   classifier.el.find('#ui-slider').attr('disabled',true)
-    #   classifier.el.find('.noUi-handle').fadeOut(150)
-
     # TODO: why doesn't this work?
     zoom = setInterval (=>
-      console.log '*********** [',cMin.toFixed(4),',',cMax.toFixed(4),'] *********** (still animating)'
-      # debugger
       @plotPoints(cMin,cMax)
-      @rescaleMarks(cMin,cMax)
       cMin -= 1.0 unless cMin <= wMin
       cMax += 1.0 unless cMax >= wMax
       if cMin <= wMin and cMax >= wMax  # finished zooming
@@ -458,7 +446,6 @@ class CanvasGraph
         classifier.el.find('#graph').removeClass('is-zooming')
         # console.log '*********** [',wMin,',',wMax,'] *********** (done with animation)'
         @plotPoints(wMin, wMax)
-        @rescaleMarks(wMin, wMax)
         unless callback is undefined 
           callback.apply()
           classifier.el.find("#zoom-button").removeClass("zoomed")
@@ -466,7 +453,6 @@ class CanvasGraph
           classifier.el.find('#ui-slider').attr('disabled',true)
           classifier.el.find('.noUi-handle').fadeOut(150)
     ), 30
-
     return
 
   clearCanvas: -> @ctx.clearRect(0,0,@canvas.width, @canvas.height)
@@ -605,10 +591,8 @@ class Mark
     @save( markLeftX, markLeftX+width )
 
   move: (e) ->
-    console.log 'WIDTH: ', @element.style.width
     markWidth = parseFloat(@element.style.width)
-    console.log 'WIDTH: ', markWidth
-
+    
     # no overlapping of marks or moving out of canvas bounds
     leftXPos = Math.max (@toCanvasXPoint(e) - @pointerOffset),
                         (@closestXBelow || -@handleWidth()) + @handleWidth(),
@@ -632,17 +616,17 @@ class Mark
 
     val = +classifier.el.find("#ui-slider").val()
 
-    console.log """
-                -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-                ----------------- DEBUG REPORT ----------------
-                                      val: #{val}
-                         mark.dataXMinRel: #{@dataXMinRel} <-- data limits        
-                         mark.dataXMaxRel: #{@dataXMaxRel}   
-                        mark width (data): #{(@dataXMaxRel-@dataXMinRel)}
-                      mark width (canvas): #{@element.style.width}       <----- CSS style    
-                  mark.element.style.left: #{@element.style.left}
-                -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-              """
+    # console.log """
+    #             -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+    #             ----------------- DEBUG REPORT ----------------
+    #                                   val: #{val}
+    #                      mark.dataXMinRel: #{@dataXMinRel} <-- data limits        
+    #                      mark.dataXMaxRel: #{@dataXMaxRel}   
+    #                     mark width (data): #{(@dataXMaxRel-@dataXMinRel)}
+    #                   mark width (canvas): #{@element.style.width}       <----- CSS style    
+    #               mark.element.style.left: #{@element.style.left}
+    #             -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+    #           """
 
 
   onMouseOver: (e) =>
