@@ -590,7 +590,7 @@ class Mark
     markWidth = parseFloat(@element.style.width)
     
     # no overlapping of marks or moving out of canvas bounds
-    leftXPos = Math.max (@toCanvasXPoint(e) - @pointerOffset),
+    leftXPos = Math.max (@toCanvasXPoint(e) - @moveOffset),
                         (@closestXBelow || -@handleWidth()) + @handleWidth(),
                         @canvasGraph.leftPadding
     leftXPos = Math.min leftXPos,
@@ -652,7 +652,7 @@ class Mark
       @dragging = true
     else if e.target.className is "mark"
       @moving = true
-      @pointerOffset = (@toCanvasXPoint(e) - @canvasXMin)
+      @moveOffset = (@toCanvasXPoint(e) - @canvasXMin)
 
     @closestXBelow = @canvasGraph.marks.closestXBelow(@canvasXMin)
     @closestXAbove = @canvasGraph.marks.closestXAbove(@canvasXMax)
