@@ -290,11 +290,11 @@ class CanvasGraph
 
       # draw ticks (bottom)
       @ctx.beginPath() 
-      @ctx.moveTo( @toCanvasXCoord(tick)+@leftPadding, @canvas.height )
+      @ctx.moveTo( @toPixels(tick)+@leftPadding, @canvas.height )
       if i % majorTickInterval is 0
-        @ctx.lineTo( @toCanvasXCoord(tick)+@leftPadding, @canvas.height - tickMajorLength ) # major tick
+        @ctx.lineTo( @toPixels(tick)+@leftPadding, @canvas.height - tickMajorLength ) # major tick
       else
-        @ctx.lineTo( @toCanvasXCoord(tick)+@leftPadding, @canvas.height - tickMinorLength ) # minor tick
+        @ctx.lineTo( @toPixels(tick)+@leftPadding, @canvas.height - tickMinorLength ) # minor tick
       @ctx.lineWidth = tickWidth
       @ctx.strokeStyle = tickColor
       @ctx.stroke()
@@ -305,29 +305,29 @@ class CanvasGraph
 
       # draw numbers (bottom)
       if (i % majorTickInterval) is 0 # zoomed out
-        @ctx.fillText( tick, @toCanvasXCoord(tick)+@leftPadding, @canvas.height - textSpacing )
+        @ctx.fillText( tick, @toPixels(tick)+@leftPadding, @canvas.height - textSpacing )
       else if (i % majorTickInterval) is 0
-        @ctx.fillText( tick, @toCanvasXCoord(tick)+@leftPadding, @canvas.height - textSpacing )
+        @ctx.fillText( tick, @toPixels(tick)+@leftPadding, @canvas.height - textSpacing )
       else if (i % majorTickInterval) is 0
-        @ctx.fillText( tick, @toCanvasXCoord(tick)+@leftPadding, @canvas.height - textSpacing )
+        @ctx.fillText( tick, @toPixels(tick)+@leftPadding, @canvas.height - textSpacing )
 
       # axis header
       @ctx.fillText( 'DAYS', textSpacing+10+@leftPadding, @canvas.height - textSpacing )
 
       # draw ticks (top)
       @ctx.beginPath() 
-      @ctx.moveTo( @toCanvasXCoord(tick)+@leftPadding, 0 )
+      @ctx.moveTo( @toPixels(tick)+@leftPadding, 0 )
       if i % majorTickInterval is 0
-        @ctx.lineTo( @toCanvasXCoord(tick)+@leftPadding, 0 + tickMajorLength ) # major tick
+        @ctx.lineTo( @toPixels(tick)+@leftPadding, 0 + tickMajorLength ) # major tick
       else
-        @ctx.lineTo( @toCanvasXCoord(tick)+@leftPadding, 0 + tickMinorLength ) # minor tick
+        @ctx.lineTo( @toPixels(tick)+@leftPadding, 0 + tickMinorLength ) # minor tick
       @ctx.lineWidth = tickWidth
       @ctx.strokeStyle = tickColor
       @ctx.stroke()
 
       # top numbers
       if (i % 4) is 0 # zoomed out
-        @ctx.fillText( (tick + @originalMin).toFixed(2), @toCanvasXCoord(tick)+@leftPadding, 0 + textSpacing+10 )
+        @ctx.fillText( (tick + @originalMin).toFixed(2), @toPixels(tick)+@leftPadding, 0 + textSpacing+10 )
       
   drawYTickMarks: (yMin, yMax) ->
 
@@ -452,7 +452,7 @@ class CanvasGraph
 
   clearCanvas: -> @ctx.clearRect(0,0,@canvas.width, @canvas.height)
 
-  toCanvasXCoord: (dataPoint) -> ((parseFloat(dataPoint) - parseFloat(@xMin)) / (parseFloat(@xMax) - parseFloat(@xMin))) * (parseFloat(@canvas.width)-parseFloat(@leftPadding))
+  toPixels: (dataPoint) -> ((parseFloat(dataPoint) - parseFloat(@xMin)) / (parseFloat(@xMax) - parseFloat(@xMin))) * (parseFloat(@canvas.width)-parseFloat(@leftPadding))
   toCanvasYCoord: (dataPoint) -> ((parseFloat(dataPoint) - parseFloat(@yMin)) / (parseFloat(@yMax) - parseFloat(@yMin))) * (parseFloat(@canvas.height))
   toDays: (canvasPoint) -> ((parseFloat(canvasPoint) / (parseFloat(@canvas.width)-parseFloat(@leftPadding))) * (parseFloat(@xMax) - parseFloat(@xMin))) + parseFloat(@xMin)
   toDataYCoord: (canvasPoint) -> ((parseFloat(canvasPoint) / parseFloat(@canvas.height)) * (parseFloat(@yMax) - parseFloat(@yMin))) + parseFloat(@yMin)
@@ -557,8 +557,8 @@ class Mark
     @element.addEventListener 'mouseover', @onMouseOver
     @element.addEventListener 'mouseout', @onMouseOut
 
-  minWidth: -> parseFloat(@canvasGraph.toCanvasXCoord(0.5)) #15 * (@canvasGraph.scale || 1)
-  maxWidth: -> parseFloat(@canvasGraph.toCanvasXCoord(3))    # * (@canvasGraph.scale || 1)
+  minWidth: -> parseFloat(@canvasGraph.toPixels(0.5)) #15 * (@canvasGraph.scale || 1)
+  maxWidth: -> parseFloat(@canvasGraph.toPixels(3))    # * (@canvasGraph.scale || 1)
   handleWidth: -> 16 * (@canvasGraph.scale || 1)
 
   draw: (e) ->
@@ -572,11 +572,11 @@ class Mark
     # no overlapping of marks
     markLeftX = Math.max markLeftX,
                         (@closestXBelow + @handleWidth() || markLeftX),
-                        (@canvasGraph.toCanvasXCoord(@canvasGraph.smallestX))
+                        (@canvasGraph.toPixels(@canvasGraph.smallestX))
 
     markRightX = Math.min markRightX,
                          (@closestXAbove - @handleWidth() || markRightX),
-                         (@canvasGraph.toCanvasXCoord(@canvasGraph.largestX))
+                         (@canvasGraph.toPixels(@canvasGraph.largestX))
 
     # max and min width on creating / resizing marks
     width = (Math.min (Math.max (Math.abs parseFloat(markRightX) - parseFloat(markLeftX)), parseFloat(@minWidth())), parseFloat(@maxWidth()))
