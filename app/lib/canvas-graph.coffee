@@ -166,7 +166,7 @@ class CanvasGraph
     $('#graph-container').addClass('showing-prev-data')
     for i in [0...@dataLength]
       if @data.x[i] >= xLeft and @data.x[i] <= xRight
-        x = ((+@data.x[i]+@toDataXCoord(@leftPadding)-@xMin)/(@xMax-@xMin)) * (@canvas.width-@leftPadding)
+        x = ((+@data.x[i]+@toDays(@leftPadding)-@xMin)/(@xMax-@xMin)) * (@canvas.width-@leftPadding)
         y = ((+@data.y[i]-@yMin)/(@yMax-@yMin)) * @canvas.height
         y = -y + @canvas.height # flip y-values
         @ctx.beginPath()
@@ -223,8 +223,8 @@ class CanvasGraph
     # draw marks
     if @marks
       for mark in @marks.all
-        scaledMin = ((parseFloat(mark.dataXMinRel) + parseFloat(@toDataXCoord(@leftPadding)) - parseFloat(xMin) - parseFloat(val) ) / (parseFloat(xMax) - parseFloat(xMin)) ) * parseFloat(@canvas.width-@leftPadding)
-        scaledMax = ((parseFloat(mark.dataXMaxRel) + parseFloat(@toDataXCoord(@leftPadding)) - parseFloat(xMin) - parseFloat(val) ) / (parseFloat(xMax) - parseFloat(xMin)) ) * parseFloat(@canvas.width-@leftPadding)
+        scaledMin = ((parseFloat(mark.dataXMinRel) + parseFloat(@toDays(@leftPadding)) - parseFloat(xMin) - parseFloat(val) ) / (parseFloat(xMax) - parseFloat(xMin)) ) * parseFloat(@canvas.width-@leftPadding)
+        scaledMax = ((parseFloat(mark.dataXMaxRel) + parseFloat(@toDays(@leftPadding)) - parseFloat(xMin) - parseFloat(val) ) / (parseFloat(xMax) - parseFloat(xMin)) ) * parseFloat(@canvas.width-@leftPadding)
         #                                ^ prevents from moving towards left                          ^ prevents marks from moving towards right
         mark.element.style.width = (parseFloat(scaledMax)-parseFloat(scaledMin)) + "px"
         mark.element.style.left = parseFloat(scaledMin) + "px"
@@ -454,7 +454,7 @@ class CanvasGraph
 
   toCanvasXCoord: (dataPoint) -> ((parseFloat(dataPoint) - parseFloat(@xMin)) / (parseFloat(@xMax) - parseFloat(@xMin))) * (parseFloat(@canvas.width)-parseFloat(@leftPadding))
   toCanvasYCoord: (dataPoint) -> ((parseFloat(dataPoint) - parseFloat(@yMin)) / (parseFloat(@yMax) - parseFloat(@yMin))) * (parseFloat(@canvas.height))
-  toDataXCoord: (canvasPoint) -> ((parseFloat(canvasPoint) / (parseFloat(@canvas.width)-parseFloat(@leftPadding))) * (parseFloat(@xMax) - parseFloat(@xMin))) + parseFloat(@xMin)
+  toDays: (canvasPoint) -> ((parseFloat(canvasPoint) / (parseFloat(@canvas.width)-parseFloat(@leftPadding))) * (parseFloat(@xMax) - parseFloat(@xMin))) + parseFloat(@xMin)
   toDataYCoord: (canvasPoint) -> ((parseFloat(canvasPoint) / parseFloat(@canvas.height)) * (parseFloat(@yMax) - parseFloat(@yMin))) + parseFloat(@yMin)
 
   addMarkToGraph: (e) =>
@@ -605,8 +605,8 @@ class Mark
     @canvasXMax = markRightX
 
     #data coords
-    @dataXMinRel = @canvasGraph.toDataXCoord(@canvasXMin-@canvasGraph.leftPadding)
-    @dataXMaxRel = @canvasGraph.toDataXCoord(@canvasXMax-@canvasGraph.leftPadding)
+    @dataXMinRel = @canvasGraph.toDays(@canvasXMin-@canvasGraph.leftPadding)
+    @dataXMaxRel = @canvasGraph.toDays(@canvasXMax-@canvasGraph.leftPadding)
     @dataXMinGlobal = @dataXMinRel + @originalMin    
     @dataXMaxGlobal = @dataXMaxRel + @originalMin
 
