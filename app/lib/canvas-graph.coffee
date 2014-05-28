@@ -9,15 +9,11 @@ class CanvasGraph
     @largestX  = Math.max @data.x...
     @largestY  = Math.max @data.y...
 
-    console.log 'ORIGINAL MIN: ', @smallestX
-
     @dataLength = Math.min @data.x.length, @data.y.length
 
     @originalMin = @smallestX
     for xValue, idx in [@data.x...]
       @data.x[idx] = xValue - @smallestX
-
-    console.log 'CURRENT MIN:', @data.x[0]
 
     # remove outliers and normalize
     @removeOutliers(nsigma=3)
@@ -215,8 +211,7 @@ class CanvasGraph
     @drawXTickMarks(xMin, xMax)
     @drawYTickMarks(yMin, yMax)
 
-    @scale = (@largestX - @smallestX) / (@xMax - @xMin)
-    # console.log 'SCALE: ', @scale
+    @scale = (parseFloat(@largestX) - parseFloat(@smallestX)) / (parseFloat(@xMax) - parseFloat(@xMin))
 
     @rescaleMarks(xMin, xMax)
 
@@ -231,7 +226,7 @@ class CanvasGraph
         scaledMin = ((parseFloat(mark.dataXMinRel) + parseFloat(@toDataXCoord(@leftPadding)) - parseFloat(xMin) - parseFloat(val) ) / (parseFloat(xMax) - parseFloat(xMin)) ) * parseFloat(@canvas.width-@leftPadding)
         scaledMax = ((parseFloat(mark.dataXMaxRel) + parseFloat(@toDataXCoord(@leftPadding)) - parseFloat(xMin) - parseFloat(val) ) / (parseFloat(xMax) - parseFloat(xMin)) ) * parseFloat(@canvas.width-@leftPadding)
         #                                ^ prevents from moving towards left                          ^ prevents marks from moving towards right
-        mark.element.style.width = parseFloat(scaledMax)-parseFloat(scaledMin) + "px"
+        mark.element.style.width = (parseFloat(scaledMax)-parseFloat(scaledMin)) + "px"
         mark.element.style.left = parseFloat(scaledMin) + "px"
         # mark.save(scaledMin, scaledMax)
 
@@ -457,10 +452,10 @@ class CanvasGraph
 
   clearCanvas: -> @ctx.clearRect(0,0,@canvas.width, @canvas.height)
 
-  toCanvasXCoord: (dataPoint) -> ((dataPoint - @xMin) / (@xMax - @xMin)) * (@canvas.width-@leftPadding)
-  toCanvasYCoord: (dataPoint) -> ((dataPoint - @yMin) / (@yMax - @yMin)) * @canvas.height
-  toDataXCoord: (canvasPoint) -> ((canvasPoint / (@canvas.width-@leftPadding)) * (@xMax - @xMin)) + @xMin
-  toDataYCoord: (canvasPoint) -> ((canvasPoint / @canvas.height) * (@yMax - @yMin)) + @yMin
+  toCanvasXCoord: (dataPoint) -> ((parseFloat(dataPoint) - parseFloat(@xMin)) / (parseFloat(@xMax) - parseFloat(@xMin))) * (parseFloat(@canvas.width)-parseFloat(@leftPadding))
+  toCanvasYCoord: (dataPoint) -> ((parseFloat(dataPoint) - parseFloat(@yMin)) / (parseFloat(@yMax) - parseFloat(@yMin))) * (parseFloat(@canvas.height))
+  toDataXCoord: (canvasPoint) -> ((parseFloat(canvasPoint) / (parseFloat(@canvas.width)-parseFloat(@leftPadding))) * (parseFloat(@xMax) - parseFloat(@xMin))) + parseFloat(@xMin)
+  toDataYCoord: (canvasPoint) -> ((parseFloat(canvasPoint) / parseFloat(@canvas.height)) * (parseFloat(@yMax) - parseFloat(@yMin))) + parseFloat(@yMin)
 
   addMarkToGraph: (e) =>
     return if @markingDisabled
@@ -543,7 +538,7 @@ class Mark
     # @element.getElementsByClassName('.left-handle').fadeOut()
     # # @element.find('.right-handle').fadeOut()
 
-    # @element.style.left = @toCanvasXPoint(e) + "px"
+    @element.style.left = @toCanvasXPoint(e) + "px"
     @element.style.position = 'absolute'
     @element.style.top = e.target.offsetTop + "px"
     @element.style.height = (@canvas.height - 2) + 'px'
@@ -562,8 +557,8 @@ class Mark
     @element.addEventListener 'mouseover', @onMouseOver
     @element.addEventListener 'mouseout', @onMouseOut
 
-  minWidth: ->    @canvasGraph.scale * @canvasGraph.toCanvasXCoord(0.5) #15 * (@canvasGraph.scale || 1)
-  maxWidth: ->    @canvasGraph.scale * @canvasGraph.toCanvasXCoord(3)# * (@canvasGraph.scale || 1)
+  minWidth: -> parseFloat(@canvasGraph.toCanvasXCoord(0.5)) #15 * (@canvasGraph.scale || 1)
+  maxWidth: -> parseFloat(@canvasGraph.toCanvasXCoord(3))    # * (@canvasGraph.scale || 1)
   handleWidth: -> 16 * (@canvasGraph.scale || 1)
 
   draw: (e) ->
@@ -584,7 +579,8 @@ class Mark
                          (@canvasGraph.toCanvasXCoord(@canvasGraph.largestX))
 
     # max and min width on creating / resizing marks
-    width = (Math.min (Math.max (Math.abs parseFloat(markRightX - markLeftX)), @minWidth()), @maxWidth())
+    width = (Math.min (Math.max (Math.abs parseFloat(markRightX) - parseFloat(markLeftX)), parseFloat(@minWidth())), parseFloat(@maxWidth()))
+    console.log 'WIDTH: ', parseFloat(width)
 
     @element.style.left = markLeftX + "px"
     @element.style.width = parseFloat(width) + "px"
