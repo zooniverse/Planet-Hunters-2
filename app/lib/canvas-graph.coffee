@@ -460,10 +460,10 @@ class CanvasGraph
   addMarkToGraph: (e) =>
     return if @markingDisabled
     e.preventDefault()
-    if @marks.markTooCloseToAnotherMark(e, @scale, @originalMin)
-      classifier.notify 'Marks may not overlap!'
-      @shakeGraph()
-      return
+    # if @marks.markTooCloseToAnotherMark(e, @scale, @originalMin)
+    #   classifier.notify 'Marks may not overlap!'
+    #   @shakeGraph()
+    #   return
 
     # create new mark
     @mark = new Mark(e, @, @originalMin)
@@ -538,7 +538,7 @@ class Mark
     # @element.getElementsByClassName('.left-handle').fadeOut()
     # # @element.find('.right-handle').fadeOut()
 
-    @element.style.left = @toCanvasXPoint(e) + "px"
+    @element.style.left = parseFloat(@toCanvasXPoint(e)) + "px"
     @element.style.position = 'absolute'
     @element.style.top = e.target.offsetTop + "px"
     @element.style.height = (@canvas.height - 2) + 'px'
@@ -558,10 +558,11 @@ class Mark
     @element.addEventListener 'mouseout', @onMouseOut
 
   minWidth: -> parseFloat(@canvasGraph.toPixels(0.5)) #15 * (@canvasGraph.scale || 1)
-  maxWidth: -> parseFloat(@canvasGraph.toPixels(3))    # * (@canvasGraph.scale || 1)
+  maxWidth: -> parseFloat(@canvasGraph.toPixels(2))    # * (@canvasGraph.scale || 1)
   handleWidth: -> 16 * (@canvasGraph.scale || 1)
 
   draw: (e) ->
+    console.log 'DRAW!'
     markLeftX = Math.max @initialLeft + @minWidth() - @maxWidth(),
                          Math.min @initialLeft, 
                          @toCanvasXPoint(e)
@@ -569,32 +570,37 @@ class Mark
     markRightX = Math.max @initialLeft + @minWidth(), 
                           @toCanvasXPoint(e)
 
-    # no overlapping of marks
-    markLeftX = Math.max markLeftX,
-                        (@closestXBelow + @handleWidth() || markLeftX),
-                        (@canvasGraph.toPixels(@canvasGraph.smallestX))
+    # # no overlapping of marks
+    # markLeftX = Math.max markLeftX,
+    #                     (@closestXBelow + @handleWidth() || markLeftX),
+    #                     (@canvasGraph.toPixels(@canvasGraph.smallestX))
 
-    markRightX = Math.min markRightX,
-                         (@closestXAbove - @handleWidth() || markRightX),
-                         (@canvasGraph.toPixels(@canvasGraph.largestX))
+    # markRightX = Math.min markRightX,
+    #                      (@closestXAbove - @handleWidth() || markRightX),
+    #                      (@canvasGraph.toPixels(@canvasGraph.largestX))
 
     # max and min width on creating / resizing marks
-    width = (Math.min (Math.max (Math.abs parseFloat(markRightX) - parseFloat(markLeftX)), parseFloat(@minWidth())), parseFloat(@maxWidth()))
-    console.log 'WIDTH: ', parseFloat(width)
+    width = Math.min (Math.max (Math.abs parseFloat(markRightX) - parseFloat(markLeftX)), parseFloat(@minWidth())), parseFloat(@maxWidth())
+    # console.log 'WIDTH: ', parseFloat(width)
 
-    @element.style.left = markLeftX + "px"
+    @element.style.left = parseFloat(markLeftX) + "px"
     @element.style.width = parseFloat(width) + "px"
     @save( markLeftX, markLeftX+width )
 
   move: (e) ->
+    console.log 'MOVE!'
     markWidth = parseFloat(@element.style.width)
     
-    # no overlapping of marks or moving out of canvas bounds
-    leftXPos = Math.max (@toCanvasXPoint(e) - @moveOffset),
-                        (@closestXBelow || -@handleWidth()) + @handleWidth(),
-                        @canvasGraph.leftPadding
-    leftXPos = Math.min leftXPos,
-                        ((@closestXAbove || @canvas.width + @handleWidth()) - markWidth) - @handleWidth()
+    # # no overlapping of marks or moving out of canvas bounds
+    # leftXPos = Math.max (@toCanvasXPoint(e) - @moveOffset),
+    #                     (@closestXBelow || -@handleWidth()) + @handleWidth(),
+    #                     @canvasGraph.leftPadding
+    # leftXPos = Math.min leftXPos,
+    #                     ((@closestXAbove || @canvas.width + @handleWidth()) - markWidth) - @handleWidth()
+    
+    leftXPos = Math.max @toCanvasXPoint(e) - @moveOffset, @canvasGraph.leftPadding
+
+
     markRightX = leftXPos + markWidth
     @element.style.left = leftXPos + "px"
     @save(leftXPos, markRightX)
@@ -653,6 +659,8 @@ class Mark
     else if e.target.className is "mark"
       @moving = true
       @moveOffset = (@toCanvasXPoint(e) - @canvasXMin)
+      console.log 'MOVE OFFSET (pixels): ', @moveOffset
+      console.log 'MOVE OFFSET (days)  : ', @canvasGraph.toDays(@moveOffset)
 
     @closestXBelow = @canvasGraph.marks.closestXBelow(@canvasXMin)
     @closestXAbove = @canvasGraph.marks.closestXAbove(@canvasXMax)
@@ -689,6 +697,7 @@ class Mark
       if value <= @dataXMaxRel and value >= @dataXMinRel
         return true
     return false
+    return true # DEBUG
 
 
   toCanvasXPoint: (e) -> e.pageX - @canvas.getBoundingClientRect().left - window.scrollX
