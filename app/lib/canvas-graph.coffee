@@ -59,6 +59,7 @@ class CanvasGraph
     # console.log 'PLOT RANGE: [',val,',',val+zoomRanges[zoomLevel],']'
 
     @plotPoints(val, val+zoomRanges[zoomLevel])
+    # @rescaleMarks(val, val+zoomRanges[zoomLevel])
 
     if xClick < @leftPadding
       # draw triangle
@@ -133,18 +134,29 @@ class CanvasGraph
     return sum / data.length
 
   showFakePrevMarks: () ->
-    # console.log 'showFakePrevMarks()'
-    @zoomOut( =>
-      maxMarks = 5
-      minMarks = 1 
-      howMany = Math.floor( Math.random() * (maxMarks-minMarks) + minMarks )
-      # console.log 'randomly generating ', howMany, ' (fake) marks' # DEBUG
-      @generateFakePrevMarks( howMany )
-      for entry in [@prevMarks...]
-        # console.log '[',entry.xL,',',entry.xR,']' # DEBUG
-        @highlightCurve(entry.xL,entry.xR)
-      return howMany
-    )
+    console.log 'showFakePrevMarks()'
+    @zoomOut()
+    maxMarks = 5
+    minMarks = 1 
+    howMany = Math.floor( Math.random() * (maxMarks-minMarks) + minMarks )
+    # console.log 'randomly generating ', howMany, ' (fake) marks' # DEBUG
+    @generateFakePrevMarks( howMany )
+    for entry in [@prevMarks...]
+      # console.log '[',entry.xL,',',entry.xR,']' # DEBUG
+      @highlightCurve(entry.xL,entry.xR)
+      
+    # DEBUG
+    # @zoomOut( =>
+    #   maxMarks = 5
+    #   minMarks = 1 
+    #   howMany = Math.floor( Math.random() * (maxMarks-minMarks) + minMarks )
+    #   # console.log 'randomly generating ', howMany, ' (fake) marks' # DEBUG
+    #   @generateFakePrevMarks( howMany )
+    #   for entry in [@prevMarks...]
+    #     # console.log '[',entry.xL,',',entry.xR,']' # DEBUG
+    #     @highlightCurve(entry.xL,entry.xR)
+    #   return howMany
+    # )
 
   generateFakePrevMarks: (n) ->
     minWid = 0.5 # [days]
@@ -163,6 +175,7 @@ class CanvasGraph
       @highlightCurve(entry.xL,entry.xR)
 
   highlightCurve: (xLeft,xRight) ->
+    console.log 'highlightCurve()'
     $('#graph-container').addClass('showing-prev-data')
     for i in [0...@dataLength]
       if @data.x[i] >= xLeft and @data.x[i] <= xRight
@@ -175,6 +188,7 @@ class CanvasGraph
     return
 
   plotPoints: (xMin = @smallestX, xMax = @largestX, yMin = @smallestY, yMax = @largestY) ->
+    console.log 'plotPoints(): [',xMin,',',xMax,']'
     @xMin = xMin
     @xMax = xMax
     @yMin = yMin
@@ -212,6 +226,7 @@ class CanvasGraph
     @drawYTickMarks(yMin, yMax)
 
     @scale = (parseFloat(@largestX) - parseFloat(@smallestX)) / (parseFloat(@xMax) - parseFloat(@xMin))
+    console.log '----------- SCALE -------- ', @scale
 
     @rescaleMarks(xMin, xMax)
 
@@ -223,16 +238,18 @@ class CanvasGraph
     # draw marks
     if @marks
       for mark in @marks.all
+        # scaledMin = ((mark.dataXMinRel - xMin) / (xMax - xMin)) * @canvas.width
+        # scaledMax = ((mark.dataXMaxRel - xMin) / (xMax - xMin)) * @canvas.width
         scaledMin = ((parseFloat(mark.dataXMinRel) + parseFloat(@toDays(@leftPadding)) - parseFloat(xMin) - parseFloat(val) ) / (parseFloat(xMax) - parseFloat(xMin)) ) * parseFloat(@canvas.width-@leftPadding)
         scaledMax = ((parseFloat(mark.dataXMaxRel) + parseFloat(@toDays(@leftPadding)) - parseFloat(xMin) - parseFloat(val) ) / (parseFloat(xMax) - parseFloat(xMin)) ) * parseFloat(@canvas.width-@leftPadding)
         #                                ^ prevents from moving towards left                          ^ prevents marks from moving towards right
         mark.element.style.width = (parseFloat(scaledMax)-parseFloat(scaledMin)) + "px"
         mark.element.style.left = parseFloat(scaledMin) + "px"
-        # mark.save(scaledMin, scaledMax)
+        mark.save(scaledMin, scaledMax)
 
         console.log """
                       -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-                      ----------------- DEBUG REPORT ----------------
+                      ---------------- RESCALE MARKS ----------------
                                             val: #{val}  <--- slider value
                               canvasGraph.scale: #{@scale}
                                            xMin: #{xMin}  <------------- lightcurve display limits                    
@@ -408,46 +425,54 @@ class CanvasGraph
       @ctx.stroke()
 
   zoomInTo: (wMin, wMax) ->
-    classifier.el.find('#graph').addClass('is-zooming')
+    # classifier.el.find('#graph').addClass('is-zooming')
     [cMin, cMax] = [@xMin, @xMax]
 
-    zoom = setInterval (=>
-      @plotPoints(cMin,cMax)
-      @rescaleMarks(cMin,cMax)
-      cMin += 1.5 unless cMin >= wMin
-      cMax -= 1.5 unless cMax <= wMax
-      if cMin >= wMin and cMax <= wMax # when 'animation' is done...
-        clearInterval zoom
-        classifier.el.find('#graph').removeClass('is-zooming')
-        @plotPoints(wMin,wMax)
-        @rescaleMarks(wMin,wMax)
-    ), 30
+    # DEBUG CODE
+    @plotPoints(wMin,wMax)
+    # @rescaleMarks(wMin,wMax)
+
+    # zoom = setInterval (=>
+    #   @plotPoints(cMin,cMax)
+    #   @rescaleMarks(cMin,cMax)
+    #   cMin += 1.5 unless cMin >= wMin
+    #   cMax -= 1.5 unless cMax <= wMax
+    #   if cMin >= wMin and cMax <= wMax # when 'animation' is done...
+    #     clearInterval zoom
+    #     classifier.el.find('#graph').removeClass('is-zooming')
+    #     @plotPoints(wMin,wMax)
+    #     @rescaleMarks(wMin,wMax)
+    # ), 30
 
   zoomOut: (callback) ->
-    classifier.el.find('#graph').addClass('is-zooming')
-    classifier.el.find('#ui-slider').val(0) # reset slider
-    classifier.zoomLevel = 0 # reset zoom level index
+    # classifier.el.find('#graph').addClass('is-zooming')
+    # classifier.el.find('#ui-slider').val(0) # reset slider
+    # classifier.zoomLevel = 0 # reset zoom level index
 
     [cMin, cMax] = [@xMin, @xMax]
     [wMin, wMax] = [@smallestX, @largestX]
 
-    # TODO: why doesn't this work?
-    zoom = setInterval (=>
-      @plotPoints(cMin,cMax)
-      cMin -= 1.0 unless cMin <= wMin
-      cMax += 1.0 unless cMax >= wMax
-      if cMin <= wMin and cMax >= wMax  # finished zooming
-        clearInterval zoom
-        classifier.el.find('#graph').removeClass('is-zooming')
-        # console.log '*********** [',wMin,',',wMax,'] *********** (done with animation)'
-        @plotPoints(wMin, wMax)
-        unless callback is undefined 
-          callback.apply()
-          classifier.el.find("#zoom-button").removeClass("zoomed")
-          classifier.el.find("#zoom-button").removeClass("allowZoomOut") # for last zoom level
-          classifier.el.find('#ui-slider').attr('disabled',true)
-          classifier.el.find('.noUi-handle').fadeOut(150)
-    ), 30
+    @plotPoints(wMin, wMax)
+
+
+    # # TODO: why doesn't this work?
+    # zoom = setInterval (=>
+    #   @plotPoints(cMin,cMax)
+    #   cMin -= 1.0 unless cMin <= wMin
+    #   cMax += 1.0 unless cMax >= wMax
+    #   if cMin <= wMin and cMax >= wMax  # finished zooming
+    #     clearInterval zoom
+    #     classifier.el.find('#graph').removeClass('is-zooming')
+    #     # console.log '*********** [',wMin,',',wMax,'] *********** (done with animation)'
+    #     @plotPoints(wMin, wMax)
+    #     unless callback is undefined 
+    #       callback.apply()
+    #       classifier.el.find("#zoom-button").removeClass("zoomed")
+    #       classifier.el.find("#zoom-button").removeClass("allowZoomOut") # for last zoom level
+    #       classifier.el.find('#ui-slider').attr('disabled',true)
+    #       classifier.el.find('.noUi-handle').fadeOut(150)
+    # ), 30
+
     return
 
   clearCanvas: -> @ctx.clearRect(0,0,@canvas.width, @canvas.height)
@@ -548,7 +573,16 @@ class Mark
     @element.style.textAlign = 'center'
     @element.style.cursor = "move"
 
+
+    val = classifier.el.find('#ui-slider').val()
+    # console.log 'VAL (days)   = ', parseFloat(val)
+    # console.log 'VAL (pixels) = ', @canvasGraph.toPixels(parseFloat(val))
+    # console.log 'MIN WIDTH    = ', @minWidth()
+
     @initialLeft = @toCanvasXPoint(e) - (@minWidth()/2)
+    # console.log 'INITIAL XMIN (pixels): ', @initialLeft
+    # console.log 'INITIAL XMIN (days)  : ', @canvasGraph.toDays(@initialLeft-@canvasGraph.leftPadding)
+
     @dragging = true
 
     # create event listeners
@@ -557,8 +591,28 @@ class Mark
     @element.addEventListener 'mouseover', @onMouseOver
     @element.addEventListener 'mouseout', @onMouseOut
 
-  minWidth: -> parseFloat(@canvasGraph.toPixels(0.5)) #15 * (@canvasGraph.scale || 1)
-  maxWidth: -> parseFloat(@canvasGraph.toPixels(2))    # * (@canvasGraph.scale || 1)
+  toPixels: (dataPoint) -> ((parseFloat(dataPoint) - parseFloat(@xMin)) / (parseFloat(@xMax) - parseFloat(@xMin))) * (parseFloat(@canvas.width)-parseFloat(@leftPadding))
+
+
+
+  minWidth: -> 
+    console.log 'CANVAS GRAPH XMIN: ', @canvasGraph.xMin
+    console.log 'CANVAS GRAPH XMAX: ', @canvasGraph.xMax
+
+
+    minWidth =  13.03 *  @canvasGraph.scale #((0.5) / ( @canvasGraph.xMax - @canvasGraph.xMin)) * (@canvas.width-@canvasGraph.leftPadding)
+    console.log '//////////////////////////'
+    console.log 'minWidth(): ', minWidth, ' (pixels)'
+    console.log 'minWidth(): ', @canvasGraph.toDays(minWidth), ' (days)'
+    return minWidth
+
+  maxWidth: ->
+    maxWidth = 78.16 * @canvasGraph.scale #parseFloat( @canvasGraph.toPixels(1.0) )   # * (@canvasGraph.scale || 1)
+    console.log '//////////////////////////'
+    console.log 'maxWidth(): ', maxWidth, '(pixels)'
+    console.log 'maxWidth(): ', @canvasGraph.toDays(maxWidth), ' (days)'
+    return maxWidth
+
   handleWidth: -> 16 * (@canvasGraph.scale || 1)
 
   draw: (e) ->
@@ -566,6 +620,9 @@ class Mark
     markLeftX = Math.max @initialLeft + @minWidth() - @maxWidth(),
                          Math.min @initialLeft, 
                          @toCanvasXPoint(e)
+
+    # console.log 'markLeftX (days)  : ', @canvasGraph.toDays(markLeftX)
+    # console.log 'markLeftX (pixels): ', markLeftX
 
     markRightX = Math.max @initialLeft + @minWidth(), 
                           @toCanvasXPoint(e)
@@ -581,7 +638,8 @@ class Mark
 
     # max and min width on creating / resizing marks
     width = Math.min (Math.max (Math.abs parseFloat(markRightX) - parseFloat(markLeftX)), parseFloat(@minWidth())), parseFloat(@maxWidth())
-    # console.log 'WIDTH: ', parseFloat(width)
+    console.log 'WIDTH: ', parseFloat(width), ' (pixels)'
+    console.log 'WIDTH: ', @canvasGraph.toDays(parseFloat(width)), ' (days)'
 
     @element.style.left = parseFloat(markLeftX) + "px"
     @element.style.width = parseFloat(width) + "px"
@@ -591,14 +649,15 @@ class Mark
     console.log 'MOVE!'
     markWidth = parseFloat(@element.style.width)
     
-    # # no overlapping of marks or moving out of canvas bounds
-    # leftXPos = Math.max (@toCanvasXPoint(e) - @moveOffset),
-    #                     (@closestXBelow || -@handleWidth()) + @handleWidth(),
-    #                     @canvasGraph.leftPadding
-    # leftXPos = Math.min leftXPos,
-    #                     ((@closestXAbove || @canvas.width + @handleWidth()) - markWidth) - @handleWidth()
+    # no overlapping of marks or moving out of canvas bounds
+    leftXPos = Math.max (@toCanvasXPoint(e) - @moveOffset),
+                        (@closestXBelow || -@handleWidth()) + @handleWidth(),
+                        @canvasGraph.leftPadding
+    leftXPos = Math.min leftXPos,
+                        ((@closestXAbove || @canvas.width + @handleWidth()) - markWidth) - @handleWidth()
     
     leftXPos = Math.max @toCanvasXPoint(e) - @moveOffset, @canvasGraph.leftPadding
+    # leftXPos = @toCanvasXPoint(e) - @moveOffset
 
 
     markRightX = leftXPos + markWidth
@@ -606,6 +665,10 @@ class Mark
     @save(leftXPos, markRightX)
 
   save: (markLeftX, markRightX) ->
+    # console.log "save()"
+    # console.log 'UPDATED MARK BOUNDS: (pixels) [',markLeftX,',',markRightX,']'
+    # console.log 'UPDATED MARK BOUNDS: (days)   [',@canvasGraph.toDays(markLeftX-@canvasGraph.leftPadding),',',@canvasGraph.toDays(markRightX-@canvasGraph.leftPadding),']'
+
     #canvas coords
     @canvasXMin = markLeftX
     @canvasXMax = markRightX
@@ -616,8 +679,7 @@ class Mark
     @dataXMinGlobal = @dataXMinRel + @originalMin    
     @dataXMaxGlobal = @dataXMaxRel + @originalMin
 
-    val = +classifier.el.find("#ui-slider").val()
-
+    # val = +classifier.el.find("#ui-slider").val()
     # console.log """
     #             -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
     #             ----------------- DEBUG REPORT ----------------
@@ -658,9 +720,12 @@ class Mark
       @dragging = true
     else if e.target.className is "mark"
       @moving = true
-      @moveOffset = (@toCanvasXPoint(e) - @canvasXMin)
-      console.log 'MOVE OFFSET (pixels): ', @moveOffset
-      console.log 'MOVE OFFSET (days)  : ', @canvasGraph.toDays(@moveOffset)
+
+    @moveOffset = (@toCanvasXPoint(e) - @canvasXMin)
+    # console.log 'CANVASXMIN (pixels)  : ', @canvasXMin
+    # console.log 'CANVASXMIN (days)    : ', @canvasGraph.toDays(@canvasXMin-@canvasGraph.leftPadding)
+    # console.log 'MOVE OFFSET (pixels) : ', @moveOffset
+    # console.log 'MOVE OFFSET (days)   : ', @canvasGraph.toDays(@moveOffset)
 
     @closestXBelow = @canvasGraph.marks.closestXBelow(@canvasXMin)
     @closestXAbove = @canvasGraph.marks.closestXAbove(@canvasXMax)
@@ -698,7 +763,6 @@ class Mark
         return true
     return false
     return true # DEBUG
-
 
   toCanvasXPoint: (e) -> e.pageX - @canvas.getBoundingClientRect().left - window.scrollX
 

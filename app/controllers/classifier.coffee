@@ -159,44 +159,49 @@ class Classifier extends BaseController
 
   onChangeScaleSlider: ->
     val = +@el.find("#ui-slider").val()
-    return if @zoomLevel is 0 or @zoomLevel > @zoomRanges.length
+    # if @zoomLevel is 0 or @zoomLevel > @zoomRanges.length
+    #   console.log 'RETURNING!!!!!!'
+    #   return 
+    
     @canvasGraph.plotPoints( val, val + @zoomRanges[@zoomLevel] )
-    @canvasGraph.rescaleMarks(val, val + @zoomRanges[@zoomLevel])
-    # DEBUG CODE
-    console.log 'onChangeScaleSlider(): '
-    console.log 'SLIDER VALUE: ', val
-    console.log 'PLOT RANGE [',val,',',val+@zoomRanges[@zoomLevel],']'
-    console.log '-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-'
+    # # DEBUG CODE
+    # console.log 'onChangeScaleSlider(): '
+    # console.log '    SLIDER VALUE (val): ', val
+    # console.log '    PLOT RANGE          [',val,',',val+@zoomRanges[@zoomLevel],']'
+    # console.log '-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-'
 
   onClickZoom: ->
     console.log 'onClickZoom()'
-    # DO WE NEED THIS?
-    @prevZoomLevel = @zoomLevel
+
+    # # DO WE NEED THIS?
+    # @prevZoomLevel = @zoomLevel
 
     # console.log '*** PREV ZOOM LEVEL: ',@prevZoomLevel,' ***'
     
     val = +@el.find("#ui-slider").val()
+
+    # increment zoom level
     @zoomLevel = @zoomLevel + 1
 
-    if @zoomLevel is 0 or @zoomLevel > @zoomRanges.length-1 # no zoom
-      # console.log 'PREV ZOOM LEVEL: ', @prevZoomLevel
-      console.log '******** ZOOMING OUT *********'
-      @zoomReset()      
-    else 
-      console.log '******** ZOOMING IN *********'
-      console.log '* zoomLevel: ', @zoomLevel, '*'
-      console.log '*****************************'
+    # reset zoom
+    if @zoomLevel > 2
+      @zoomLevel = 0
 
-      # DO WE NEED THIS?
-      # set slider for current zoom level
-      if val isnt 0 and @prevZoomLevel isnt 2
-        val = val + 0.5*( @zoomRanges[@prevZoomLevel] - @zoomRanges[@zoomLevel] )
-      if @prevZoomLevel is 2
-        val = 0
-      @el.find("#ui-slider").val(val) 
+    if @zoomLevel is 0
+      @zoomReset()
+    else 
+      # # DO WE NEED THIS?
+      # # set slider for current zoom level
+      # if val isnt 0 and @prevZoomLevel isnt 2
+      #   val = val + 0.5*( @zoomRanges[@prevZoomLevel] - @zoomRanges[@zoomLevel] )
+      # if @prevZoomLevel is 2
+      #   val = 0
+      # @el.find("#ui-slider").val(val) 
 
       # zoom in to new range
       @canvasGraph.zoomInTo(val, val+@zoomRanges[@zoomLevel])
+      console.log 'zoomInTo(', val, ',', val+@zoomRanges[@zoomLevel], ')'
+
     
       # rebuild slider
       @el.find("#ui-slider").noUiSlider
@@ -209,20 +214,20 @@ class Classifier extends BaseController
       # update attributes/properties
       @el.find('#ui-slider').removeAttr('disabled')
       @el.find("#zoom-button").addClass("zoomed")
-      if @zoomLevel is @zoomRanges.length-1 # last zoom level
+      if @zoomLevel is 2
         @el.find("#zoom-button").addClass("allowZoomOut")
       else
         @el.find("#zoom-button").removeClass("allowZoomOut")
 
     # DEBUG CODE        
     # console.log 'onClickZoom(): '
-    console.log 'SLIDER VALUE: ', val
-    console.log 'PLOT RANGE [', val, ',', val+@zoomRanges[@zoomLevel], ']'
-    console.log '******************************************************************************************'
+    # console.log 'SLIDER VALUE: ', val
+    # console.log 'PLOT RANGE [', val, ',', val+@zoomRanges[@zoomLevel], ']'
+    # console.log '******************************************************************************************'
 
-    # DO WE NEED THIS?
-    @prevZoomMin = 0
-    @prevZoomMax = @zoomRanges[@zoomLevel]
+    # # DO WE NEED THIS?
+    # @prevZoomMin = 0
+    # @prevZoomMax = @zoomRanges[@zoomLevel]
 
     # console.log 'PREV ZOOM WINDOW: [',@prevZoomMin,',',,']'
 
@@ -323,7 +328,6 @@ class Classifier extends BaseController
     # @finishedFeedbackButton.hide()
 
     # keep drawing highlighted points while displaying previous data
-    # remove when not needed
     # TODO: fix, kindda cluegy
     $("#graph-container").removeClass('showing-prev-data')    
 
