@@ -430,6 +430,14 @@ class CanvasGraph
 
     # DEBUG CODE
     @plotPoints(wMin,wMax)
+    @plotPoints(wMin,wMax)
+    @plotPoints(wMin,wMax)
+    @plotPoints(wMin,wMax)
+    @plotPoints(wMin,wMax)
+    @plotPoints(wMin,wMax)
+    @plotPoints(wMin,wMax)
+    @plotPoints(wMin,wMax)
+
     # @rescaleMarks(wMin,wMax)
 
     # zoom = setInterval (=>
@@ -452,26 +460,32 @@ class CanvasGraph
     [cMin, cMax] = [@xMin, @xMax]
     [wMin, wMax] = [@smallestX, @largestX]
 
-    @plotPoints(wMin, wMax)
+    # @plotPoints(wMin, wMax)
+    # @plotPoints(wMin, wMax)
+    # @plotPoints(wMin, wMax)
+    # @plotPoints(wMin, wMax)
+    # @plotPoints(wMin, wMax)
+    # @plotPoints(wMin, wMax)
+    # @plotPoints(wMin, wMax)
 
 
-    # # TODO: why doesn't this work?
-    # zoom = setInterval (=>
-    #   @plotPoints(cMin,cMax)
-    #   cMin -= 1.0 unless cMin <= wMin
-    #   cMax += 1.0 unless cMax >= wMax
-    #   if cMin <= wMin and cMax >= wMax  # finished zooming
-    #     clearInterval zoom
-    #     classifier.el.find('#graph').removeClass('is-zooming')
-    #     # console.log '*********** [',wMin,',',wMax,'] *********** (done with animation)'
-    #     @plotPoints(wMin, wMax)
-    #     unless callback is undefined 
-    #       callback.apply()
-    #       classifier.el.find("#zoom-button").removeClass("zoomed")
-    #       classifier.el.find("#zoom-button").removeClass("allowZoomOut") # for last zoom level
-    #       classifier.el.find('#ui-slider').attr('disabled',true)
-    #       classifier.el.find('.noUi-handle').fadeOut(150)
-    # ), 30
+    # TODO: why doesn't this work?
+    zoom = setInterval (=>
+      @plotPoints(cMin,cMax)
+      cMin -= 1.0 unless cMin <= wMin
+      cMax += 1.0 unless cMax >= wMax
+      if cMin <= wMin and cMax >= wMax  # finished zooming
+        clearInterval zoom
+        classifier.el.find('#graph').removeClass('is-zooming')
+        # console.log '*********** [',wMin,',',wMax,'] *********** (done with animation)'
+        @plotPoints(wMin, wMax)
+        unless callback is undefined 
+          callback.apply()
+          classifier.el.find("#zoom-button").removeClass("zoomed")
+          classifier.el.find("#zoom-button").removeClass("allowZoomOut") # for last zoom level
+          classifier.el.find('#ui-slider').attr('disabled',true)
+          classifier.el.find('.noUi-handle').fadeOut(150)
+    ), 30
 
     return
 
@@ -595,23 +609,18 @@ class Mark
 
 
 
-  minWidth: -> 
-    console.log 'CANVAS GRAPH XMIN: ', @canvasGraph.xMin
-    console.log 'CANVAS GRAPH XMAX: ', @canvasGraph.xMax
+  minWidth: -> 0.5*(@canvas.width-@canvasGraph.leftPadding)/(@canvasGraph.xMax-@canvasGraph.xMin)
+    # DEBUG CODE
+    # minWidth =  0.5*(@canvas.width-@canvasGraph.leftPadding)/(@canvasGraph.xMax-@canvasGraph.xMin)
+    # console.log 'canvasGraph.xMax = ', @canvasGraph.xMax
+    # console.log 'minWidth() = ', minWidth
+    # return minWidth
 
-
-    minWidth =  13.03 *  @canvasGraph.scale #((0.5) / ( @canvasGraph.xMax - @canvasGraph.xMin)) * (@canvas.width-@canvasGraph.leftPadding)
-    console.log '//////////////////////////'
-    console.log 'minWidth(): ', minWidth, ' (pixels)'
-    console.log 'minWidth(): ', @canvasGraph.toDays(minWidth), ' (days)'
-    return minWidth
-
-  maxWidth: ->
-    maxWidth = 78.16 * @canvasGraph.scale #parseFloat( @canvasGraph.toPixels(1.0) )   # * (@canvasGraph.scale || 1)
-    console.log '//////////////////////////'
-    console.log 'maxWidth(): ', maxWidth, '(pixels)'
-    console.log 'maxWidth(): ', @canvasGraph.toDays(maxWidth), ' (days)'
-    return maxWidth
+  maxWidth: -> 2.0*(@canvas.width-@canvasGraph.leftPadding)/(@canvasGraph.xMax-@canvasGraph.xMin)
+    # DEBUG CODE
+    # maxWidth =  2.0*(@canvas.width-@canvasGraph.leftPadding)/(@canvasGraph.xMax-@canvasGraph.xMin)
+    # console.log 'maxWidth() = ', maxWidth
+    # return maxWidth
 
   handleWidth: -> 16 * (@canvasGraph.scale || 1)
 
