@@ -428,11 +428,13 @@ class CanvasGraph
     classifier.el.find('#graph').addClass('is-zooming')
     [cMin, cMax] = [@xMin, @xMax]
     [wMin, wMax] = [@smallestX, @largestX]
+    
+    step = 1.5
     zoom = setInterval (=>
       
-      cMin -= 0.1
+      cMin -= step
       if cMin < wMin then cMin = wMin
-      cMax += 0.1
+      cMax += step
       if cMax > wMax then cMax = wMax
       
       console.log "[cMin,cMax] = [#{cMin},#{cMax}]"
