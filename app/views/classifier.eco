@@ -27,7 +27,7 @@
     <div class="subject-header">
       <div class="do-you-see-a-transit">
         <h3>Do you see a transit?</h3>
-        <p>If so, highlight it on the graph!</p>
+        <p>If so, highlight it on the light curve below!</p>
       </div>
       <div id="notification">
         <div id="notification-message"></div>
