@@ -264,7 +264,7 @@ class CanvasGraph
                       -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
                     """
 
-zoomOut: (callback) ->
+  zoomOut: (callback) ->
     classifier.el.find('#graph').addClass('is-zooming')
     [cMin, cMax] = [@xMin, @xMax]
     [wMin, wMax] = [@smallestX, @largestX]
