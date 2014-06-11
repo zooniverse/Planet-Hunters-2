@@ -429,11 +429,15 @@ class CanvasGraph
     [cMin, cMax] = [@xMin, @xMax]
     [wMin, wMax] = [@smallestX, @largestX]
     zoom = setInterval (=>
-      unless parseFloat(cMin) <= parseFloat(wMin)
-        cMin -= 0.1
-      unless parseFloat(cMax) >= parseFloat(wMax)
-        cMax += 0.1
+      
+      cMin -= 0.1
+      if cMin < wMin then cMin = wMin
+      cMax += 0.1
+      if cMax > wMax then cMax = wMax
+      
+      console.log "[cMin,cMax] = [#{cMin},#{cMax}]"
       @plotPoints(cMin,cMax)
+
       if cMin <= wMin and cMax >= wMax  # finished zooming
         clearInterval zoom
         classifier.el.find('#graph').removeClass('is-zooming')
@@ -645,7 +649,7 @@ class Mark
   handleWidth: -> 16 * (@canvasGraph.scale || 1)
 
   draw: (e) ->
-    console.log 'DRAW!'
+    # console.log 'DRAW!'
     markLeftX = Math.max @initialLeft + @minWidth() - @maxWidth(),
                          Math.min @initialLeft, 
                          @toCanvasXPoint(e)
@@ -667,8 +671,8 @@ class Mark
 
     # max and min width on creating / resizing marks
     width = Math.min (Math.max (Math.abs parseFloat(markRightX) - parseFloat(markLeftX)), parseFloat(@minWidth())), parseFloat(@maxWidth())
-    console.log 'WIDTH: ', parseFloat(width), ' (pixels)'
-    console.log 'WIDTH: ', @canvasGraph.toDays(parseFloat(width)), ' (days)'
+    # console.log 'WIDTH: ', parseFloat(width), ' (pixels)'
+    # console.log 'WIDTH: ', @canvasGraph.toDays(parseFloat(width)), ' (days)'
 
     @element.style.left = parseFloat(markLeftX) + "px"
     @element.style.width = parseFloat(width) + "px"
