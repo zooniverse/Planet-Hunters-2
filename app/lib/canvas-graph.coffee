@@ -188,7 +188,7 @@ class CanvasGraph
     return
 
   plotPoints: (xMin = @smallestX, xMax = @largestX, yMin = @smallestY, yMax = @largestY) ->
-    console.log 'plotPoints(): [',xMin,',',xMax,']'
+    # console.log 'plotPoints(): [',xMin,',',xMax,']'
     @xMin = xMin
     @xMax = xMax
     @yMin = yMin
@@ -226,7 +226,7 @@ class CanvasGraph
     @drawYTickMarks(yMin, yMax)
 
     @scale = (parseFloat(@largestX) - parseFloat(@smallestX)) / (parseFloat(@xMax) - parseFloat(@xMin))
-    console.log '----------- SCALE -------- ', @scale
+    # console.log '----------- SCALE -------- ', @scale
 
     @rescaleMarks(xMin, xMax)
 
@@ -247,22 +247,22 @@ class CanvasGraph
         mark.element.style.left = parseFloat(scaledMin) + "px"
         mark.save(scaledMin, scaledMax)
 
-        console.log """
-                      -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-                      ---------------- RESCALE MARKS ----------------
-                                            val: #{val}  <--- slider value
-                              canvasGraph.scale: #{@scale}
-                                           xMin: #{xMin}  <------------- lightcurve display limits                    
-                                           xMax: #{xMax}    
-                                      scaledMin: #{scaledMin} <---/------ mark limits
-                                      scaledMax: #{scaledMax} <--/ 
-                               mark.dataXMinRel: #{mark.dataXMinRel} <-- data limits        
-                               mark.dataXMaxRel: #{mark.dataXMaxRel}   
-                              mark width (data): #{(mark.dataXMaxRel-mark.dataXMinRel)}
-                            mark width (canvas): #{mark.element.style.width}       <----- CSS style    
-                        mark.element.style.left: #{mark.element.style.left}
-                      -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-                    """
+        # console.log """
+        #               -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+        #               ---------------- RESCALE MARKS ----------------
+        #                                     val: #{val}  <--- slider value
+        #                       canvasGraph.scale: #{@scale}
+        #                                    xMin: #{xMin}  <------------- lightcurve display limits                    
+        #                                    xMax: #{xMax}    
+        #                               scaledMin: #{scaledMin} <---/------ mark limits
+        #                               scaledMax: #{scaledMax} <--/ 
+        #                        mark.dataXMinRel: #{mark.dataXMinRel} <-- data limits        
+        #                        mark.dataXMaxRel: #{mark.dataXMaxRel}   
+        #                       mark width (data): #{(mark.dataXMaxRel-mark.dataXMinRel)}
+        #                     mark width (canvas): #{mark.element.style.width}       <----- CSS style    
+        #                 mark.element.style.left: #{mark.element.style.left}
+        #               -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+        #             """
 
 
   drawXTickMarks: (xMin, xMax) ->
@@ -424,60 +424,19 @@ class CanvasGraph
       @ctx.strokeStyle = tickColor
       @ctx.stroke()
 
-  zoomInTo: (wMin, wMax) ->
-    # classifier.el.find('#graph').addClass('is-zooming')
-    [cMin, cMax] = [@xMin, @xMax]
-
-    # DEBUG CODE
-    @plotPoints(wMin,wMax)
-    @plotPoints(wMin,wMax)
-    @plotPoints(wMin,wMax)
-    @plotPoints(wMin,wMax)
-    @plotPoints(wMin,wMax)
-    @plotPoints(wMin,wMax)
-    @plotPoints(wMin,wMax)
-    @plotPoints(wMin,wMax)
-
-    # @rescaleMarks(wMin,wMax)
-
-    # zoom = setInterval (=>
-    #   @plotPoints(cMin,cMax)
-    #   @rescaleMarks(cMin,cMax)
-    #   cMin += 1.5 unless cMin >= wMin
-    #   cMax -= 1.5 unless cMax <= wMax
-    #   if cMin >= wMin and cMax <= wMax # when 'animation' is done...
-    #     clearInterval zoom
-    #     classifier.el.find('#graph').removeClass('is-zooming')
-    #     @plotPoints(wMin,wMax)
-    #     @rescaleMarks(wMin,wMax)
-    # ), 30
-
   zoomOut: (callback) ->
-    # classifier.el.find('#graph').addClass('is-zooming')
-    # classifier.el.find('#ui-slider').val(0) # reset slider
-    # classifier.zoomLevel = 0 # reset zoom level index
-
+    classifier.el.find('#graph').addClass('is-zooming')
     [cMin, cMax] = [@xMin, @xMax]
     [wMin, wMax] = [@smallestX, @largestX]
-
-    # @plotPoints(wMin, wMax)
-    # @plotPoints(wMin, wMax)
-    # @plotPoints(wMin, wMax)
-    # @plotPoints(wMin, wMax)
-    # @plotPoints(wMin, wMax)
-    # @plotPoints(wMin, wMax)
-    # @plotPoints(wMin, wMax)
-
-
-    # TODO: why doesn't this work?
     zoom = setInterval (=>
+      unless parseFloat(cMin) <= parseFloat(wMin)
+        cMin -= 0.1
+      unless parseFloat(cMax) >= parseFloat(wMax)
+        cMax += 0.1
       @plotPoints(cMin,cMax)
-      cMin -= 1.0 unless cMin <= wMin
-      cMax += 1.0 unless cMax >= wMax
       if cMin <= wMin and cMax >= wMax  # finished zooming
         clearInterval zoom
         classifier.el.find('#graph').removeClass('is-zooming')
-        # console.log '*********** [',wMin,',',wMax,'] *********** (done with animation)'
         @plotPoints(wMin, wMax)
         unless callback is undefined 
           callback.apply()
@@ -486,8 +445,71 @@ class CanvasGraph
           classifier.el.find('#ui-slider').attr('disabled',true)
           classifier.el.find('.noUi-handle').fadeOut(150)
     ), 30
-
     return
+
+  zoomInTo: (wMin, wMax) ->
+    classifier.el.find('#graph').addClass('is-zooming')
+    [cMin, cMax] = [@xMin, @xMax]
+
+    # # DEBUG CODE
+    # @plotPoints(wMin,wMax)
+    # @rescaleMarks(wMin,wMax)
+
+    zoom = setInterval (=>
+      @plotPoints(cMin,cMax)
+      @rescaleMarks(cMin,cMax)
+      cMin += 1.5 unless cMin >= wMin
+      cMax -= 1.5 unless cMax <= wMax
+      if cMin >= wMin and cMax <= wMax # when 'animation' is done...
+        clearInterval zoom
+        classifier.el.find('#graph').removeClass('is-zooming')
+        @plotPoints(wMin,wMax)
+        @rescaleMarks(wMin,wMax)
+    ), 30
+
+  # zoomOut: (callback) ->
+  #   classifier.el.find('#graph').addClass('is-zooming')
+  #   classifier.el.find('#ui-slider').val(0) # reset slider
+  #   classifier.zoomLevel = 0 # reset zoom level index
+
+  #   [cMin, cMax] = [@xMin, @xMax]
+  #   [wMin, wMax] = [@smallestX, @largestX]
+
+  #   zoom = setInterval (=>
+
+  #       @plotPoints(cMin,cMax) # this line is problematic. why?
+  #       console.log '*****************************'
+  #       console.log '**** plotPoints(',cMin,',',cMax,') ****'
+  #       console.log '*****************************'
+
+  #       if (cMin-1.0) > wMin
+  #         cMin -= 1.0
+  #       else
+  #         console.log 'LEFT DONE!'
+
+  #       if (cMax+1.0) < wMax
+  #         cMax += 1.0
+  #       else
+  #         console.log 'RIGHT DONE!'
+
+  #     if cMin <= wMin and cMax >= wMax  # finished zooming
+  #       console.log 'CONSDOSNDKLSJDFHSLKJDHSKLDJHSLKJDHSKJDFHLKJSHFGLEUIRBLCIUW:DN:X WJKB:FHLKJSHD'
+  #       clearInterval zoom
+  #       classifier.el.find('#graph').removeClass('is-zooming')
+  #       @plotPoints(wMin, wMax)
+  #       unless callback is undefined 
+  #         callback.apply()
+  #         classifier.el.find("#zoom-button").removeClass("zoomed")
+  #         classifier.el.find("#zoom-button").removeClass("allowZoomOut") # for last zoom level
+  #         classifier.el.find('#ui-slider').attr('disabled',true)
+  #         classifier.el.find('.noUi-handle').fadeOut(150)
+
+  #       # cMin -= 1.5 unless cMin <= wMin
+  #       # cMax += 1.5 unless cMax >= wMax
+
+  #   ), 30
+
+  #   return
 
   clearCanvas: -> @ctx.clearRect(0,0,@canvas.width, @canvas.height)
 
@@ -606,8 +628,6 @@ class Mark
     @element.addEventListener 'mouseout', @onMouseOut
 
   toPixels: (dataPoint) -> ((parseFloat(dataPoint) - parseFloat(@xMin)) / (parseFloat(@xMax) - parseFloat(@xMin))) * (parseFloat(@canvas.width)-parseFloat(@leftPadding))
-
-
 
   minWidth: -> 0.5*(@canvas.width-@canvasGraph.leftPadding)/(@canvasGraph.xMax-@canvasGraph.xMin)
     # DEBUG CODE
