@@ -138,7 +138,7 @@ class Classifier extends BaseController
       @el.find(".noUi-handle").hide()
       
     @insertMetadata()
-    @el.find('.do-you-see-a-transit')
+    @el.find('.do-you-see-a-transit').fadeIn()
     @el.find('#no-transits').fadeIn() #prop('disabled',false)
     @el.find('#finished-marking').fadeIn() #prop('disabled',false)
     @el.find('#finished-feedback').fadeIn() #prop('disabled',false)
