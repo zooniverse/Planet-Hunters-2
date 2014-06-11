@@ -247,52 +247,55 @@ class CanvasGraph
         mark.element.style.left = parseFloat(scaledMin) + "px"
         mark.save(scaledMin, scaledMax)
 
-        console.log """
-                      -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-                      ---------------- RESCALE MARKS ----------------
-                                            val: #{val}  <--- slider value
-                              canvasGraph.scale: #{@scale}
-                                           xMin: #{xMin}  <------------- lightcurve display limits                    
-                                           xMax: #{xMax}    
-                                      scaledMin: #{scaledMin} <---/------ mark limits
-                                      scaledMax: #{scaledMax} <--/ 
-                               mark.dataXMinRel: #{mark.dataXMinRel} <-- data limits        
-                               mark.dataXMaxRel: #{mark.dataXMaxRel}   
-                              mark width (data): #{(mark.dataXMaxRel-mark.dataXMinRel)}
-                            mark width (canvas): #{mark.element.style.width}       <----- CSS style    
-                        mark.element.style.left: #{mark.element.style.left}
-                      -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-                    """
+        # console.log """
+        #               -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+        #               ---------------- RESCALE MARKS ----------------
+        #                                     val: #{val}  <--- slider value
+        #                       canvasGraph.scale: #{@scale}
+        #                                    xMin: #{xMin}  <------------- lightcurve display limits                    
+        #                                    xMax: #{xMax}    
+        #                               scaledMin: #{scaledMin} <---/------ mark limits
+        #                               scaledMax: #{scaledMax} <--/ 
+        #                        mark.dataXMinRel: #{mark.dataXMinRel} <-- data limits        
+        #                        mark.dataXMaxRel: #{mark.dataXMaxRel}   
+        #                       mark width (data): #{(mark.dataXMaxRel-mark.dataXMinRel)}
+        #                     mark width (canvas): #{mark.element.style.width}       <----- CSS style    
+        #                 mark.element.style.left: #{mark.element.style.left}
+        #               -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+        #             """
 
   zoomOut: (callback) ->
     classifier.el.find('#graph').addClass('is-zooming')
+    @plotPoints(@smallestX, @largestX)
+
     [cMin, cMax] = [@xMin, @xMax]
     [wMin, wMax] = [@smallestX, @largestX]
     
-    step = 1.5
-    zoom = setInterval (=>
+    # TODO: broken (a major pain in my ass)
+    # step = 1.5
+    # zoom = setInterval (=>
       
-      # gradually expand zooming bounds
-      cMin -= step
-      if cMin < wMin then cMin = wMin
-      cMax += step
-      if cMax > wMax then cMax = wMax
+    #   # gradually expand zooming bounds
+    #   cMin -= step
+    #   if cMin < @smallestX then cMin = @smallestX
+    #   cMax += step
+    #   if cMax > @largestX then cMax = @largestX
       
-      # console.log "[cMin,cMax] = [#{cMin},#{cMax}]"
-      @plotPoints(cMin,cMax)
+    #   # console.log "[cMin,cMax] = [#{cMin},#{cMax}]"
+    #   @plotPoints(cMin,cMax)
 
-      if cMin <= wMin and cMax >= wMax  # finished zooming
-        clearInterval zoom
-        classifier.el.find('#graph').removeClass('is-zooming')
-        @plotPoints(wMin, wMax)
-        unless callback is undefined 
-          callback.apply()
-          classifier.el.find("#zoom-button").removeClass("zoomed")
-          classifier.el.find("#zoom-button").removeClass("allowZoomOut") # for last zoom level
-          classifier.el.find('#ui-slider').attr('disabled',true)
-          classifier.el.find('.noUi-handle').fadeOut(150)
-    ), 30
-    return
+    #   if cMin <= @smallestX and cMax >= @largestX  # finished zooming
+    #     clearInterval zoom
+    #     classifier.el.find('#graph').removeClass('is-zooming')
+    #     @plotPoints(@smallestX, @largestX)
+    #     unless callback is undefined 
+    #       callback.apply()
+    #       classifier.el.find("#zoom-button").removeClass("zoomed")
+    #       classifier.el.find("#zoom-button").removeClass("allowZoomOut") # for last zoom level
+    #       classifier.el.find('#ui-slider').attr('disabled',true)
+    #       classifier.el.find('.noUi-handle').fadeOut(150)
+    # ), 30
+    # return
 
   zoomInTo: (wMin, wMax) ->
     classifier.el.find('#graph').addClass('is-zooming')
@@ -484,10 +487,10 @@ class CanvasGraph
   addMarkToGraph: (e) =>
     return if @markingDisabled
     e.preventDefault()
-    # if @marks.markTooCloseToAnotherMark(e, @scale, @originalMin)
-    #   classifier.notify 'Marks may not overlap!'
-    #   @shakeGraph()
-    #   return
+    if @marks.markTooCloseToAnother(e, @scale, @originalMin)
+      classifier.notify 'Marks may not overlap!'
+      @shakeGraph()
+      return
 
     # create new mark
     @mark = new Mark(e, @, @originalMin)
@@ -528,12 +531,12 @@ class Marks
   closestXAbove: (xCoord) -> (@sortedXCoords().filter (i) -> i > xCoord).shift()
   toCanvasXPoint: (e) -> e.pageX - e.target.getBoundingClientRect().left - window.scrollX
 
-  markTooCloseToAnotherMark: (e, scale) ->
+  markTooCloseToAnother: (e, scale) ->
     mouseLocation = @toCanvasXPoint(e)
     markBelow = Math.abs mouseLocation - @closestXBelow(mouseLocation)
     markAbove = Math.abs mouseLocation - @closestXAbove(mouseLocation)
     # 22 is width of mark plus some room on each side
-    markBelow < (22*scale) or markAbove < (22*scale) or mouseLocation in @sortedXCoords()
+    markBelow < (10*scale) or markAbove < (10*scale) or mouseLocation in @sortedXCoords()
 
 # -------------------------
 #  MARK CLASS
