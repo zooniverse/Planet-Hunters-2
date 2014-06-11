@@ -611,16 +611,35 @@ class Mark
   handleWidth: -> 16 * (@canvasGraph.scale || 1)
 
   draw: (e) ->
-    # console.log 'DRAW!'
+
     markLeftX = Math.max @initialLeft + @minWidth() - @maxWidth(),
-                         Math.min @initialLeft, 
-                         @toCanvasXPoint(e)
+                         Math.min @initialLeft, @toCanvasXPoint(e)
+
+    markRightX = Math.max @initialLeft + @minWidth(), @toCanvasXPoint(e)
+
+    # no overlapping of marks
+    markLeftX = Math.max markLeftX,
+                        (@closestXBelow + @handleWidth()/2 || markLeftX),
+                        (@canvasGraph.toPixels(@canvasGraph.smallestX))
+
+    markRightX = Math.min markRightX,
+                         (@closestXAbove - @handleWidth()/2 || markRightX),
+                         (@canvasGraph.toPixels(@canvasGraph.largestX))
+
+
+
+
+
+    # console.log 'DRAW!'
+    # markLeftX = Math.max @initialLeft + @minWidth() - @maxWidth(),
+    #                      Math.min @initialLeft, 
+    #                      @toCanvasXPoint(e)
 
     # console.log 'markLeftX (days)  : ', @canvasGraph.toDays(markLeftX)
     # console.log 'markLeftX (pixels): ', markLeftX
 
-    markRightX = Math.max @initialLeft + @minWidth(), 
-                          @toCanvasXPoint(e)
+    # markRightX = Math.max @initialLeft + @minWidth(), 
+    #                       @toCanvasXPoint(e)
 
     # # no overlapping of marks
     # markLeftX = Math.max markLeftX,
@@ -646,12 +665,12 @@ class Mark
     
     # no overlapping of marks or moving out of canvas bounds
     leftXPos = Math.max (@toCanvasXPoint(e) - @moveOffset),
-                        (@closestXBelow || -@handleWidth()) + @handleWidth(),
+                        (@closestXBelow || -@handleWidth()/2) + @handleWidth()/2,
                         @canvasGraph.leftPadding
     leftXPos = Math.min leftXPos,
-                        ((@closestXAbove || @canvas.width + @handleWidth()) - markWidth) - @handleWidth()
+                        ((@closestXAbove || @canvas.width + @handleWidth()/2) - markWidth) - @handleWidth()/2
     
-    leftXPos = Math.max @toCanvasXPoint(e) - @moveOffset, @canvasGraph.leftPadding
+    # leftXPos = Math.max @toCanvasXPoint(e) - @moveOffset, @canvasGraph.leftPadding
     # leftXPos = @toCanvasXPoint(e) - @moveOffset
 
 
