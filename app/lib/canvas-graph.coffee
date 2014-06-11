@@ -195,8 +195,6 @@ class CanvasGraph
     @yMax = yMax
     @clearCanvas()
 
-    # console.log 'PLOT RANGE [',xMin,',',xMax,']'
-
     # get necessary values from classifier
     val = +classifier.el.find('#ui-slider').val()
     zoomRanges = classifier.zoomRanges
@@ -224,10 +222,7 @@ class CanvasGraph
     # draw axes
     @drawXTickMarks(xMin, xMax)
     @drawYTickMarks(yMin, yMax)
-
     @scale = (parseFloat(@largestX) - parseFloat(@smallestX)) / (parseFloat(@xMax) - parseFloat(@xMin))
-    # console.log '----------- SCALE -------- ', @scale
-
     @rescaleMarks(xMin, xMax)
 
     return
@@ -317,7 +312,6 @@ class CanvasGraph
         @rescaleMarks(wMin,wMax)
     ), 30
 
-
   drawXTickMarks: (xMin, xMax) ->
     # tick/text properties
     tickMinorLength = 5
@@ -400,8 +394,6 @@ class CanvasGraph
         @ctx.fillText( (tick + @originalMin).toFixed(2), @toPixels(tick)+@leftPadding, 0 + textSpacing+10 )
       
   drawYTickMarks: (yMin, yMax) ->
-
-    # console.log 'LIMITS [',yMin,',',yMax,']'
     
     # generate intervals
     yTicks = []
@@ -575,16 +567,8 @@ class Mark
     @element.style.textAlign = 'center'
     @element.style.cursor = "move"
 
-
     val = classifier.el.find('#ui-slider').val()
-    # console.log 'VAL (days)   = ', parseFloat(val)
-    # console.log 'VAL (pixels) = ', @canvasGraph.toPixels(parseFloat(val))
-    # console.log 'MIN WIDTH    = ', @minWidth()
-
     @initialLeft = @toCanvasXPoint(e) - (@minWidth()/2)
-    # console.log 'INITIAL XMIN (pixels): ', @initialLeft
-    # console.log 'INITIAL XMIN (days)  : ', @canvasGraph.toDays(@initialLeft-@canvasGraph.leftPadding)
-
     @dragging = true
 
     # create event listeners
@@ -594,20 +578,8 @@ class Mark
     @element.addEventListener 'mouseout', @onMouseOut
 
   toPixels: (dataPoint) -> ((parseFloat(dataPoint) - parseFloat(@xMin)) / (parseFloat(@xMax) - parseFloat(@xMin))) * (parseFloat(@canvas.width)-parseFloat(@leftPadding))
-
   minWidth: -> 0.5*(@canvas.width-@canvasGraph.leftPadding)/(@canvasGraph.xMax-@canvasGraph.xMin)
-    # DEBUG CODE
-    # minWidth =  0.5*(@canvas.width-@canvasGraph.leftPadding)/(@canvasGraph.xMax-@canvasGraph.xMin)
-    # console.log 'canvasGraph.xMax = ', @canvasGraph.xMax
-    # console.log 'minWidth() = ', minWidth
-    # return minWidth
-
   maxWidth: -> 2.0*(@canvas.width-@canvasGraph.leftPadding)/(@canvasGraph.xMax-@canvasGraph.xMin)
-    # DEBUG CODE
-    # maxWidth =  2.0*(@canvas.width-@canvasGraph.leftPadding)/(@canvasGraph.xMax-@canvasGraph.xMin)
-    # console.log 'maxWidth() = ', maxWidth
-    # return maxWidth
-
   handleWidth: -> 16 * (@canvasGraph.scale || 1)
 
   draw: (e) ->
@@ -625,30 +597,6 @@ class Mark
     markRightX = Math.min markRightX,
                          (@closestXAbove - @handleWidth()/2 || markRightX),
                          (@canvasGraph.toPixels(@canvasGraph.largestX))
-
-
-
-
-
-    # console.log 'DRAW!'
-    # markLeftX = Math.max @initialLeft + @minWidth() - @maxWidth(),
-    #                      Math.min @initialLeft, 
-    #                      @toCanvasXPoint(e)
-
-    # console.log 'markLeftX (days)  : ', @canvasGraph.toDays(markLeftX)
-    # console.log 'markLeftX (pixels): ', markLeftX
-
-    # markRightX = Math.max @initialLeft + @minWidth(), 
-    #                       @toCanvasXPoint(e)
-
-    # # no overlapping of marks
-    # markLeftX = Math.max markLeftX,
-    #                     (@closestXBelow + @handleWidth() || markLeftX),
-    #                     (@canvasGraph.toPixels(@canvasGraph.smallestX))
-
-    # markRightX = Math.min markRightX,
-    #                      (@closestXAbove - @handleWidth() || markRightX),
-    #                      (@canvasGraph.toPixels(@canvasGraph.largestX))
 
     # max and min width on creating / resizing marks
     width = Math.min (Math.max (Math.abs parseFloat(markRightX) - parseFloat(markLeftX)), parseFloat(@minWidth())), parseFloat(@maxWidth())
@@ -669,19 +617,12 @@ class Mark
                         @canvasGraph.leftPadding
     leftXPos = Math.min leftXPos,
                         ((@closestXAbove || @canvas.width + @handleWidth()/2) - markWidth) - @handleWidth()/2
-    
-    # leftXPos = Math.max @toCanvasXPoint(e) - @moveOffset, @canvasGraph.leftPadding
-    # leftXPos = @toCanvasXPoint(e) - @moveOffset
-
 
     markRightX = leftXPos + markWidth
     @element.style.left = leftXPos + "px"
     @save(leftXPos, markRightX)
 
   save: (markLeftX, markRightX) ->
-    # console.log "save()"
-    # console.log 'UPDATED MARK BOUNDS: (pixels) [',markLeftX,',',markRightX,']'
-    # console.log 'UPDATED MARK BOUNDS: (days)   [',@canvasGraph.toDays(markLeftX-@canvasGraph.leftPadding),',',@canvasGraph.toDays(markRightX-@canvasGraph.leftPadding),']'
 
     #canvas coords
     @canvasXMin = markLeftX
@@ -692,20 +633,6 @@ class Mark
     @dataXMaxRel = @canvasGraph.toDays(@canvasXMax-@canvasGraph.leftPadding)
     @dataXMinGlobal = @dataXMinRel + @originalMin    
     @dataXMaxGlobal = @dataXMaxRel + @originalMin
-
-    # val = +classifier.el.find("#ui-slider").val()
-    # console.log """
-    #             -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-    #             ----------------- DEBUG REPORT ----------------
-    #                                   val: #{val}
-    #                      mark.dataXMinRel: #{@dataXMinRel} <-- data limits        
-    #                      mark.dataXMaxRel: #{@dataXMaxRel}   
-    #                     mark width (data): #{(@dataXMaxRel-@dataXMinRel)}
-    #                   mark width (canvas): #{@element.style.width}       <----- CSS style    
-    #               mark.element.style.left: #{@element.style.left}
-    #             -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-    #           """
-
 
   onMouseOver: (e) =>
     @element.style.backgroundColor = 'rgba(252,69,65,.6)'
@@ -736,11 +663,6 @@ class Mark
       @moving = true
 
     @moveOffset = (@toCanvasXPoint(e) - @canvasXMin)
-    # console.log 'CANVASXMIN (pixels)  : ', @canvasXMin
-    # console.log 'CANVASXMIN (days)    : ', @canvasGraph.toDays(@canvasXMin-@canvasGraph.leftPadding)
-    # console.log 'MOVE OFFSET (pixels) : ', @moveOffset
-    # console.log 'MOVE OFFSET (days)   : ', @canvasGraph.toDays(@moveOffset)
-
     @closestXBelow = @canvasGraph.marks.closestXBelow(@canvasXMin)
     @closestXAbove = @canvasGraph.marks.closestXAbove(@canvasXMax)
 
