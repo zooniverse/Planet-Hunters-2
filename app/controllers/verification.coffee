@@ -29,6 +29,7 @@ class Verification extends BaseController
   constructor: ->
     super
     window.verification = @
+    @message.html "Is this a proper transit?"
 
     User.on 'change', @onUserChange
     Subject.on 'fetch', @onSubjectFetch
@@ -47,36 +48,37 @@ class Verification extends BaseController
     @subject = subject
     @classification = new Classification {subject}
     @loadSubject()
-    
+
   loadSubject: ->
-    middleStart = @el.find('#verify-main')[0] # TODO: index is annoying
-    middleStart.width = 300
-    middleStart.height = 300
-    startCanvas = new CanvasGraph(middleStart, sampleData[3])
-    startCanvas.showAxes = false
-    startCanvas.leftPadding = 0
-    startCanvas.plotPoints(1,2) # comment for now
-    
-    jsonFile = @subject.location['14-1'] # read actual subject
-    canvas?.remove() # kill any previous canvas
 
     # @dataIndex ||= 0
-    canvas = @el.find('#verify-done')[0]
+    # canvas = @el.find('#verify-done')[0]
+    
+    canvas = @el.find('.verify-canvas:nth-child(3)')[0]
     canvas.width = 300
     canvas.height = 300
 
+    # middleStart = @el.find('#verify-main')[0] # TODO: index is annoying
+    middleStart = @el.find('.verify-canvas:nth-child(2)')[0]
+    middleStart.width = 300
+    middleStart.height = 300
+    
+    jsonFile = @subject.location['14-1'] # read actual subject
     $.getJSON jsonFile, (data) =>
-      # @canvasGraph?.marks.destroyAll()  
       @canvasGraph = new CanvasGraph(canvas, data)
       @canvasGraph.showAxes = false
       @canvasGraph.leftPadding = 0
       @canvasGraph.plotPoints(1,2)
 
-    # @canvasGraph = new CanvasGraph(canvas, sampleData[@dataIndex])
-    # console.log 'calling plotPoints()...'
-    # @canvasGraph.plotPoints() # comment for now
-    # console.log 'Done!'
-    # @message.html "Is this a proper transit?"
+    jsonFile = @subject.location['14-2'] # read actual subject
+    $.getJSON jsonFile, (data) =>
+      startCanvas = new CanvasGraph(middleStart, data)
+      startCanvas.showAxes = false
+      startCanvas.leftPadding = 0
+      startCanvas.plotPoints(1,2) # comment for now
+    
+    @message.html "Is this a proper transit?"
+    return
 
   onClickYesButton: -> @showSummary()
 
@@ -86,15 +88,17 @@ class Verification extends BaseController
     button.show() for button in [@yesButton, @noButton, @notSureButton]
     @nextSubjectButton.hide()
     @summary.hide()
-    @message.html "Is this a proper transit?"
-
+    # @message.html "Is this a proper transit?"
     @dataIndex += 1
 
     canvasContainer = document.getElementById('canvas-container')
+
     firstChild = canvasContainer.children[0]
     canvasContainer.appendChild(firstChild)
 
     @loadSubject()
+
+    @Subject.next()
 
   onClickNotSureButton: -> console.log "NOT SURE"
 

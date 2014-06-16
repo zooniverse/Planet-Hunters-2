@@ -50,50 +50,69 @@
       canvas
         border-radius 5px
         border 2px solid black
-      #verify-todo
+      // #verify-todo
+      :nth-child(1)
         width 200px
         height 200px
         position absolute
         left 700px
-        background rgba(100,0,0,0.92)
-        transition all 2s ease
+        // background rgba(100,0,0,0.92)
+        background rgba(0,0,0,0.92)
+        transition all 1s ease
         opacity 0.7
         z-index 0
         top 50px
         // background: url("./images/planet.png") // this could be a 'Good job' type image
-      #verify-main
+      // #verify-main
+      :nth-child(2)
         background rgba(13,21,24,0.75)
         position absolute
         left 300px
         width 300px
         height 300px
-        transition all 2s ease
+        transition all 1s ease
         z-index 100
         top 0px
-      #verify-done
+      // #verify-done
+      :nth-child(3)
         width 200px
         position absolute
         left 0px
         height 200px
-        transition all 2s ease
-        background rgba(0,100,0,0.92)
+        transition all 1s ease
+        // background rgba(0,100,0,0.92)
+        background rgba(0,0,0,0.92)
         opacity 0.7
         z-index 0
         top 50px
+
+      #verify-done-container
+        width 200px
+        height 200px
+        background rgba(20,20,20,0.5)
 
 @media screen and (max-width: 920px)
   .verification
     .container
       #canvas-container
         width auto
+        // #verify-todo
         :nth-child(1)
-          display none
+          // left 400px
+          // display none
+          // visibility hidden
+          opacity 0
+        // #verify-main
         :nth-child(2)
           position relative
           margin 0 auto
           left auto
+        // #verify-done
         :nth-child(3)
-          display none
+          // left -400px
+          // display none
+          // visibility hidden
+          opacity 0
 
 @media screen and (max-width: 520px)
   .verification
