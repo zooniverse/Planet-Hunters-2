@@ -43,7 +43,8 @@ class CanvasGraph
     @canvas.addEventListener 'mousemove', (e) => @onMouseMove(e) # TODO: FIX (disabled for now)
 
   onMouseDown: (e) =>
-    # console.log 'onMouseDown()'
+    # debugger
+    console.log 'onMouseDown()'
     xClick = e.pageX - e.target.getBoundingClientRect().left - window.scrollX
     return if xClick < 80 # display line instead 
     @addMarkToGraph(e)

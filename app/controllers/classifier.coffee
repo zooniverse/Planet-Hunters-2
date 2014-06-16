@@ -86,12 +86,14 @@ class Classifier extends BaseController
     console.log '*** DISABLED ***'
 
   onUserChange: (e, user) =>
+    console.log 'classify: onUserChange()'
     Subject.next() unless @classification?
 
   onSubjectFetch: (e, user) =>
-    console.log 'onSubjectFetch()'
+    console.log 'classify: onSubjectFetch()'
 
   onSubjectSelect: (e, subject) =>
+    console.log 'classify: onSubjectSelect()'
     @el.find('#loading-screen').show() # TODO: uncomment
     @el.find('#star-id').hide()
     console.log 'onSubjectSelect()'
@@ -102,9 +104,9 @@ class Classifier extends BaseController
 
 
   loadSubjectData: ->
+    console.log 'loadSubjectData()'
     @el.find('#ui-slider').attr('disabled',true)
     @el.find(".noUi-handle").fadeOut(150)
-
 
     # TODO: use Subject data to choose the right lightcurve
     jsonFile = @subject.location['14-1'] # read actual subject
@@ -252,6 +254,7 @@ class Classifier extends BaseController
     @el.find("#toggle-fav").removeClass("toggled")
 
   showZoomMessage: (message) =>
+    console.log 'DISPLAYING ZOOM MESSAGE'
     @el.find('#zoom-notification').html(message).fadeIn(100).delay(1000).fadeOut()
     
   notify: (message) =>
