@@ -37,6 +37,9 @@ class Verification extends BaseController
     Subject.on 'select', @onSubjectSelect
     @Subject = Subject
 
+    @targetCount = 5
+    @count = 0
+
   onUserChange: (e, user) =>
     return unless window.app.stack.activePage.target.constructor.name is "Verification"
     console.log 'verify: onUserChange()'
@@ -88,7 +91,6 @@ class Verification extends BaseController
     return
 
   onClickYesButton: -> @showSummary()
-
   onClickNoButton: -> @showSummary()
 
   onClickNextSubject: ->
@@ -112,8 +114,13 @@ class Verification extends BaseController
     @showNextSubjectButton()
 
   showNextSubjectButton: ->
+    console.log 'count: ', @count
+    if @count > @targetCount # back to marking
+      @count = 0
+      location.hash = "#/classify"
     console.log "call @loadSubject(NEXT_SUBJECTS_DATA) here)"
     @nextSubjectButton.show()
     button.hide() for button in [@yesButton, @noButton, @notSureButton]
+    @count++
 
 module.exports = Verification

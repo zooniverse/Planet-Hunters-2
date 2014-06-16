@@ -78,6 +78,8 @@ class Classifier extends BaseController
     @course = new MiniCourse
     @course.setRate 3
 
+    @verifyRate = 2
+
     @recordedClickEvents = []
 
     @el.find('#no-transits').hide() #prop('disabled',true)
@@ -346,6 +348,10 @@ class Classifier extends BaseController
     @resetTalkComment @talkComment
     @resetTalkComment @altTalkComment
     # show courses
+
+    if @course.count % @verifyRate is 0
+      location.hash = "#/verify"
+
     if @course.getPref() isnt 'never' and @course.count % @course.rate is 0
       @el.find('#notification-message').hide() # get any notification out of the way
       @course.showPrompt() 
