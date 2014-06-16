@@ -14,3 +14,11 @@
     <button class="std-btn big-btn transparent"name="not-sure">Not Sure?</button>
   </div>
 </div>
+
+<!-- PLANET TIME -->
+<div class="bg-starfield-sun">
+  <div class="bg-planet-container">
+    <img class="bg-planet" src="./images/planet.png">
+  </div>
+</div>
+<div class="bg-overlay"></div>

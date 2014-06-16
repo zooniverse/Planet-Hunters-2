@@ -47,7 +47,7 @@ class Verification extends BaseController
     console.log 'verify: onSubjectFetch()'
 
   onSubjectSelect: (e, subject) =>
-    return unless window.app.stack.activePage.target.constructor.name is "Verification"
+    # return unless window.app.stack.activePage.target.constructor.name is "Verification"
     console.log 'verify: onSubjectSelect()'
     @subject = subject
     @classification = new Classification {subject}
