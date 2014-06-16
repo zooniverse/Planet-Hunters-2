@@ -1,7 +1,11 @@
 BaseController = require 'zooniverse/controllers/base-controller'
+Subject        = require 'zooniverse/models/subject'
+Classification = require 'zooniverse/models/classification'
+User           = require 'zooniverse/models/user'
 {CanvasGraph, Marks, Mark} = require "../lib/canvas-graph"
-$ = window.jQuery
 require '../lib/sample-data'
+
+$ = window.jQuery
 
 class Verification extends BaseController
   className: 'verification'
@@ -24,22 +28,51 @@ class Verification extends BaseController
 
   constructor: ->
     super
-    setTimeout =>
-      @loadSubject()
-      middleStart = @el.find('.verify-canvas:nth-child(2)')[0]
-      middleStart.width = 300
-      middleStart.height = 300
-      startCanvas = new CanvasGraph(middleStart, sampleData[3])
-      startCanvas.plotPoints() # comment for now
+    window.verification = @
 
+    User.on 'change', @onUserChange
+    Subject.on 'fetch', @onSubjectFetch
+    Subject.on 'select', @onSubjectSelect
+    @Subject = Subject
+
+  onUserChange: (e, user) =>
+    console.log 'verify: onUserChange()'
+    Subject.next() unless @classification?
+
+  onSubjectFetch: (e, user) =>
+    console.log 'verify: onSubjectFetch()'
+
+  onSubjectSelect: (e, subject) =>
+    console.log 'verify: onSubjectSelect()'
+    @subject = subject
+    @classification = new Classification {subject}
+    @loadSubject()
+    
   loadSubject: ->
-    @dataIndex ||= 0
-    canvas = @el.find('.verify-canvas:nth-child(3)')[0]
+    middleStart = @el.find('#verify-main')[0] # TODO: index is annoying
+    middleStart.width = 300
+    middleStart.height = 300
+    startCanvas = new CanvasGraph(middleStart, sampleData[3])
+    startCanvas.plotPoints() # comment for now
+    
+    jsonFile = @subject.location['14-1'] # read actual subject
+    canvas?.remove() # kill any previous canvas
+
+    # @dataIndex ||= 0
+    canvas = @el.find('#verify-done')[0]
     canvas.width = 300
     canvas.height = 300
-    @canvasGraph = new CanvasGraph(canvas, sampleData[@dataIndex])
-    @canvasGraph.plotPoints() # comment for now
-    @message.html "Is this a proper transit?"
+
+    $.getJSON jsonFile, (data) =>
+      # @canvasGraph?.marks.destroyAll()  
+      @canvasGraph = new CanvasGraph(canvas, data)
+      @canvasGraph.plotPoints()
+
+    # @canvasGraph = new CanvasGraph(canvas, sampleData[@dataIndex])
+    # console.log 'calling plotPoints()...'
+    # @canvasGraph.plotPoints() # comment for now
+    # console.log 'Done!'
+    # @message.html "Is this a proper transit?"
 
   onClickYesButton: -> @showSummary()
 
