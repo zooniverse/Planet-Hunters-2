@@ -124,7 +124,7 @@ class Classifier extends BaseController
     $.getJSON jsonFile, (data) =>
       @canvasGraph?.marks.destroyAll()  
       @marksContainer.appendChild(@canvas)
-      @canvasGraph = new CanvasGraph(@canvas, data, showAxes=true)
+      @canvasGraph = new CanvasGraph(@canvas, data)
       @canvasGraph.plotPoints()
       @canvasGraph.enableMarking()
       @zoomRanges = [@canvasGraph.largestX, 10, 2]

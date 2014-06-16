@@ -1,7 +1,11 @@
 # $ = window.jQuery
 
 class CanvasGraph
-  constructor: (@canvas, @data, @showAxes) ->
+  constructor: (@canvas, @data) ->
+
+    @leftPadding = 60
+    @showAxes    = true
+
     @ctx = @canvas.getContext('2d')
 
     @smallestX = Math.min @data.x...
@@ -26,8 +30,6 @@ class CanvasGraph
 
     @prevZoomMin = @smallestX
     @prevZoomMax = @largestX
-
-    @leftPadding = 60
 
   disableMarking: ->
     @markingDisabled = true
