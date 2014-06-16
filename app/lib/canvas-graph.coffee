@@ -1,7 +1,7 @@
 # $ = window.jQuery
 
 class CanvasGraph
-  constructor: (@canvas, @data) ->
+  constructor: (@canvas, @data, @showAxes) ->
     @ctx = @canvas.getContext('2d')
 
     @smallestX = Math.min @data.x...
@@ -220,8 +220,10 @@ class CanvasGraph
       @showPrevMarks()
 
     # draw axes
-    @drawXTickMarks(xMin, xMax)
-    @drawYTickMarks(yMin, yMax)
+    if @showAxes
+      @drawXTickMarks(xMin, xMax)
+      @drawYTickMarks(yMin, yMax)
+
     @scale = (parseFloat(@largestX) - parseFloat(@smallestX)) / (parseFloat(@xMax) - parseFloat(@xMin))
     @rescaleMarks(xMin, xMax)
 

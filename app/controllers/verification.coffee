@@ -52,8 +52,9 @@ class Verification extends BaseController
     middleStart = @el.find('#verify-main')[0] # TODO: index is annoying
     middleStart.width = 300
     middleStart.height = 300
-    startCanvas = new CanvasGraph(middleStart, sampleData[3])
-    startCanvas.plotPoints() # comment for now
+    startCanvas = new CanvasGraph(middleStart, sampleData[3], showAxes = false)
+    startCanvas
+    # startCanvas.plotPoints(1,2) # comment for now
     
     jsonFile = @subject.location['14-1'] # read actual subject
     canvas?.remove() # kill any previous canvas
@@ -66,7 +67,7 @@ class Verification extends BaseController
     $.getJSON jsonFile, (data) =>
       # @canvasGraph?.marks.destroyAll()  
       @canvasGraph = new CanvasGraph(canvas, data)
-      @canvasGraph.plotPoints()
+      @canvasGraph.plotPoints(1,2)
 
     # @canvasGraph = new CanvasGraph(canvas, sampleData[@dataIndex])
     # console.log 'calling plotPoints()...'
