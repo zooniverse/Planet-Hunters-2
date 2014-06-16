@@ -94,6 +94,12 @@ class Verification extends BaseController
   onClickNoButton: -> @showSummary()
 
   onClickNextSubject: ->
+    @count++
+    console.log 'count: ', @count
+    if @count > @targetCount # back to marking
+      @count = 0
+      location.hash = "#/classify"
+
     button.show() for button in [@yesButton, @noButton, @notSureButton]
     @nextSubjectButton.hide()
     @summary.hide()
@@ -114,13 +120,7 @@ class Verification extends BaseController
     @showNextSubjectButton()
 
   showNextSubjectButton: ->
-    console.log 'count: ', @count
-    if @count > @targetCount # back to marking
-      @count = 0
-      location.hash = "#/classify"
-    console.log "call @loadSubject(NEXT_SUBJECTS_DATA) here)"
     @nextSubjectButton.show()
     button.hide() for button in [@yesButton, @noButton, @notSureButton]
-    @count++
 
 module.exports = Verification
