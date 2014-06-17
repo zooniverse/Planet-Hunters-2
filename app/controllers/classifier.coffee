@@ -51,6 +51,14 @@ class Classifier extends BaseController
 
   constructor: ->
     super    
+
+    # if mobile device detected, go to verify mode
+    if window.matchMedia("(min-device-width: 320px)").matches and window.matchMedia("(max-device-width: 480px)").matches
+      console.log "BLAH"
+      location.hash = "#/verify"
+    else
+      console.log "BLAH2"
+      
     window.classifier = @
     
     @el.find('#star-id').hide()
