@@ -375,6 +375,7 @@ class Classifier extends BaseController
     @classification.set 'recordedClickEvents', [@recordedClickEvents...]
     for mark, i in [@canvasGraph.marks.all...]
       @classification.annotations[i] =
+        timestamp: mark.timestamp
         zoomLevel: mark.zoomLevelAtCreation
         xMinRelative: mark.dataXMinRel
         xMaxRelative: mark.dataXMaxRel

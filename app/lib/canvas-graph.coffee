@@ -545,6 +545,7 @@ class Marks
 # -------------------------
 class Mark
   constructor: (e, @canvasGraph, @originalMin) ->
+    @timestamp = (new Date).toUTCString()
     @zoomLevelAtCreation = @canvasGraph.zoomLevel
     @canvas = @canvasGraph.canvas
 
