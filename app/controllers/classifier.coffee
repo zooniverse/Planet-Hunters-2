@@ -267,6 +267,9 @@ class Classifier extends BaseController
       @el.find('#notification').removeClass('notifying') )
 
   onToggleFav: ->
+    # go to verify (for debug)
+    location.hash = "#/verify"
+
     favButton = @el.find("#toggle-fav")[0]
     if @isFaved
       @isFaved = false

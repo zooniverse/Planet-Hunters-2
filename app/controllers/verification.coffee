@@ -96,9 +96,12 @@ class Verification extends BaseController
   onClickNextSubject: ->
     @count++
     console.log 'count: ', @count
-    if @count > @targetCount # back to marking
-      @count = 0
-      location.hash = "#/classify"
+
+    # back to marking
+    if @count > @targetCount
+      unless window.matchMedia("(min-device-width: 320px)").matches and window.matchMedia("(max-device-width: 480px)").matches
+        @count = 0
+        location.hash = "#/classify"
 
     button.show() for button in [@yesButton, @noButton, @notSureButton]
     @nextSubjectButton.hide()
@@ -111,7 +114,9 @@ class Verification extends BaseController
     @loadSubject()
     @Subject.next()
 
-  onClickNotSureButton: -> console.log "NOT SURE"
+  onClickNotSureButton: -> 
+    # got to classify mode (for debug)
+    location.hash = "#/classify"
 
   showSummary: -> 
     @message.html "Ready to move on?"
