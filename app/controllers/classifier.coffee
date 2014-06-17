@@ -54,10 +54,7 @@ class Classifier extends BaseController
 
     # if mobile device detected, go to verify mode
     if window.matchMedia("(min-device-width: 320px)").matches and window.matchMedia("(max-device-width: 480px)").matches
-      console.log "BLAH"
       location.hash = "#/verify"
-    else
-      console.log "BLAH2"
       
     window.classifier = @
     
@@ -378,12 +375,13 @@ class Classifier extends BaseController
     @classification.set 'recordedClickEvents', [@recordedClickEvents...]
     for mark, i in [@canvasGraph.marks.all...]
       @classification.annotations[i] =
+        zoomLevel: mark.zoomLevelAtCreation
         xMinRelative: mark.dataXMinRel
         xMaxRelative: mark.dataXMaxRel
         xMinGlobal: mark.dataXMinGlobal
         xMaxGlobal: mark.dataXMaxGlobal
     # DEBUG CODE
-    # console.log JSON.stringify( @classification )
+    console.log JSON.stringify( @classification )
     @classification.send()
     console.log '********************************************'
 

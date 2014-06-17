@@ -53,16 +53,16 @@ class CanvasGraph
     # console.log 'onMouseMove()'
     # return # just for now
     return if classifier.el.find('#graph').hasClass('is-zooming')
-    zoomLevel = classifier.zoomLevel
+    @zoomLevel = classifier.zoomLevel
     zoomRanges = classifier.zoomRanges
     val = +classifier.el.find("#ui-slider").val()
     xClick = e.pageX - e.target.getBoundingClientRect().left - window.scrollX
     yClick = e.pageY - e.target.getBoundingClientRect().top - window.scrollY
     
-    # console.log 'PLOT RANGE: [',val,',',val+zoomRanges[zoomLevel],']'
+    # console.log 'PLOT RANGE: [',val,',',val+zoomRanges[@zoomLevel],']'
 
-    @plotPoints(val, val+zoomRanges[zoomLevel])
-    # @rescaleMarks(val, val+zoomRanges[zoomLevel])
+    @plotPoints(val, val+zoomRanges[@zoomLevel])
+    # @rescaleMarks(val, val+zoomRanges[@zoomLevel])
 
     if xClick < @leftPadding
       # draw triangle
@@ -201,7 +201,7 @@ class CanvasGraph
     # get necessary values from classifier
     val = +classifier.el.find('#ui-slider').val()
     zoomRanges = classifier.zoomRanges
-    zoomLevel  = classifier.zoomLevel
+    @zoomLevel  = classifier.zoomLevel
     
     # draw points
     for i in [0...@dataLength]
@@ -545,6 +545,7 @@ class Marks
 # -------------------------
 class Mark
   constructor: (e, @canvasGraph, @originalMin) ->
+    @zoomLevelAtCreation = @canvasGraph.zoomLevel
     @canvas = @canvasGraph.canvas
 
     @element = document.createElement('div')
