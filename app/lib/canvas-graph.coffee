@@ -2,6 +2,10 @@
 
 class CanvasGraph
   constructor: (@canvas, @data) ->
+
+    @leftPadding = 60
+    @showAxes    = true
+
     @ctx = @canvas.getContext('2d')
 
     @smallestX = Math.min @data.x...
@@ -27,8 +31,6 @@ class CanvasGraph
     @prevZoomMin = @smallestX
     @prevZoomMax = @largestX
 
-    @leftPadding = 60
-
   disableMarking: ->
     @markingDisabled = true
 
@@ -41,7 +43,8 @@ class CanvasGraph
     @canvas.addEventListener 'mousemove', (e) => @onMouseMove(e) # TODO: FIX (disabled for now)
 
   onMouseDown: (e) =>
-    # console.log 'onMouseDown()'
+    # debugger
+    console.log 'onMouseDown()'
     xClick = e.pageX - e.target.getBoundingClientRect().left - window.scrollX
     return if xClick < 80 # display line instead 
     @addMarkToGraph(e)
@@ -220,8 +223,10 @@ class CanvasGraph
       @showPrevMarks()
 
     # draw axes
-    @drawXTickMarks(xMin, xMax)
-    @drawYTickMarks(yMin, yMax)
+    if @showAxes
+      @drawXTickMarks(xMin, xMax)
+      @drawYTickMarks(yMin, yMax)
+
     @scale = (parseFloat(@largestX) - parseFloat(@smallestX)) / (parseFloat(@xMax) - parseFloat(@xMin))
     @rescaleMarks(xMin, xMax)
 

@@ -1,9 +1,9 @@
 <div class="title">Transit Verification</div>
 <div class="container">
   <div id="canvas-container">
-    <canvas class="verify-canvas"></canvas>
-    <canvas class="verify-canvas"></canvas>
-    <canvas class="verify-canvas"></canvas>
+    <canvas id="verify-todo" class="verify-canvas"></canvas>
+    <canvas id="verify-main" class="verify-canvas"></canvas>
+    <canvas id="verify-done" class="verify-canvas"></canvas>
   </div>
 
   <div id="button-container">
@@ -14,3 +14,11 @@
     <button class="std-btn big-btn transparent"name="not-sure">Not Sure?</button>
   </div>
 </div>
+
+<!-- PLANET TIME -->
+<div class="bg-starfield-sun">
+  <div class="bg-planet-container">
+    <img class="bg-planet" src="./images/planet.png">
+  </div>
+</div>
+<div class="bg-overlay"></div>
