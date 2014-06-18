@@ -1,28 +1,13 @@
 <div class="secondary-header">
-  <h1>Profile</h1>
+  <h1>Your Profile</h1>
 </div>
 
-<div class="secondary-white">
+<div id="secondary-white" class="secondary-white">
   <div class="secondary-content">
     <div class="intro content">
       <p id="greeting"></p>
     </div>
   </div>
-<!--   <div class="secondary-content">
-    <div class="left-column">
-      Blah
-    </div>
-    <div class="right-column">
-      <div class="content">
-        <h1>Get Involved</h1>
-        <p>Join us in finding the many workds out there. Are you ready?</p>
-        <button class="std-btn big-btn yellow">Start Classifying</button>
-
-        <h1>Connect</h1>
-        <p>Follow the <a href="">Planet Hunters 2</a> Blog and <a href="">@planethunters</a> to keep current with the latest results</p>
-      </div>
-    </div>
-  </div> -->
 </div>
 
 <!-- PLANET TIME -->
