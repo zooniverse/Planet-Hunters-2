@@ -51,6 +51,11 @@ class Classifier extends BaseController
 
   constructor: ->
     super    
+
+    # if mobile device detected, go to verify mode
+    if window.matchMedia("(min-device-width: 320px)").matches and window.matchMedia("(max-device-width: 480px)").matches
+      location.hash = "#/verify"
+      
     window.classifier = @
     
     @el.find('#star-id').hide()
@@ -267,13 +272,16 @@ class Classifier extends BaseController
       @el.find('#notification').removeClass('notifying') )
 
   onToggleFav: ->
+    @classification.favorite = !@classification.favorite
     favButton = @el.find("#toggle-fav")[0]
     if @isFaved
       @isFaved = false
       @el.find("#toggle-fav").removeClass("toggled")
+      @notify('Removed to Favorites.')
     else
       @isFaved = true
       @el.find("#toggle-fav").addClass("toggled")
+      @notify('Added to Favorites.')
 
   onClickHelp: ->
     console.log 'onClickHelp()'
@@ -367,12 +375,14 @@ class Classifier extends BaseController
     @classification.set 'recordedClickEvents', [@recordedClickEvents...]
     for mark, i in [@canvasGraph.marks.all...]
       @classification.annotations[i] =
+        timestamp: mark.timestamp
+        zoomLevel: mark.zoomLevelAtCreation
         xMinRelative: mark.dataXMinRel
         xMaxRelative: mark.dataXMaxRel
         xMinGlobal: mark.dataXMinGlobal
         xMaxGlobal: mark.dataXMaxGlobal
     # DEBUG CODE
-    # console.log JSON.stringify( @classification )
+    console.log JSON.stringify( @classification )
     @classification.send()
     console.log '********************************************'
 
