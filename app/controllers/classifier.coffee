@@ -373,8 +373,13 @@ class Classifier extends BaseController
     @course.count = @course.count + 1
     console.log 'YOU\'VE MARKED ', @course.count, ' LIGHT CURVES!'
     @classification.set 'recordedClickEvents', [@recordedClickEvents...]
+    # @classification.set 'classification_type', 'light_curve'
+    # @classification.set '_id', @subject.id
     for mark, i in [@canvasGraph.marks.all...]
       @classification.annotations[i] =
+        selected_light_curve:
+          _id: @subject.id
+          quarter: '14-1'
         timestamp: mark.timestamp
         zoomLevel: mark.zoomLevelAtCreation
         xMinRelative: mark.dataXMinRel
