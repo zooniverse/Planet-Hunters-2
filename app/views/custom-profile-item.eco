@@ -1,0 +1,13 @@
+<div class='item'>
+  <!-- <a href="<%= @subjects[0]?.talkHref() || '#/SUBJECT_ERROR' %>"> -->
+    <a href="<%= @subjects[0].location['14-1'] %>">
+    <img src="http://lorempixel.com/200/200/" />
+
+    <% console.log 'this: ', @ %>
+    <% console.log 'RECENT SUBJECTS: ', @subjects[0] %>
+
+    <div id="graph-container">
+    </div>
+
+  </a>
+</div>
