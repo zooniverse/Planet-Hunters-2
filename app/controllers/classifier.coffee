@@ -376,8 +376,8 @@ class Classifier extends BaseController
 
     @classification.annotate
       classification_type: 'light_curve'
-      selected_id: @subject.selected_light_curve._id
-
+      selected_id:          @subject.selected_light_curve._id
+      location:             @subject.selected_light_curve.location
     for mark in [@canvasGraph.marks.all...]
       @classification.annotate
         timestamp: mark.timestamp
@@ -389,9 +389,10 @@ class Classifier extends BaseController
     
     # DEBUG CODE
     console.log JSON.stringify( @classification )
-    @classification.send()
     console.log '********************************************'
-
+   
+    @classification.send()
+    
     # re-enable zoom button (after feedback)
     @el.find('#zoom-button').attr('disabled',false)
 
