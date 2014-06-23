@@ -109,7 +109,6 @@ class Classifier extends BaseController
     @loadSubjectData()
     @el.find('#loading-screen').hide() # TODO: uncomment
 
-
   loadSubjectData: ->
     console.log 'loadSubjectData()'
     @el.find('#ui-slider').attr('disabled',true)

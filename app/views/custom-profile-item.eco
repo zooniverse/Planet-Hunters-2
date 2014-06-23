@@ -1,9 +1,0 @@
-<div class='item'>
-  <!-- <a href="<%= @subjects[0]?.talkHref() || '#/SUBJECT_ERROR' %>"> -->
-    <a href="<%= @subjects[0].location %>">
-    <img src="http://lorempixel.com/600/150/" />
-    <div id="graph-container">
-    </div>
-
-  </a>
-</div>
