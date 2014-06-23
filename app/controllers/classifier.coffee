@@ -372,20 +372,21 @@ class Classifier extends BaseController
     # fake classification counter
     @course.count = @course.count + 1
     console.log 'YOU\'VE MARKED ', @course.count, ' LIGHT CURVES!'
-    @classification.set 'recordedClickEvents', [@recordedClickEvents...]
-    # @classification.set 'classification_type', 'light_curve'
-    # @classification.set '_id', @subject.id
-    for mark, i in [@canvasGraph.marks.all...]
-      @classification.annotations[i] =
-        selected_light_curve:
-          _id: @subject.id
-          quarter: '14-1'
+    @classification.annotate recordedClickEvents: [@recordedClickEvents...]
+
+    @classification.annotate
+      classification_type: 'light_curve'
+      selected_id: @subject.selected_light_curve._id
+
+    for mark in [@canvasGraph.marks.all...]
+      @classification.annotate
         timestamp: mark.timestamp
         zoomLevel: mark.zoomLevelAtCreation
         xMinRelative: mark.dataXMinRel
         xMaxRelative: mark.dataXMaxRel
         xMinGlobal: mark.dataXMinGlobal
         xMaxGlobal: mark.dataXMaxGlobal
+    
     # DEBUG CODE
     console.log JSON.stringify( @classification )
     @classification.send()
