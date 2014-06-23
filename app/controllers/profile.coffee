@@ -14,13 +14,13 @@ class Profile extends BaseController
 
   constructor: ->
     super
-
+    window.profile = @
     # use custom template for light curves
     BaseProfile::recentTemplate = customItemTemplate
     BaseProfile::favoriteTemplate = customItemTemplate
     @profile = new BaseProfile
 
-    # console.log 'JSON FILE: ', subjects[0].location['14-1']
+    # console.log 'JSON FILE: ', subjects[0]
 
     @el.find('#secondary-white').append @profile.el
     @profile.el.addClass 'content-block content-container'
