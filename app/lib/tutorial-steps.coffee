@@ -18,53 +18,41 @@ tutorialSteps =
     header:      translate 'span', 'tutorial.theData2.header'
     details:     translate 'span', 'tutorial.theData2.details'
     attachment: 'center center #graph-container center center'
-    next: 'theData3'
+    next: 'transits'
 
-  theData3: new Step
-    header:      translate 'span', 'tutorial.theData3.header'
-    details:     translate 'span', 'tutorial.theData3.details'
+  transits: new Step
+    header:      translate 'span', 'tutorial.transits.header'
+    details:     translate 'span', 'tutorial.transits.details'
     attachment: 'center center #graph-container center center'
-    next: 'transits1'
+    next: 'markingTransits'
 
-  transits1: new Step
-    header:      translate 'span', 'tutorial.transits1.header'
-    details:     translate 'span', 'tutorial.transits1.details'
+  markingTransits: new Step
+    header:      translate 'span', 'tutorial.markingTransits.header'
+    details:     translate 'span', 'tutorial.markingTransits.details'
     attachment: 'center center #graph-container center center'
-    next: 'transits2'
+    next: 'spotTransits'
 
-  transits2: new Step
-    header:      translate 'span', 'tutorial.transits2.header'
-    details:     translate 'span', 'tutorial.transits2.details'
+  spotTransits: new Step
+    header:      translate 'span', 'tutorial.spotTransits.header'
+    details:     translate 'span', 'tutorial.spotTransits.details'
     attachment: 'center center #graph-container center center'
-    next: 'findingTransits'
+    next: 'showTransits'
 
-  findingTransits: new Step
-    header:      translate 'span', 'tutorial.findingTransits.header'
-    details:     translate 'span', 'tutorial.findingTransits.details'
+  showTransits: new Step
+    header:      translate 'span', 'tutorial.showTransits.header'
+    details:     translate 'span', 'tutorial.showTransits.details'
     attachment: 'center center #graph-container center center'
-    next: 'markingTransits1'
+    next: 'zooming'
 
-  markingTransits1: new Step
-    header:      translate 'span', 'tutorial.markingTransits1.header'
-    details:     translate 'span', 'tutorial.markingTransits1.details'
+  zooming: new Step
+    header:      translate 'span', 'tutorial.zooming.header'
+    details:     translate 'span', 'tutorial.zooming.details'
     attachment: 'center center #graph-container center center'
-    next: 'markingTransits2'
+    next: 'goodLuck'
 
-  markingTransits2: new Step
-    header:      translate 'span', 'tutorial.markingTransits2.header'
-    details:     translate 'span', 'tutorial.markingTransits2.details'
-    attachment: 'center center #graph-container center center'
-    next: 'spotThem'
-
-  spotThem: new Step
-    header:      translate 'span', 'tutorial.spotThem.header'
-    details:     translate 'span', 'tutorial.spotThem.details'
-    attachment: 'center center #graph-container center center'
-    next: 'thanks'
-
-  thanks: new Step
-    header:      translate 'span', 'tutorial.thanks.header'
-    details:     translate 'span', 'tutorial.thanks.details'
+  goodLuck: new Step
+    header:      translate 'span', 'tutorial.goodLuck.header'
+    details:     translate 'span', 'tutorial.goodLuck.details'
     attachment: 'center center #graph-container center center'
 
 module.exports = tutorialSteps
