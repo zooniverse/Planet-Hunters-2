@@ -39,32 +39,53 @@ class Profile extends BaseController
     @canvasElements = []
     @graphs = []
     for recent, i in window.zooniverse.models.Recent.instances
-      newElement = document.createElement('canvas')
-      newElement.id     = "graph-#{i}"
-      newElement.width  = 600
-      newElement.height = 150
-      newElement.setAttribute 'class', 'graph'
+      newCanvasElement = document.createElement('canvas')
+      newCanvasElement.id     = "graph-#{i}"
+      newCanvasElement.setAttribute 'width' ,'inherit'
+      newCanvasElement.setAttribute 'height','inherit'
+      newCanvasElement.setAttribute 'class', 'graph'
 
-      # @canvasElements.push(newElement)
-      @canvasElements[i] = newElement
-      $('.items')[0].appendChild(@canvasElements[i])
+
+      console.log 'NEW CANVAS ELEMENT: ', newCanvasElement
+
+      newItem = document.createElement('div')
+      newItem.setAttribute 'class', 'item'
+      newItem.innerHTML = """
+        <div id="graph-#{i}-container">
+        </div>
+        <p class=\"caption\">#{recent.subjects[0].zooniverse_id}</p>
+      """
+
+
+      @canvasElements[i] = newCanvasElement
+   
+
+      # newItem.el.find('.graph-container').append newCanvasElement
+      # console.log 'LAST CHILD: ', $('.items')[0].firstChild
+      
+
+      # $('.items')[0].insertBefore(@canvasElements[i], $('.items')[0].firstChild)
+      
+      $('.items')[0].insertBefore(newItem, $('.items')[0].firstChild)
+
+
+      console.log 'NEW ITEM: ', $("#graph-#{i}-container")[0]
+
+      $("#graph-#{i}-container").append newCanvasElement
 
       # get data
       jsonFile = "test_data/testLightCurve.json"
       jsonFile = window.zooniverse.models.Recent.instances[i].subjects[0].location
-      
-      # canvas = @canvasElements[i]
       do(i) =>
         $.getJSON jsonFile, (data) =>
           # console.log "EL[#{i}]: ", canvas
           console.log "EL[#{i}]: ", $(".graph")[i]
           canvas = $(".graph")[i]
-
-
           newGraph = new CanvasGraph( canvas, data )
           newGraph.showAxes = false
           newGraph.leftPadding = 0
           newGraph.disableMarking()
+          # debugger
           newGraph.plotPoints()
           @graphs[i] = newGraph
 
