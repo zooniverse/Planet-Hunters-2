@@ -18,7 +18,8 @@ tutorialSteps =
   theData2: new Step
     header:      translate 'span', 'tutorial.theData2.header'
     details:     translate 'span', 'tutorial.theData2.details'
-    attachment: 'center center #graph-container center center'
+    attachment: 'center 20px #slider-container center top'
+    className: 'arrow-bottom'
     next: 'transits'
 
   transits: new Step
@@ -41,7 +42,13 @@ tutorialSteps =
 
   showTransits: new Step
     onEnter: ->
-      window.classifier.canvasGraph.highlightCurve(8,10)
+      # modify this to fit the light curve
+      window.classifier.canvasGraph.highlightCurve(1,2)
+      window.classifier.canvasGraph.highlightCurve(4,5)
+      window.classifier.canvasGraph.highlightCurve(8,9)
+      window.classifier.canvasGraph.highlightCurve(10,11)
+      window.classifier.canvasGraph.highlightCurve(12,13)
+
     header:      translate 'span', 'tutorial.showTransits.header'
     details:     translate 'span', 'tutorial.showTransits.details'
     attachment: 'center center #graph-container center center'
@@ -51,7 +58,9 @@ tutorialSteps =
     header:      translate 'span', 'tutorial.zooming.header'
     details:     translate 'span', 'tutorial.zooming.details'
     attachment: 'center center #graph-container center center'
-    next: 'goodLuck'
+    className: 'arrow-right'
+    attachment: 'right center #zoom-button left center'
+    next: 'click [id="zoom-button"]': 'goodLuck'
 
   goodLuck: new Step
     header:      translate 'span', 'tutorial.goodLuck.header'
