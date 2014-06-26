@@ -52,15 +52,14 @@ class Profile extends BaseController
         <p class=\"caption\">#{recent.subjects[0].zooniverse_id}</p>
       """
       @canvasElements[i] = newCanvasElement
-      $('.items')[0].insertBefore(newItem, $('.items')[0].firstChild)
+      $('.items').append newItem
       $("#graph-#{i}-container").append newCanvasElement
 
       # get data
-      jsonFile = "test_data/testLightCurve.json"
-      jsonFile = window.zooniverse.models.Recent.instances[i].subjects[0].location
+      # jsonFile = "test_data/testLightCurve.json"
+      jsonFile = recent.subjects[0].location
       do(i) =>
         $.getJSON jsonFile, (data) =>
-          console.log "EL[#{i}]: ", $(".graph")[i]
           canvas = $(".graph")[i]
           newGraph = new CanvasGraph( canvas, data )
           newGraph.showAxes = false
