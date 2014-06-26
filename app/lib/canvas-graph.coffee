@@ -3,6 +3,8 @@
 class CanvasGraph
   constructor: (@canvas, @data) ->
 
+    console.log 'DATA: ', @data
+
     @leftPadding = 60
     @showAxes    = true
 
@@ -191,7 +193,7 @@ class CanvasGraph
     return
 
   plotPoints: (xMin = @smallestX, xMax = @largestX, yMin = @smallestY, yMax = @largestY) ->
-    # console.log 'plotPoints(): [',xMin,',',xMax,']'
+    console.log 'plotPoints(): [',xMin,',',xMax,']'
     @xMin = xMin
     @xMax = xMax
     @yMin = yMin

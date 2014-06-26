@@ -7,7 +7,7 @@ Recent             = require 'zooniverse/models/recent'
 Favorite           = require 'zooniverse/models/favorite'
 User               = require 'zooniverse/models/user'
 customItemTemplate = require '../views/custom-profile-item'
-CanvasGraph        = require '../lib/canvas-graph'
+{CanvasGraph, Marks, Mark} = require '../lib/canvas-graph'
 
 class Profile extends BaseController
   className: 'profile'
@@ -20,8 +20,6 @@ class Profile extends BaseController
       
     Subject.on 'select', @onSubjectSelect
     window.profile = @
-
-
 
     # use custom template for light curves
     BaseProfile::recentTemplate = customItemTemplate
@@ -37,31 +35,38 @@ class Profile extends BaseController
 
   onSubjectSelect: ->
 
-    for recent, i in window.zooniverse.models.Recent.instances
-      location = recent.subjects[0].location
-      $('.items').prepend """
-        <div class='item' json-file=\"#{location}\">
-          <a href=\"#{location}\">
-            <img src=\"http://lorempixel.com/600/150/\" />
-            <div class=\"graph-container\">
+    console.log 'onSubjectSelect()'
+    console.log 'window.zooniverse.models.Recent.instances: ', window.zooniverse.models.Recent.instances
 
-            </div>
-          </a>
-        </div>
-      """
+    #  create canvas Elements
+    @canvasElements = []
+    @graphs = []
+    # for recent, i in window.zooniverse.models.Recent.instances
+    i = 0
+    newElement = document.createElement('canvas')
+    newElement.id     = "graph-#{i}"
+    newElement.width  = 600
+    newElement.height = 150
+    newElement.setAttribute 'class', 'graph'
 
-  loadSubjectData: (location) ->
-    jsonFile = location
+    @canvasElements.push(newElement)
+    $('.items')[0].appendChild(@canvasElements[i])
 
-    # create new canvas
-    @canvas = document.createElement('canvas')
-    @canvas.id = 'graph'
-    @canvas.width = 600
-    @canvas.height = 150
-    
+    console.log "canvasElements[#{i}]: ", @canvasElements[i]
+
+    # get data
+    # jsonFile = "test_data/testLightCurve.json"
+    jsonFile = window.zooniverse.models.Recent.instances[3].subjects[0].location
+    console.log "JSON FILE:::::::::::::::::: #{jsonFile}"
     $.getJSON jsonFile, (data) =>
-      @canvasGraph = new CanvasGraph(@canvas, data)
-      @canvasGraph.plotPoints()
-      
+      console.log 
+      console.log 'BLAH: ', @canvasElements[i]
+      newGraph = new CanvasGraph(@canvasElements[i], data)
+      newGraph.showAxes = false
+      newGraph.leftPadding = 0
+      newGraph.disableMarking()
+      newGraph.plotPoints()
+      @graphs.push(newGraph)
+
 
 module.exports = Profile

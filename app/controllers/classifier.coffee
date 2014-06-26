@@ -119,7 +119,7 @@ class Classifier extends BaseController
 
     # DEBUG CODE
     # jsonFile = './offline/subject.json' # for debug only
-    console.log 'json_file: ', jsonFile
+    console.log 'jsonFile: ', jsonFile
     
     @canvas?.remove() # kill any previous canvas
 
