@@ -17,7 +17,7 @@ class Profile extends BaseController
 
   constructor: ->
     super
-    # className: 'profile'
+    className: 'profile'
       
     Subject.on 'select', @onSubjectSelect
     window.profile = @
@@ -40,37 +40,19 @@ class Profile extends BaseController
     @graphs = []
     for recent, i in window.zooniverse.models.Recent.instances
       newCanvasElement = document.createElement('canvas')
-      newCanvasElement.id     = "graph-#{i}"
-      newCanvasElement.setAttribute 'width' ,'inherit'
+      newCanvasElement.id  = "graph-#{i}"
+      newCanvasElement.setAttribute 'width','inherit'
       newCanvasElement.setAttribute 'height','inherit'
       newCanvasElement.setAttribute 'class', 'graph'
-
-
-      console.log 'NEW CANVAS ELEMENT: ', newCanvasElement
-
       newItem = document.createElement('div')
       newItem.setAttribute 'class', 'item'
       newItem.innerHTML = """
-        <div id="graph-#{i}-container">
-        </div>
+          <div id="graph-#{i}-container">
+          </div>
         <p class=\"caption\">#{recent.subjects[0].zooniverse_id}</p>
       """
-
-
       @canvasElements[i] = newCanvasElement
-   
-
-      # newItem.el.find('.graph-container').append newCanvasElement
-      # console.log 'LAST CHILD: ', $('.items')[0].firstChild
-      
-
-      # $('.items')[0].insertBefore(@canvasElements[i], $('.items')[0].firstChild)
-      
       $('.items')[0].insertBefore(newItem, $('.items')[0].firstChild)
-
-
-      console.log 'NEW ITEM: ', $("#graph-#{i}-container")[0]
-
       $("#graph-#{i}-container").append newCanvasElement
 
       # get data
@@ -78,7 +60,6 @@ class Profile extends BaseController
       jsonFile = window.zooniverse.models.Recent.instances[i].subjects[0].location
       do(i) =>
         $.getJSON jsonFile, (data) =>
-          # console.log "EL[#{i}]: ", canvas
           console.log "EL[#{i}]: ", $(".graph")[i]
           canvas = $(".graph")[i]
           newGraph = new CanvasGraph( canvas, data )
@@ -88,6 +69,5 @@ class Profile extends BaseController
           # debugger
           newGraph.plotPoints()
           @graphs[i] = newGraph
-
 
 module.exports = Profile

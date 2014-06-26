@@ -1,6 +1,15 @@
 # $ = window.jQuery
 
 class CanvasGraph
+
+  events:
+    'click button[name="unfavorite"]': 'onClickUnfavorite'
+    'click button[name="turn-page"]': 'onTurnPage'
+
+  elements:
+    'nav': 'navigation'
+    'button[name="turn-page"]': 'pageTurners'
+
   constructor: (@canvas, @data) ->
 
     # console.log 'CANVAS ELEMENT: ', @canvas
