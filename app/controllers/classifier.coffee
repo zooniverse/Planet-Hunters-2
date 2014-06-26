@@ -107,8 +107,8 @@ class Classifier extends BaseController
 
 
     # TODO: use Subject data to choose the right lightcurve
-    jsonFile = @subject.location['14-1'] # read actual subject
-
+    jsonFile = @subject.selected_light_curve.location
+    
     # DEBUG CODE
     # jsonFile = './offline/subject.json' # for debug only
     console.log 'json_file: ', jsonFile
