@@ -3,7 +3,7 @@
 class CanvasGraph
   constructor: (@canvas, @data) ->
 
-    console.log 'DATA: ', @data
+    # console.log 'CANVAS ELEMENT: ', @canvas
 
     @leftPadding = 60
     @showAxes    = true

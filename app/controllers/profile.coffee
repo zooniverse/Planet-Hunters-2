@@ -17,6 +17,7 @@ class Profile extends BaseController
 
   constructor: ->
     super
+    # className: 'profile'
       
     Subject.on 'select', @onSubjectSelect
     window.profile = @
@@ -34,39 +35,38 @@ class Profile extends BaseController
     , 1000
 
   onSubjectSelect: ->
-
-    console.log 'onSubjectSelect()'
-    console.log 'window.zooniverse.models.Recent.instances: ', window.zooniverse.models.Recent.instances
-
     #  create canvas Elements
     @canvasElements = []
     @graphs = []
-    # for recent, i in window.zooniverse.models.Recent.instances
-    i = 0
-    newElement = document.createElement('canvas')
-    newElement.id     = "graph-#{i}"
-    newElement.width  = 600
-    newElement.height = 150
-    newElement.setAttribute 'class', 'graph'
+    for recent, i in window.zooniverse.models.Recent.instances
+      newElement = document.createElement('canvas')
+      newElement.id     = "graph-#{i}"
+      newElement.width  = 600
+      newElement.height = 150
+      newElement.setAttribute 'class', 'graph'
 
-    @canvasElements.push(newElement)
-    $('.items')[0].appendChild(@canvasElements[i])
+      # @canvasElements.push(newElement)
+      @canvasElements[i] = newElement
+      $('.items')[0].appendChild(@canvasElements[i])
 
-    console.log "canvasElements[#{i}]: ", @canvasElements[i]
+      # get data
+      jsonFile = "test_data/testLightCurve.json"
+      jsonFile = window.zooniverse.models.Recent.instances[i].subjects[0].location
+      
+      # canvas = @canvasElements[i]
+      do(i) =>
+        $.getJSON jsonFile, (data) =>
+          # console.log "EL[#{i}]: ", canvas
+          console.log "EL[#{i}]: ", $(".graph")[i]
+          canvas = $(".graph")[i]
 
-    # get data
-    # jsonFile = "test_data/testLightCurve.json"
-    jsonFile = window.zooniverse.models.Recent.instances[3].subjects[0].location
-    console.log "JSON FILE:::::::::::::::::: #{jsonFile}"
-    $.getJSON jsonFile, (data) =>
-      console.log 
-      console.log 'BLAH: ', @canvasElements[i]
-      newGraph = new CanvasGraph(@canvasElements[i], data)
-      newGraph.showAxes = false
-      newGraph.leftPadding = 0
-      newGraph.disableMarking()
-      newGraph.plotPoints()
-      @graphs.push(newGraph)
+
+          newGraph = new CanvasGraph( canvas, data )
+          newGraph.showAxes = false
+          newGraph.leftPadding = 0
+          newGraph.disableMarking()
+          newGraph.plotPoints()
+          @graphs[i] = newGraph
 
 
 module.exports = Profile
