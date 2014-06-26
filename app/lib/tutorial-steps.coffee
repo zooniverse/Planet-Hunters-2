@@ -1,5 +1,6 @@
 {Step} = require 'zootorial'
-translate = require 't7e'
+translate  = require 't7e'
+# classifier = require "../controllers/classifier"
 
 tutorialSteps =
   welcome: new Step
@@ -39,6 +40,8 @@ tutorialSteps =
     next: 'showTransits'
 
   showTransits: new Step
+    onEnter: ->
+      window.classifier.canvasGraph.highlightCurve(8,10)
     header:      translate 'span', 'tutorial.showTransits.header'
     details:     translate 'span', 'tutorial.showTransits.details'
     attachment: 'center center #graph-container center center'
