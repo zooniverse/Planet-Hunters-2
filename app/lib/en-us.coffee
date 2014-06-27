@@ -33,7 +33,7 @@ module.exports =
 
 
   tutorial:
-    welcome:
+    first:
       header: 'Welcome!'
       details: 'This short tutorial will show you how to find undiscovered planets by looking at how the brightness of a star changes over time.'
 

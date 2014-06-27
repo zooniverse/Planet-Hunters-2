@@ -74,7 +74,7 @@ class Classifier extends BaseController
       steps:
         first: 
           header:      translate 'span', 'tutorial.welcome.header'
-          details:     translate 'span', 'tutorial.welcome.details'
+          footer:     translate 'span', 'tutorial.welcome.details'
           attachment: [0.5, 0.5, "#graph-container", 0.5, 0.5]
           next: 'theData1'
 
