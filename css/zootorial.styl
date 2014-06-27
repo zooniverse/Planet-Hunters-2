@@ -1,179 +1,196 @@
-.zootorial-dialog.tutorial
-  background: rgba(39,54,64,1)
-  border: 0
-  border-radius: 5px
-  box-shadow: 0 3px 5px rgba(#000, 0.67)
-  color: #FFF
-  max-width: 33%
-  text-align center
-  margin 5px
-  max-width 450px
-  z-index 1000
-  display none
-  &.open
-    display inline-block
+.zootorial-tutorial
+  background-color rgba(39,54,64,1)
+  border: 0;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  -webkit-box-shadow: 0 3px 5px rgba(0,0,0,0.67);
+  box-shadow: 0 3px 5px rgba(0,0,0,0.67);
+  color: #000;
+  font: 14px "Helvetica Neue", Arial, sans-serif;
+  max-width: 33%;
+  -webkit-transition: opacity 0.5s, -webkit-transform 0.5s;
+  -moz-transition: opacity 0.5s, -moz-transform 0.5s;
+  -o-transition: opacity 0.5s, -o-transform 0.5s;
+  -ms-transition: opacity 0.5s, -ms-transform 0.5s;
+  transition: opacity 0.5s, transform 0.5s;
+  z-index: 1000
 
-  &.arrow-right > .dialog-arrow
-    border-top 10px solid transparent
-    border-bottom 10px solid transparent
-    border-left 10px solid rgba(39,54,64,1)
-    position absolute
-    right -10px
-    top 45%
+// .zootorial-dialog.tutorial
+//   background: rgba(39,54,64,1)
+//   border: 0
+//   border-radius: 5px
+//   box-shadow: 0 3px 5px rgba(#000, 0.67)
+//   color: #FFF
+//   max-width: 33%
+//   text-align center
+//   margin 5px
+//   max-width 450px
+//   z-index 1000
+//   display none
+//   &.open
+//     display inline-block
 
-  &.arrow-left > .dialog-arrow
-    border-top 10px solid transparent
-    border-bottom 10px solid transparent
-    border-right 10px solid rgba(39,54,64,1)
-    position absolute
-    left -10px
-    top 45%
+//   &.arrow-right > .dialog-arrow
+//     border-top 10px solid transparent
+//     border-bottom 10px solid transparent
+//     border-left 10px solid rgba(39,54,64,1)
+//     position absolute
+//     right -10px
+//     top 45%
 
-  &.arrow-top > .dialog-arrow
-    border-left 10px solid transparent
-    border-right 10px solid transparent
-    border-bottom 10px solid rgba(39,54,64,1)
-    position absolute
-    left 45%
-    top -10px
+//   &.arrow-left > .dialog-arrow
+//     border-top 10px solid transparent
+//     border-bottom 10px solid transparent
+//     border-right 10px solid rgba(39,54,64,1)
+//     position absolute
+//     left -10px
+//     top 45%
 
-  &.arrow-bottom > .dialog-arrow
-    border-left 10px solid transparent
-    border-right 10px solid transparent
-    border-top 10px solid rgba(39,54,64,1)
-    position absolute
-    left 45%
-    bottom -10px
+//   &.arrow-top > .dialog-arrow
+//     border-left 10px solid transparent
+//     border-right 10px solid transparent
+//     border-bottom 10px solid rgba(39,54,64,1)
+//     position absolute
+//     left 45%
+//     top -10px
 
-  .dialog-arrow
-    width 0
-    height 0
+//   &.arrow-bottom > .dialog-arrow
+//     border-left 10px solid transparent
+//     border-right 10px solid transparent
+//     border-top 10px solid rgba(39,54,64,1)
+//     position absolute
+//     left 45%
+//     bottom -10px
 
-  button[name="close-dialog"]
-    background: transparent
-    border: 0
-    color: #999
-    cursor: pointer
-    font: 16px Arial, sans-serif
-    height: 1em
-    line-height: 1em
-    padding: 0
-    position: absolute
-    right: 5px
-    top: 5px
-    width: 1em
+//   .dialog-arrow
+//     width 0
+//     height 0
 
-  .header
-    display: none
-    font-size: 20px
-    margin-bottom: -10px
-    padding: 15px 25px 0 20px
-    font-weight bold
+//   button[name="close-dialog"]
+//     background: transparent
+//     border: 0
+//     color: #999
+//     cursor: pointer
+//     font: 16px Arial, sans-serif
+//     height: 1em
+//     line-height: 1em
+//     padding: 0
+//     position: absolute
+//     right: 5px
+//     top: 5px
+//     width: 1em
 
-    &.defined
-      display: block
+//   .header
+//     display: none
+//     font-size: 20px
+//     margin-bottom: -10px
+//     padding: 15px 25px 0 20px
+//     font-weight bold
 
-  .details
-    display: none
-    padding: 15px 25px 15px 20px
-    font-size 14px
-    line-height 22px
+//     &.defined
+//       display: block
 
-    &.defined
-      display: block
+//   .details
+//     display: none
+//     padding: 15px 25px 15px 20px
+//     font-size 14px
+//     line-height 22px
 
-  .instruction
-    color: #319cae
-    display: none
-    padding: 15px 20px 5px 20px
+//     &.defined
+//       display: block
 
-    &.defined
-      display: block
+//   .instruction
+//     color: #319cae
+//     display: none
+//     padding: 15px 20px 5px 20px
 
-    &.attention
-      animation: 1s zootorial-throb ease-in-out infinite
+//     &.defined
+//       display: block
 
-    button
-      border: 0
-      border-radius: 5px
-      border 1px solid #fff
-      color: #fff
-      margin-top 5px
-      cursor: pointer
-      padding: 0px 10px
-      position: relative
+//     &.attention
+//       animation: 1s zootorial-throb ease-in-out infinite
 
-      &[disabled]
-        opacity: 0.5
+//     button
+//       border: 0
+//       border-radius: 5px
+//       border 1px solid #fff
+//       color: #fff
+//       margin-top 5px
+//       cursor: pointer
+//       padding: 0px 10px
+//       position: relative
 
-  .buttons
-    background: greenish
-    display: none
-    padding: 10px
-    text-align: center
+//       &[disabled]
+//         opacity: 0.5
 
-    &.defined
-      display: block
+//   .buttons
+//     background: greenish
+//     display: none
+//     padding: 10px
+//     text-align: center
 
-    button
-      background: #38b3c5
-      border: 0
-      border-radius: 5px
-      color: inherit
-      cursor: pointer
-      font-weight: bold
-      padding: 3px 15px
-      position: relative
+//     &.defined
+//       display: block
 
-      &:active
-        top: 1px
+//     button
+//       background: #38b3c5
+//       border: 0
+//       border-radius: 5px
+//       color: inherit
+//       cursor: pointer
+//       font-weight: bold
+//       padding: 3px 15px
+//       position: relative
 
-  .progress
-    display: none
+//       &:active
+//         top: 1px
 
-    &.defined
-      display: block
+//   .progress
+//     display: none
 
-    .track
-      background: #ccc
-      border-radius: 5px
-      box-shadow: 0 1px 1px #999 inset
-      height: 5px
-      margin: 5px 10px
-      overflow: hidden
-      position: relative
+//     &.defined
+//       display: block
 
-      .fill
-        background: greenish
-        height: 100%
-        left: 0
-        position: absolute
-        top: 0
-        transition: width 0.5s ease-in-out
-        width: 0%
+//     .track
+//       background: #ccc
+//       border-radius: 5px
+//       box-shadow: 0 1px 1px #999 inset
+//       height: 5px
+//       margin: 5px 10px
+//       overflow: hidden
+//       position: relative
 
-    .steps
-      line-height: 0
-      margin: 5px 10px
-      text-align: center
+//       .fill
+//         background: greenish
+//         height: 100%
+//         left: 0
+//         position: absolute
+//         top: 0
+//         transition: width 0.5s ease-in-out
+//         width: 0%
 
-      .step
-        border: 1px solid #999
-        border-radius: 50%
-        display: inline-block
-        height: 5px
-        margin: 0 2px
-        width: 5px
+//     .steps
+//       line-height: 0
+//       margin: 5px 10px
+//       text-align: center
 
-        &.passed
-          background: #999
+//       .step
+//         border: 1px solid #999
+//         border-radius: 50%
+//         display: inline-block
+//         height: 5px
+//         margin: 0 2px
+//         width: 5px
 
-        &.active
-          background: greenish
-          border-color: greenish
+//         &.passed
+//           background: #999
 
-.zootorial-focuser
-  background #6E6E6E
+//         &.active
+//           background: greenish
+//           border-color: greenish
 
-.actionable
-  animation: 1s zootorial-glow ease-in-out infinite
+// .zootorial-focuser
+//   background #6E6E6E
+
+// .actionable
+//   animation: 1s zootorial-glow ease-in-out infinite
