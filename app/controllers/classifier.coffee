@@ -7,7 +7,7 @@ NoUiSlider     = require '../lib/jquery.nouislider.min'
 translate      = require 't7e'
 {Tutorial}     = require 'zootorial'
 {Step}         = require 'zootorial'
-tutorialSteps  = require '../lib/tutorial-steps'
+# tutorialSteps  = require '../lib/tutorial-steps'
 $ = window.jQuery
 {CanvasGraph, Marks, Mark} = require "../lib/canvas-graph"
 
@@ -75,9 +75,82 @@ class Classifier extends BaseController
     $(document).on 'mark-change', => @updateButtons()
     @marksContainer = @el.find('#marks-container')[0]
 
+    # /// BEGIN TUTORIAL ///
     @tutorial = new Tutorial
-      steps: tutorialSteps
-      firstStep: 'welcome'
+      # progress: 9
+      steps:
+        first: 
+          # progress:    1
+          header:      translate 'span', 'tutorial.first.header'
+          content:     translate 'span', 'tutorial.first.content'
+          attachment:  [0.5, 0.5, "#graph-container", 0.5, 0.5]
+          next:        'theData1'
+
+        theData1: 
+          # progress:    2
+          header:      translate 'span', 'tutorial.theData1.header'
+          content:     translate 'span', 'tutorial.theData1.content'
+          attachment:  [0.5, 0.5, "#graph-container", 0.5, 0.5]
+          next:        'theData2'
+
+        theData2: 
+          # progress:    3
+          header:      translate 'span', 'tutorial.theData2.header'
+          content:     translate 'span', 'tutorial.theData2.content'
+          attachment:  [0.5, 1.20, "#slider-container", 0.5, 0.5]
+          arrow:       "bottom"
+          next:        'transits'
+
+        transits: 
+          # progress:    4
+          header:      translate 'span', 'tutorial.transits.header'
+          content:     translate 'span', 'tutorial.transits.content'
+          attachment:  [0.5, 0.5, "#graph-container", 0.5, 0.5]
+          next:        'markingTransits'
+
+        markingTransits:
+          # progress:    5 
+          header:      translate 'span', 'tutorial.markingTransits.header'
+          content:     translate 'span', 'tutorial.markingTransits.content'
+          attachment:  [0.5, 0.5, "#graph-container", 0.5, 0.5]
+          next:        'spotTransits'
+
+        spotTransits:
+          # progress:    6 
+          header:      translate 'span', 'tutorial.spotTransits.header'
+          content:     translate 'span', 'tutorial.spotTransits.content'
+          attachment:  [0.5, 0.5, "#graph-container", 0.5, 0.5]
+          next:        'showTransits'
+
+        showTransits:
+          # progress:    7 
+          header:      translate 'span', 'tutorial.showTransits.header'
+          content:     translate 'span', 'tutorial.showTransits.content'
+          attachment:  [0.5, 0.5, "#graph-container", 0.5, 0.5]
+          next:        'zooming'
+
+          demo: -> # TODO: Fix. This doesn't work!
+            # modify this to fit the light curve
+            window.classifier.canvasGraph.highlightCurve(1,2)
+            window.classifier.canvasGraph.highlightCurve(4,5)
+            window.classifier.canvasGraph.highlightCurve(8,9)
+            window.classifier.canvasGraph.highlightCurve(10,11)
+            window.classifier.canvasGraph.highlightCurve(12,13)
+
+        zooming: 
+          # progress:    8
+          header:      translate 'span', 'tutorial.zooming.header'
+          content:     translate 'span', 'tutorial.zooming.content'
+          arrow:       'right'
+          attachment:  [0.5, 0.5, "#graph-container", 0.5, 0.5]
+          next:        'click [id="zoom-button"]': 'goodLuck'
+
+        goodLuck: 
+          # progress:    9
+          header:      translate 'span', 'tutorial.goodLuck.header'
+          content:     translate 'span', 'tutorial.goodLuck.content'
+          attachment:  [0.5, 0.5, "#graph-container", 0.5, 0.5]
+    # /// END TUTORIAL /// 
 
     # mini course
     @course = new MiniCourse
@@ -109,18 +182,17 @@ class Classifier extends BaseController
     @loadSubjectData()
     @el.find('#loading-screen').hide() # TODO: uncomment
 
-
   loadSubjectData: ->
     console.log 'loadSubjectData()'
     @el.find('#ui-slider').attr('disabled',true)
     @el.find(".noUi-handle").fadeOut(150)
 
     # TODO: use Subject data to choose the right lightcurve
-    jsonFile = @subject.location['14-1'] # read actual subject
-
+    jsonFile = @subject.selected_light_curve.location
+    
     # DEBUG CODE
     # jsonFile = './offline/subject.json' # for debug only
-    console.log 'json_file: ', jsonFile
+    console.log 'jsonFile: ', jsonFile
     
     @canvas?.remove() # kill any previous canvas
 
@@ -277,7 +349,7 @@ class Classifier extends BaseController
     if @isFaved
       @isFaved = false
       @el.find("#toggle-fav").removeClass("toggled")
-      @notify('Removed to Favorites.')
+      @notify('Removed from Favorites.')
     else
       @isFaved = true
       @el.find("#toggle-fav").addClass("toggled")
@@ -376,8 +448,8 @@ class Classifier extends BaseController
 
     @classification.annotate
       classification_type: 'light_curve'
-      selected_id: @subject.selected_light_curve._id
-
+      selected_id:          @subject.selected_light_curve._id
+      location:             @subject.selected_light_curve.location
     for mark in [@canvasGraph.marks.all...]
       @classification.annotate
         timestamp: mark.timestamp
@@ -389,9 +461,10 @@ class Classifier extends BaseController
     
     # DEBUG CODE
     console.log JSON.stringify( @classification )
-    @classification.send()
     console.log '********************************************'
-
+   
+    @classification.send()
+    
     # re-enable zoom button (after feedback)
     @el.find('#zoom-button').attr('disabled',false)
 
