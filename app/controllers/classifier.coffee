@@ -71,20 +71,24 @@ class Classifier extends BaseController
     @marksContainer = @el.find('#marks-container')[0]
 
     @tutorial = new Tutorial
+      progress: 9
       steps:
         first: 
+          progress: 1
           header:      translate 'span', 'tutorial.welcome.header'
           footer:     translate 'span', 'tutorial.welcome.details'
           attachment: [0.5, 0.5, "#graph-container", 0.5, 0.5]
           next: 'theData1'
 
         theData1: 
+          progress: 2
           header:      translate 'span', 'tutorial.theData1.header'
           details:     translate 'span', 'tutorial.theData1.details'
           attachment: [0.5, 0.5, "#graph-container", 0.5, 0.5]
           next: 'theData2'
 
         theData2: 
+          progress: 3
           header:      translate 'span', 'tutorial.theData2.header'
           details:     translate 'span', 'tutorial.theData2.details'
           attachment: [0.5, 0.5, "#slider-container", 0.5, 0.5]
@@ -92,24 +96,28 @@ class Classifier extends BaseController
           next: 'transits'
 
         transits: 
+          progress: 4
           header:      translate 'span', 'tutorial.transits.header'
           details:     translate 'span', 'tutorial.transits.details'
           attachment: [0.5, 0.5, "#graph-container", 0.5, 0.5]
           next: 'markingTransits'
 
-        markingTransits: 
+        markingTransits:
+          progress: 5 
           header:      translate 'span', 'tutorial.markingTransits.header'
           details:     translate 'span', 'tutorial.markingTransits.details'
           attachment: [0.5, 0.5, "#graph-container", 0.5, 0.5]
           next: 'spotTransits'
 
-        spotTransits: 
+        spotTransits:
+          progress: 6 
           header:      translate 'span', 'tutorial.spotTransits.header'
           details:     translate 'span', 'tutorial.spotTransits.details'
           attachment: [0.5, 0.5, "#graph-container", 0.5, 0.5]
           next: 'showTransits'
 
-        showTransits: 
+        showTransits:
+          progress: 7 
           onEnter: ->
             # modify this to fit the light curve
             window.classifier.canvasGraph.highlightCurve(1,2)
@@ -124,6 +132,7 @@ class Classifier extends BaseController
           next: 'zooming'
 
         zooming: 
+          progress: 8
           header:      translate 'span', 'tutorial.zooming.header'
           details:     translate 'span', 'tutorial.zooming.details'
           attachment: [0.5, 0.5, "#graph-container", 0.5, 0.5]
@@ -132,6 +141,7 @@ class Classifier extends BaseController
           next: 'click [id="zoom-button"]': 'goodLuck'
 
         goodLuck: 
+          progress: 9
           header:      translate 'span', 'tutorial.goodLuck.header'
           details:     translate 'span', 'tutorial.goodLuck.details'
           attachment: [0.5, 0.5, "#graph-container", 0.5, 0.5]
