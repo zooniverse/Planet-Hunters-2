@@ -75,50 +75,57 @@ class Classifier extends BaseController
       steps:
         first: 
           progress: 1
-          header:      translate 'span', 'tutorial.first.header'
-          footer:     translate 'span', 'tutorial.first.details'
-          attachment: [0.5, 0.5, "#graph-container", 0.5, 0.5]
+          header: "Header"
+          content: "Content. Blah blah blah."
+          instruction: "Instruction."
+          footer: "Footer."
+          arrow: 'left'
+
+          # header:      translate 'span', 'tutorial.first.header'
+          # footer:     translate 'span', 'tutorial.first.content'
+          # attachment: [0.5, 0.5, "#graph-container", 0.5, 0.5]
           next: 'theData1'
 
         theData1: 
           progress: 2
           header:      translate 'span', 'tutorial.theData1.header'
-          details:     translate 'span', 'tutorial.theData1.details'
+          content:     translate 'span', 'tutorial.theData1.content'
           attachment: [0.5, 0.5, "#graph-container", 0.5, 0.5]
           next: 'theData2'
 
         theData2: 
           progress: 3
           header:      translate 'span', 'tutorial.theData2.header'
-          details:     translate 'span', 'tutorial.theData2.details'
+          content:     translate 'span', 'tutorial.theData2.content'
           attachment: [0.5, 0.5, "#slider-container", 0.5, 0.5]
-          className: 'arrow-bottom'
+          arrow: "bottom"
           next: 'transits'
 
         transits: 
           progress: 4
           header:      translate 'span', 'tutorial.transits.header'
-          details:     translate 'span', 'tutorial.transits.details'
+          content:     translate 'span', 'tutorial.transits.content'
           attachment: [0.5, 0.5, "#graph-container", 0.5, 0.5]
           next: 'markingTransits'
 
         markingTransits:
           progress: 5 
           header:      translate 'span', 'tutorial.markingTransits.header'
-          details:     translate 'span', 'tutorial.markingTransits.details'
+          content:     translate 'span', 'tutorial.markingTransits.content'
           attachment: [0.5, 0.5, "#graph-container", 0.5, 0.5]
           next: 'spotTransits'
 
         spotTransits:
           progress: 6 
           header:      translate 'span', 'tutorial.spotTransits.header'
-          details:     translate 'span', 'tutorial.spotTransits.details'
+          content:     translate 'span', 'tutorial.spotTransits.content'
           attachment: [0.5, 0.5, "#graph-container", 0.5, 0.5]
           next: 'showTransits'
 
         showTransits:
           progress: 7 
-          onEnter: ->
+          demo: ->
+            console.log 'FOO!'
             # modify this to fit the light curve
             window.classifier.canvasGraph.highlightCurve(1,2)
             window.classifier.canvasGraph.highlightCurve(4,5)
@@ -127,23 +134,23 @@ class Classifier extends BaseController
             window.classifier.canvasGraph.highlightCurve(12,13)
 
           header:      translate 'span', 'tutorial.showTransits.header'
-          details:     translate 'span', 'tutorial.showTransits.details'
+          content:     translate 'span', 'tutorial.showTransits.content'
           attachment: [0.5, 0.5, "#graph-container", 0.5, 0.5]
           next: 'zooming'
 
         zooming: 
           progress: 8
           header:      translate 'span', 'tutorial.zooming.header'
-          details:     translate 'span', 'tutorial.zooming.details'
+          content:     translate 'span', 'tutorial.zooming.content'
           attachment: [0.5, 0.5, "#graph-container", 0.5, 0.5]
-          className: 'arrow-right'
+          arrow: 'right'
           attachment: [0, 0.5, "#zoom-button", 0, 0.5]
           next: 'click [id="zoom-button"]': 'goodLuck'
 
         goodLuck: 
           progress: 9
           header:      translate 'span', 'tutorial.goodLuck.header'
-          details:     translate 'span', 'tutorial.goodLuck.details'
+          content:     translate 'span', 'tutorial.goodLuck.content'
           attachment: [0.5, 0.5, "#graph-container", 0.5, 0.5]
 
       # steps: tutorialSteps
