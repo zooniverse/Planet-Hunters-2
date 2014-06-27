@@ -29,7 +29,7 @@
   top 5px
   width 1em
 
-.zootorial-tutorial button.zootorial-close:hover
+.zootorial-tutorial button.zootorial-closehover
   color rgba(102,0,0,0.5)
 
 
@@ -40,7 +40,7 @@
   padding 15px 25px 0 20px
 
 .zootorial-tutorial .zootorial-content
-  padding: 15px 25px 15px 20px
+  padding 15px 25px 15px 20px
 
 .zootorial-tutorial .zootorial-instruction
   background #c3ffa6
@@ -48,183 +48,195 @@
   font-weight bold
   padding 15px 25px 15px 20px
 
+.zootorial-tutorial .zootorial-instruction[data-zootorial-attention]
+  animation 0.25s zootorial-throb ease-in-out infinite alternate
 
-// .zootorial-dialog.tutorial
-//   background: rgba(39,54,64,1)
-//   border: 0
-//   border-radius: 5px
-//   box-shadow: 0 3px 5px rgba(#000, 0.67)
-//   color: #FFF
-//   max-width: 33%
-//   text-align center
-//   margin 5px
-//   max-width 450px
-//   z-index 1000
-//   display none
-//   &.open
-//     display inline-block
+.zootorial-tutorial .zootorial-instruction[data-zootorial-attention="1"]
+  animation 0.5s zootorial-throb ease-in-out infinite alternate
 
-//   &.arrow-right > .dialog-arrow
-//     border-top 10px solid transparent
-//     border-bottom 10px solid transparent
-//     border-left 10px solid rgba(39,54,64,1)
-//     position absolute
-//     right -10px
-//     top 45%
+.zootorial-tutorial .zootorial-instruction button
+  background transparent
+  border 0
+  color inherit
+  cursor pointer
+  font-family inherit
+  font-size 12px
+  margin 0
+  padding 0
+  text-shadow inherit
+  text-decoration underline
 
-//   &.arrow-left > .dialog-arrow
-//     border-top 10px solid transparent
-//     border-bottom 10px solid transparent
-//     border-right 10px solid rgba(39,54,64,1)
-//     position absolute
-//     left -10px
-//     top 45%
+.zootorial-tutorial .zootorial-instruction button:disabled
+  opacity 0.5
+  pointer-events none
 
-//   &.arrow-top > .dialog-arrow
-//     border-left 10px solid transparent
-//     border-right 10px solid transparent
-//     border-bottom 10px solid rgba(39,54,64,1)
-//     position absolute
-//     left 45%
-//     top -10px
+.zootorial-tutorial .zootorial-footer
+  background #c3ffa6
+  border-radius 3px
+  padding 10px
+  text-align center
 
-//   &.arrow-bottom > .dialog-arrow
-//     border-left 10px solid transparent
-//     border-right 10px solid transparent
-//     border-top 10px solid rgba(39,54,64,1)
-//     position absolute
-//     left 45%
-//     bottom -10px
+.zootorial-tutorial .zootorial-footer button
+  background #fff
+  border 0
+  border-radius 3px
+  box-shadow 0 2px 3px rgba(0,0,0,0.67)
+  color inherit
+  cursor pointer
+  font inherit
+  font-weight bold
+  padding 3px 15px
+  position relative
 
-//   .dialog-arrow
-//     width 0
-//     height 0
+.zootorial-tutorial .zootorial-footer button:active 
+  box-shadow 0 1px 2px rgba(0,0,0,0.5)
+  top 1px
 
-//   button[name="close-dialog"]
-//     background: transparent
-//     border: 0
-//     color: #999
-//     cursor: pointer
-//     font: 16px Arial, sans-serif
-//     height: 1em
-//     line-height: 1em
-//     padding: 0
-//     position: absolute
-//     right: 5px
-//     top: 5px
-//     width: 1em
+.zootorial-tutorial .zootorial-progress 
+  text-align center
 
-//   .header
-//     display: none
-//     font-size: 20px
-//     margin-bottom: -10px
-//     padding: 15px 25px 0 20px
-//     font-weight bold
+.zootorial-tutorial .zootorial-progress-step 
+  border 1px solid #808080
+  border-radius 50%
+  display inline-block
+  height 5px
+  margin 0 3px
+  width 5px
 
-//     &.defined
-//       display: block
+.zootorial-tutorial .zootorial-progress-step[data-zootorial-progress] 
+  background #808080
 
-//   .details
-//     display: none
-//     padding: 15px 25px 15px 20px
-//     font-size 14px
-//     line-height 22px
+.zootorial-tutorial .zootorial-arrow 
+  border 10px solid transparent
+  left 50%
+  top 50%
+  margin -10px 0 0 -10px
+  height 0
+  width 0
 
-//     &.defined
-//       display: block
+.zootorial-tutorial .zootorial-arrow[data-zootorial-position="top"] 
+  border-bottom-color #fff
+  border-top-width 0
+  top 0
 
-//   .instruction
-//     color: #319cae
-//     display: none
-//     padding: 15px 20px 5px 20px
+.zootorial-tutorial .zootorial-arrow[data-zootorial-position="right"] 
+  border-left-color #fff
+  border-right-width 0
+  margin-left 0
+  left 100%
 
-//     &.defined
-//       display: block
+.zootorial-tutorial .zootorial-arrow[data-zootorial-position="bottom"] 
+  border-bottom-width 0
+  border-top-color #fff
+  margin-top 0
+  top 100%
 
-//     &.attention
-//       animation: 1s zootorial-throb ease-in-out infinite
+.zootorial-tutorial .zootorial-arrow[data-zootorial-position="left"] 
+  border-left-width 0
+  border-right-color #fff
+  left 0
 
-//     button
-//       border: 0
-//       border-radius: 5px
-//       border 1px solid #fff
-//       color: #fff
-//       margin-top 5px
-//       cursor: pointer
-//       padding: 0px 10px
-//       position: relative
+[data-zootorial-actionable]
+  animation 0.5s zootorial-glow ease-in-out infinite alternate
 
-//       &[disabled]
-//         opacity: 0.5
 
-//   .buttons
-//     background: greenish
-//     display: none
-//     padding: 10px
-//     text-align: center
+@-moz-keyframes zootorial-throb 
+  0% 
+    background #c3ffa6
+  
 
-//     &.defined
-//       display: block
+  100% 
+    background #7cff3d
+  
 
-//     button
-//       background: #38b3c5
-//       border: 0
-//       border-radius: 5px
-//       color: inherit
-//       cursor: pointer
-//       font-weight: bold
-//       padding: 3px 15px
-//       position: relative
+@-webkit-keyframes zootorial-throb 
+  0% 
+    background #c3ffa6
+  
 
-//       &:active
-//         top: 1px
+  100% 
+    background #7cff3d
+  
 
-//   .progress
-//     display: none
+@-o-keyframes zootorial-throb 
+  0% 
+    background #c3ffa6
+  
 
-//     &.defined
-//       display: block
+  100% 
+    background #7cff3d
+  
 
-//     .track
-//       background: #ccc
-//       border-radius: 5px
-//       box-shadow: 0 1px 1px #999 inset
-//       height: 5px
-//       margin: 5px 10px
-//       overflow: hidden
-//       position: relative
+@-ms-keyframes zootorial-throb 
+  0% 
+    background #c3ffa6
+  
 
-//       .fill
-//         background: greenish
-//         height: 100%
-//         left: 0
-//         position: absolute
-//         top: 0
-//         transition: width 0.5s ease-in-out
-//         width: 0%
+  100% 
+    background #7cff3d
+  
 
-//     .steps
-//       line-height: 0
-//       margin: 5px 10px
-//       text-align: center
+@keyframes zootorial-throb 
+  0% 
+    background #c3ffa6
+  
 
-//       .step
-//         border: 1px solid #999
-//         border-radius: 50%
-//         display: inline-block
-//         height: 5px
-//         margin: 0 2px
-//         width: 5px
+  100% 
+    background #7cff3d
+  
 
-//         &.passed
-//           background: #999
+@-moz-keyframes zootorial-glow 
+  0% 
+    -webkit-box-shadow 0 0 1px 2px #000 inset
+    box-shadow 0 0 1px 2px #000 inset
+  
 
-//         &.active
-//           background: greenish
-//           border-color: greenish
+  100% 
+    -webkit-box-shadow 0 0 1px 2px #fff inset
+    box-shadow 0 0 1px 2px #fff inset
+  
 
-// .zootorial-focuser
-//   background #6E6E6E
+@-webkit-keyframes zootorial-glow 
+  0% 
+    -webkit-box-shadow 0 0 1px 2px #000 inset
+    box-shadow 0 0 1px 2px #000 inset
+  
 
-// .actionable
-//   animation: 1s zootorial-glow ease-in-out infinite
+  100% 
+    -webkit-box-shadow 0 0 1px 2px #fff inset
+    box-shadow 0 0 1px 2px #fff inset
+  
+
+@-o-keyframes zootorial-glow 
+  0% 
+    -webkit-box-shadow 0 0 1px 2px #000 inset
+    box-shadow 0 0 1px 2px #000 inset
+  
+
+  100% 
+    -webkit-box-shadow 0 0 1px 2px #fff inset
+    box-shadow 0 0 1px 2px #fff inset
+  
+
+@-ms-keyframes zootorial-glow 
+  0% 
+    -webkit-box-shadow 0 0 1px 2px #000 inset
+    box-shadow 0 0 1px 2px #000 inset
+  
+
+  100% 
+    -webkit-box-shadow 0 0 1px 2px #fff inset
+    box-shadow 0 0 1px 2px #fff inset
+  
+
+@keyframes zootorial-glow 
+  0% 
+    -webkit-box-shadow 0 0 1px 2px #000 inset
+    box-shadow 0 0 1px 2px #000 inset
+  
+
+  100% 
+    -webkit-box-shadow 0 0 1px 2px #fff inset
+    box-shadow 0 0 1px 2px #fff inset
+  
+
