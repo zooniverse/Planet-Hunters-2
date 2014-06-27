@@ -72,53 +72,53 @@ class Classifier extends BaseController
 
     # /// BEGIN TUTORIAL ///
     @tutorial = new Tutorial
-      progress: 9
+      # progress: 9
       steps:
         first: 
-          progress:    1
+          # progress:    1
           header:      translate 'span', 'tutorial.first.header'
           content:     translate 'span', 'tutorial.first.content'
           attachment:  [0.5, 0.5, "#graph-container", 0.5, 0.5]
           next:        'theData1'
 
         theData1: 
-          progress:    2
+          # progress:    2
           header:      translate 'span', 'tutorial.theData1.header'
           content:     translate 'span', 'tutorial.theData1.content'
           attachment:  [0.5, 0.5, "#graph-container", 0.5, 0.5]
           next:        'theData2'
 
         theData2: 
-          progress:    3
+          # progress:    3
           header:      translate 'span', 'tutorial.theData2.header'
           content:     translate 'span', 'tutorial.theData2.content'
-          attachment:  [0.5, 0.5, "#slider-container", 0.5, 0.5]
+          attachment:  [0.5, 1.20, "#slider-container", 0.5, 0.5]
           arrow:       "bottom"
           next:        'transits'
 
         transits: 
-          progress:    4
+          # progress:    4
           header:      translate 'span', 'tutorial.transits.header'
           content:     translate 'span', 'tutorial.transits.content'
           attachment:  [0.5, 0.5, "#graph-container", 0.5, 0.5]
           next:        'markingTransits'
 
         markingTransits:
-          progress:    5 
+          # progress:    5 
           header:      translate 'span', 'tutorial.markingTransits.header'
           content:     translate 'span', 'tutorial.markingTransits.content'
           attachment:  [0.5, 0.5, "#graph-container", 0.5, 0.5]
           next:        'spotTransits'
 
         spotTransits:
-          progress:    6 
+          # progress:    6 
           header:      translate 'span', 'tutorial.spotTransits.header'
           content:     translate 'span', 'tutorial.spotTransits.content'
           attachment:  [0.5, 0.5, "#graph-container", 0.5, 0.5]
           next:        'showTransits'
 
         showTransits:
-          progress:    7 
+          # progress:    7 
           header:      translate 'span', 'tutorial.showTransits.header'
           content:     translate 'span', 'tutorial.showTransits.content'
           attachment:  [0.5, 0.5, "#graph-container", 0.5, 0.5]
@@ -132,18 +132,16 @@ class Classifier extends BaseController
             window.classifier.canvasGraph.highlightCurve(10,11)
             window.classifier.canvasGraph.highlightCurve(12,13)
 
-
         zooming: 
-          progress:    8
+          # progress:    8
           header:      translate 'span', 'tutorial.zooming.header'
           content:     translate 'span', 'tutorial.zooming.content'
-          attachment:  [0.5, 0.5, "#graph-container", 0.5, 0.5]
           arrow:       'right'
-          attachment:  [0, 0.5, "#zoom-button", 0, 0.5]
+          attachment:  [0.5, 0.5, "#graph-container", 0.5, 0.5]
           next:        'click [id="zoom-button"]': 'goodLuck'
 
         goodLuck: 
-          progress:    9
+          # progress:    9
           header:      translate 'span', 'tutorial.goodLuck.header'
           content:     translate 'span', 'tutorial.goodLuck.content'
           attachment:  [0.5, 0.5, "#graph-container", 0.5, 0.5]
