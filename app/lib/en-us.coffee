@@ -33,47 +33,39 @@ module.exports =
 
 
   tutorial:
-    welcome:
+    first:
       header: 'Welcome!'
-      details: 'You\’re looking at data from the Kepler Space Telescope to find undiscovered planets by observing how stars\’ brightness changes over time.'
+      content: 'This short tutorial will show you how to find undiscovered planets by looking at how the brightness of a star changes over time.'
 
     theData1:
       header: 'The Data'
-      details:  'This graph is a light curve showing how the brightness of one star changes over 35 days. The x-axis represents the time spent observing the star. Usually each graph shows 35 days of observations.' 
-
+      content:  'Each point on the light curve represents one measurement of a star\'s brightness taken by NASA’s Kepler Space Telescope. These measurements are taken approximately every 30 minutes. The higher the dot, the brighter the star appears.' 
 
     theData2:
-      header: 'The Data (part 2)'
-      details: 'The x-axis represents the time spent observing the star. Usually each graph shows 35 days of observations.'
+      header: 'The Data (continued)'
+      content: 'The x-axis represents the time spent observing the star. Usually each graph shows 35 days of observations. This part of the light curve shows the time spent observing the star. This part of the light curve shows the star\'s observed brightness.'
 
-    theData3:
-      header: 'The Data (part 3)'
-      details: 'The y-axis shows the star\'s observed brightness. Each point on the light curve shows one measurement of a star\'s brightness. These measurements are taken approximately every 30 minutes. The higher the dot, the brighter the star appears.'
-
-    transits1:
+    transits:
       header: 'Transits'
-      details: 'A transit is when a small object moves between your field of view and a larger object. In this case the large object is the star being observed and the smaller object could be a planet orbiting around the star.'
+      content: 'As the planet passes in front of (or transits) a star, it blocks out a small amount of the star’s light, making the star appear a little bit dimmer. You’re looking for points on the light curve that appear lower than the rest. When you spot a potential transit, mark each one on the light curve.'
 
-    transits2:
-      header: 'Transits (part 2)'
-      details: 'We can\’t see a planet transiting it\’s star directly. We can detect a change in the star\’s observed brightness. As the planet moves between the observer and the star, it blocks a small amount of the light emitted by the star, making it appear a little bit dimmer.'
-
-    findingTransits:
-      header: 'Finding Transits'
-      details: 'You\’re looking for points on the light curve that appear lower than the rest. This indicates that for a period of time the star\’s observed brightness decreased, indicating that a planet may have been transiting it.'
-    
-    markingTransits1:
+    markingTransits:
       header: 'Marking Transits'
-      details: 'When you spot a potential transit, highlight each one on the light curve. Mark the transits that you see in this light curve.'
+      content: 'Try marking this transit. Click and then drag left or right to highlight the transit points. Release the mouse button when you\'re done. You can go back and adjust the box width by selecting the transit box and using the handles.'
 
-    markingTransits2:
-      header: 'Marking Transits (part 2)'
-      details: 'Next adjust each box to the width of the marked transit feature. Most transits that you\’ll see will be cover 0.5-3 days.'
-
-    spotThem:
+    spotTransits:
+      header: 'Can you spot the transits?'
+      content: 'Depending on how far the planet is from the star, you may see one or many dips in the light curve. Most transits that you’ll typically see span a few hours to a day. Try marking the remaining transits in this example light curve.'
+    
+    showTransits:
       header: 'Did you spot them?'
-      details: 'Don\’t worry if you didn\’t mark all of them, spotting transits can be tricky. That\’s why multiple Planet Hunters volunteers observe each light curve! Just do your best.'
+      content: 'These are the locations of the transits. Each light curve is reviewed by several volunteers so don\'t be discouraged if you missed a hard to spot transit. Transit hunting can be tricky and requires practice. Just do your best.'
 
-    thanks:
-      header: 'Thanks!'
-      details: 'Now you\’re ready to being hunting planets! Over your first few classifications we\’ll provide some additional information that will be useful as you help astronomers search for new worlds.'
+    zooming:
+      header: 'Zoom'
+      content: 'You can use the zoom tool to look at the light curve in more detail. When zoomed in, you can use the slider along the bottom of the light curve to scroll through. You can toggle the scale of the zoom by clicking the magnifying glass here.'
+
+    goodLuck:
+      header: 'Good luck!'
+      content: 'Now you\’re ready to begin hunting for planets! Over the next few classifications we\’ll provide some additional information that will be useful as you search for new worlds. Click "Finished" to move on to a new light curve.'
+

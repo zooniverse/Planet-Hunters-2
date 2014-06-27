@@ -184,13 +184,13 @@ class CanvasGraph
       @prevMarks[i] = { xL: xPos[i]-wid[i]/2, xR: xPos[i]+wid[i]/2 }
 
   showPrevMarks: ->
+    $('#graph-container').addClass('showing-prev-data')
     for entry in [@prevMarks...]
       # console.log '[',entry.xL,',',entry.xR,']' # DEBUG
       @highlightCurve(entry.xL,entry.xR)
 
   highlightCurve: (xLeft,xRight) ->
     console.log 'highlightCurve()'
-    $('#graph-container').addClass('showing-prev-data')
     for i in [0...@dataLength]
       if @data.x[i] >= xLeft and @data.x[i] <= xRight
         x = ((+@data.x[i]+@toDays(@leftPadding)-@xMin)/(@xMax-@xMin)) * (@canvas.width-@leftPadding)
@@ -498,6 +498,7 @@ class CanvasGraph
   toDataYCoord: (canvasPoint) -> ((parseFloat(canvasPoint) / parseFloat(@canvas.height)) * (parseFloat(@yMax) - parseFloat(@yMin))) + parseFloat(@yMin)
 
   addMarkToGraph: (e) =>
+    console.log 'e: ', e
     return if @markingDisabled
     e.preventDefault()
     if @marks.markTooCloseToAnother(e, @scale, @originalMin)
