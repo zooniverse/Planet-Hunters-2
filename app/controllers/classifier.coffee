@@ -51,6 +51,11 @@ class Classifier extends BaseController
 
   constructor: ->
     super    
+
+    # if mobile device detected, go to verify mode
+    if window.matchMedia("(min-device-width: 320px)").matches and window.matchMedia("(max-device-width: 480px)").matches
+      location.hash = "#/verify"
+      
     window.classifier = @
     
     @el.find('#star-id').hide()
@@ -151,6 +156,8 @@ class Classifier extends BaseController
     @course = new MiniCourse
     @course.setRate 3
 
+    @verifyRate = 2
+
     @recordedClickEvents = []
 
     @el.find('#no-transits').hide() #prop('disabled',true)
@@ -159,12 +166,14 @@ class Classifier extends BaseController
     console.log '*** DISABLED ***'
 
   onUserChange: (e, user) =>
+    console.log 'classify: onUserChange()'
     Subject.next() unless @classification?
 
   onSubjectFetch: (e, user) =>
-    console.log 'onSubjectFetch()'
+    console.log 'classify: onSubjectFetch()'
 
   onSubjectSelect: (e, subject) =>
+    console.log 'classify: onSubjectSelect()'
     @el.find('#loading-screen').show() # TODO: uncomment
     @el.find('#star-id').hide()
     console.log 'onSubjectSelect()'
@@ -175,9 +184,9 @@ class Classifier extends BaseController
 
 
   loadSubjectData: ->
+    console.log 'loadSubjectData()'
     @el.find('#ui-slider').attr('disabled',true)
     @el.find(".noUi-handle").fadeOut(150)
-
 
     # TODO: use Subject data to choose the right lightcurve
     jsonFile = @subject.selected_light_curve.location
@@ -325,6 +334,7 @@ class Classifier extends BaseController
     @el.find("#toggle-fav").removeClass("toggled")
 
   showZoomMessage: (message) =>
+    console.log 'DISPLAYING ZOOM MESSAGE'
     @el.find('#zoom-notification').html(message).fadeIn(100).delay(1000).fadeOut()
     
   notify: (message) =>
@@ -419,6 +429,10 @@ class Classifier extends BaseController
     @resetTalkComment @talkComment
     @resetTalkComment @altTalkComment
     # show courses
+
+    if @course.count % @verifyRate is 0
+      location.hash = "#/verify"
+
     if @course.getPref() isnt 'never' and @course.count % @course.rate is 0
       @el.find('#notification-message').hide() # get any notification out of the way
       @course.showPrompt() 
@@ -431,15 +445,23 @@ class Classifier extends BaseController
     # fake classification counter
     @course.count = @course.count + 1
     console.log 'YOU\'VE MARKED ', @course.count, ' LIGHT CURVES!'
-    @classification.set 'recordedClickEvents', [@recordedClickEvents...]
-    for mark, i in [@canvasGraph.marks.all...]
-      @classification.annotations[i] =
+    @classification.annotate recordedClickEvents: [@recordedClickEvents...]
+
+    @classification.annotate
+      classification_type: 'light_curve'
+      selected_id: @subject.selected_light_curve._id
+
+    for mark in [@canvasGraph.marks.all...]
+      @classification.annotate
+        timestamp: mark.timestamp
+        zoomLevel: mark.zoomLevelAtCreation
         xMinRelative: mark.dataXMinRel
         xMaxRelative: mark.dataXMaxRel
         xMinGlobal: mark.dataXMinGlobal
         xMaxGlobal: mark.dataXMaxGlobal
+    
     # DEBUG CODE
-    # console.log JSON.stringify( @classification )
+    console.log JSON.stringify( @classification )
     @classification.send()
     console.log '********************************************'
 

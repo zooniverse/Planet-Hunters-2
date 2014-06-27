@@ -2,6 +2,10 @@
 
 class CanvasGraph
   constructor: (@canvas, @data) ->
+
+    @leftPadding = 60
+    @showAxes    = true
+
     @ctx = @canvas.getContext('2d')
 
     @smallestX = Math.min @data.x...
@@ -27,8 +31,6 @@ class CanvasGraph
     @prevZoomMin = @smallestX
     @prevZoomMax = @largestX
 
-    @leftPadding = 60
-
   disableMarking: ->
     @markingDisabled = true
 
@@ -41,7 +43,8 @@ class CanvasGraph
     @canvas.addEventListener 'mousemove', (e) => @onMouseMove(e) # TODO: FIX (disabled for now)
 
   onMouseDown: (e) =>
-    # console.log 'onMouseDown()'
+    # debugger
+    console.log 'onMouseDown()'
     xClick = e.pageX - e.target.getBoundingClientRect().left - window.scrollX
     return if xClick < 80 # display line instead 
     @addMarkToGraph(e)
@@ -50,16 +53,16 @@ class CanvasGraph
     # console.log 'onMouseMove()'
     # return # just for now
     return if classifier.el.find('#graph').hasClass('is-zooming')
-    zoomLevel = classifier.zoomLevel
+    @zoomLevel = classifier.zoomLevel
     zoomRanges = classifier.zoomRanges
     val = +classifier.el.find("#ui-slider").val()
     xClick = e.pageX - e.target.getBoundingClientRect().left - window.scrollX
     yClick = e.pageY - e.target.getBoundingClientRect().top - window.scrollY
     
-    # console.log 'PLOT RANGE: [',val,',',val+zoomRanges[zoomLevel],']'
+    # console.log 'PLOT RANGE: [',val,',',val+zoomRanges[@zoomLevel],']'
 
-    @plotPoints(val, val+zoomRanges[zoomLevel])
-    # @rescaleMarks(val, val+zoomRanges[zoomLevel])
+    @plotPoints(val, val+zoomRanges[@zoomLevel])
+    # @rescaleMarks(val, val+zoomRanges[@zoomLevel])
 
     if xClick < @leftPadding
       # draw triangle
@@ -198,7 +201,7 @@ class CanvasGraph
     # get necessary values from classifier
     val = +classifier.el.find('#ui-slider').val()
     zoomRanges = classifier.zoomRanges
-    zoomLevel  = classifier.zoomLevel
+    @zoomLevel  = classifier.zoomLevel
     
     # draw points
     for i in [0...@dataLength]
@@ -220,8 +223,10 @@ class CanvasGraph
       @showPrevMarks()
 
     # draw axes
-    @drawXTickMarks(xMin, xMax)
-    @drawYTickMarks(yMin, yMax)
+    if @showAxes
+      @drawXTickMarks(xMin, xMax)
+      @drawYTickMarks(yMin, yMax)
+
     @scale = (parseFloat(@largestX) - parseFloat(@smallestX)) / (parseFloat(@xMax) - parseFloat(@xMin))
     @rescaleMarks(xMin, xMax)
 
@@ -541,6 +546,8 @@ class Marks
 # -------------------------
 class Mark
   constructor: (e, @canvasGraph, @originalMin) ->
+    @timestamp = (new Date).toUTCString()
+    @zoomLevelAtCreation = @canvasGraph.zoomLevel
     @canvas = @canvasGraph.canvas
 
     @element = document.createElement('div')
