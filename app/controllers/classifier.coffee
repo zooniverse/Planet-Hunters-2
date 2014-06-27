@@ -7,7 +7,7 @@ NoUiSlider     = require '../lib/jquery.nouislider.min'
 translate      = require 't7e'
 {Tutorial}     = require 'zootorial'
 {Step}         = require 'zootorial'
-tutorialSteps  = require '../lib/tutorial-steps'
+# tutorialSteps  = require '../lib/tutorial-steps'
 $ = window.jQuery
 {CanvasGraph, Marks, Mark} = require "../lib/canvas-graph"
 
@@ -71,8 +71,73 @@ class Classifier extends BaseController
     @marksContainer = @el.find('#marks-container')[0]
 
     @tutorial = new Tutorial
-      steps: tutorialSteps
-      firstStep: 'welcome'
+      steps:
+        first: 
+          header:      translate 'span', 'tutorial.welcome.header'
+          details:     translate 'span', 'tutorial.welcome.details'
+          attachment: [0.5, 0.5, "#graph-container", 0.5, 0.5]
+          next: 'theData1'
+
+        theData1: 
+          header:      translate 'span', 'tutorial.theData1.header'
+          details:     translate 'span', 'tutorial.theData1.details'
+          attachment: [0.5, 0.5, "#graph-container", 0.5, 0.5]
+          next: 'theData2'
+
+        theData2: 
+          header:      translate 'span', 'tutorial.theData2.header'
+          details:     translate 'span', 'tutorial.theData2.details'
+          attachment: [0.5, 0.5, "#slider-container", 0.5, 0.5]
+          className: 'arrow-bottom'
+          next: 'transits'
+
+        transits: 
+          header:      translate 'span', 'tutorial.transits.header'
+          details:     translate 'span', 'tutorial.transits.details'
+          attachment: [0.5, 0.5, "#graph-container", 0.5, 0.5]
+          next: 'markingTransits'
+
+        markingTransits: 
+          header:      translate 'span', 'tutorial.markingTransits.header'
+          details:     translate 'span', 'tutorial.markingTransits.details'
+          attachment: [0.5, 0.5, "#graph-container", 0.5, 0.5]
+          next: 'spotTransits'
+
+        spotTransits: 
+          header:      translate 'span', 'tutorial.spotTransits.header'
+          details:     translate 'span', 'tutorial.spotTransits.details'
+          attachment: [0.5, 0.5, "#graph-container", 0.5, 0.5]
+          next: 'showTransits'
+
+        showTransits: 
+          onEnter: ->
+            # modify this to fit the light curve
+            window.classifier.canvasGraph.highlightCurve(1,2)
+            window.classifier.canvasGraph.highlightCurve(4,5)
+            window.classifier.canvasGraph.highlightCurve(8,9)
+            window.classifier.canvasGraph.highlightCurve(10,11)
+            window.classifier.canvasGraph.highlightCurve(12,13)
+
+          header:      translate 'span', 'tutorial.showTransits.header'
+          details:     translate 'span', 'tutorial.showTransits.details'
+          attachment: [0.5, 0.5, "#graph-container", 0.5, 0.5]
+          next: 'zooming'
+
+        zooming: 
+          header:      translate 'span', 'tutorial.zooming.header'
+          details:     translate 'span', 'tutorial.zooming.details'
+          attachment: [0.5, 0.5, "#graph-container", 0.5, 0.5]
+          className: 'arrow-right'
+          attachment: [0, 0.5, "#zoom-button", 0, 0.5]
+          next: 'click [id="zoom-button"]': 'goodLuck'
+
+        goodLuck: 
+          header:      translate 'span', 'tutorial.goodLuck.header'
+          details:     translate 'span', 'tutorial.goodLuck.details'
+          attachment: [0.5, 0.5, "#graph-container", 0.5, 0.5]
+
+      # steps: tutorialSteps
+      # firstStep: 'welcome'
 
     # mini course
     @course = new MiniCourse
