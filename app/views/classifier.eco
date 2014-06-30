@@ -51,6 +51,14 @@
 
     </div>
     <div id="graph-container">
+      <!-- additional tutorial stuff -->
+      <div class="tutorial-annotations x-axis">
+        <p>This part of the light curve shows the time spent observing the star.</p>
+      </div>
+      <div class="tutorial-annotations y-axis">
+        <p>This part of the light curve shows the star\'s observed brightness.</p>
+      </div>
+
       <div id='loading-screen'>
         <h3>Loading...</h3>
       </div>
@@ -162,6 +170,7 @@
         <button class="std-btn yellow" name="next-subject">Next Subject</button>
         <button id="no-transits" name="no-transits" class="std-btn white" id="tutorial">No Transits</button>
       </div>
+
     </div>
 
 

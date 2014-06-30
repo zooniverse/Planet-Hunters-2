@@ -4,6 +4,42 @@
     overflow-x visible
   .bg-overlay
     background-color rgba(19,34,44,0.92)
+
+  // for highlighting areas during tutorial
+  .tutorial-annotations
+    opacity 0
+    position absolute
+    border-style solid
+    border-width 2px
+    border-color #fc4541
+    border-radius 5px
+    z-index 0
+    transition opacity 1s
+    &.x-axis
+      top 386px
+      height 30px 
+      width 1020px
+      p
+        position relative
+        text-align center
+        top -20px
+        color #fc4541
+    &.y-axis
+      height 416px
+      width 60px
+      p
+        width 1000px
+        position relative
+        text-align left
+        top 40px
+        left 70px
+        // transform rotate(90deg)
+        // vertical-align middle
+        color #fc4541
+    &.visible
+      opacity 1
+      z-index 2000
+  
   #course-container
     position absolute
     top 96px
@@ -168,6 +204,7 @@
         #notification-message
           color #fc4541
           line-height 25px
+
     #graph-container
       float left
       position relative
