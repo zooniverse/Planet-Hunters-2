@@ -40,6 +40,11 @@
             <%- translate 'course.prompt.login_message' %>
           </div>
           <button id="course-yes" name="course-yes" class="course-button">Yes</button>
+          <div id="course-interval-setter">
+            <span class="course-spinner">Remind me every </span>
+            <input id="course-spinner" class="ui-spinner-input" name="course-interval"></input>
+            <span class="course-spinner"> classifications</span>
+          </div>
           <button id="course-no" name="course-no" class="course-button">No</button>
           <button id="course-never" name="course-never" class="course-button">Never</button>
           <svg id="course-prompt-close" class="course-prompt-close" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="7px" height="7px">

@@ -58,6 +58,11 @@ class Classifier extends BaseController
       location.hash = "#/verify"
       
     window.classifier = @
+
+    setTimeout: ->
+      console.log "SPINNER: ", $('#course-spinner')
+      $("#course-spinner").spinner("value",5)
+
     
     @el.find('#star-id').hide()
 
