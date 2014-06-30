@@ -1,15 +1,15 @@
-BaseController = require 'zooniverse/controllers/base-controller'
-User           = require 'zooniverse/models/user'
-Subject        = require 'zooniverse/models/subject'
-Classification = require 'zooniverse/models/classification'
-MiniCourse     = require '../lib/mini-course'
-NoUiSlider     = require '../lib/jquery.nouislider.min'
-translate      = require 't7e'
-{Tutorial}     = require 'zootorial'
-{Step}         = require 'zootorial'
-tutorialSteps  = require '../lib/tutorial-steps'
-$ = window.jQuery
+BaseController       = require 'zooniverse/controllers/base-controller'
+User                 = require 'zooniverse/models/user'
+Subject              = require 'zooniverse/models/subject'
+Classification       = require 'zooniverse/models/classification'
+MiniCourse           = require '../lib/mini-course'
+NoUiSlider           = require '../lib/jquery.nouislider.min'
+translate            = require 't7e'
+{Tutorial}           = require 'zootorial'
+{Step}               = require 'zootorial'
+initialTutorialSteps = require '../lib/initial-tutorial-steps'
 {CanvasGraph, Marks, Mark} = require "../lib/canvas-graph"
+$ = window.jQuery
 
 class Classifier extends BaseController
   className: 'classifier'
@@ -77,7 +77,10 @@ class Classifier extends BaseController
 
     @tutorial = new Tutorial
       # progress: 9
-      steps: tutorialSteps.steps
+      foo: ->
+        alert 'foo!'
+        return
+      steps: initialTutorialSteps.steps
 
     # mini course
     @course = new MiniCourse

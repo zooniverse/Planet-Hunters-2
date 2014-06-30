@@ -2,7 +2,7 @@
 translate  = require 't7e'
 # classifier = require "../controllers/classifier"
 
-tutorialSteps =
+initialTutorialSteps =
   steps:
     # /// BEGIN TUTORIAL STEPS ///
     first: 
@@ -23,9 +23,15 @@ tutorialSteps =
       # progress:    3
       header:      translate 'span', 'tutorial.theData2.header'
       content:     translate 'span', 'tutorial.theData2.content'
-      attachment:  [0.5, 1.20, "#slider-container", 0.5, 0.5]
-      arrow:       "bottom"
+      attachment:  [0.5, 0.5, "#graph-container", 0.5, 0.5]
+      # attachment:  [0.5, 1.20, "#slider-container", 0.5, 0.5]
+      # arrow:       "bottom"
       next:        'transits'
+
+      demo: ->
+        alert 'FOO!'
+        return
+      # createElement('div', @el)
 
     transits: 
       # progress:    4
@@ -68,8 +74,10 @@ tutorialSteps =
       header:      translate 'span', 'tutorial.zooming.header'
       content:     translate 'span', 'tutorial.zooming.content'
       arrow:       'right'
-      attachment:  [0.5, 0.5, "#graph-container", 0.5, 0.5]
-      next:        'click [id="zoom-button"]': 'goodLuck'
+      attachment:  [1.1, 0.5, "#zoom-button", 0.5, 0.5]
+      actionable:  '[id="zoom-button"]'
+      next:        'goodLuck'
+      # next:        'click [id="zoom-button"]': 'goodLuck'
 
     goodLuck: 
       # progress:    9
@@ -78,4 +86,4 @@ tutorialSteps =
       attachment:  [0.5, 0.5, "#graph-container", 0.5, 0.5]
     # /// END TUTORIAL STEPS /// 
 
-module.exports = tutorialSteps
+module.exports = initialTutorialSteps
