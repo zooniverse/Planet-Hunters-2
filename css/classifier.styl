@@ -183,21 +183,23 @@
         &.selected
           font-weight 700
       #course-interval-setter
-        display none
-        opacity 0
+        display inline-flex
         float left
         height 25px
         line-height 25px
         background-color rgba(0,0,0,0.5)
-        padding-left 10px
+        // padding-left 10px
         padding-right 10px
         transition 3s
         margin auto
         font-weight 100
-        &.visible
-          opacity 1
-          display inline-flex
-          transition 3s
+        transition 0.4s
+        // width 0px
+        // &.visible
+        //   display inline-flex
+        //   width auto
+        //   // float left
+        //   transition 3s
         .course-spinner-text
           display inline
           line-height 25px
@@ -207,16 +209,11 @@
           border solid thin
           border-radius 4px
           background none
-          // line-height 25px
-          height 100%
           width 20px
-          height 15px
+          // height 15px
           font-size 10px
           text-align center
-          margin-top auto
-          margin-bottom auto
-          margin-left 5px
-          margin-right 5px
+          margin 5px
           .ui-spinner-button
             float left
 

@@ -49,8 +49,9 @@ class Classifier extends BaseController
     'click button[name="alt-join-convo"]'    : 'onClickAltJoinConvo'
     'click button[name="submit-talk"]'       : 'onClickSubmitTalk'
     'click button[name="alt-submit-talk"]'   : 'onClickSubmitTalkAlt'
-    'mouseover #course-yes-container'        : 'onMouseoverCourseYes'
-    'mouseout  #course-yes-container'        : 'onMouseoutCourseYes'
+    'mouseover #course-yes'        : 'onMouseoverCourseYes'
+    'mouseout  #course-yes'        : 'onMouseoutCourseYes'
+    'change #course-spinner'                 : 'onChangeCourseSpinner'
   constructor: ->
     super    
 
@@ -60,11 +61,12 @@ class Classifier extends BaseController
 
     window.classifier = @
 
-    setTimeout: ->
-      console.log "SPINNER: ", $('#course-spinner')
-      $("#course-spinner").spinner("value",5)
+    # setTimeout: ->
+    #   console.log "SPINNER: ", $('#course-spinner')
+    #   $("#course-spinner").spinner("value",5)
 
-    
+    @el.find('#course-interval-setter').hide()
+
     @el.find('#star-id').hide()
 
     # zoom levels [days]: 2x, 10x, 20x
@@ -83,10 +85,6 @@ class Classifier extends BaseController
     @marksContainer = @el.find('#marks-container')[0]
 
     @tutorial = new Tutorial
-      # progress: 9
-      foo: ->
-        alert 'foo!'
-        return
       steps: initialTutorialSteps.steps
 
     # mini course
@@ -103,10 +101,39 @@ class Classifier extends BaseController
     console.log '*** DISABLED ***'
 
   onMouseoverCourseYes: ->
-    @el.find('#course-interval-setter').addClass('visible')
+    console.log 'onMouseoverCourseYes()'
+    # if @el.find('#course-interval-setter').hasClass('visible')
+    #   console.log 'already visible'
+    #   return
+    # else
+    #   @el.find('#course-interval-setter').fadeIn(400)
+    #   @el.find('#course-interval-setter').addClass('visible')
+
+    # @el.find('#course-interval-setter').addClass('visible')
+    @el.find('#course-yes').html 'Yes, '
+    # @el.find('#course-yes').addClass 'hover'
+    @el.find('#course-interval-setter').fadeIn(200)
+
+
 
   onMouseoutCourseYes: ->
-    @el.find('#course-interval-setter').removeClass('visible')
+    console.log 'onMouseoutCourseYes()'
+    # unless @el.find('#course-interval-setter').hasClass('visible')
+    #   console.log 'already hidden'
+    #   return
+    # else
+    #   @el.find('#course-interval-setter').delay(3000).fadeOut(400)
+    #   @el.find('#course-interval-setter').removeClass('visible')
+    
+    # @el.find('#course-interval-setter').removeClass('visible')
+    @el.find('#course-yes').html 'Yes'
+    # @el.find('#course-yes').removeClass 'hover'
+    @el.find('#course-interval-setter').fadeOut(200)
+
+
+  onChangeCourseSpinner: ->
+    console.log 'VALUE: ', @el.find('#course-spinner').val()
+    @course.setRate @el.find('#course-spinner').val()
 
   onUserChange: (e, user) =>
     console.log 'classify: onUserChange()'
