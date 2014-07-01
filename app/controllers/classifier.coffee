@@ -49,14 +49,15 @@ class Classifier extends BaseController
     'click button[name="alt-join-convo"]'    : 'onClickAltJoinConvo'
     'click button[name="submit-talk"]'       : 'onClickSubmitTalk'
     'click button[name="alt-submit-talk"]'   : 'onClickSubmitTalkAlt'
-
+    'mouseover #course-yes'                  : 'onMouseoverCourseYes'
+    'mouseout  #course-yes'                  : 'onMouseoutCourseYes'
   constructor: ->
     super    
 
     # if mobile device detected, go to verify mode
     if window.matchMedia("(min-device-width: 320px)").matches and window.matchMedia("(max-device-width: 480px)").matches
       location.hash = "#/verify"
-      
+
     window.classifier = @
 
     setTimeout: ->
@@ -100,6 +101,12 @@ class Classifier extends BaseController
     @el.find('#finished-marking').hide() #prop('disabled',true)
     @el.find('#finished-feedback').hide() #prop('disabled',true)
     console.log '*** DISABLED ***'
+
+  onMouseoverCourseYes: ->
+    @el.find('#course-interval-setter').addClass('visible')
+
+  onMouseoutCourseYes: ->
+    @el.find('#course-interval-setter').removeClass('visible')
 
   onUserChange: (e, user) =>
     console.log 'classify: onUserChange()'

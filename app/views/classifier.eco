@@ -40,7 +40,7 @@
             <%- translate 'course.prompt.login_message' %>
           </div>
           <button id="course-yes" name="course-yes" class="course-button">Yes</button>
-          <div id="course-interval-setter">
+          <div id="course-interval-setter" class='course-interval-setter'>
             <div class="course-spinner-text">Remind me every </div>
             <input id="course-spinner" class="ui-spinner-input" name="course-interval"></input>
             <div class="course-spinner-text"> classifications</div>
