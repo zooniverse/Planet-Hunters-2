@@ -182,31 +182,38 @@
         &.selected
           font-weight 700
       #course-interval-setter
-        display inline-flex
+        display none
         float left
+        height 25px
+        line-height 25px
         background-color rgba(0,0,0,0.5)
         padding-left 10px
         padding-right 10px
-        p
+        transition all 3s
+        margin auto
+        &.visible
+          display inline-flex
+          transition all 3s
+        .course-spinner-text
+          display inline
           line-height 25px
-
-      #course-spinner
-        float left
-        border solid thin
-        background none
-        // background-color #3e89af
-        color: inherit;
-        padding: 0;
-        margin: .2em 0;
-        vertical-align: middle;
-        line-height 25px
-        height 20px
-        margin-top 2.5px 
-        margin-bottom 2.5px
-        margin-left 5px
-        margin-right 5px
-        .ui-spinner-button
+        #course-spinner
           float left
+          border solid thin
+          background none
+          // background-color #3e89af
+          color: inherit;
+          padding: 0;
+          margin: .2em 0;
+          vertical-align: middle;
+          line-height 25px
+          height 20px
+          margin-top 2.5px 
+          margin-bottom 2.5px
+          margin-left 5px
+          margin-right 5px
+          .ui-spinner-button
+            float left
       .course-prompt-close
         padding 9px
         float right
