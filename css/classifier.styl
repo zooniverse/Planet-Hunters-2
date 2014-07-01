@@ -182,40 +182,48 @@
           transition 0.4s
         &.selected
           font-weight 700
-      #course-interval-setter
-        display inline-flex
-        float left
-        height 25px
+
+      #course-yes-container
+        display inline
+        padding 0px 10px 0px 10px
+        height 100%
         line-height 25px
-        background-color rgba(0,0,0,0.5)
-        // padding-left 10px
-        padding-right 10px
-        transition 3s
-        margin auto
+        color black
+        border none
+        // transition color, background-color 0.4s
+        float left
         font-weight 100
-        transition 0.4s
-        // width 0px
-        // &.visible
-        //   display inline-flex
-        //   width auto
-        //   // float left
-        //   transition 3s
-        .course-spinner-text
-          display inline
-          line-height 25px
-        #course-spinner
-          float left
+        &:hover
           color #fff
-          border solid thin
-          border-radius 4px
-          background none
-          width 20px
-          // height 15px
-          font-size 10px
-          text-align center
-          margin 5px
-          .ui-spinner-button
+          background-color rgba(0,0,0,0.5)
+          // transition color, background-color 0.4s
+        #course-yes
+          float left
+          cursor pointer
+          &:hover
+            font-weight 700
+            text-decoration underline
+        #course-interval-setter
+          display inline-flex
+          float left
+          height 25px
+          line-height 25px
+          padding-right 10px
+          font-weight 100
+          // transition 0.4s
+          .course-spinner-text
+            display inline
+            line-height 25px
+          #course-spinner
             float left
+            color #fff
+            border solid thin
+            border-radius 4px
+            background none
+            width 20px
+            font-size 10px
+            text-align center
+            margin 5px
 
       .course-prompt-close
         padding 9px
