@@ -39,11 +39,13 @@
           <div id="course-message" class="course-message">
             <%- translate 'course.prompt.login_message' %>
           </div>
-          <button id="course-yes" name="course-yes" class="course-button">Yes</button>
-          <div id="course-interval-setter" class='course-interval-setter'>
-            <div class="course-spinner-text">Remind me every </div>
-            <input id="course-spinner" class="ui-spinner-input" name="course-interval"></input>
-            <div class="course-spinner-text"> classifications</div>
+          <div id="course-yes-container">
+            <button id="course-yes" name="course-yes" class="course-button">Yes</button>
+            <div id="course-interval-setter" class='course-interval-setter'>
+              <div class="course-spinner-text">Remind me every </div>
+              <input id="course-spinner" class="ui-spinner-input" name="course-interval"></input>
+              <div class="course-spinner-text"> classifications</div>
+            </div>
           </div>
           <button id="course-no" name="course-no" class="course-button">No</button>
           <button id="course-never" name="course-never" class="course-button">Never</button>

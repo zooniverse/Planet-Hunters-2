@@ -49,8 +49,8 @@ class Classifier extends BaseController
     'click button[name="alt-join-convo"]'    : 'onClickAltJoinConvo'
     'click button[name="submit-talk"]'       : 'onClickSubmitTalk'
     'click button[name="alt-submit-talk"]'   : 'onClickSubmitTalkAlt'
-    'mouseover #course-yes'                  : 'onMouseoverCourseYes'
-    'mouseout  #course-yes'                  : 'onMouseoutCourseYes'
+    'mouseover #course-yes-container'        : 'onMouseoverCourseYes'
+    'mouseout  #course-yes-container'        : 'onMouseoutCourseYes'
   constructor: ->
     super    
 
