@@ -43,9 +43,9 @@
           <div id="course-yes-container">
             <div id="course-yes">Yes</div>
             <div id="course-interval-setter">
-              <div class="course-spinner-text">, remind me every </div>
-              <input id="course-spinner" name="course-interval" value="5"></input>
-              <div class="course-spinner-text"> classifications!</div>
+              <div class="course-interval-text">, remind me every </div>
+              <input type="number" id="course-interval" name="course-interval" value="5"></input>
+              <div class="course-interval-text"> classifications!</div>
             </div>
           </div>
 

@@ -49,9 +49,10 @@ class Classifier extends BaseController
     'click button[name="alt-join-convo"]'    : 'onClickAltJoinConvo'
     'click button[name="submit-talk"]'       : 'onClickSubmitTalk'
     'click button[name="alt-submit-talk"]'   : 'onClickSubmitTalkAlt'
-    'mouseenter #course-yes-container'        : 'onMouseoverCourseYes'
-    'mouseleave  #course-yes-container'        : 'onMouseoutCourseYes'
-    'change #course-spinner'                 : 'onChangeCourseSpinner'
+    'mouseenter #course-yes-container'       : 'onMouseoverCourseYes'
+    'mouseleave  #course-yes-container'      : 'onMouseoutCourseYes'
+    'change #course-interval'                : 'onChangeCourseInterval'
+
   constructor: ->
     super    
 
@@ -60,12 +61,6 @@ class Classifier extends BaseController
       location.hash = "#/verify"
 
     window.classifier = @
-
-    # setTimeout: ->
-    #   console.log "SPINNER: ", $('#course-spinner')
-    #   $("#course-spinner").spinner("value",5)
-
-    @el.find('#course-interval-setter').hide()
 
     @el.find('#star-id').hide()
 
@@ -89,9 +84,10 @@ class Classifier extends BaseController
 
     # mini course
     @course = new MiniCourse
-    @course.setRate 3
+    @course.setRate 5
+    @el.find('#course-interval-setter').hide()
 
-    @verifyRate = 2
+    @verifyRate = 20
 
     @recordedClickEvents = []
 
@@ -102,28 +98,34 @@ class Classifier extends BaseController
 
   # /////////////////////////////////////////////////
   onMouseoverCourseYes: ->
-    console.log '*** ON ***'
-    # if @el.find('#course-yes-container').hasClass('displaying-interval-setter')
-    #   console.log 'ALREADY DISPLAYING!'
-    #   return
-    # else
-    #   @el.find('#course-yes-container').addClass('displaying-interval-setter')
-    @el.find('#course-interval-setter').show(200)
+    # console.log '*** ON ***'
+    return if @blockCourseIntervalDisplay
+    @blockCourseIntervalDisplay = true
+    @el.find('#course-interval-setter').show 400, =>
+      @blockCourseIntervalHide = false
 
   onMouseoutCourseYes: ->
-    console.log '*** OUT ***'
-    # unless @el.find('#course-yes-container').hasClass('displaying-interval-setter')
-    #   console.log 'ALREADY HIDDEN!'
-    #   return
-    # else
-    @el.find('#course-interval-setter').delay(1000).hide 200, => 
-      @el.find('#course-yes-container').removeClass('displaying-interval-setter')
-    
+    # console.log '*** OUT ***'
+    return if @blockCourseIntervalHide
+    @blockCourseIntervalHide = true
+    @el.find('#course-interval-setter').hide 400, =>
+      @blockCourseIntervalDisplay = false
   # /////////////////////////////////////////////////
 
-  onChangeCourseSpinner: ->
-    console.log 'VALUE: ', @el.find('#course-spinner').val()
-    @course.setRate @el.find('#course-spinner').val()
+  onChangeCourseInterval: ->
+    console.log 'VALUE: ', @el.find('#course-interval').val()
+    defaultValue = 5
+    value = +@el.find('#course-interval').val()
+
+    console.log 'VALUE IS NUMBER: ', (typeof value)
+
+    # validate integer values
+    unless (typeof value is 'number') and (value % 1 is 0) and value > 0 and value < 100
+      value = defaultValue
+      @el.find('#course-interval').val(value)
+    else
+      console.log 'SETTING VALUE TO: ', value
+      @course.setRate value
 
   onUserChange: (e, user) =>
     console.log 'classify: onUserChange()'
@@ -148,7 +150,9 @@ class Classifier extends BaseController
     @el.find(".noUi-handle").fadeOut(150)
 
     # TODO: use Subject data to choose the right lightcurve
-    jsonFile = @subject.selected_light_curve.location
+    # jsonFile = @subject.selected_light_curve.location
+    jsonFile = 'test_data/test_light_curve.json'
+
     
     # DEBUG CODE
     # jsonFile = './offline/subject.json' # for debug only
