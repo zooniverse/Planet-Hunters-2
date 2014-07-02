@@ -7,22 +7,22 @@ initialTutorialSteps =
     # /// BEGIN TUTORIAL STEPS ///
     first: 
       # progress:    1
-      header:      translate 'span', 'tutorial.first.header'
-      content:     translate 'span', 'tutorial.first.content'
+      header:      translate 'span', 'initialTutorial.first.header'
+      content:     translate 'span', 'initialTutorial.first.content'
       attachment:  [0.5, 0.5, "#graph-container", 0.5, 0.5]
       next:        'theData1'
 
     theData1: 
       # progress:    2
-      header:      translate 'span', 'tutorial.theData1.header'
-      content:     translate 'span', 'tutorial.theData1.content'
+      header:      translate 'span', 'initialTutorial.theData1.header'
+      content:     translate 'span', 'initialTutorial.theData1.content'
       attachment:  [0.5, 0.5, "#graph-container", 0.5, 0.5]
       next:        'theData2'
 
     theData2: 
       # progress:    3
-      header:      translate 'span', 'tutorial.theData2.header'
-      content:     translate 'span', 'tutorial.theData2.content'
+      header:      translate 'span', 'initialTutorial.theData2.header'
+      content:     translate 'span', 'initialTutorial.theData2.content'
       attachment:  [0.5, 0.5, "#graph-container", 0.5, 0.5]
       # attachment:  [0.5, 1.20, "#slider-container", 0.5, 0.5]
       # arrow:       "bottom"
@@ -30,29 +30,29 @@ initialTutorialSteps =
 
     transits: 
       # progress:    4
-      header:      translate 'span', 'tutorial.transits.header'
-      content:     translate 'span', 'tutorial.transits.content'
+      header:      translate 'span', 'initialTutorial.transits.header'
+      content:     translate 'span', 'initialTutorial.transits.content'
       attachment:  [0.5, 0.5, "#graph-container", 0.5, 0.5]
       next:        'markingTransits'
 
     markingTransits:
       # progress:    5 
-      header:      translate 'span', 'tutorial.markingTransits.header'
-      content:     translate 'span', 'tutorial.markingTransits.content'
+      header:      translate 'span', 'initialTutorial.markingTransits.header'
+      content:     translate 'span', 'initialTutorial.markingTransits.content'
       attachment:  [0.5, 0.5, "#graph-container", 0.5, 0.5]
       next:        'spotTransits'
 
     spotTransits:
       # progress:    6 
-      header:      translate 'span', 'tutorial.spotTransits.header'
-      content:     translate 'span', 'tutorial.spotTransits.content'
+      header:      translate 'span', 'initialTutorial.spotTransits.header'
+      content:     translate 'span', 'initialTutorial.spotTransits.content'
       attachment:  [0.5, 0.5, "#graph-container", 0.5, 0.5]
       next:        'showTransits'
 
     showTransits:
       # progress:    7 
-      header:      translate 'span', 'tutorial.showTransits.header'
-      content:     translate 'span', 'tutorial.showTransits.content'
+      header:      translate 'span', 'initialTutorial.showTransits.header'
+      content:     translate 'span', 'initialTutorial.showTransits.content'
       attachment:  [0.5, 0.5, "#graph-container", 0.5, 0.5]
       next:        'zooming'
       instruction: ''
@@ -67,8 +67,8 @@ initialTutorialSteps =
 
     zooming: 
       # progress:    8
-      header:      translate 'span', 'tutorial.zooming.header'
-      content:     translate 'span', 'tutorial.zooming.content'
+      header:      translate 'span', 'initialTutorial.zooming.header'
+      content:     translate 'span', 'initialTutorial.zooming.content'
       arrow:       'right'
       attachment:  [1.1, 0.5, "#zoom-button", 0.5, 0.5]
       actionable:  '[id="zoom-button"]'
@@ -77,8 +77,8 @@ initialTutorialSteps =
 
     goodLuck: 
       # progress:    9
-      header:      translate 'span', 'tutorial.goodLuck.header'
-      content:     translate 'span', 'tutorial.goodLuck.content'
+      header:      translate 'span', 'initialTutorial.goodLuck.header'
+      content:     translate 'span', 'initialTutorial.goodLuck.content'
       attachment:  [0.5, 0.5, "#graph-container", 0.5, 0.5]
     # /// END TUTORIAL STEPS /// 
 

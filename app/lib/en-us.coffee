@@ -32,7 +32,7 @@ module.exports =
       never            : 'Never'
 
 
-  tutorial:
+  initialTutorial:
     first:
       header: 'Welcome!'
       content: 'This short tutorial will show you how to find undiscovered planets by looking at how the brightness of a star changes over time.'
@@ -69,3 +69,11 @@ module.exports =
       header: 'Good luck!'
       content: 'Now you\’re ready to begin hunting for planets! Over the next few classifications we\’ll provide some additional information that will be useful as you search for new worlds. Click "Finished" to move on to a new light curve.'
 
+  supplementalTutorial:
+    first:
+      header: 'Talk'
+      content: 'Sometimes you might see something interesting or have a question. TALK is a tool where you can join Planet Hunters project scientists and volunteers to observe, collect, share, and discuss Planet Hunters data.'
+      
+    dataGaps: 
+      header: 'Gaps in the Data'
+      content: 'Sometimes you might see gaps in the data like in this light curve. This means that Kepler was either turned off or not pointing at the star.'

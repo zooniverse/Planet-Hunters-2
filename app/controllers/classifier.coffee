@@ -76,9 +76,13 @@ class Classifier extends BaseController
     $(document).on 'mark-change', => @updateButtons()
     @marksContainer = @el.find('#marks-container')[0]
 
-    @tutorial = new Tutorial
+    @initialTutorial = new Tutorial
       parent: window.classifier.el.children()[0]
       steps: initialTutorialSteps.steps
+
+    @supplementalTutorial = new Tutorial
+      parent: window.classifier.el.children()[0]
+      steps: supplementalTutorialSteps.steps
 
     # mini course
     @course = new MiniCourse
@@ -292,7 +296,7 @@ class Classifier extends BaseController
   onClickTutorial: ->
     console.log 'onClickTutorial()'
     @notify('Loading tutorial...')
-    @tutorial.start()
+    @initialTutorial.start()
 
   updateButtons: ->
     # console.log 'updateButtons()'
