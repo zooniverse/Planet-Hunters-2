@@ -72,7 +72,7 @@ class Classifier extends BaseController
     ifFaved: false
 
     # classification counts at which to display supplementary tutorial
-    @whenToDisplayTips = [1, 4, 10]
+    @whenToDisplayTips = [1, 4]
 
     User.on 'change', @onUserChange
     Subject.on 'fetch', @onSubjectFetch
