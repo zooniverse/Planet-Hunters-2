@@ -84,7 +84,7 @@ class Classifier extends BaseController
 
     # mini course
     @course = new MiniCourse
-    @course.setRate 5
+    @course.setRate 1
     @el.find('#course-interval-setter').hide()
 
     @verifyRate = 20
@@ -99,12 +99,14 @@ class Classifier extends BaseController
   # /////////////////////////////////////////////////
   onMouseoverCourseYes: ->
     # console.log '*** ON ***'
+    return unless User.current?
     return if @blockCourseIntervalDisplay
     @blockCourseIntervalDisplay = true
     @el.find('#course-interval-setter').show 400, =>
       @blockCourseIntervalHide = false
 
   onMouseoutCourseYes: ->
+    return unless User.current?
     # console.log '*** OUT ***'
     return if @blockCourseIntervalHide
     @blockCourseIntervalHide = true
