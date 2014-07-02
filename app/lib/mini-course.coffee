@@ -19,7 +19,7 @@ class MiniCourse
     @course_el.hide()
 
     # get content
-    @content = miniCourseContent
+    @content = miniCourseContent # TODO: remove (unnecessary?)
     
     # keep track of courses
     @count = 0 # fake classification counter
@@ -28,7 +28,7 @@ class MiniCourse
 
     User.on 'change', =>
       # needs to be changed to read user's last course number
-      @resetCourse() #unless User.current?.preferences[Api.current.project]?.hasOwnProperty 'prev_course'
+      @resetCourse() #unless User.current?.preferences[zooniverse.Api.current.project]?.hasOwnProperty 'prev_course'
       if User.current?
         @prompt_el.toggleClass 'signed-in'
         @prompt_el.find('.course-button').show()
@@ -98,14 +98,15 @@ class MiniCourse
   displayCourse: ->
     return if @curr > @num_courses
     unless User.current is null
+      @prev = @curr
+      @curr = +@curr + 1
       User.current.setPreference 'prev_course', @prev
+      console.log 'SET PREV COURSE TO: ', @prev
       @loadContent()
       @course_el.fadeIn(@transitionTime)
       @subject_el.fadeOut(@transitionTime)
       @subject_el.toggleClass("hidden")
       @course_el.toggleClass("visible")
-      @prev = @curr
-      @curr = +@curr + 1
 
   hideCourse: ->
     @subject_el.fadeIn(@transitionTime)
@@ -120,7 +121,7 @@ class MiniCourse
     @prompt_el.fadeOut(delay)
 
   getPref: ->
-    @pref = User.current?.preferences[Api.current.project]['course']
+    @pref = User.current?.preferences[zooniverse.Api.current.project]['course']
     # console.log 'course preference: ', @pref # DEBUG CODE
     return @pref
 
@@ -128,7 +129,7 @@ class MiniCourse
     unless User.current is null
       User.current.setPreference 'course', 'yes'
       User.current.setPreference 'prev_course', 0
-      @prev = User.current?.preferences[Api.current.project]['prev_course']
+      @prev = User.current?.preferences[zooniverse.Api.current.project]['prev_course']
       @curr = 0
 
 module.exports = MiniCourse
