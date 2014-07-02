@@ -161,6 +161,12 @@ class Classifier extends BaseController
     else
       console.log 'Setting mini-course interval to 5'
       @course.setRate 5 # set default
+
+    # HANDLE SUPPLEMENTAL TUTORIAL SPLITS
+    if @splitDesignation in ['a', 'b', 'c', 'g', 'h', 'i']
+      @tipsOptIn = true  
+    else if @splitDesignation in ['d', 'e', 'f', 'j', 'k', 'l']
+      @tipsOptIn = false
     
     Subject.next() unless @classification?
 
