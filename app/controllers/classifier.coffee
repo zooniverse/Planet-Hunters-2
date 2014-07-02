@@ -77,10 +77,7 @@ class Classifier extends BaseController
     @marksContainer = @el.find('#marks-container')[0]
 
     @tutorial = new Tutorial
-      # progress: 9
-      foo: ->
-        alert 'foo!'
-        return
+      parent: window.classifier.el.children()[0]
       steps: initialTutorialSteps.steps
 
     # mini course

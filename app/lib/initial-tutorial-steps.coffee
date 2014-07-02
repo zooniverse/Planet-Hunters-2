@@ -28,11 +28,6 @@ initialTutorialSteps =
       # arrow:       "bottom"
       next:        'transits'
 
-      demo: ->
-        alert 'FOO!'
-        return
-      # createElement('div', @el)
-
     transits: 
       # progress:    4
       header:      translate 'span', 'tutorial.transits.header'
@@ -60,6 +55,7 @@ initialTutorialSteps =
       content:     translate 'span', 'tutorial.showTransits.content'
       attachment:  [0.5, 0.5, "#graph-container", 0.5, 0.5]
       next:        'zooming'
+      instruction: ''
 
       demo: -> # TODO: Fix. This doesn't work!
         # modify this to fit the light curve
