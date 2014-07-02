@@ -151,13 +151,16 @@ class Classifier extends BaseController
     if @splitDesignation in ['b', 'e']
       console.log 'Setting mini-course interval to 10'
       @course.setRate 10
+      $('#course-interval-setter').remove() # destroy custom course interval setter
+
     else if @splitDesignation in ['c', 'f']
       console.log 'Setting mini-course interval to 25'
       @course.setRate 25
+      $('#course-interval-setter').remove() # destroy custom course interval setter
+
     else if @splitDesignation in ['a', 'd']
       console.log 'Setting mini-course interval to 5'
       @course.setRate 5 # set default
-      $('#course-interval-setter').remove() # destroy custom course interval setter
     else
       console.log 'Setting mini-course interval to 5'
       @course.setRate 5 # set default
@@ -386,12 +389,13 @@ class Classifier extends BaseController
   onClickFinishedMarking: ->
     # console.log 'onClickFinishedMarking()'
 
-    # first make sure graph is zoomed out
-    @canvasGraph.zoomOut()
-    
-    @finishedMarkingButton.hide()
-    @el.find('#zoom-button').attr('disabled',true)
-    @giveFeedback()
+    @finishSubject() # TODO: remove this line when displaying known lightcurves
+
+    # # DISPLAY KNOWN LIGHTCURVES
+    # @canvasGraph.zoomOut() # first make sure graph is zoomed out
+    # @finishedMarkingButton.hide()
+    # @el.find('#zoom-button').attr('disabled',true)
+    # @giveFeedback()
   
   giveFeedback: ->
     # console.log 'giveFeedback()'
