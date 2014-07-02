@@ -56,6 +56,7 @@ class Classifier extends BaseController
   constructor: ->
     super    
 
+
     # if mobile device detected, go to verify mode
     if window.matchMedia("(min-device-width: 320px)").matches and window.matchMedia("(max-device-width: 480px)").matches
       location.hash = "#/verify"
@@ -106,7 +107,7 @@ class Classifier extends BaseController
     @el.find('#finished-marking').hide() #prop('disabled',true)
     @el.find('#finished-feedback').hide() #prop('disabled',true)
     console.log '*** DISABLED ***'
-
+    
   # /////////////////////////////////////////////////
   onMouseoverCourseYes: ->
     # console.log '*** ON ***'
