@@ -150,9 +150,9 @@ class Classifier extends BaseController
     @el.find(".noUi-handle").fadeOut(150)
 
     # TODO: use Subject data to choose the right lightcurve
-    # jsonFile = @subject.selected_light_curve.location
-    jsonFile = 'test_data/test_light_curve.json'
-
+    jsonFile = @subject.selected_light_curve.location
+    # jsonFile = 'test_data/test_light_curve.json'
+    # jsonFile = 'http://demo.zooniverse.org.s3.amazonaws.com/planet_hunter/new_subjects2/1430893_4.json'
     
     # DEBUG CODE
     # jsonFile = './offline/subject.json' # for debug only
