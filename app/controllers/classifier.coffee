@@ -79,6 +79,8 @@ class Classifier extends BaseController
     Subject.on 'select', @onSubjectSelect
     @Subject = Subject
 
+    @splitDesignation = null
+
     $(document).on 'mark-change', => @updateButtons()
     @marksContainer = @el.find('#marks-container')[0]
 
@@ -92,7 +94,7 @@ class Classifier extends BaseController
 
     # mini course
     @course = new MiniCourse
-    @course.setRate 5
+
     @el.find('#course-interval-setter').hide()
 
     @verifyRate = 20
@@ -139,6 +141,27 @@ class Classifier extends BaseController
 
   onUserChange: (e, user) =>
     console.log 'classify: onUserChange()'
+
+    # console.log 'SPLIT DESIGNATION: ', User.current.project.splits.mini_course_sup_tutorial
+    if User.current?
+      @splitDesignation = User.current.project.splits.mini_course_sup_tutorial
+      # @splitDesignation = 'a' # DEBUG CODE
+
+    # HANDLE MINI-COURSE SPLITS
+    if @splitDesignation in ['b', 'e']
+      console.log 'Setting mini-course interval to 10'
+      @course.setRate 10
+    else if @splitDesignation in ['c', 'f']
+      console.log 'Setting mini-course interval to 25'
+      @course.setRate 25
+    else if @splitDesignation in ['a', 'd']
+      console.log 'Setting mini-course interval to 5'
+      @course.setRate 5 # set default
+      $('#course-interval-setter').remove() # destroy custom course interval setter
+    else
+      console.log 'Setting mini-course interval to 5'
+      @course.setRate 5 # set default
+    
     Subject.next() unless @classification?
 
   onSubjectFetch: (e, user) =>
