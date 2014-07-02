@@ -8,6 +8,9 @@ $ = window.jQuery
 
 class MiniCourse
 
+  # set debug flag
+  DEBUG = false
+
   @transitionTime = 1000
 
   constructor: ->
@@ -21,14 +24,19 @@ class MiniCourse
     # get content
     @content = miniCourseContent # TODO: remove (unnecessary?)
     
-    # keep track of courses
-    @count = 0 # fake classification counter
-    @curr = 0
-    @prev = 0
-
     User.on 'change', =>
       # needs to be changed to read user's last course number
-      @resetCourse() #unless User.current?.preferences[zooniverse.Api.current.project]?.hasOwnProperty 'prev_course'
+      
+      if DEBUG
+        console.log 'MiniCourse: running in DEBUG mode'
+        @resetCourse() #unless User.current?.preferences[zooniverse.Api.current.project]?.hasOwnProperty 'prev_course'
+      else
+        console.log 'MiniCourse: running in NORMAL mode'
+        # get user preferences
+        @count  = +User.current?.preferences[zooniverse.Api.current.project]['count']
+        @curr   = +User.current?.preferences[zooniverse.Api.current.project]['curr_course_id']
+
+
       if User.current?
         @prompt_el.toggleClass 'signed-in'
         @prompt_el.find('.course-button').show()
@@ -50,7 +58,7 @@ class MiniCourse
     $(classifier.el).on "click", ".sign-up", (e) => signupDialog.show() 
 
   loadContent: ->
-    if @curr >= @content.length
+    if @coursesAvailable()
       title  = "That\'s all, folks!"
       text   = "This concludes the mini-course series. Thanks for tuning in!"
       figure = ""
@@ -72,8 +80,19 @@ class MiniCourse
     @course_el.find("#course-figure").attr 'src', figure
     @course_el.find(".course-figure-credits").html figure_credits
 
+  incrementCount: ->
+    @count = @count + 1
+    User.current.setPreference 'count', @count
+
   setRate: (rate) ->
     @rate = rate
+
+  coursesAvailable: ->
+    if @curr >= @content.length
+      return false
+    else
+      return true
+
 
   onClickCourseYes: ->
     unless User.current is null
@@ -100,11 +119,10 @@ class MiniCourse
   displayCourse: ->
     return if @curr > @num_courses
     unless User.current is null
-      @prev = @curr
-      @curr = +@curr + 1
-      User.current.setPreference 'prev_course', @prev
-      console.log 'SET PREV COURSE TO: ', @prev
       @loadContent()
+      @curr = +@curr + 1
+      console.log 'SETTING CURRENT COURSE ID TO: ', @curr
+      User.current.setPreference 'curr_course_id', @curr
       @course_el.fadeIn(@transitionTime)
       @subject_el.fadeOut(@transitionTime)
       @subject_el.toggleClass("hidden")
@@ -130,8 +148,9 @@ class MiniCourse
   resetCourse: ->
     unless User.current is null
       User.current.setPreference 'course', 'yes'
-      User.current.setPreference 'prev_course', 0
-      @prev = User.current?.preferences[zooniverse.Api.current.project]['prev_course']
-      @curr = 0
+      User.current.setPreference 'count', 0
+      User.current.setPreference 'curr_course_id', 0 
+      @count = 0
+      @curr  = 0
 
 module.exports = MiniCourse

@@ -84,7 +84,7 @@ class Classifier extends BaseController
 
     # mini course
     @course = new MiniCourse
-    @course.setRate 1
+    @course.setRate 5
     @el.find('#course-interval-setter').hide()
 
     @verifyRate = 20
@@ -408,7 +408,7 @@ class Classifier extends BaseController
     # console.log 'finishSubject()'
     @finishedFeedbackButton.hide()
     # fake classification counter
-    @course.count = @course.count + 1
+    @course.incrementCount()
     console.log 'YOU\'VE MARKED ', @course.count, ' LIGHT CURVES!'
     @classification.annotate recordedClickEvents: [@recordedClickEvents...]
 
