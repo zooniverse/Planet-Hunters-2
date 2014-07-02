@@ -403,7 +403,7 @@ class Classifier extends BaseController
     if @course.count % @verifyRate is 0
       location.hash = "#/verify"
 
-    if @course.getPref() isnt 'never' and @course.count % @course.rate is 0
+    if @course.getPref() isnt 'never' and @course.count % @course.rate is 0 and @course.coursesAvailable()
       @el.find('#notification-message').hide() # get any notification out of the way
       @course.showPrompt() 
     @el.find('#loading-screen').show() # TODO: uncomment

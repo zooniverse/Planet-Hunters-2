@@ -17,8 +17,7 @@ class MiniCourse
     @prompt_el = $(classifier.el).find("#course-prompt")
     @course_el = $(classifier.el).find("#course-container")
     @subject_el = $(classifier.el).find("#subject-container")
-    # @prompt_el.hide()
-    # $(classifier.el).find('#course-interval-setter').toggleClass('visible')
+    @prompt_el.hide()
     @course_el.hide()
 
     # get content
@@ -35,7 +34,6 @@ class MiniCourse
         # get user preferences
         @count  = +User.current?.preferences[zooniverse.Api.current.project]['count']
         @curr   = +User.current?.preferences[zooniverse.Api.current.project]['curr_course_id']
-
 
       if User.current?
         @prompt_el.toggleClass 'signed-in'
@@ -58,7 +56,7 @@ class MiniCourse
     $(classifier.el).on "click", ".sign-up", (e) => signupDialog.show() 
 
   loadContent: ->
-    if @coursesAvailable()
+    unless @coursesAvailable()
       title  = "That\'s all, folks!"
       text   = "This concludes the mini-course series. Thanks for tuning in!"
       figure = ""
@@ -89,10 +87,11 @@ class MiniCourse
 
   coursesAvailable: ->
     if @curr >= @content.length
+      console.log 'WARNING: COURSES NOT AVAILABLE!!!'
       return false
     else
+      console.log 'AWESOME. COURSES AVAILABLE!!!'
       return true
-
 
   onClickCourseYes: ->
     unless User.current is null
@@ -117,7 +116,8 @@ class MiniCourse
       @hidePrompt()
 
   displayCourse: ->
-    return if @curr > @num_courses
+    console.log "@curr: #{@curr}, @num_courses: #{@num_courses}"
+    return unless @coursesAvailable()
     unless User.current is null
       @loadContent()
       @curr = +@curr + 1
