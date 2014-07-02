@@ -59,6 +59,8 @@
       &:hover
         // opacity 1.0
         color #fff
+        &.disabled-navlink:after
+          background #555555
         &:after
           height 4px
           background rgb(252,69,65)
@@ -67,6 +69,9 @@
       //   background rgb(252,69,65)
       //   top 100%
       //   transition .2s
+
+      &.disabled-navlink
+        color #555555
 
 .zooniverse-top-bar
   background transparent

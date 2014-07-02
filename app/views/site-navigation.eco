@@ -56,12 +56,12 @@
 
   <div class="links">
     <%- translate 'a', 'siteNavigation.classify',  href: '#/classify',  class: 'link' %>
-    <!--<%- translate 'a', 'siteNavigation.science',   href: '#/science',   class: 'link' %>-->
-    <!--<%- translate 'a', 'siteNavigation.about',     href: '#/about',     class: 'link' %>-->
+    <%- translate 'a', 'siteNavigation.science',   foohref: '#/science',   class: 'link disabled-navlink' %>
+    <%- translate 'a', 'siteNavigation.about',     foohref: '#/about',     class: 'link disabled-navlink' %>
     <%- translate 'a', 'siteNavigation.profile',   href: '#/profile',   class: 'link' %>
-    <!--<%- translate 'a', 'siteNavigation.education', href: '#/education', class: 'link' %>-->
-    <!--<%- translate 'a', 'siteNavigation.talk',      href: '#/discuss',   class: 'link' %>-->
-    <!--<%- translate 'a', 'siteNavigation.blog',      href: '#/blog',      class: 'link' %>-->
+    <%- translate 'a', 'siteNavigation.education', foohref: '#/education', class: 'link disabled-navlink' %>
+    <%- translate 'a', 'siteNavigation.talk',      foohref: '#/discuss',   class: 'link disabled-navlink' %>
+    <%- translate 'a', 'siteNavigation.blog',      foohref: '#/blog',      class: 'link disabled-navlink' %>
   </div>
 </div>
 
