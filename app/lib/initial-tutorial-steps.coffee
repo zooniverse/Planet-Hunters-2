@@ -10,23 +10,37 @@ initialTutorialSteps =
       header:      translate 'span', 'initialTutorial.first.header'
       content:     translate 'span', 'initialTutorial.first.content'
       attachment:  [0.5, 0.5, "#graph-container", 0.5, 0.5]
-      next:        'theData1'
+      next:        'theData'
 
-    theData1: 
+    theData: 
       # progress:    2
-      header:      translate 'span', 'initialTutorial.theData1.header'
-      content:     translate 'span', 'initialTutorial.theData1.content'
+      header:      translate 'span', 'initialTutorial.theData.header'
+      content:     translate 'span', 'initialTutorial.theData.content'
       attachment:  [0.5, 0.5, "#graph-container", 0.5, 0.5]
-      next:        'theData2'
+      next: ->
+        $('.tutorial-annotations.x-axis').addClass('visible')
+        return 'xAxis' # go on to next step
 
-    theData2: 
+    xAxis: 
       # progress:    3
-      header:      translate 'span', 'initialTutorial.theData2.header'
-      content:     translate 'span', 'initialTutorial.theData2.content'
-      attachment:  [0.5, 0.5, "#graph-container", 0.5, 0.5]
-      # attachment:  [0.5, 1.20, "#slider-container", 0.5, 0.5]
-      # arrow:       "bottom"
-      next:        'transits'
+      header:      translate 'span', 'initialTutorial.xAxis.header'
+      content:     translate 'span', 'initialTutorial.xAxis.content'
+      attachment:  [0.5, 1.40, "#slider-container", 0.5, 0.5]
+      arrow:       'bottom'
+      next: ->
+        $('.tutorial-annotations.x-axis').removeClass('visible')
+        $('.tutorial-annotations.y-axis').addClass('visible')
+        return 'yAxis'
+
+    yAxis: 
+      # progress:    3
+      header:      translate 'span', 'initialTutorial.yAxis.header'
+      content:     translate 'span', 'initialTutorial.yAxis.content'
+      attachment:  [0.0, 0.5, "#graph-container", 0.08, 0.5]
+      arrow:       'left'
+      next: ->       
+        $('.tutorial-annotations.y-axis').removeClass('visible')
+        return 'transits'
 
     transits: 
       # progress:    4
@@ -52,10 +66,9 @@ initialTutorialSteps =
     showTransits:
       # progress:    7 
       header:      translate 'span', 'initialTutorial.showTransits.header'
-      content:     translate 'span', 'initialTutorial.showTransits.content'
+      instruction: translate 'span', 'initialTutorial.showTransits.content'
       attachment:  [0.5, 0.5, "#graph-container", 0.5, 0.5]
       next:        'zooming'
-      instruction: ''
 
       demo: -> # TODO: Fix. This doesn't work!
         # modify this to fit the light curve

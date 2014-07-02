@@ -65,7 +65,7 @@
         <p>This part of the light curve shows the time spent observing the star.</p>
       </div>
       <div class="tutorial-annotations y-axis">
-        <p>This part of the light curve shows the star\'s observed brightness.</p>
+        <!-- <p>This part of the light curve shows the star's observed brightness.</p> -->
       </div>
 
       <div id='loading-screen'>

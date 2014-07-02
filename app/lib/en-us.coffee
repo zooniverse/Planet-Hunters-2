@@ -37,13 +37,19 @@ module.exports =
       header: 'Welcome!'
       content: 'This short tutorial will show you how to find undiscovered planets by looking at how the brightness of a star changes over time.'
 
-    theData1:
+    theData:
       header: 'The Data'
       content:  'Each point on the light curve represents one measurement of a star\'s brightness taken by NASA’s Kepler Space Telescope. These measurements are taken approximately every 30 minutes. The higher the dot, the brighter the star appears.' 
 
-    theData2:
-      header: 'The Data (continued)'
-      content: 'The x-axis represents the time spent observing the star. Usually each graph shows 35 days of observations. This part of the light curve shows the time spent observing the star. This part of the light curve shows the star\'s observed brightness.'
+    xAxis:
+      header: 'The X Axis'
+      content: 'The x-axis represents the time spent observing the star. Usually each graph shows about 30 days of observations.'
+
+    # removed: This part of the light curve shows the time spent observing the star.
+
+    yAxis:
+      header: 'The Y Axis'
+      content: 'The y-axis of the light curve shows the star\'s observed brightness.'
 
     transits:
       header: 'Transits'
