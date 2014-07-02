@@ -84,6 +84,7 @@ class MiniCourse
 
   setRate: (rate) ->
     @rate = rate
+    $('#course-interval').val(@rate)
 
   coursesAvailable: ->
     if @curr >= @content.length
