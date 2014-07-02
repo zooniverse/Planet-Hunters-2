@@ -10,9 +10,15 @@ supplementalTutorialSteps =
       header:      translate 'span', 'supplementalTutorial.first.header'
       content:     translate 'span', 'supplementalTutorial.first.content'
       attachment:  [0.5, 0.5, "#graph-container", 0.5, 0.5]
-      next:        'dataGaps'
 
-    dataGaps: 
+    displayOn_1: 
+      # progress:    1
+      count:       1
+      header:      translate 'span', 'supplementalTutorial.first.header'
+      content:     translate 'span', 'supplementalTutorial.first.content'
+      attachment:  [0.5, 0.5, "#graph-container", 0.5, 0.5]
+
+    displayOn_4: 
       # progress:    1
       count:       4
       header:      translate 'span', 'supplementalTutorial.dataGaps.header'

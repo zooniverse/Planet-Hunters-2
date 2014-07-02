@@ -71,6 +71,9 @@ class Classifier extends BaseController
     isZoomed: false
     ifFaved: false
 
+    # classification counts at which to display supplementary tutorial
+    @whenToDisplayTips = [1, 4, 10]
+
     User.on 'change', @onUserChange
     Subject.on 'fetch', @onSubjectFetch
     Subject.on 'select', @onSubjectSelect
@@ -406,6 +409,17 @@ class Classifier extends BaseController
     if @course.getPref() isnt 'never' and @course.count % @course.rate is 0 and @course.coursesAvailable()
       @el.find('#notification-message').hide() # get any notification out of the way
       @course.showPrompt() 
+
+
+    for classification_count in @whenToDisplayTips
+      if @course.count is classification_count
+        console.log "*** DISPLAY SUPPLEMENTAL TUTOTIAL # #{classification_count} *** "
+        @supplementalTutorial.first = "displayOn_" + classification_count.toString()
+        @supplementalTutorial.start()
+
+
+
+
     @el.find('#loading-screen').show() # TODO: uncomment
     @Subject.next()
 
