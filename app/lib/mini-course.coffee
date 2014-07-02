@@ -58,7 +58,8 @@ class MiniCourse
     @prompt_el = $(classifier.el).find("#course-prompt")
     @course_el = $(classifier.el).find("#course-container")
     @subject_el = $(classifier.el).find("#subject-container")
-    @prompt_el.hide()
+    # @prompt_el.hide()
+    # $(classifier.el).find('#course-interval-setter').toggleClass('visible')
     @course_el.hide()
 
     # keep track of courses

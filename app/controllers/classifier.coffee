@@ -49,6 +49,9 @@ class Classifier extends BaseController
     'click button[name="alt-join-convo"]'    : 'onClickAltJoinConvo'
     'click button[name="submit-talk"]'       : 'onClickSubmitTalk'
     'click button[name="alt-submit-talk"]'   : 'onClickSubmitTalkAlt'
+    'mouseenter #course-yes-container'       : 'onMouseoverCourseYes'
+    'mouseleave  #course-yes-container'      : 'onMouseoutCourseYes'
+    'change #course-interval'                : 'onChangeCourseInterval'
 
   constructor: ->
     super    
@@ -56,9 +59,9 @@ class Classifier extends BaseController
     # if mobile device detected, go to verify mode
     if window.matchMedia("(min-device-width: 320px)").matches and window.matchMedia("(max-device-width: 480px)").matches
       location.hash = "#/verify"
-      
+
     window.classifier = @
-    
+
     @el.find('#star-id').hide()
 
     # zoom levels [days]: 2x, 10x, 20x
@@ -77,17 +80,14 @@ class Classifier extends BaseController
     @marksContainer = @el.find('#marks-container')[0]
 
     @tutorial = new Tutorial
-      # progress: 9
-      foo: ->
-        alert 'foo!'
-        return
       steps: initialTutorialSteps.steps
 
     # mini course
     @course = new MiniCourse
-    @course.setRate 3
+    @course.setRate 5
+    @el.find('#course-interval-setter').hide()
 
-    @verifyRate = 2
+    @verifyRate = 20
 
     @recordedClickEvents = []
 
@@ -95,6 +95,37 @@ class Classifier extends BaseController
     @el.find('#finished-marking').hide() #prop('disabled',true)
     @el.find('#finished-feedback').hide() #prop('disabled',true)
     console.log '*** DISABLED ***'
+
+  # /////////////////////////////////////////////////
+  onMouseoverCourseYes: ->
+    # console.log '*** ON ***'
+    return if @blockCourseIntervalDisplay
+    @blockCourseIntervalDisplay = true
+    @el.find('#course-interval-setter').show 400, =>
+      @blockCourseIntervalHide = false
+
+  onMouseoutCourseYes: ->
+    # console.log '*** OUT ***'
+    return if @blockCourseIntervalHide
+    @blockCourseIntervalHide = true
+    @el.find('#course-interval-setter').hide 400, =>
+      @blockCourseIntervalDisplay = false
+  # /////////////////////////////////////////////////
+
+  onChangeCourseInterval: ->
+    console.log 'VALUE: ', @el.find('#course-interval').val()
+    defaultValue = 5
+    value = +@el.find('#course-interval').val()
+
+    console.log 'VALUE IS NUMBER: ', (typeof value)
+
+    # validate integer values
+    unless (typeof value is 'number') and (value % 1 is 0) and value > 0 and value < 100
+      value = defaultValue
+      @el.find('#course-interval').val(value)
+    else
+      console.log 'SETTING VALUE TO: ', value
+      @course.setRate value
 
   onUserChange: (e, user) =>
     console.log 'classify: onUserChange()'
@@ -120,6 +151,8 @@ class Classifier extends BaseController
 
     # TODO: use Subject data to choose the right lightcurve
     jsonFile = @subject.selected_light_curve.location
+    # jsonFile = 'test_data/test_light_curve.json'
+    # jsonFile = 'http://demo.zooniverse.org.s3.amazonaws.com/planet_hunter/new_subjects2/1430893_4.json'
     
     # DEBUG CODE
     # jsonFile = './offline/subject.json' # for debug only

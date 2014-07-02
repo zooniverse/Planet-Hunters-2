@@ -39,7 +39,16 @@
           <div id="course-message" class="course-message">
             <%- translate 'course.prompt.login_message' %>
           </div>
-          <button id="course-yes" name="course-yes" class="course-button">Yes</button>
+
+          <div id="course-yes-container">
+            <div id="course-yes">Yes</div>
+            <div id="course-interval-setter">
+              <div class="course-interval-text">, remind me every </div>
+              <input type="number" id="course-interval" name="course-interval" value="5"></input>
+              <div class="course-interval-text"> classifications!</div>
+            </div>
+          </div>
+
           <button id="course-no" name="course-no" class="course-button">No</button>
           <button id="course-never" name="course-never" class="course-button">Never</button>
           <svg id="course-prompt-close" class="course-prompt-close" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="7px" height="7px">
