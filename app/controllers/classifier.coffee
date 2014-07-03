@@ -366,7 +366,7 @@ class Classifier extends BaseController
     addEventListener "zootorial-end", =>
       $('.tutorial-annotations.x-axis').removeClass('visible')
       $('.tutorial-annotations.y-axis').removeClass('visible')
-      Subject.next()
+      @finishSubject() # loads next subject, among other stuff
 
     # load training subject
     @notify('Loading tutorial...')
