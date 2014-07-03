@@ -182,6 +182,7 @@ class Classifier extends BaseController
     @loadSubjectData()
 
   loadSubjectData: (jsonFile) ->
+    $('#graph-container').addClass 'loading-lightcurve'
     unless jsonFile?
       jsonFile = jsonFile = @subject.selected_light_curve.location
       # jsonFile = 'https://s3.amazonaws.com/demo.zooniverse.org/planet_hunter/beta_subjects/2442084_13-2.json' # TRAINING FILE
@@ -207,6 +208,7 @@ class Classifier extends BaseController
       @canvasGraph = new CanvasGraph(@canvas, data)
       @canvasGraph.plotPoints()
       @el.find('#loading-screen').hide()
+      $('#graph-container').removeClass 'loading-lightcurve'
       @canvasGraph.enableMarking()
       @zoomRanges = [@canvasGraph.largestX, 10, 2]
       @magnification = [ '1x (all days)', '10 days', '2 days' ]
@@ -362,6 +364,9 @@ class Classifier extends BaseController
     @course.showPrompt()
     
   onClickTutorial: ->
+    if $('#graph-container').hasClass 'loading-lightcurve'
+      @notify 'Please wait until current lightcurve is loaded.'
+      return
     # do stuff after tutorial complete/aborted
     addEventListener "zootorial-end", =>
       $('.tutorial-annotations.x-axis').removeClass('visible')
