@@ -55,10 +55,14 @@ initialTutorialSteps =
     markingTransits:
       # progress:    5 
       header:      translate 'span', 'initialTutorial.markingTransits.header'
-      content:     translate 'span', 'initialTutorial.markingTransits.content'
+      instruction: translate 'span', 'initialTutorial.markingTransits.content'
       attachment:  [0.0, 0.5, "#graph-container", 0.20, 0.2]
       arrow:       'left'
       next:        'spotTransits'
+
+      demo: ->
+        window.classifier.canvasGraph.highlightCurve(2.75,3.00)
+
 
     spotTransits:
       # progress:    6 
