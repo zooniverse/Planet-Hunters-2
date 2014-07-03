@@ -49,6 +49,7 @@ initialTutorialSteps =
       attachment:  [0.5, 0.5, "#graph-container", 0.5, 0.5]
       next: ->
         window.classifier.canvasGraph.highlightCurve(2.75,3.00)
+        # window.classifier.canvasGraph.enableMarking()
         return 'markingTransits'
 
     markingTransits:
@@ -64,7 +65,9 @@ initialTutorialSteps =
       header:      translate 'span', 'initialTutorial.spotTransits.header'
       content:     translate 'span', 'initialTutorial.spotTransits.content'
       attachment:  [0.5, 0.5, "#graph-container", 0.5, 0.9]
-      next:        'showTransits'
+      next: ->
+        window.classifier.canvasGraph.disableMarking()
+        return 'showTransits'
 
     showTransits:
       # progress:    7 
@@ -85,6 +88,7 @@ initialTutorialSteps =
         window.classifier.canvasGraph.highlightCurve(25.72,26.00)
         window.classifier.canvasGraph.highlightCurve(29.00,29.34)
         window.classifier.canvasGraph.highlightCurve(32.34,32.60)
+        $('.mark').fadeOut(600)
 
     zooming: 
       # progress:    8
@@ -101,14 +105,8 @@ initialTutorialSteps =
       header:      translate 'span', 'initialTutorial.goodLuck.header'
       content:     translate 'span', 'initialTutorial.goodLuck.content'
       attachment:  [0.5, 0.5, "#graph-container", 0.5, 0.5]
+      next: ->
+        window.classifier.canvasGraph.enableMarking() # causes double marks to be drawn. why?
     # /// END TUTORIAL STEPS /// 
-
-  onEnd: ->
-    # hide tutorial annotations
-    alert 'END'
-    $('.tutorial-annotations.x-axis').removeClass('visible')
-    $('.tutorial-annotations.y-axis').removeClass('visible')
-
-
 
 module.exports = initialTutorialSteps

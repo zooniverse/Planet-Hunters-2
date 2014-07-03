@@ -56,15 +56,11 @@ class Classifier extends BaseController
   constructor: ->
     super    
 
-
     # if mobile device detected, go to verify mode
     if window.matchMedia("(min-device-width: 320px)").matches and window.matchMedia("(max-device-width: 480px)").matches
       location.hash = "#/verify"
 
     window.classifier = @
-
-    # hide zooniverse and kepler ids
-    @el.find('.star-id').hide()
 
     # zoom levels [days]: 2x, 10x, 20x
     @zoomRange = 15
@@ -191,9 +187,9 @@ class Classifier extends BaseController
       # jsonFile = 'https://s3.amazonaws.com/demo.zooniverse.org/planet_hunter/beta_subjects/2442084_13-2.json' # TRAINING FILE
     console.log 'jsonFile: ', jsonFile # DEBUG CODE
 
-    # handle elements
+    # handle ui elements
     @el.find('#loading-screen').show()
-    @el.find('#star-id').hide()
+    @el.find('.star-id').hide()
     @el.find('#ui-slider').attr('disabled',true)
     @el.find(".noUi-handle").fadeOut(150)
     
@@ -210,10 +206,11 @@ class Classifier extends BaseController
       @marksContainer.appendChild(@canvas)
       @canvasGraph = new CanvasGraph(@canvas, data)
       @canvasGraph.plotPoints()
-      @canvasGraph.enableMarking()
       @el.find('#loading-screen').hide()
+      @canvasGraph.enableMarking()
       @zoomRanges = [@canvasGraph.largestX, 10, 2]
       @magnification = [ '1x (all days)', '10 days', '2 days' ]
+      # update ui elements
       @showZoomMessage(@magnification[@zoomLevel])
       @el.find("#ui-slider").noUiSlider
         start: 0
@@ -221,7 +218,7 @@ class Classifier extends BaseController
           min: @canvasGraph.smallestX
           max: @canvasGraph.largestX #- @zoomRange
       @el.find(".noUi-handle").hide()
-      
+
     @insertMetadata()
     @el.find('.do-you-see-a-transit').fadeIn()
     @el.find('#no-transits').fadeIn()
@@ -229,7 +226,6 @@ class Classifier extends BaseController
     @el.find('#finished-feedback').fadeIn()
 
   insertMetadata: ->
-    
     # ukirt data
     @ra      = @subject.coords[0]
     @dec     = @subject.coords[1]
@@ -362,18 +358,20 @@ class Classifier extends BaseController
       @notify('Added to Favorites.')
 
   onClickHelp: ->
-    console.log 'onClickHelp()'
     @el.find('#notification-message').hide() # get any notification out of the way
-    # @el.find('#course-prompt').slideDown()
     @course.showPrompt()
     
   onClickTutorial: ->
-    console.log 'onClickTutorial()'
+    # do stuff after tutorial complete/aborted
+    addEventListener "zootorial-end", =>
+      $('.tutorial-annotations.x-axis').removeClass('visible')
+      $('.tutorial-annotations.y-axis').removeClass('visible')
+      Subject.next()
 
     # load training subject
-    @loadSubjectData jsonFile = 'https://s3.amazonaws.com/demo.zooniverse.org/planet_hunter/beta_subjects/1873513_15-3.json'
-
     @notify('Loading tutorial...')
+    jsonFile = 'https://s3.amazonaws.com/demo.zooniverse.org/planet_hunter/beta_subjects/1873513_15-3.json'
+    @loadSubjectData(jsonFile)  
     @initialTutorial.start()
 
   updateButtons: ->
