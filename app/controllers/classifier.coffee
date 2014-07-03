@@ -188,13 +188,17 @@ class Classifier extends BaseController
     @loadSubjectData()
     @el.find('#loading-screen').hide() # TODO: uncomment
 
-  loadSubjectData: ->
+  loadSubjectData: (jsonFile) ->
+    unless jsonFile?
+      jsonFile = jsonFile = @subject.selected_light_curve.location
+    
+
     console.log 'loadSubjectData()'
     @el.find('#ui-slider').attr('disabled',true)
     @el.find(".noUi-handle").fadeOut(150)
 
     # TODO: use Subject data to choose the right lightcurve
-    jsonFile = @subject.selected_light_curve.location
+    # jsonFile = @subject.selected_light_curve.location
     # jsonFile = 'https://s3.amazonaws.com/demo.zooniverse.org/planet_hunter/beta_subjects/2442084_13-2.json' # TRAINING FILE
 
     # jsonFile = 'test_data/test_light_curve.json'
@@ -374,6 +378,10 @@ class Classifier extends BaseController
     
   onClickTutorial: ->
     console.log 'onClickTutorial()'
+
+    # load training subject
+    @loadSubjectData(jsonFile='https://s3.amazonaws.com/demo.zooniverse.org/planet_hunter/beta_subjects/2442084_13-2.json')
+
     @notify('Loading tutorial...')
     @initialTutorial.start()
 
