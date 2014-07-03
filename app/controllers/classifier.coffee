@@ -180,42 +180,31 @@ class Classifier extends BaseController
 
   onSubjectSelect: (e, subject) =>
     console.log 'classify: onSubjectSelect()'
-    @el.find('#loading-screen').show() # TODO: uncomment
-    @el.find('#star-id').hide()
     console.log 'onSubjectSelect()'
     @subject = subject
     @classification = new Classification {subject}
     @loadSubjectData()
-    @el.find('#loading-screen').hide() # TODO: uncomment
 
   loadSubjectData: (jsonFile) ->
     unless jsonFile?
       jsonFile = jsonFile = @subject.selected_light_curve.location
-    
+      # jsonFile = 'https://s3.amazonaws.com/demo.zooniverse.org/planet_hunter/beta_subjects/2442084_13-2.json' # TRAINING FILE
+    console.log 'jsonFile: ', jsonFile # DEBUG CODE
 
-    console.log 'loadSubjectData()'
+    # handle elements
+    @el.find('#loading-screen').show()
+    @el.find('#star-id').hide()
     @el.find('#ui-slider').attr('disabled',true)
     @el.find(".noUi-handle").fadeOut(150)
-
-    # TODO: use Subject data to choose the right lightcurve
-    # jsonFile = @subject.selected_light_curve.location
-    # jsonFile = 'https://s3.amazonaws.com/demo.zooniverse.org/planet_hunter/beta_subjects/2442084_13-2.json' # TRAINING FILE
-
-    # jsonFile = 'test_data/test_light_curve.json'
-    # jsonFile = 'http://demo.zooniverse.org.s3.amazonaws.com/planet_hunter/new_subjects2/1430893_4.json'
     
-    # DEBUG CODE
-    # jsonFile = './offline/subject.json' # for debug only
-    console.log 'jsonFile: ', jsonFile
-    
-    @canvas?.remove() # kill any previous canvas
-
-    # create new canvas
+    # remove any previous canvas; create new one
+    @canvas?.remove()
     @canvas = document.createElement('canvas')
     @canvas.id = 'graph'
     @canvas.width = 1024
     @canvas.height = 420
-    
+
+    # read json data
     $.getJSON jsonFile, (data) =>
       @canvasGraph?.marks.destroyAll()  
       @marksContainer.appendChild(@canvas)
@@ -231,19 +220,21 @@ class Classifier extends BaseController
           min: @canvasGraph.smallestX
           max: @canvasGraph.largestX #- @zoomRange
       @el.find(".noUi-handle").hide()
+      @el.find('#loading-screen').hide()
       
     @insertMetadata()
     @el.find('.do-you-see-a-transit').fadeIn()
-    @el.find('#no-transits').fadeIn() #prop('disabled',false)
-    @el.find('#finished-marking').fadeIn() #prop('disabled',false)
-    @el.find('#finished-feedback').fadeIn() #prop('disabled',false)
-    console.log '*** ENABLED ***'
+    @el.find('#no-transits').fadeIn()
+    @el.find('#finished-marking').fadeIn()
+    @el.find('#finished-feedback').fadeIn()
 
   insertMetadata: ->
+    
+    # ukirt data
     @ra      = @subject.coords[0]
     @dec     = @subject.coords[1]
     ukirtUrl = "http://surveys.roe.ac.uk:8080/wsa/GetImage?ra=" + @ra + "&dec=" + @dec + "&database=wserv4v20101019&frameType=stack&obsType=object&programmeID=10209&mode=show&archive=%20wsa&project=wserv4"
-    # console.log 'ukirtUrl: ', ukirtUrl
+    
     metadata = @Subject.current.metadata
     @el.find('#zooniverse-id').html @Subject.current.zooniverse_id 
     @el.find('#kepler-id').html     metadata.kepler_id

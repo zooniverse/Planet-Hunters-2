@@ -95,4 +95,11 @@ initialTutorialSteps =
       attachment:  [0.5, 0.5, "#graph-container", 0.5, 0.5]
     # /// END TUTORIAL STEPS /// 
 
+    onBeforeEnd: ->
+      # hide tutorial annotations
+      $('.tutorial-annotations.x-axis').removeClass('visible')
+      $('.tutorial-annotations.y-axis').removeClass('visible')
+
+
+
 module.exports = initialTutorialSteps
