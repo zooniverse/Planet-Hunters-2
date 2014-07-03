@@ -169,7 +169,15 @@ class Classifier extends BaseController
     else if @splitDesignation in ['d', 'e', 'f', 'j', 'k', 'l']
       @tipsOptIn = false
     
-    Subject.next() unless @classification?
+    console.log 'BLAH: ', User.current?.preferences.planet_hunter
+    if +User.current?.preferences.planet_hunter.count is 0
+      console.log 'First-time user. Loading tutorial...', 
+      @onClickTutorial()
+    else
+      console.log 'Loading subject.'
+      Subject.next() unless @classification?
+
+    # Subject.next() unless @classification?
 
   onSubjectFetch: (e, user) =>
     console.log 'classify: onSubjectFetch()'
@@ -367,10 +375,28 @@ class Classifier extends BaseController
     if $('#graph-container').hasClass 'loading-lightcurve'
       @notify 'Please wait until current lightcurve is loaded.'
       return
+
+    # create tutorial subject
+    tutorialSubject = new Subject
+      id: 'TUTORIAL_SUBJECT'
+      zooniverse_id: 'APH0000009'
+      metadata:
+        kepler_id: "1431599"
+        logg: "4.673"
+        magnitudes:
+          kepler: "12.320"
+        mass: "0.57"
+        radius: "0.577"
+        teff: "4056"
+      selected_light_curve: 'https://s3.amazonaws.com/demo.zooniverse.org/planet_hunter/beta_subjects/1873513_15-3.json'
+    tutorialSubject.select()
+
+
     # do stuff after tutorial complete/aborted
     addEventListener "zootorial-end", =>
       $('.tutorial-annotations.x-axis').removeClass('visible')
       $('.tutorial-annotations.y-axis').removeClass('visible')
+      $('.mark').remove()
       @finishSubject() # loads next subject, among other stuff
 
     # load training subject
@@ -438,7 +464,7 @@ class Classifier extends BaseController
     @classifySummary.fadeOut(150)
     @nextSubjectButton.hide()
     @canvasGraph.marks.destroyAll() #clear old marks
-    @canvas.outerHTML = ""
+    # @canvas.outerHTML = ""
     @resetTalkComment @talkComment
     @resetTalkComment @altTalkComment
     # show courses

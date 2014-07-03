@@ -200,7 +200,7 @@ class CanvasGraph
         y = ((+@data.y[i]-@yMin)/(@yMax-@yMin)) * @canvas.height
         y = -y + @canvas.height # flip y-values
         @ctx.beginPath()
-        @ctx.fillStyle = "rgba(252, 69, 65, 0.65)" #"#fc4541"
+        @ctx.fillStyle = "rgba(252, 69, 65, 1.0)" #"#fc4541"
         @ctx.fillRect(x,y,2,2)
     return
 

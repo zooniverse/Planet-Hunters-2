@@ -77,9 +77,9 @@ module.exports =
 
   supplementalTutorial:
     first:
-      header: 'Tips: Talk'
+      header: 'Tip: Talk'
       content: 'Sometimes you might see something interesting or have a question. TALK is a tool where you can join Planet Hunters project scientists and volunteers to observe, collect, share, and discuss Planet Hunters data.'
       
     dataGaps: 
-      header: 'Tips: Gaps in the Data'
+      header: 'Tip: Gaps in the Data'
       content: 'Sometimes you might see gaps in the data like in this light curve. This means that Kepler was either turned off or not pointing at the star.'
