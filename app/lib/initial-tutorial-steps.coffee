@@ -47,36 +47,44 @@ initialTutorialSteps =
       header:      translate 'span', 'initialTutorial.transits.header'
       content:     translate 'span', 'initialTutorial.transits.content'
       attachment:  [0.5, 0.5, "#graph-container", 0.5, 0.5]
-      next:        'markingTransits'
+      next: ->
+        window.classifier.canvasGraph.highlightCurve(2.75,3.00)
+        return 'markingTransits'
 
     markingTransits:
       # progress:    5 
       header:      translate 'span', 'initialTutorial.markingTransits.header'
       content:     translate 'span', 'initialTutorial.markingTransits.content'
-      attachment:  [0.5, 0.5, "#graph-container", 0.5, 0.5]
+      attachment:  [0.0, 0.5, "#graph-container", 0.20, 0.2]
+      arrow:       'left'
       next:        'spotTransits'
 
     spotTransits:
       # progress:    6 
       header:      translate 'span', 'initialTutorial.spotTransits.header'
       content:     translate 'span', 'initialTutorial.spotTransits.content'
-      attachment:  [0.5, 0.5, "#graph-container", 0.5, 0.5]
+      attachment:  [0.5, 0.5, "#graph-container", 0.5, 0.9]
       next:        'showTransits'
 
     showTransits:
       # progress:    7 
       header:      translate 'span', 'initialTutorial.showTransits.header'
       instruction: translate 'span', 'initialTutorial.showTransits.content'
-      attachment:  [0.5, 0.5, "#graph-container", 0.5, 0.5]
+      attachment:  [0.5, 0.5, "#graph-container", 0.5, 0.9]
       next:        'zooming'
 
       demo: -> # TODO: Fix. This doesn't work!
         # modify this to fit the light curve
-        window.classifier.canvasGraph.highlightCurve(1,2)
-        window.classifier.canvasGraph.highlightCurve(4,5)
-        window.classifier.canvasGraph.highlightCurve(8,9)
-        window.classifier.canvasGraph.highlightCurve(10,11)
-        window.classifier.canvasGraph.highlightCurve(12,13)
+        window.classifier.canvasGraph.highlightCurve(2.75,3.00)
+        window.classifier.canvasGraph.highlightCurve(6.00,6.30)
+        window.classifier.canvasGraph.highlightCurve(9.25,9.50)
+        window.classifier.canvasGraph.highlightCurve(12.60,12.85)
+        window.classifier.canvasGraph.highlightCurve(15.80,16.12)
+        window.classifier.canvasGraph.highlightCurve(19.15,19.45)
+        window.classifier.canvasGraph.highlightCurve(22.48,22.75)
+        window.classifier.canvasGraph.highlightCurve(25.72,26.00)
+        window.classifier.canvasGraph.highlightCurve(29.00,29.34)
+        window.classifier.canvasGraph.highlightCurve(32.34,32.60)
 
     zooming: 
       # progress:    8
@@ -95,10 +103,11 @@ initialTutorialSteps =
       attachment:  [0.5, 0.5, "#graph-container", 0.5, 0.5]
     # /// END TUTORIAL STEPS /// 
 
-    onBeforeEnd: ->
-      # hide tutorial annotations
-      $('.tutorial-annotations.x-axis').removeClass('visible')
-      $('.tutorial-annotations.y-axis').removeClass('visible')
+  onEnd: ->
+    # hide tutorial annotations
+    alert 'END'
+    $('.tutorial-annotations.x-axis').removeClass('visible')
+    $('.tutorial-annotations.y-axis').removeClass('visible')
 
 
 

@@ -211,6 +211,7 @@ class Classifier extends BaseController
       @canvasGraph = new CanvasGraph(@canvas, data)
       @canvasGraph.plotPoints()
       @canvasGraph.enableMarking()
+      @el.find('#loading-screen').hide()
       @zoomRanges = [@canvasGraph.largestX, 10, 2]
       @magnification = [ '1x (all days)', '10 days', '2 days' ]
       @showZoomMessage(@magnification[@zoomLevel])
@@ -220,7 +221,6 @@ class Classifier extends BaseController
           min: @canvasGraph.smallestX
           max: @canvasGraph.largestX #- @zoomRange
       @el.find(".noUi-handle").hide()
-      @el.find('#loading-screen').hide()
       
     @insertMetadata()
     @el.find('.do-you-see-a-transit').fadeIn()
@@ -371,7 +371,7 @@ class Classifier extends BaseController
     console.log 'onClickTutorial()'
 
     # load training subject
-    @loadSubjectData(jsonFile='https://s3.amazonaws.com/demo.zooniverse.org/planet_hunter/beta_subjects/2442084_13-2.json')
+    @loadSubjectData jsonFile = 'https://s3.amazonaws.com/demo.zooniverse.org/planet_hunter/beta_subjects/1873513_15-3.json'
 
     @notify('Loading tutorial...')
     @initialTutorial.start()
@@ -453,7 +453,6 @@ class Classifier extends BaseController
         @supplementalTutorial.first = "displayOn_" + classification_count.toString()
         @supplementalTutorial.start()
 
-    @el.find('#loading-screen').show() # TODO: uncomment
     @Subject.next()
 
   finishSubject: ->
