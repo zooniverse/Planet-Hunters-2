@@ -42,16 +42,16 @@ class Verification extends BaseController
 
   onUserChange: (e, user) =>
     return unless window.app.stack.activePage.target.constructor.name is "Verification"
-    console.log 'verify: onUserChange()'
+    # console.log 'verify: onUserChange()'
     Subject.next() unless @classification?
 
   onSubjectFetch: (e, user) =>
     return unless window.app.stack.activePage.target.constructor.name is "Verification"
-    console.log 'verify: onSubjectFetch()'
+    # console.log 'verify: onSubjectFetch()'
 
   onSubjectSelect: (e, subject) =>
     # return unless window.app.stack.activePage.target.constructor.name is "Verification"
-    console.log 'verify: onSubjectSelect()'
+    # console.log 'verify: onSubjectSelect()'
     @subject = subject
     @classification = new Classification {subject}
     @loadSubject()

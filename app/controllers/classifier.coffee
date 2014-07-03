@@ -95,14 +95,13 @@ class Classifier extends BaseController
 
     @el.find('#course-interval-setter').hide()
 
-    @verifyRate = 20
+    # @verifyRate = 20
 
     @recordedClickEvents = []
 
     @el.find('#no-transits').hide() #prop('disabled',true)
     @el.find('#finished-marking').hide() #prop('disabled',true)
     @el.find('#finished-feedback').hide() #prop('disabled',true)
-    console.log '*** DISABLED ***'
     
   # /////////////////////////////////////////////////
   onMouseoverCourseYes: ->
@@ -123,7 +122,7 @@ class Classifier extends BaseController
   # /////////////////////////////////////////////////
 
   onChangeCourseInterval: ->
-    console.log 'VALUE: ', @el.find('#course-interval').val()
+    # console.log 'VALUE: ', @el.find('#course-interval').val()
     defaultValue = 5
     value = +@el.find('#course-interval').val()
 
@@ -138,7 +137,7 @@ class Classifier extends BaseController
       @course.setRate value
 
   onUserChange: (e, user) =>
-    console.log 'classify: onUserChange()'
+    # console.log 'classify: onUserChange()'
 
     # console.log 'SPLIT DESIGNATION: ', User.current.project.splits.mini_course_sup_tutorial
     if User.current?
@@ -169,22 +168,22 @@ class Classifier extends BaseController
     else if @splitDesignation in ['d', 'e', 'f', 'j', 'k', 'l']
       @tipsOptIn = false
     
-    console.log 'BLAH: ', User.current?.preferences.planet_hunter
+    # console.log 'BLAH: ', User.current?.preferences.planet_hunter
     if +User.current?.preferences.planet_hunter.count is 0
-      console.log 'First-time user. Loading tutorial...', 
+      # console.log 'First-time user. Loading tutorial...', 
       @onClickTutorial()
     else
-      console.log 'Loading subject.'
+      # console.log 'Loading subject.'
       Subject.next() unless @classification?
 
     # Subject.next() unless @classification?
 
   onSubjectFetch: (e, user) =>
-    console.log 'classify: onSubjectFetch()'
+    # console.log 'classify: onSubjectFetch()'
 
   onSubjectSelect: (e, subject) =>
-    console.log 'classify: onSubjectSelect()'
-    console.log 'onSubjectSelect()'
+    # console.log 'classify: onSubjectSelect()'
+    # console.log 'onSubjectSelect()'
     @subject = subject
     @classification = new Classification {subject}
     @loadSubjectData()
@@ -345,7 +344,6 @@ class Classifier extends BaseController
     @el.find("#toggle-fav").removeClass("toggled")
 
   showZoomMessage: (message) =>
-    console.log 'DISPLAYING ZOOM MESSAGE'
     @el.find('#zoom-notification').html(message).fadeIn(100).delay(1000).fadeOut()
     
   notify: (message) =>
@@ -519,7 +517,6 @@ class Classifier extends BaseController
     @el.find('#no-transits').hide() #prop('disabled',true)
     @el.find('#finished-marking').hide() #prop('disabled',true)
     @el.find('#finished-feedback').hide() #prop('disabled',true)
-    console.log '*** DISABLED ***'
 
     # show summary
     @el.find('.do-you-see-a-transit').fadeOut()
