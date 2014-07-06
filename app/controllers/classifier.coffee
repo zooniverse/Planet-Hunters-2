@@ -169,8 +169,8 @@ class Classifier extends BaseController
       @tipsOptIn = false
     
     # console.log 'BLAH: ', User.current?.preferences.planet_hunter
-    if +User.current?.preferences.planet_hunter.count is 0
-      # console.log 'First-time user. Loading tutorial...', 
+    if +User.current?.preferences.planet_hunter.count is 0 or not User.current?
+      console.log 'First-time user. Loading tutorial...', 
       @onClickTutorial()
     else
       # console.log 'Loading subject.'
@@ -179,20 +179,15 @@ class Classifier extends BaseController
     # Subject.next() unless @classification?
 
   onSubjectFetch: (e, user) =>
-    # console.log 'classify: onSubjectFetch()'
 
   onSubjectSelect: (e, subject) =>
-    # console.log 'classify: onSubjectSelect()'
-    # console.log 'onSubjectSelect()'
     @subject = subject
     @classification = new Classification {subject}
     @loadSubjectData()
 
-  loadSubjectData: (jsonFile) ->
+  loadSubjectData: () ->
     $('#graph-container').addClass 'loading-lightcurve'
-    unless jsonFile?
-      jsonFile = jsonFile = @subject.selected_light_curve.location
-      # jsonFile = 'https://s3.amazonaws.com/demo.zooniverse.org/planet_hunter/beta_subjects/2442084_13-2.json' # TRAINING FILE
+    jsonFile = @subject.selected_light_curve
     console.log 'jsonFile: ', jsonFile # DEBUG CODE
 
     # handle ui elements
@@ -374,6 +369,9 @@ class Classifier extends BaseController
       @notify 'Please wait until current lightcurve is loaded.'
       return
 
+    # load training subject
+    @notify('Loading tutorial...')
+
     # create tutorial subject
     tutorialSubject = new Subject
       id: 'TUTORIAL_SUBJECT'
@@ -387,20 +385,20 @@ class Classifier extends BaseController
         radius: "0.577"
         teff: "4056"
       selected_light_curve: 'https://s3.amazonaws.com/demo.zooniverse.org/planet_hunter/beta_subjects/1873513_15-3.json'
-    tutorialSubject.select()
+    console.log 'TUTORIAL SUBJECT: ', tutorialSubject
 
+    tutorialSubject.select()
 
     # do stuff after tutorial complete/aborted
     addEventListener "zootorial-end", =>
       $('.tutorial-annotations.x-axis').removeClass('visible')
       $('.tutorial-annotations.y-axis').removeClass('visible')
-      $('.mark').remove()
-      @finishSubject() # loads next subject, among other stuff
+      $('.mark').fadeIn()
+      # $('.mark').remove()
+      # @finishSubject() # loads next subject, among other stuff
 
-    # load training subject
-    @notify('Loading tutorial...')
-    jsonFile = 'https://s3.amazonaws.com/demo.zooniverse.org/planet_hunter/beta_subjects/1873513_15-3.json'
-    @loadSubjectData(jsonFile)  
+    # jsonFile = 'https://s3.amazonaws.com/demo.zooniverse.org/planet_hunter/beta_subjects/1873513_15-3.json'
+    # @loadSubjectData(jsonFile)  
     @initialTutorial.start()
 
   updateButtons: ->

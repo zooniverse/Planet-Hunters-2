@@ -500,7 +500,6 @@ class CanvasGraph
   toDataYCoord: (canvasPoint) -> ((parseFloat(canvasPoint) / parseFloat(@canvas.height)) * (parseFloat(@yMax) - parseFloat(@yMin))) + parseFloat(@yMin)
 
   addMarkToGraph: (e) =>
-    console.log 'e: ', e
     return if @markingDisabled
     e.preventDefault()
     if @marks.markTooCloseToAnother(e, @scale, @originalMin)
