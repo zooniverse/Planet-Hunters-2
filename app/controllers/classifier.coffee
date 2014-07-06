@@ -52,6 +52,7 @@ class Classifier extends BaseController
     'mouseenter #course-yes-container'       : 'onMouseoverCourseYes'
     'mouseleave  #course-yes-container'      : 'onMouseoutCourseYes'
     'change #course-interval'                : 'onChangeCourseInterval'
+    'change .supplemental-option'            : 'onChangeSupplementalOption'
 
   constructor: ->
     super    
@@ -120,6 +121,9 @@ class Classifier extends BaseController
     @el.find('#course-interval-setter').hide 400, =>
       @blockCourseIntervalDisplay = false
   # /////////////////////////////////////////////////
+
+  onChangeSupplementalOption: ->
+    console.log 'onChangeSupplementalOption(): '
 
   onChangeCourseInterval: ->
     # console.log 'VALUE: ', @el.find('#course-interval').val()
@@ -484,7 +488,7 @@ class Classifier extends BaseController
 
         newElement = document.createElement('div')
         newElement.setAttribute 'class', "supplemental-tutorial-option-container"
-        newElement.setAttribute 'style', "float: right; padding: 5px;"
+        newElement.setAttribute 'style', "float: 1right; padding: 5px;"
         newElement.innerHTML = """
           <input class=\"supplemental-option\" type=\"checkbox\"></input>
           <label>Do not show tips in the fiture.</label>
