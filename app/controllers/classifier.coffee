@@ -90,16 +90,6 @@ class Classifier extends BaseController
       parent: window.classifier.el.children()[0]
       steps: supplementalTutorialSteps.steps
 
-
-    newElement = document.createElement('div')
-    newElement.setAttribute 'class', "supplemental-tutorial-option-container"
-    newElement.setAttribute 'style', "float: right; padding: 5px;"
-    newElement.innerHTML = """
-      <input class=\"supplemental-option\" type=\"checkbox\"></input>
-      <label>Do not show tips in the fiture.</label>
-    """
-    @supplementalTutorial.container.getElementsByClassName('zootorial-footer')[0].appendChild(newElement)
-
     # mini course
     @course = new MiniCourse
 
@@ -491,8 +481,15 @@ class Classifier extends BaseController
         console.log "*** DISPLAY SUPPLEMENTAL TUTOTIAL # #{classification_count} *** "
         @supplementalTutorial.first = "displayOn_" + classification_count.toString()
         @supplementalTutorial.start()
-        console.log 'supplementalTutorial.el: ', @supplementalTutorial.el
-        # @supplementalTutorial.el.
+
+        newElement = document.createElement('div')
+        newElement.setAttribute 'class', "supplemental-tutorial-option-container"
+        newElement.setAttribute 'style', "float: right; padding: 5px;"
+        newElement.innerHTML = """
+          <input class=\"supplemental-option\" type=\"checkbox\"></input>
+          <label>Do not show tips in the fiture.</label>
+        """
+        @supplementalTutorial.container.getElementsByClassName('zootorial-footer')[0].appendChild(newElement)
         
     @Subject.next()
 
