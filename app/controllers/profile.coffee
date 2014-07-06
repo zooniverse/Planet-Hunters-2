@@ -25,7 +25,7 @@ class Profile extends BaseController
     # use custom template for light curves
     BaseProfile::recentTemplate = customItemTemplate
     BaseProfile::favoriteTemplate = customItemTemplate
-    @profile = new BaseProfile      
+    @profile = new BaseProfile
 
     # @profile.el.addClass 'content-block content-container' # doesn't seem to do anything
     @el.find('#secondary-white').append @profile.el
