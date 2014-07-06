@@ -70,7 +70,7 @@ class Classifier extends BaseController
     ifFaved: false
 
     # classification counts at which to display supplementary tutorial
-    @whenToDisplayTips = [1, 4]
+    @whenToDisplayTips = [1, 4, 7]
 
     User.on 'change', @onUserChange
     Subject.on 'fetch', @onSubjectFetch
@@ -98,7 +98,6 @@ class Classifier extends BaseController
       <input class=\"supplemental-option\" type=\"checkbox\"></input>
       <label>Do not show tips in the fiture.</label>
     """
-    # @supplementalTutorial.container.getElementsByClassName('zootorial-footer')
     @supplementalTutorial.container.getElementsByClassName('zootorial-footer')[0].appendChild(newElement)
 
     # mini course

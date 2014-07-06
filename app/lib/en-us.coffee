@@ -76,10 +76,18 @@ module.exports =
       content: 'Now you\’re ready to begin hunting for planets! Over the next few classifications we\’ll provide some additional information that will be useful as you search for new worlds. Click "Finished" to move on to a new light curve.'
 
   supplementalTutorial:
-    first:
+    talk:
       header: 'Tip: Talk'
       content: 'Sometimes you might see something interesting or have a question. TALK is a tool where you can join Planet Hunters project scientists and volunteers to observe, collect, share, and discuss Planet Hunters data.'
       
     dataGaps: 
       header: 'Tip: Gaps in the Data'
       content: 'Sometimes you might see gaps in the data like in this light curve. This means that Kepler was either turned off or not pointing at the star.'
+
+    miniCourse_optOut:
+      header: 'Tip: Take the Planet Hunters Mini Course'
+      content: 'There\'s a lot of interesting science behind discovering exoplanets. Want to learn more? Check the box below and you’ll learn as you hunt for new planets! You can opt in at anytime.'
+
+    miniCourse_optIn:
+      header: 'Tip: Take the Planet Hunters Mini Course'
+      content: 'There\'s a lot of interesting science behind discovering exoplanets. Want to learn more? Check the box below and you’ll learn as you hunt for new planets! You can opt out at anytime.'
