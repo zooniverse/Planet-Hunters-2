@@ -488,7 +488,7 @@ class Classifier extends BaseController
 
         newElement = document.createElement('div')
         newElement.setAttribute 'class', "supplemental-tutorial-option-container"
-        newElement.setAttribute 'style', "float: 1right; padding: 5px;"
+        newElement.setAttribute 'style', "float: 1right; padding-top: 20px;"
         newElement.innerHTML = """
           <input class=\"supplemental-option\" type=\"checkbox\"></input>
           <label>Do not show tips in the fiture.</label>
