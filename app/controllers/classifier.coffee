@@ -179,15 +179,17 @@ class Classifier extends BaseController
     # Subject.next() unless @classification?
 
   onSubjectFetch: (e, user) =>
+    console.log 'onSubjectFetch(): '
 
   onSubjectSelect: (e, subject) =>
+    console.log 'onSubjectSelect(): '
     @subject = subject
     @classification = new Classification {subject}
     @loadSubjectData()
 
   loadSubjectData: () ->
     $('#graph-container').addClass 'loading-lightcurve'
-    jsonFile = @subject.selected_light_curve
+    jsonFile = @subject.selected_light_curve.location
     console.log 'jsonFile: ', jsonFile # DEBUG CODE
 
     # handle ui elements
@@ -384,7 +386,8 @@ class Classifier extends BaseController
         mass: "0.57"
         radius: "0.577"
         teff: "4056"
-      selected_light_curve: 'https://s3.amazonaws.com/demo.zooniverse.org/planet_hunter/beta_subjects/1873513_15-3.json'
+      selected_light_curve: 
+        location: 'https://s3.amazonaws.com/demo.zooniverse.org/planet_hunter/beta_subjects/1873513_15-3.json'
     console.log 'TUTORIAL SUBJECT: ', tutorialSubject
 
     tutorialSubject.select()
