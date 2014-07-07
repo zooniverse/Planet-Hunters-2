@@ -29,6 +29,24 @@ supplementalTutorialSteps =
       content:     translate 'span', 'supplementalTutorial.miniCourse_optOut.content'
       attachment:  [0.5, 0.5, "#graph-container", 0.5, 0.5]
 
+    displayOn_8:
+      count:       7
+      header:      translate 'span', 'supplementalTutorial.miniCourse_optOut.header'
+      content:     translate 'span', 'supplementalTutorial.miniCourse_optOut.content'
+      attachment:  [0.5, 0.5, "#graph-container", 0.5, 0.5]
+
+    displayOn_9:
+      count:       7
+      header:      translate 'span', 'supplementalTutorial.miniCourse_optOut.header'
+      content:     translate 'span', 'supplementalTutorial.miniCourse_optOut.content'
+      attachment:  [0.5, 0.5, "#graph-container", 0.5, 0.5]
+
+    displayOn_10:
+      count:       7
+      header:      translate 'span', 'supplementalTutorial.miniCourse_optOut.header'
+      content:     translate 'span', 'supplementalTutorial.miniCourse_optOut.content'
+      attachment:  [0.5, 0.5, "#graph-container", 0.5, 0.5]
+
     # displayOn_4: 
     #   count:       7
     #   header:      translate 'span', 'supplementalTutorial.dataGaps.header'

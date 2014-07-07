@@ -71,7 +71,7 @@ class Classifier extends BaseController
     ifFaved: false
 
     # classification counts at which to display supplementary tutorial
-    @whenToDisplayTips = [1, 4, 7]
+    @whenToDisplayTips = [1, 4, 7, 8, 9, 10]
 
     User.on 'change', @onUserChange
     Subject.on 'fetch', @onSubjectFetch
@@ -125,8 +125,9 @@ class Classifier extends BaseController
   onChangeSupplementalOption: ->
     console.log 'onChangeSupplementalOption(): '
     return unless User.current?
-    @supplementalOption = not @supplementalOption
-    User.current?.setPreference 'supplemental_option', @supplementalOption
+    supplementalOption = User.current.preferences.planet_hunter.supplemental_option
+    supplementalOption = not supplementalOption
+    User.current?.setPreference 'supplemental_option', supplementalOption
 
   onChangeCourseInterval: ->
     # console.log 'VALUE: ', @el.find('#course-interval').val()
@@ -149,7 +150,7 @@ class Classifier extends BaseController
     # console.log 'SPLIT DESIGNATION: ', User.current.project.splits.mini_course_sup_tutorial
     if User.current?
       @splitDesignation = User.current.project.splits.mini_course_sup_tutorial
-      @supplementalOption = User.current.preferences.planet_hunter.supplemental_option?
+      supplementalOption = User.current.preferences.planet_hunter.supplemental_option?
       # @splitDesignation = 'a' # DEBUG CODE
 
     # HANDLE MINI-COURSE SPLITS
@@ -173,16 +174,16 @@ class Classifier extends BaseController
     if +User.current?.preferences.planet_hunter.count is 0
       # HANDLE SUPPLEMENTAL TUTORIAL SPLITS
       if @splitDesignation in ['a', 'b', 'c', 'g', 'h', 'i']
-        @supplementalOption = true  
+        supplementalOption = true  
       else if @splitDesignation in ['d', 'e', 'f', 'j', 'k', 'l']
-        @supplementalOption = false
+        supplementalOption = false
     
     # handle first-time users
     if +User.current?.preferences.planet_hunter.count is 0 or not User.current?
       console.log 'First-time user. Loading tutorial...'
       @onClickTutorial()
 
-    User.current?.setPreference 'supplemental_option', @supplementalOption
+    User.current?.setPreference 'supplemental_option', supplementalOption
     
     Subject.next() unless @classification?
 
@@ -485,7 +486,7 @@ class Classifier extends BaseController
 
     # display supplemental tutorial
     for classification_count in @whenToDisplayTips
-      if @supplementalOption and @course.count is classification_count
+      if User.current.preferences.planet_hunter.supplemental_option and @course.count is classification_count
         console.log "*** DISPLAY SUPPLEMENTAL TUTOTIAL # #{classification_count} *** "
         @supplementalTutorial.first = "displayOn_" + classification_count.toString()
         @supplementalTutorial.start()
