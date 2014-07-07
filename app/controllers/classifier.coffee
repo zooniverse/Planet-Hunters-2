@@ -52,19 +52,16 @@ class Classifier extends BaseController
     'mouseenter #course-yes-container'       : 'onMouseoverCourseYes'
     'mouseleave  #course-yes-container'      : 'onMouseoutCourseYes'
     'change #course-interval'                : 'onChangeCourseInterval'
+    'change .supplemental-option'            : 'onChangeSupplementalOption'
 
   constructor: ->
     super    
-
 
     # if mobile device detected, go to verify mode
     if window.matchMedia("(min-device-width: 320px)").matches and window.matchMedia("(max-device-width: 480px)").matches
       location.hash = "#/verify"
 
     window.classifier = @
-
-    # hide zooniverse and kepler ids
-    @el.find('.star-id').hide()
 
     # zoom levels [days]: 2x, 10x, 20x
     @zoomRange = 15
@@ -74,7 +71,7 @@ class Classifier extends BaseController
     ifFaved: false
 
     # classification counts at which to display supplementary tutorial
-    @whenToDisplayTips = [1, 4]
+    @whenToDisplayTips = [1, 4, 7]
 
     User.on 'change', @onUserChange
     Subject.on 'fetch', @onSubjectFetch
@@ -99,14 +96,13 @@ class Classifier extends BaseController
 
     @el.find('#course-interval-setter').hide()
 
-    @verifyRate = 20
+    # @verifyRate = 20
 
     @recordedClickEvents = []
 
     @el.find('#no-transits').hide() #prop('disabled',true)
     @el.find('#finished-marking').hide() #prop('disabled',true)
     @el.find('#finished-feedback').hide() #prop('disabled',true)
-    console.log '*** DISABLED ***'
     
   # /////////////////////////////////////////////////
   onMouseoverCourseYes: ->
@@ -126,8 +122,15 @@ class Classifier extends BaseController
       @blockCourseIntervalDisplay = false
   # /////////////////////////////////////////////////
 
+  onChangeSupplementalOption: ->
+    console.log 'onChangeSupplementalOption(): '
+    return unless User.current?
+    supplementalOption = User.current.preferences.planet_hunter.supplemental_option
+    supplementalOption = not supplementalOption
+    User.current?.setPreference 'supplemental_option', supplementalOption
+
   onChangeCourseInterval: ->
-    console.log 'VALUE: ', @el.find('#course-interval').val()
+    # console.log 'VALUE: ', @el.find('#course-interval').val()
     defaultValue = 5
     value = +@el.find('#course-interval').val()
 
@@ -147,6 +150,7 @@ class Classifier extends BaseController
     # console.log 'SPLIT DESIGNATION: ', User.current.project.splits.mini_course_sup_tutorial
     if User.current?
       @splitDesignation = User.current.project.splits.mini_course_sup_tutorial
+      supplementalOption = User.current.preferences.planet_hunter.supplemental_option?
       # @splitDesignation = 'a' # DEBUG CODE
 
     # HANDLE MINI-COURSE SPLITS
@@ -167,59 +171,61 @@ class Classifier extends BaseController
       console.log 'Setting mini-course interval to 5'
       @course.setRate 5 # set default
 
-    # HANDLE SUPPLEMENTAL TUTORIAL SPLITS
-    if @splitDesignation in ['a', 'b', 'c', 'g', 'h', 'i']
-      @tipsOptIn = true  
-    else if @splitDesignation in ['d', 'e', 'f', 'j', 'k', 'l']
-      @tipsOptIn = false
+    if +User.current?.preferences.planet_hunter.count is 0
+      # HANDLE SUPPLEMENTAL TUTORIAL SPLITS
+      if @splitDesignation in ['a', 'b', 'c', 'g', 'h', 'i']
+        supplementalOption = true  
+      else if @splitDesignation in ['d', 'e', 'f', 'j', 'k', 'l']
+        supplementalOption = false
+    
+    # # handle first-time users
+    # if +User.current?.preferences.planet_hunter.count is 0 or not User.current?
+    #   console.log 'First-time user. Loading tutorial...'
+    #   @onClickTutorial()
+
+    User.current?.setPreference 'supplemental_option', supplementalOption
     
     Subject.next() unless @classification?
 
   onSubjectFetch: (e, user) =>
-    console.log 'classify: onSubjectFetch()'
+    console.log 'onSubjectFetch(): '
 
   onSubjectSelect: (e, subject) =>
-    console.log 'classify: onSubjectSelect()'
-    @el.find('#loading-screen').show() # TODO: uncomment
-    @el.find('#star-id').hide()
-    console.log 'onSubjectSelect()'
+    console.log 'onSubjectSelect(): '
     @subject = subject
     @classification = new Classification {subject}
     @loadSubjectData()
-    @el.find('#loading-screen').hide() # TODO: uncomment
 
-  loadSubjectData: ->
-    console.log 'loadSubjectData()'
+  loadSubjectData: () ->
+    $('#graph-container').addClass 'loading-lightcurve'
+    jsonFile = @subject.selected_light_curve.location
+    console.log 'jsonFile: ', jsonFile # DEBUG CODE
+
+    # handle ui elements
+    @el.find('#loading-screen').show()
+    @el.find('.star-id').hide()
     @el.find('#ui-slider').attr('disabled',true)
     @el.find(".noUi-handle").fadeOut(150)
-
-    # TODO: use Subject data to choose the right lightcurve
-    jsonFile = @subject.selected_light_curve.location
-    # jsonFile = 'https://s3.amazonaws.com/demo.zooniverse.org/planet_hunter/beta_subjects/2442084_13-2.json' # TRAINING FILE
-
-    # jsonFile = 'test_data/test_light_curve.json'
-    # jsonFile = 'http://demo.zooniverse.org.s3.amazonaws.com/planet_hunter/new_subjects2/1430893_4.json'
     
-    # DEBUG CODE
-    # jsonFile = './offline/subject.json' # for debug only
-    console.log 'jsonFile: ', jsonFile
-    
-    @canvas?.remove() # kill any previous canvas
-
-    # create new canvas
+    # remove any previous canvas; create new one
+    @canvas?.remove()
     @canvas = document.createElement('canvas')
     @canvas.id = 'graph'
     @canvas.width = 1024
     @canvas.height = 420
-    
+
+    # read json data
     $.getJSON jsonFile, (data) =>
       @canvasGraph?.marks.destroyAll()  
       @marksContainer.appendChild(@canvas)
       @canvasGraph = new CanvasGraph(@canvas, data)
       @canvasGraph.plotPoints()
+      @el.find('#loading-screen').hide()
+      $('#graph-container').removeClass 'loading-lightcurve'
       @canvasGraph.enableMarking()
       @zoomRanges = [@canvasGraph.largestX, 10, 2]
       @magnification = [ '1x (all days)', '10 days', '2 days' ]
+      # update ui elements
       @showZoomMessage(@magnification[@zoomLevel])
       @el.find("#ui-slider").noUiSlider
         start: 0
@@ -227,19 +233,19 @@ class Classifier extends BaseController
           min: @canvasGraph.smallestX
           max: @canvasGraph.largestX #- @zoomRange
       @el.find(".noUi-handle").hide()
-      
+
     @insertMetadata()
     @el.find('.do-you-see-a-transit').fadeIn()
-    @el.find('#no-transits').fadeIn() #prop('disabled',false)
-    @el.find('#finished-marking').fadeIn() #prop('disabled',false)
-    @el.find('#finished-feedback').fadeIn() #prop('disabled',false)
-    console.log '*** ENABLED ***'
+    @el.find('#no-transits').fadeIn()
+    @el.find('#finished-marking').fadeIn()
+    @el.find('#finished-feedback').fadeIn()
 
   insertMetadata: ->
+    # ukirt data
     @ra      = @subject.coords[0]
     @dec     = @subject.coords[1]
     ukirtUrl = "http://surveys.roe.ac.uk:8080/wsa/GetImage?ra=" + @ra + "&dec=" + @dec + "&database=wserv4v20101019&frameType=stack&obsType=object&programmeID=10209&mode=show&archive=%20wsa&project=wserv4"
-    # console.log 'ukirtUrl: ', ukirtUrl
+    
     metadata = @Subject.current.metadata
     @el.find('#zooniverse-id').html @Subject.current.zooniverse_id 
     @el.find('#kepler-id').html     metadata.kepler_id
@@ -344,7 +350,6 @@ class Classifier extends BaseController
     @el.find("#toggle-fav").removeClass("toggled")
 
   showZoomMessage: (message) =>
-    console.log 'DISPLAYING ZOOM MESSAGE'
     @el.find('#zoom-notification').html(message).fadeIn(100).delay(1000).fadeOut()
     
   notify: (message) =>
@@ -367,14 +372,45 @@ class Classifier extends BaseController
       @notify('Added to Favorites.')
 
   onClickHelp: ->
-    console.log 'onClickHelp()'
     @el.find('#notification-message').hide() # get any notification out of the way
-    # @el.find('#course-prompt').slideDown()
     @course.showPrompt()
     
   onClickTutorial: ->
-    console.log 'onClickTutorial()'
+    if $('#graph-container').hasClass 'loading-lightcurve'
+      @notify 'Please wait until current lightcurve is loaded.'
+      return
+
+    # load training subject
     @notify('Loading tutorial...')
+
+    # create tutorial subject
+    tutorialSubject = new Subject
+      id: 'TUTORIAL_SUBJECT'
+      zooniverse_id: 'APH0000009'
+      metadata:
+        kepler_id: "1431599"
+        logg: "4.673"
+        magnitudes:
+          kepler: "12.320"
+        mass: "0.57"
+        radius: "0.577"
+        teff: "4056"
+      selected_light_curve: 
+        location: 'https://s3.amazonaws.com/demo.zooniverse.org/planet_hunter/beta_subjects/1873513_15-3.json'
+    console.log 'TUTORIAL SUBJECT: ', tutorialSubject
+
+    tutorialSubject.select()
+
+    # do stuff after tutorial complete/aborted
+    addEventListener "zootorial-end", =>
+      $('.tutorial-annotations.x-axis').removeClass('visible')
+      $('.tutorial-annotations.y-axis').removeClass('visible')
+      $('.mark').fadeIn()
+      # $('.mark').remove()
+      # @finishSubject() # loads next subject, among other stuff
+
+    # jsonFile = 'https://s3.amazonaws.com/demo.zooniverse.org/planet_hunter/beta_subjects/1873513_15-3.json'
+    # @loadSubjectData(jsonFile)  
     @initialTutorial.start()
 
   updateButtons: ->
@@ -436,7 +472,7 @@ class Classifier extends BaseController
     @classifySummary.fadeOut(150)
     @nextSubjectButton.hide()
     @canvasGraph.marks.destroyAll() #clear old marks
-    @canvas.outerHTML = ""
+    # @canvas.outerHTML = ""
     @resetTalkComment @talkComment
     @resetTalkComment @altTalkComment
     # show courses
@@ -448,19 +484,23 @@ class Classifier extends BaseController
       @el.find('#notification-message').hide() # get any notification out of the way
       @course.showPrompt() 
 
+    # display supplemental tutorial
     for classification_count in @whenToDisplayTips
-      if @course.count is classification_count
+      if User.current.preferences.planet_hunter.supplemental_option and @course.count is classification_count
         console.log "*** DISPLAY SUPPLEMENTAL TUTOTIAL # #{classification_count} *** "
         @supplementalTutorial.first = "displayOn_" + classification_count.toString()
         @supplementalTutorial.start()
 
-    @el.find('#loading-screen').show() # TODO: uncomment
-    @Subject.next()
-
-  finishSubject: ->
-    # console.log 'finishSubject()'
-    @finishedFeedbackButton.hide()
-    # fake classification counter
+        newElement = document.createElement('div')
+        newElement.setAttribute 'class', "supplemental-tutorial-option-container"
+        newElement.setAttribute 'style', "padding-top: 20px;"
+        newElement.innerHTML = """
+          <input class=\"supplemental-option\" type=\"checkbox\"></input>
+          <label>Do not show tips in the fiture.</label>
+        """
+        @supplementalTutorial.container.getElementsByClassName('zootorial-footer')[0].appendChild(newElement)
+        
+    # SEND CLASSIFICATION
     @course.incrementCount()
     console.log 'YOU\'VE MARKED ', @course.count, ' LIGHT CURVES!'
     @classification.annotate recordedClickEvents: [@recordedClickEvents...]
@@ -481,18 +521,21 @@ class Classifier extends BaseController
     # DEBUG CODE
     console.log JSON.stringify( @classification )
     console.log '********************************************'
-   
     @classification.send()
+    @recordedClickEvents = []
+    @Subject.next()
+
+  finishSubject: ->
+    # console.log 'finishSubject()'
+    @finishedFeedbackButton.hide()
     
     # re-enable zoom button (after feedback)
     @el.find('#zoom-button').attr('disabled',false)
-
 
     # disable buttons until next lightcurve is loaded
     @el.find('#no-transits').hide() #prop('disabled',true)
     @el.find('#finished-marking').hide() #prop('disabled',true)
     @el.find('#finished-feedback').hide() #prop('disabled',true)
-    console.log '*** DISABLED ***'
 
     # show summary
     @el.find('.do-you-see-a-transit').fadeOut()
@@ -505,8 +548,6 @@ class Classifier extends BaseController
 
     # reset zoom parameters
     @zoomReset()
-
-    @recordedClickEvents = []
     
   onClickJoinConvo: -> @joinConvoBtn.hide().siblings().show()
   onClickAltJoinConvo: -> @altJoinConvoBtn.hide().siblings().show()

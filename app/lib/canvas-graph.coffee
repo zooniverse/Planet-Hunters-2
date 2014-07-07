@@ -11,12 +11,8 @@ class CanvasGraph
     'button[name="turn-page"]': 'pageTurners'
 
   constructor: (@canvas, @data) ->
-
-    # console.log 'CANVAS ELEMENT: ', @canvas
-
     @leftPadding = 60
     @showAxes    = true
-
     @ctx = @canvas.getContext('2d')
 
     @smallestX = Math.min @data.x...
@@ -43,10 +39,17 @@ class CanvasGraph
     @prevZoomMax = @largestX
 
   disableMarking: ->
+    # console.log 'CANVAS GRAPH: disableMarking()'
     @markingDisabled = true
+    @canvas.removeEventListener 'mousedown', (e) => @onMouseDown(e)
+    @canvas.removeEventListener 'touchstart', (e) => @addMarkToGraph(e)
+    @canvas.removeEventListener 'mousemove', (e) => @onMouseMove(e) # TODO: FIX (disabled for now)
 
   enableMarking: ->
+    # console.log 'CANVAS GRAPH: enableMarking()'
     @markingDisabled = false
+    
+    # TODO: should this be in the constructor?
     @marks = new Marks
     window.marks = @marks
     @canvas.addEventListener 'mousedown', (e) => @onMouseDown(e)
@@ -55,7 +58,7 @@ class CanvasGraph
 
   onMouseDown: (e) =>
     # debugger
-    console.log 'onMouseDown()'
+    # console.log 'onMouseDown()'
     xClick = e.pageX - e.target.getBoundingClientRect().left - window.scrollX
     return if xClick < 80 # display line instead 
     @addMarkToGraph(e)
@@ -63,6 +66,7 @@ class CanvasGraph
   onMouseMove: (e) =>
     # console.log 'onMouseMove()'
     # return # just for now
+    return if @markingDisabled
     return if classifier.el.find('#graph').hasClass('is-zooming')
     @zoomLevel = classifier.zoomLevel
     zoomRanges = classifier.zoomRanges
@@ -70,7 +74,6 @@ class CanvasGraph
     xClick = e.pageX - e.target.getBoundingClientRect().left - window.scrollX
     yClick = e.pageY - e.target.getBoundingClientRect().top - window.scrollY
     
-    # console.log 'PLOT RANGE: [',val,',',val+zoomRanges[@zoomLevel],']'
 
     @plotPoints(val, val+zoomRanges[@zoomLevel])
     # @rescaleMarks(val, val+zoomRanges[@zoomLevel])
@@ -148,7 +151,7 @@ class CanvasGraph
     return sum / data.length
 
   showFakePrevMarks: () ->
-    console.log 'showFakePrevMarks()'
+    # console.log 'showFakePrevMarks()'
     @zoomOut()
     maxMarks = 5
     minMarks = 1 
@@ -190,19 +193,19 @@ class CanvasGraph
       @highlightCurve(entry.xL,entry.xR)
 
   highlightCurve: (xLeft,xRight) ->
-    console.log 'highlightCurve()'
+    # console.log 'highlightCurve()'
     for i in [0...@dataLength]
       if @data.x[i] >= xLeft and @data.x[i] <= xRight
         x = ((+@data.x[i]+@toDays(@leftPadding)-@xMin)/(@xMax-@xMin)) * (@canvas.width-@leftPadding)
         y = ((+@data.y[i]-@yMin)/(@yMax-@yMin)) * @canvas.height
         y = -y + @canvas.height # flip y-values
         @ctx.beginPath()
-        @ctx.fillStyle = "rgba(252, 69, 65, 0.65)" #"#fc4541"
+        @ctx.fillStyle = "rgba(252, 69, 65, 1.0)" #"#fc4541"
         @ctx.fillRect(x,y,2,2)
     return
 
   plotPoints: (xMin = @smallestX, xMax = @largestX, yMin = @smallestY, yMax = @largestY) ->
-    console.log 'plotPoints(): [',xMin,',',xMax,']'
+    # console.log 'plotPoints(): [',xMin,',',xMax,']'
     @xMin = xMin
     @xMax = xMax
     @yMin = yMin
@@ -415,7 +418,6 @@ class CanvasGraph
         @ctx.fillText( (tick + @originalMin).toFixed(2), @toPixels(tick)+@leftPadding, 0 + textSpacing+10 )
       
   drawYTickMarks: (yMin, yMax) ->
-    
     # generate intervals
     yTicks = []
     yStep = Math.abs(yMin-yMax)/20
@@ -498,7 +500,6 @@ class CanvasGraph
   toDataYCoord: (canvasPoint) -> ((parseFloat(canvasPoint) / parseFloat(@canvas.height)) * (parseFloat(@yMax) - parseFloat(@yMin))) + parseFloat(@yMin)
 
   addMarkToGraph: (e) =>
-    console.log 'e: ', e
     return if @markingDisabled
     e.preventDefault()
     if @marks.markTooCloseToAnother(e, @scale, @originalMin)
@@ -632,7 +633,7 @@ class Mark
     @save( markLeftX, markLeftX+width )
 
   move: (e) ->
-    console.log 'MOVE!'
+    # console.log 'MOVE!'
     markWidth = parseFloat(@element.style.width)
     
     # no overlapping of marks or moving out of canvas bounds
@@ -669,6 +670,7 @@ class Mark
     @element.children[2].children[0].style.visibility = "hidden"
 
   onMouseDown: (e) =>
+    return if @canvasGraph.markingDisabled
     e.preventDefault()
     window.addEventListener 'mousemove', @onMouseMove
     window.addEventListener 'mouseup', @onMouseUp
