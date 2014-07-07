@@ -124,6 +124,9 @@ class Classifier extends BaseController
 
   onChangeSupplementalOption: ->
     console.log 'onChangeSupplementalOption(): '
+    return unless User.current?
+    @supplementalOption = not @supplementalOption
+    User.current?.setPreference 'supplemental_option', @supplementalOption
 
   onChangeCourseInterval: ->
     # console.log 'VALUE: ', @el.find('#course-interval').val()
@@ -146,6 +149,7 @@ class Classifier extends BaseController
     # console.log 'SPLIT DESIGNATION: ', User.current.project.splits.mini_course_sup_tutorial
     if User.current?
       @splitDesignation = User.current.project.splits.mini_course_sup_tutorial
+      @supplementalOption = User.current.preferences.planet_hunter.supplemental_option?
       # @splitDesignation = 'a' # DEBUG CODE
 
     # HANDLE MINI-COURSE SPLITS
@@ -166,18 +170,21 @@ class Classifier extends BaseController
       console.log 'Setting mini-course interval to 5'
       @course.setRate 5 # set default
 
-    # HANDLE SUPPLEMENTAL TUTORIAL SPLITS
-    if @splitDesignation in ['a', 'b', 'c', 'g', 'h', 'i']
-      @tipsOptIn = true  
-    else if @splitDesignation in ['d', 'e', 'f', 'j', 'k', 'l']
-      @tipsOptIn = false
+    if +User.current?.preferences.planet_hunter.count is 0
+      # HANDLE SUPPLEMENTAL TUTORIAL SPLITS
+      if @splitDesignation in ['a', 'b', 'c', 'g', 'h', 'i']
+        @supplementalOption = true  
+      else if @splitDesignation in ['d', 'e', 'f', 'j', 'k', 'l']
+        @supplementalOption = false
     
     # handle first-time users
     if +User.current?.preferences.planet_hunter.count is 0 or not User.current?
       console.log 'First-time user. Loading tutorial...'
       @onClickTutorial()
-    else
-      Subject.next() unless @classification?
+
+    User.current?.setPreference 'supplemental_option', @supplementalOption
+    
+    Subject.next() unless @classification?
 
   onSubjectFetch: (e, user) =>
     console.log 'onSubjectFetch(): '
@@ -478,14 +485,14 @@ class Classifier extends BaseController
 
     # display supplemental tutorial
     for classification_count in @whenToDisplayTips
-      if @course.count is classification_count
+      if @supplementalOption and @course.count is classification_count
         console.log "*** DISPLAY SUPPLEMENTAL TUTOTIAL # #{classification_count} *** "
         @supplementalTutorial.first = "displayOn_" + classification_count.toString()
         @supplementalTutorial.start()
 
         newElement = document.createElement('div')
         newElement.setAttribute 'class', "supplemental-tutorial-option-container"
-        newElement.setAttribute 'style', "float: 1right; padding-top: 20px;"
+        newElement.setAttribute 'style', "padding-top: 20px;"
         newElement.innerHTML = """
           <input class=\"supplemental-option\" type=\"checkbox\"></input>
           <label>Do not show tips in the fiture.</label>

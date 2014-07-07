@@ -151,6 +151,7 @@ class MiniCourse
       User.current.setPreference 'course', 'yes'
       User.current.setPreference 'count', 0
       User.current.setPreference 'curr_course_id', 0 
+      User.current.setPreference 'supplemental_option', true
       @count = 0
       @curr  = 0
 
