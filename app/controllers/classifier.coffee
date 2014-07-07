@@ -141,7 +141,7 @@ class Classifier extends BaseController
       @course.setRate value
 
   onUserChange: (e, user) =>
-    # console.log 'classify: onUserChange()'
+    console.log 'classify: onUserChange()'
 
     # console.log 'SPLIT DESIGNATION: ', User.current.project.splits.mini_course_sup_tutorial
     if User.current?
@@ -172,15 +172,12 @@ class Classifier extends BaseController
     else if @splitDesignation in ['d', 'e', 'f', 'j', 'k', 'l']
       @tipsOptIn = false
     
-    # console.log 'BLAH: ', User.current?.preferences.planet_hunter
+    # handle first-time users
     if +User.current?.preferences.planet_hunter.count is 0 or not User.current?
-      console.log 'First-time user. Loading tutorial...', 
+      console.log 'First-time user. Loading tutorial...'
       @onClickTutorial()
     else
-      # console.log 'Loading subject.'
       Subject.next() unless @classification?
-
-    # Subject.next() unless @classification?
 
   onSubjectFetch: (e, user) =>
     console.log 'onSubjectFetch(): '
@@ -495,12 +492,7 @@ class Classifier extends BaseController
         """
         @supplementalTutorial.container.getElementsByClassName('zootorial-footer')[0].appendChild(newElement)
         
-    @Subject.next()
-
-  finishSubject: ->
-    # console.log 'finishSubject()'
-    @finishedFeedbackButton.hide()
-    # fake classification counter
+    # SEND CLASSIFICATION
     @course.incrementCount()
     console.log 'YOU\'VE MARKED ', @course.count, ' LIGHT CURVES!'
     @classification.annotate recordedClickEvents: [@recordedClickEvents...]
@@ -521,12 +513,16 @@ class Classifier extends BaseController
     # DEBUG CODE
     console.log JSON.stringify( @classification )
     console.log '********************************************'
-   
     @classification.send()
+    @recordedClickEvents = []
+    @Subject.next()
+
+  finishSubject: ->
+    # console.log 'finishSubject()'
+    @finishedFeedbackButton.hide()
     
     # re-enable zoom button (after feedback)
     @el.find('#zoom-button').attr('disabled',false)
-
 
     # disable buttons until next lightcurve is loaded
     @el.find('#no-transits').hide() #prop('disabled',true)
@@ -544,8 +540,6 @@ class Classifier extends BaseController
 
     # reset zoom parameters
     @zoomReset()
-
-    @recordedClickEvents = []
     
   onClickJoinConvo: -> @joinConvoBtn.hide().siblings().show()
   onClickAltJoinConvo: -> @altJoinConvoBtn.hide().siblings().show()
