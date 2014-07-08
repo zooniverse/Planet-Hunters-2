@@ -211,10 +211,10 @@ class Classifier extends BaseController
         @courseOptionIsChecked = true
         # supplementalOption = false
     
-    # # handle first-time users
-    # if +User.current?.preferences.planet_hunter.count is 0 or not User.current?
-    #   console.log 'First-time user. Loading tutorial...'
-    #   @onClickTutorial()
+    # handle first-time users
+    if +User.current?.preferences.planet_hunter.count is 0 or not User.current?
+      console.log 'First-time user. Loading tutorial...'
+      @onClickTutorial()
 
     User.current?.setPreference 'supplemental_option', supplementalOption
 
