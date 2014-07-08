@@ -52,6 +52,7 @@ class Classifier extends BaseController
     'mouseenter #course-yes-container'        : 'onMouseoverCourseYes'
     'mouseleave  #course-yes-container'       : 'onMouseoutCourseYes'
     'change #course-interval'                 : 'onChangeCourseInterval'
+    'change #course-interval-sup-tut'         : 'onChangeCourseIntervalViaSupTut'
     'change .supplemental-option'             : 'onChangeSupplementalOption'
     'change input[name="mini-course-option"]' : 'onChangeMiniCourseOption'
 
@@ -144,7 +145,7 @@ class Classifier extends BaseController
     User.current?.setPreference 'course', courseOption
 
   onChangeCourseInterval: ->
-    # console.log 'VALUE: ', @el.find('#course-interval').val()
+    console.log 'VALUE: ', @el.find('#course-interval').val()
     defaultValue = 5
     value = +@el.find('#course-interval').val()
 
@@ -158,6 +159,20 @@ class Classifier extends BaseController
       console.log 'SETTING VALUE TO: ', value
       @course.setRate value
 
+  onChangeCourseIntervalViaSupTut: ->
+    console.log 'onChangeCourseIntervalViaSupTut(): '
+    defaultValue = 5
+    value = +@el.find('#course-interval-sup-tut').val()
+
+    # validate integer values
+    unless (typeof value is 'number') and (value % 1 is 0) and value > 0 and value < 100
+      value = defaultValue
+      @el.find('#course-interval-sup-tut').val(value)
+    else
+      console.log 'SETTING VALUE TO: ', value
+    
+    @course.setRate value
+
   onUserChange: (e, user) =>
     console.log 'classify: onUserChange()'
 
@@ -165,7 +180,7 @@ class Classifier extends BaseController
     if User.current?
       @splitDesignation = User.current.project.splits.mini_course_sup_tutorial
       supplementalOption = User.current.preferences.planet_hunter.supplemental_option?
-      @splitDesignation = 'd' # DEBUG CODE
+      @splitDesignation = 'a' # DEBUG CODE
 
     # HANDLE MINI-COURSE SPLITS
     if @splitDesignation in ['b', 'e']
@@ -181,8 +196,10 @@ class Classifier extends BaseController
     else if @splitDesignation in ['a', 'd']
       console.log 'Setting mini-course interval to 5'
       @course.setRate 5 # set default
+      @allowCustomCourseInterval = true
     else
       console.log 'Setting mini-course interval to 5'
+      @allowCustomCourseInterval = false
       @course.setRate 5 # set default
 
     if +User.current?.preferences.planet_hunter.count is 0
@@ -513,14 +530,39 @@ class Classifier extends BaseController
         @supplementalTutorial.start()
 
         if @course.count is 1 # TODO: change back to 7
+
+          # if @allowCustomCourseInterval
+          #   newElement = document.createElement('div')
+          #   newElement.setAttribute 'class', "custom-interval-setter"
+          #   newElement.setAttribute 'style', "padding-top: 20px;"
+          #   newElement.innerHTML = """
+          #     <div id="course-interval-setter">
+          #       <div class="course-interval-text">Launch mini-course every </div>
+          #       <input type="number" id="course-interval-sup-tut" name="course-interval-sup-tut" value="5"></input>
+          #       <div class="course-interval-text"> classifications!</div>
+          #     </div>
+          #   """
+          #   @supplementalTutorial.container.getElementsByClassName('zootorial-content')[0].appendChild(newElement)
+
           newElement = document.createElement('div')
           newElement.setAttribute 'class', "supplemental-tutorial-option-container"
-          newElement.setAttribute 'style', "padding-top: 20px;"
+          newElement.setAttribute 'style', "padding: 20px;"
           newElement.innerHTML = """
             <input class=\"mini-course-option\" name=\"mini-course-option\" type=\"checkbox\"></input>
-            <label style=\"font-style: italic; font-weight: 100;\">Launch Planet Hunters mini-courses as they become available!</label>
+            <div id=\"course-opt-in-label\" style=\"float: left; font-style: italic; font-weight: 500;\"></div>
           """
           @supplementalTutorial.container.getElementsByClassName('zootorial-content')[0].appendChild(newElement)
+          if @allowCustomCourseInterval
+            $('#course-opt-in-label').html """
+              <!--<div id="course-interval-setter">-->
+                <div class="course-interval-text">Launch mini-course every </div>
+                <input type="number" id="course-interval-sup-tut" class="course-interval" name="course-interval-sup-tut" value="5"></input>
+                <div class="course-interval-text"> classifications!</div>
+              <!--</div>-->
+            """
+          else
+            $('#course-opt-in-label').html "Launch Planet Hunters mini-courses as they become available!"
+
           $('.mini-course-option').prop 'checked', @courseOptionIsChecked
         
     # SEND CLASSIFICATION

@@ -42,9 +42,9 @@
 
           <div id="course-yes-container">
             <div id="course-yes">Yes</div>
-            <div id="course-interval-setter">
+            <div id="course-interval-setter" class="course-interval-setter">
               <div class="course-interval-text">, remind me every </div>
-              <input type="number" id="course-interval" name="course-interval" value="5"></input>
+              <input type="number" id="course-interval" class="course-interval" name="course-interval" value="5"></input>
               <div class="course-interval-text"> classifications!</div>
             </div>
           </div>
