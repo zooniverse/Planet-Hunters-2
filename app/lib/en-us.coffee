@@ -78,22 +78,22 @@ module.exports =
   supplementalTutorial:
 
     tutorial:
-      header: 'Tip: Tutorial'
-      content: 'Having trouble? You can start the tutorial at any time by clicking on the highlighted button.'
+      header: 'Having Trouble?'
+      content: 'You can start the tutorial at any time by clicking on the highlighted button to the right.'
 
     # talk:
     #   header: 'Tip: Talk'
     #   content: 'Sometimes you might see something interesting or have a question. TALK is a tool where you can join Planet Hunters project scientists and volunteers to observe, collect, share, and discuss Planet Hunters data.'
       
     dataGaps: 
-      header: 'Tip: Gaps in the Data'
+      header: 'Gaps in the Data'
       content: 'Sometimes you might see gaps in the data. This means that Kepler was either turned off or not pointing at the star.'
       # content: 'Sometimes you might see gaps in the data like in this light curve. This means that Kepler was either turned off or not pointing at the star.'
 
     miniCourse_optOut:
-      header: 'Tip: Take the Planet Hunters Mini Course'
-      content: 'There\'s a lot of interesting science behind discovering exoplanets. Want to learn more? Check the box below and you’ll learn as you hunt for new planets! You can opt in at anytime.'
+      header: 'Want to learn more?'
+      content: 'There\'s a lot of interesting science behind discovering exoplanets. Check the box below and you’ll learn as you hunt for new planets! You can opt in at anytime.'
 
     miniCourse_optIn:
-      header: 'Tip: Take the Planet Hunters Mini Course'
+      header: 'Want to learn more?'
       content: 'There\'s a lot of interesting science behind discovering exoplanets. Want to learn more? Check the box below and you’ll learn as you hunt for new planets! You can opt out at anytime.'

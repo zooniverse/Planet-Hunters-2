@@ -36,23 +36,24 @@ class Classifier extends BaseController
     'textarea[name="alt-talk-comment"]' : 'altTalkComment'
 
   events:
-    'click button[id="zoom-button"]'         : 'onClickZoom'
-    'click button[id="toggle-fav"]'          : 'onToggleFav'
-    'click button[id="help"]'                : 'onClickHelp'
-    'click button[id="tutorial"]'            : 'onClickTutorial'
-    'click button[name="no-transits"]'       : 'onClickNoTransits'
-    'click button[name="next-subject"]'      : 'onClickNextSubject'
-    'click button[name="finished-marking"]'  : 'onClickFinishedMarking'
-    'click button[name="finished-feedback"]' : 'onClickFinishedFeedback'
-    'slide #ui-slider'                       : 'onChangeScaleSlider'
-    'click button[name="join-convo"]'        : 'onClickJoinConvo'
-    'click button[name="alt-join-convo"]'    : 'onClickAltJoinConvo'
-    'click button[name="submit-talk"]'       : 'onClickSubmitTalk'
-    'click button[name="alt-submit-talk"]'   : 'onClickSubmitTalkAlt'
-    'mouseenter #course-yes-container'       : 'onMouseoverCourseYes'
-    'mouseleave  #course-yes-container'      : 'onMouseoutCourseYes'
-    'change #course-interval'                : 'onChangeCourseInterval'
-    'change .supplemental-option'            : 'onChangeSupplementalOption'
+    'click button[id="zoom-button"]'          : 'onClickZoom'
+    'click button[id="toggle-fav"]'           : 'onToggleFav'
+    'click button[id="help"]'                 : 'onClickHelp'
+    'click button[id="tutorial"]'             : 'onClickTutorial'
+    'click button[name="no-transits"]'        : 'onClickNoTransits'
+    'click button[name="next-subject"]'       : 'onClickNextSubject'
+    'click button[name="finished-marking"]'   : 'onClickFinishedMarking'
+    'click button[name="finished-feedback"]'  : 'onClickFinishedFeedback'
+    'slide #ui-slider'                        : 'onChangeScaleSlider'
+    'click button[name="join-convo"]'         : 'onClickJoinConvo'
+    'click button[name="alt-join-convo"]'     : 'onClickAltJoinConvo'
+    'click button[name="submit-talk"]'        : 'onClickSubmitTalk'
+    'click button[name="alt-submit-talk"]'    : 'onClickSubmitTalkAlt'
+    'mouseenter #course-yes-container'        : 'onMouseoverCourseYes'
+    'mouseleave  #course-yes-container'       : 'onMouseoutCourseYes'
+    'change #course-interval'                 : 'onChangeCourseInterval'
+    'change .supplemental-option'             : 'onChangeSupplementalOption'
+    'change input[name="mini-course-option"]' : 'onChangeMiniCourseOption'
 
   constructor: ->
     super    
@@ -128,6 +129,13 @@ class Classifier extends BaseController
     supplementalOption = User.current.preferences.planet_hunter.supplemental_option
     supplementalOption = not supplementalOption
     User.current?.setPreference 'supplemental_option', supplementalOption
+
+  onChangeMiniCourseOption: ->
+    console.log 'onChangeMiniCourseOption(): '
+    # return unless User.current?
+    # courseOption = User.current.preferences.planet_hunter.course
+    # courseOption = not courseOption
+    # User.current?.setPreference 'course', courseOption
 
   onChangeCourseInterval: ->
     # console.log 'VALUE: ', @el.find('#course-interval').val()
@@ -475,25 +483,27 @@ class Classifier extends BaseController
     if @course.count % @verifyRate is 0
       location.hash = "#/verify"
 
-    if @course.getPref() isnt 'never' and @course.count % @course.rate is 0 and @course.coursesAvailable()
+    if @course.getPref() isnt 'never' and @course.count % @course.rate is 0 and @course.coursesAvailable() and @course.count isnt 0
       @el.find('#notification-message').hide() # get any notification out of the way
       @course.showPrompt() 
 
     # display supplemental tutorial
     for classification_count in @whenToDisplayTips
-      if User.current.preferences.planet_hunter.supplemental_option and @course.count is classification_count
+      # if User.current.preferences.planet_hunter.supplemental_option and @course.count is classification_count
+      if @course.count is classification_count
         console.log "*** DISPLAY SUPPLEMENTAL TUTOTIAL # #{classification_count} *** "
         @supplementalTutorial.first = "displayOn_" + classification_count.toString()
         @supplementalTutorial.start()
 
-        newElement = document.createElement('div')
-        newElement.setAttribute 'class', "supplemental-tutorial-option-container"
-        newElement.setAttribute 'style', "padding-top: 20px;"
-        newElement.innerHTML = """
-          <input class=\"supplemental-option\" type=\"checkbox\"></input>
-          <label>Do not show tips in the fiture.</label>
-        """
-        @supplementalTutorial.container.getElementsByClassName('zootorial-footer')[0].appendChild(newElement)
+        if @course.count is 1 # TODO: change back to 7
+          newElement = document.createElement('div')
+          newElement.setAttribute 'class', "supplemental-tutorial-option-container"
+          newElement.setAttribute 'style', "padding-top: 20px;"
+          newElement.innerHTML = """
+            <input class=\"mini-course-option\" name=\"mini-course-option\" type=\"checkbox\"></input>
+            <label style=\"font-style: italic; font-weight: 100;\">Launch Planet Hunters mini-courses as they become available!</label>
+          """
+          @supplementalTutorial.container.getElementsByClassName('zootorial-content')[0].appendChild(newElement)
         
     # SEND CLASSIFICATION
     @course.incrementCount()
