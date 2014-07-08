@@ -202,7 +202,7 @@ class Classifier extends BaseController
     console.log 'jsonFile: ', jsonFile # DEBUG CODE
 
     # handle ui elements
-    @el.find('#loading-screen').show()
+    @el.find('#loading-screen').fadeIn()
     @el.find('.star-id').hide()
     @el.find('#ui-slider').attr('disabled',true)
     @el.find(".noUi-handle").fadeOut(150)
@@ -220,7 +220,7 @@ class Classifier extends BaseController
       @marksContainer.appendChild(@canvas)
       @canvasGraph = new CanvasGraph(@canvas, data)
       @canvasGraph.plotPoints()
-      @el.find('#loading-screen').hide()
+      @el.find('#loading-screen').fadeOut()
       $('#graph-container').removeClass 'loading-lightcurve'
       @canvasGraph.enableMarking()
       @zoomRanges = [@canvasGraph.largestX, 10, 2]
@@ -379,10 +379,18 @@ class Classifier extends BaseController
     if $('#graph-container').hasClass 'loading-lightcurve'
       @notify 'Please wait until current lightcurve is loaded.'
       return
-
     # load training subject
     @notify('Loading tutorial...')
+    tutorialSubject = @createTutorialSubject()
+    tutorialSubject.select()
+    # do stuff after tutorial complete/aborted
+    addEventListener "zootorial-end", =>
+      $('.tutorial-annotations.x-axis').removeClass('visible')
+      $('.tutorial-annotations.y-axis').removeClass('visible')
+      $('.mark').fadeIn()
+    @initialTutorial.start()
 
+  createTutorialSubject: ->
     # create tutorial subject
     tutorialSubject = new Subject
       id: 'TUTORIAL_SUBJECT'
@@ -398,20 +406,7 @@ class Classifier extends BaseController
       selected_light_curve: 
         location: 'https://s3.amazonaws.com/demo.zooniverse.org/planet_hunter/beta_subjects/1873513_15-3.json'
     console.log 'TUTORIAL SUBJECT: ', tutorialSubject
-
-    tutorialSubject.select()
-
-    # do stuff after tutorial complete/aborted
-    addEventListener "zootorial-end", =>
-      $('.tutorial-annotations.x-axis').removeClass('visible')
-      $('.tutorial-annotations.y-axis').removeClass('visible')
-      $('.mark').fadeIn()
-      # $('.mark').remove()
-      # @finishSubject() # loads next subject, among other stuff
-
-    # jsonFile = 'https://s3.amazonaws.com/demo.zooniverse.org/planet_hunter/beta_subjects/1873513_15-3.json'
-    # @loadSubjectData(jsonFile)  
-    @initialTutorial.start()
+    tutorialSubject
 
   updateButtons: ->
     # console.log 'updateButtons()'
@@ -521,7 +516,11 @@ class Classifier extends BaseController
     # DEBUG CODE
     console.log JSON.stringify( @classification )
     console.log '********************************************'
-    @classification.send()
+    
+    # send classification (except for tutorial subject)
+    unless @classification.subject.id is 'TUTORIAL_SUBJECT'
+      @classification.send()
+
     @recordedClickEvents = []
     @Subject.next()
 

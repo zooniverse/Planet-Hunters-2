@@ -70,6 +70,7 @@
 
       <div id='loading-screen'>
         <h3>Loading...</h3>
+        <div class="spinner"></div>
       </div>
       <div id="marks-container">
       </div>
