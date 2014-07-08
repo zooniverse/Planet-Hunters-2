@@ -20,6 +20,8 @@ class CanvasGraph
     @largestX  = Math.max @data.x...
     @largestY  = Math.max @data.y...
 
+    @highlights = []
+
     @dataLength = Math.min @data.x.length, @data.y.length
 
     @originalMin = @smallestX
@@ -193,16 +195,8 @@ class CanvasGraph
       @highlightCurve(entry.xL,entry.xR)
 
   highlightCurve: (xLeft,xRight) ->
-    # console.log 'highlightCurve()'
-    for i in [0...@dataLength]
-      if @data.x[i] >= xLeft and @data.x[i] <= xRight
-        x = ((+@data.x[i]+@toDays(@leftPadding)-@xMin)/(@xMax-@xMin)) * (@canvas.width-@leftPadding)
-        y = ((+@data.y[i]-@yMin)/(@yMax-@yMin)) * @canvas.height
-        y = -y + @canvas.height # flip y-values
-        @ctx.beginPath()
-        @ctx.fillStyle = "rgba(252, 69, 65, 1.0)" #"#fc4541"
-        @ctx.fillRect(x,y,2,2)
-    return
+    @highlights.push {'xLeft': xLeft, 'xRight': xRight}
+    @plotPoints()
 
   plotPoints: (xMin = @smallestX, xMax = @largestX, yMin = @smallestY, yMax = @largestY) ->
     # console.log 'plotPoints(): [',xMin,',',xMax,']'
@@ -244,6 +238,19 @@ class CanvasGraph
     @scale = (parseFloat(@largestX) - parseFloat(@smallestX)) / (parseFloat(@xMax) - parseFloat(@xMin))
     @rescaleMarks(xMin, xMax)
 
+    # draw highlights
+    for highlight in [ @highlights... ]
+      console.log 'HIGHLIGHT: ', highlight
+      console.log "HIGHLIGHT: (#{highlight.xLeft},#{highlight.xRight})"
+      for i in [0...@dataLength]
+        if @data.x[i] >= highlight.xLeft and @data.x[i] <= highlight.xRight
+          x = ((+@data.x[i]+@toDays(@leftPadding)-@xMin)/(@xMax-@xMin)) * (@canvas.width-@leftPadding)
+          y = ((+@data.y[i]-@yMin)/(@yMax-@yMin)) * @canvas.height
+          y = -y + @canvas.height # flip y-values
+          @ctx.beginPath()
+          @ctx.fillStyle = "rgba(252, 69, 65, 1.0)" #"#fc4541"
+          @ctx.fillRect(x,y,2,2)
+    
     return
 
   rescaleMarks: (xMin, xMax) ->
