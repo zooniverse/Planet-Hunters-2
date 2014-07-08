@@ -49,7 +49,6 @@ initialTutorialSteps =
       attachment:  [0.5, 0.5, "#graph-container", 0.5, 0.5]
       next: ->
         window.classifier.canvasGraph.highlightCurve(2.75,3.00)
-        # window.classifier.canvasGraph.enableMarking()
         return 'markingTransits'
 
     markingTransits:
@@ -70,7 +69,6 @@ initialTutorialSteps =
       content:     translate 'span', 'initialTutorial.spotTransits.content'
       attachment:  [0.5, 0.5, "#graph-container", 0.5, 0.9]
       next: ->
-        window.classifier.canvasGraph.disableMarking()
         return 'showTransits'
 
     showTransits:
@@ -110,7 +108,6 @@ initialTutorialSteps =
       content:     translate 'span', 'initialTutorial.goodLuck.content'
       attachment:  [0.5, 0.5, "#graph-container", 0.5, 0.5]
       next: ->
-        window.classifier.canvasGraph.enableMarking() # causes double marks to be drawn. why?
     # /// END TUTORIAL STEPS /// 
 
 module.exports = initialTutorialSteps
