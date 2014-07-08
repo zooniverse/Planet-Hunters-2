@@ -196,6 +196,7 @@ class CanvasGraph
 
   highlightCurve: (xLeft,xRight) ->
     @highlights.push {'xLeft': xLeft, 'xRight': xRight}
+    @plotPoints()
 
   plotPoints: (xMin = @smallestX, xMax = @largestX, yMin = @smallestY, yMax = @largestY) ->
     # console.log 'plotPoints(): [',xMin,',',xMax,']'
