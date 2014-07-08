@@ -132,10 +132,16 @@ class Classifier extends BaseController
 
   onChangeMiniCourseOption: ->
     console.log 'onChangeMiniCourseOption(): '
-    # return unless User.current?
-    # courseOption = User.current.preferences.planet_hunter.course
-    # courseOption = not courseOption
-    # User.current?.setPreference 'course', courseOption
+    return unless User.current?
+    courseOption = User.current.preferences.planet_hunter.course
+
+    # toggle course option
+    if courseOption is 'yes'
+      courseOption = 'no'
+    else
+      courseOption = 'yes'  
+
+    User.current?.setPreference 'course', courseOption
 
   onChangeCourseInterval: ->
     # console.log 'VALUE: ', @el.find('#course-interval').val()
@@ -159,7 +165,7 @@ class Classifier extends BaseController
     if User.current?
       @splitDesignation = User.current.project.splits.mini_course_sup_tutorial
       supplementalOption = User.current.preferences.planet_hunter.supplemental_option?
-      # @splitDesignation = 'a' # DEBUG CODE
+      @splitDesignation = 'd' # DEBUG CODE
 
     # HANDLE MINI-COURSE SPLITS
     if @splitDesignation in ['b', 'e']
@@ -182,9 +188,11 @@ class Classifier extends BaseController
     if +User.current?.preferences.planet_hunter.count is 0
       # HANDLE SUPPLEMENTAL TUTORIAL SPLITS
       if @splitDesignation in ['a', 'b', 'c', 'g', 'h', 'i']
-        supplementalOption = true  
+        @courseOptionIsChecked = false
+        # supplementalOption = true  
       else if @splitDesignation in ['d', 'e', 'f', 'j', 'k', 'l']
-        supplementalOption = false
+        @courseOptionIsChecked = true
+        # supplementalOption = false
     
     # # handle first-time users
     # if +User.current?.preferences.planet_hunter.count is 0 or not User.current?
@@ -192,6 +200,11 @@ class Classifier extends BaseController
     #   @onClickTutorial()
 
     User.current?.setPreference 'supplemental_option', supplementalOption
+
+    if @courseOptionIsChecked
+      User.current?.setPreference 'course', 'yes'
+    else
+      User.current?.setPreference 'course', 'no'
     
     Subject.next() unless @classification?
 
@@ -483,9 +496,13 @@ class Classifier extends BaseController
     if @course.count % @verifyRate is 0
       location.hash = "#/verify"
 
-    if @course.getPref() isnt 'never' and @course.count % @course.rate is 0 and @course.coursesAvailable() and @course.count isnt 0
-      @el.find('#notification-message').hide() # get any notification out of the way
-      @course.showPrompt() 
+    # if @course.getPref() isnt 'never' and @course.count % @course.rate is 0 and @course.coursesAvailable() and @course.count isnt 0
+    #   @el.find('#notification-message').hide() # get any notification out of the way
+    #   @course.showPrompt() 
+
+    if @course.getPref() is "yes" and @course.count % @course.rate is 0 and @course.coursesAvailable() and @course.count isnt 0
+      @notify 'Loading mini-course...'
+      @course.displayCourse()
 
     # display supplemental tutorial
     for classification_count in @whenToDisplayTips
@@ -504,6 +521,7 @@ class Classifier extends BaseController
             <label style=\"font-style: italic; font-weight: 100;\">Launch Planet Hunters mini-courses as they become available!</label>
           """
           @supplementalTutorial.container.getElementsByClassName('zootorial-content')[0].appendChild(newElement)
+          $('.mini-course-option').prop 'checked', @courseOptionIsChecked
         
     # SEND CLASSIFICATION
     @course.incrementCount()
