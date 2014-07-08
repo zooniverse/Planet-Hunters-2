@@ -73,7 +73,7 @@ class Classifier extends BaseController
     ifFaved: false
 
     # classification counts at which to display supplementary tutorial
-    @whenToDisplayTips = [1, 4, 7]
+    @whenToDisplayTips = [1, 7] # TODO: don't forget to add 4 after beta version
 
     User.on 'change', @onUserChange
     Subject.on 'fetch', @onSubjectFetch
@@ -180,7 +180,7 @@ class Classifier extends BaseController
     if User.current?
       @splitDesignation = User.current.project.splits.mini_course_sup_tutorial
       supplementalOption = User.current.preferences.planet_hunter.supplemental_option?
-      @splitDesignation = 'a' # DEBUG CODE
+      # @splitDesignation = 'a' # DEBUG CODE
 
     # HANDLE MINI-COURSE SPLITS
     if @splitDesignation in ['b', 'e']
@@ -529,7 +529,7 @@ class Classifier extends BaseController
         @supplementalTutorial.first = "displayOn_" + classification_count.toString()
         @supplementalTutorial.start()
 
-        if @course.count is 1 # TODO: change back to 7
+        if @course.count is 7
 
           # if @allowCustomCourseInterval
           #   newElement = document.createElement('div')

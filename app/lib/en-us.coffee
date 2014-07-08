@@ -42,13 +42,13 @@ module.exports =
       content:  'Each point on the light curve represents one measurement of a star\'s brightness taken by NASA’s Kepler Space Telescope. These measurements are taken approximately every 30 minutes. The higher the dot, the brighter the star appears.' 
 
     xAxis:
-      header: 'The X Axis'
+      header: 'The Data'
       content: 'The x-axis represents the time spent observing the star. Usually each graph shows about 30 days of observations.'
 
     # removed: This part of the light curve shows the time spent observing the star.
 
     yAxis:
-      header: 'The Y Axis'
+      header: 'The Data'
       content: 'The y-axis of the light curve shows the star\'s observed brightness.'
 
     transits:
@@ -92,7 +92,7 @@ module.exports =
 
     miniCourse_optOut:
       header: 'Want to learn more?'
-      content: 'There\'s a lot of interesting science behind discovering exoplanets. Check the box below and you’ll learn as you hunt for new planets! You can opt in at anytime.'
+      content: 'There\'s a lot of interesting science behind discovering exoplanets. Check the box below and you’ll learn as you hunt for new planets!'
 
     miniCourse_optIn:
       header: 'Want to learn more?'
