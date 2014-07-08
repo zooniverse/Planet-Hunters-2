@@ -202,7 +202,7 @@ class Classifier extends BaseController
     console.log 'jsonFile: ', jsonFile # DEBUG CODE
 
     # handle ui elements
-    @el.find('#loading-screen').show()
+    @el.find('#loading-screen').fadeIn()
     @el.find('.star-id').hide()
     @el.find('#ui-slider').attr('disabled',true)
     @el.find(".noUi-handle").fadeOut(150)
@@ -220,7 +220,7 @@ class Classifier extends BaseController
       @marksContainer.appendChild(@canvas)
       @canvasGraph = new CanvasGraph(@canvas, data)
       @canvasGraph.plotPoints()
-      @el.find('#loading-screen').hide()
+      @el.find('#loading-screen').fadeOut()
       $('#graph-container').removeClass 'loading-lightcurve'
       @canvasGraph.enableMarking()
       @zoomRanges = [@canvasGraph.largestX, 10, 2]
