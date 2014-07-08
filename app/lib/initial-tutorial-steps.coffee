@@ -59,9 +59,9 @@ initialTutorialSteps =
       arrow:       'left'
       next:        'spotTransits'
 
-      demo: ->
+      next: ->
         window.classifier.canvasGraph.highlightCurve(2.75,3.00)
-
+        return 'spotTransits'
 
     spotTransits:
       # progress:    6 

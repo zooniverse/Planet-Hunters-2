@@ -65,7 +65,7 @@ module.exports =
     
     showTransits:
       header: 'Did you spot them?'
-      content: 'These are the locations of the transits. Each light curve is reviewed by several volunteers so don\'t be discouraged if you missed a hard to spot transit. Transit hunting can be tricky and requires practice. Just do your best.'
+      content: 'Each light curve is reviewed by several volunteers so don\'t be discouraged if you missed a hard to spot transit. Transit hunting can be tricky and requires practice. Just do your best.'
 
     zooming:
       header: 'Zoom'
