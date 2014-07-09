@@ -7,16 +7,17 @@
   <!--<a href="<%= #@subjects[0]?.selected_light_curve.location %>">-->
     
     <div class="graph-container">
-    <p class="caption" style="text-align:"><%= @subjects[0]?.zooniverse_id %></p>
-      <canvas class="graph">
-        <% $.getJSON @subjects[0].location, (data) => %>
-        <% console.log 'DATA: ', $('.graph')[0] %>
-        <% newGraph = new CanvasGraph( $('.graph')[0], data ) %>
-        <% newGraph.showAxes = false %>
-        <% newGraph.leftPadding = 0 %>
-        <% newGraph.disableMarking() %>
-        <% newGraph.plotPoints() %>
+      <canvas class="graph" id="<%= @subjects[0].id %>">
       </canvas>
+      <p class="caption" style="text-align:"><%= @subjects[0]?.zooniverse_id %></p>
     </div>
   <!--</a>-->
 </div>
+
+<% $.getJSON @subjects[0].location, (data) => %>
+<% newCanvas = $("##{@subjects[0].id}")[0] %>
+<% newGraph = new CanvasGraph( newCanvas, data ) %>
+<% newGraph.showAxes = false %>
+<% newGraph.leftPadding = 0 %>
+<% newGraph.disableMarking() %>
+<% newGraph.plotPoints() %>
