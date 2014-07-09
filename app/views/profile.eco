@@ -3,12 +3,12 @@
 </div>
 
 <div id="secondary-white" class="secondary-white">
-  <div class="secondary-content">
+  <div class="content">
     <div class="intro content">
-      <p id="greeting"></p>
+      <!-- <p id="greeting"></p> -->
     </div>
+    <%- require('zooniverse/views/profile')() %>
   </div>
-  <%- require('zooniverse/views/profile')() %>
 </div>
 
 <!-- PLANET TIME -->

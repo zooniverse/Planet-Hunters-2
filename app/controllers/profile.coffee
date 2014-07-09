@@ -40,8 +40,6 @@ class Profile extends BaseProfile
 
   constructor: ->
     super
-    # @profile = new BaseProfile
-    # @el.find('#secondary-white').append @profile.el
     setTimeout =>
       @greeting.html("Hello #{User.current.name}!") if User.current
     , 1000
