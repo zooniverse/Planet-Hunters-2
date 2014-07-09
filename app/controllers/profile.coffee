@@ -10,17 +10,6 @@ customItemTemplate         = require '../views/custom-profile-item'
 Paginator                  = require 'zooniverse/controllers/paginator'
 {CanvasGraph, Marks, Mark} = require '../lib/canvas-graph'
 
-class ProfilePaginator extends Paginator
-  typeCount: ->
-    count = if @type is Recent
-      User.current?.project?.classification_count
-    else if @type is Favorite
-      User.current?.project?.favorite_count
-    else
-      super
-
-    count || 0
-
 class Profile extends BaseProfile
   className: 'profile'
   template: require '../views/profile'
@@ -41,7 +30,7 @@ class Profile extends BaseProfile
   constructor: ->
     super
     setTimeout =>
-      @greeting.html("Hello #{User.current.name}!") if User.current
+      @greeting.html("Hello, #{User.current.name}!") if User.current
     , 1000
 
 module.exports = Profile

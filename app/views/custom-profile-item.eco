@@ -1,8 +1,4 @@
-<% Favorite = window.zooniverse?.models?.Favorite || require 'zooniverse/models/favorite' %>
-<% Recent = window.zooniverse?.models?.Recent || require 'zooniverse/models/recent' %>
-
 <% {CanvasGraph, Marks, Mark} = require '../lib/canvas-graph' %>
-
 <div class='item'>
   <a href="<%= @subjects[0]?.location %>">
     <div class="graph-container">
