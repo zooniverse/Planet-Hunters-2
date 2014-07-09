@@ -1,25 +1,162 @@
-.zooniverse-profile
+.profile
   padding-left 20px
   padding-right 20px
-.intro, .content
-  padding-top 20px
-  padding-left 20px
-.secondary-white
-  overflow hidden
+  .intro, .content
+    margin 0px auto
+    padding-top 20px
+    padding-left 20px
+    max-width 1090px
+  .secondary-white
+    overflow hidden
 
-.item 
-  width 50%
+  // #greeting
+  //   font-size 20px
 
-.graph
-  background-color rgba(19,34,44,0.75)
-  box-shadow
-  border solid thin white
+  .graph
+    background-color rgba(19,34,44,0.75)
+    box-shadow
+    // border solid thin white
+    width 530px
+    height 128px
 
-  &:hover
-    background-color rgba(19,34,44,0.92)
-    border solid thin black
-    box-shadow: 0 3px 5px rgba(#000, 0.5)
-    transition all 0.3s
+    &:hover
+      background-color rgba(19,34,44,0.92)
+      // border solid thin black
+      box-shadow: 0 3px 5px rgba(#000, 0.5)
+      transition all 0.3s
 
-.caption
-  text-align center
+  .caption
+    text-align center
+
+  & > nav
+      display: none
+      overflow: hidden
+
+    button
+      text-align: center
+      font-weight: bold
+      color black
+      border-radius: 1em
+      height: 2em
+      width: 4em
+
+      &.active
+        background: rgba(#000, 0.1)
+        // box-shadow: 0 1px 2px rgba(#000, 0.5) //inset
+        // text-shadow: 0 1px 1px rgba(#000, 0.75)
+
+      &:hover
+        border solid thin #353535
+
+      &[name="turn-page"]
+        // background-color red
+        font-size 14px
+        width 6em
+        height 2em
+      &[name="page"]
+        font-size 12px
+
+    .zooniverse-paginator
+      display: none
+      position: relative
+
+      .items
+        margin: 1em -10px
+        overflow: hidden;
+
+        .item
+          box-sizing: border-box
+          float: left
+          padding: 10px
+          position: relative
+          width: 50%
+          a
+            font-style bold
+
+    .empty-message
+      display: none
+      margin: 1em 0
+      text-align: center
+
+    &.signed-in
+      .zooniverse-login-form
+        display: none
+
+      & > nav,
+      .zooniverse-paginator.active
+      .zooniverse-paginator.active.empty + .empty-message
+        display: block
+
+      .zooniverse-paginator.empty
+        display: none
+
+  .loader
+    animation: 2s zooniverse-progress linear infinite
+    background: linear-gradient(left top, transparent 25%, #808080 25%, #808080 50%, transparent 50%, transparent 75%, #808080 75%)
+    background-size: 25px 25px
+    bottom: -10px
+    display: none
+    left: -10px
+    opacity: 0.25
+    position: absolute
+    right: -10px
+    top: -10px
+    z-index: -1
+
+  .loading .loader
+      display: block
+
+    .sign-in-form
+      display: block
+      margin: 0 auto
+      position: relative
+      text-align: center
+      width: 50%
+
+      header
+        font-size: 32px
+
+      label
+        display: block
+        margin: 20px 0
+
+      input
+        background: #fff
+        border: 0
+        border-radius: 3px
+        box-sizing: border-box
+        box-shadow:
+          0 1px 1px rgba(#000, 0.5) inset,
+          0 1px 0 rgba(#fff, 0.25)
+        font-size: 18px
+        padding: 10px
+        width: 100%
+
+      .error-message
+        background: darken(#f00, 25%)
+        border-radius: 3px
+        box-shadow: 0 3px 5px rgba(#000, 0.5)
+        color: #fff
+        font-weight: bold
+        display: inline-block
+        padding: 0 1em
+
+      .action
+        margin: 20px
+
+      button
+        background: #fff
+        border: 0
+        border-radius: 3px
+        box-shadow: 0 3px 5px rgba(#000, 0.5)
+        color: #000
+        font-size: 18px
+        font-weight: bold
+        padding: 5px 1em
+        width 6em
+
+      .no-account
+        font-weight: bold;
+
+        button
+          text-decoration: underline
