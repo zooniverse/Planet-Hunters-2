@@ -19,16 +19,30 @@ content = [
     course_number: 3
     material:
       title: "What can we learn from a lightcurve? (Part 1)"
-      text: "<p>A lightcurve can tell us a lot about a planetary system. If multiple transits are observed then we have a measurement of the orbital period, P, as it is just the time interval between each transit. Astronomer Johannes Kepler showed that orbital period is proportional to orbital seperation,</p>"
-      figure: ""
+      text: """
+        <p>
+          A lightcurve can tell us a lot about a planetary system. If multiple transits are observed then we have a measurement of the orbital period, P, as it is just the time interval between each transit. Astronomer Johannes Kepler showed that orbital period is proportional to orbital seperation &alpha;,
+        </p>
+        <div style=\"text-align: center;\">
+          <img style=\"width: 75px; padding: 20px\" src=\"./images/mini-course/keplers-third-law.png\"/>
+        </div>
+      """
+      figure: "./images/mini-course/light-curve-period.png"
       figure_credits: ""
   }
   {
     course_number: 4
     material:
       title: "What can we learn from a lightcurve? (Part 2)"
-      text: "The other most important piece of information a transit lightcurve gives us is an estimate of the size of the planet. The larger the planet is in relation to the star, the more light is blocked by the planet and the deeper the transit. So the transit depth, d, is proportional to the radius of the planet,"
-      figure: ""
+      text: """
+        <p>
+          The other most important piece of information a transit lightcurve gives us is an estimate of the size of the planet. The larger the planet is in relation to the star, the more light is blocked by the planet and the deeper the transit. So the transit depth, d, is proportional to the radius of the planet,
+        </p>
+        <div style=\"text-align: center;\">
+          <img style=\"width: 75px; padding: 20px\" src=\"./images/mini-course/transit-depth.png\"/>
+        </div>
+        """
+      figure: "./images/mini-course/lightcurve-transit-depth.png"
       figure_credits: ""
   }
 ]
