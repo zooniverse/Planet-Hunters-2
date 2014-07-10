@@ -240,8 +240,6 @@ class CanvasGraph
 
     # draw highlights
     for highlight in [ @highlights... ]
-      console.log 'HIGHLIGHT: ', highlight
-      console.log "HIGHLIGHT: (#{highlight.xLeft},#{highlight.xRight})"
       for i in [0...@dataLength]
         if @data.x[i] >= highlight.xLeft and @data.x[i] <= highlight.xRight
           x = ((+@data.x[i]+@toDays(@leftPadding)-@xMin)/(@xMax-@xMin)) * (@canvas.width-@leftPadding)

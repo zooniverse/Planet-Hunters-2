@@ -561,7 +561,7 @@ class Classifier extends BaseController
               <!--</div>-->
             """
           else
-            $('#course-opt-in-label').html "Launch Planet Hunters mini-courses as they become available!"
+            $('#course-opt-in-label').html "Yes, I want to learn more!"
 
           $('.mini-course-option').prop 'checked', @courseOptionIsChecked
         
