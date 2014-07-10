@@ -21,9 +21,9 @@
     </div>
 
     <!-- mini-course checkbox -->
-    <div style="padding: 20px;">
+    <div style="float: left; padding: 20px;">
       <input class="mini-course-option" name="mini-course-option" type="checkbox"></input>
-      <div style="float: left; font-style: italic; font-weight: 500;">Do not show mini-course in the future.
+      <div style="float: left; font-style: italic; font-weight: 500; color: #fff;">Do not show mini-course in the future.
       </div>
     </div>
     <button name="course-close" class="course-close std-btn yellow">Close</button>
