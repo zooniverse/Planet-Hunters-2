@@ -232,12 +232,12 @@ class CanvasGraph
 
     @drawHighlights()
 
-    # draw y-axis gradient
-    gradient = @ctx.createLinearGradient(0,0,60,0);
-    gradient.addColorStop(0,'rgba(0,0,0,1.0)');
-    gradient.addColorStop(1,'rgba(0,0,0,0.0');
-    @ctx.fillStyle = gradient
-    @ctx.fillRect(0,0,60,@canvas.height)
+    # # draw y-axis gradient
+    # gradient = @ctx.createLinearGradient(0,0,60,0);
+    # gradient.addColorStop(0,'rgba(0,0,0,1.0)');
+    # gradient.addColorStop(1,'rgba(0,0,0,0.0');
+    # @ctx.fillStyle = gradient
+    # @ctx.fillRect(0,0,60,@canvas.height)
 
     if $('#graph-container').hasClass('showing-prev-data')
       @showPrevMarks()
