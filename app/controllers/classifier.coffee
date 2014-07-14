@@ -64,7 +64,6 @@ class Classifier extends BaseController
       location.hash = "#/verify"
 
     window.classifier = @
-
     @recordedClickEvents = [] # array to store all click events
 
     # zoom levels [days]: 2x, 10x, 20x
@@ -76,13 +75,12 @@ class Classifier extends BaseController
 
     # classification counts at which to display supplementary tutorial
     @whenToDisplayTips = [1, 7] # TODO: don't forget to add 4 after beta version
+    @splitDesignation = null
 
     User.on 'change', @onUserChange
     Subject.on 'fetch', @onSubjectFetch
     Subject.on 'select', @onSubjectSelect
     @Subject = Subject
-
-    @splitDesignation = null
 
     $(document).on 'mark-change', => @updateButtons()
     @marksContainer = @el.find('#marks-container')[0]
@@ -97,12 +95,9 @@ class Classifier extends BaseController
 
     # mini course
     @course = new MiniCourse
-
     @el.find('#course-interval-setter').hide()
 
     # @verifyRate = 20
-
-    @recordedClickEvents = []
 
     @el.find('#no-transits').hide() #prop('disabled',true)
     @el.find('#finished-marking').hide() #prop('disabled',true)
@@ -127,11 +122,11 @@ class Classifier extends BaseController
   # /////////////////////////////////////////////////
 
   onChangeSupplementalOption: ->
-    console.log 'onChangeSupplementalOption(): '
+    # console.log 'onChangeSupplementalOption(): '
     return unless User.current?
 
   onChangeMiniCourseOption: ->
-    console.log 'onChangeMiniCourseOption(): '
+    # console.log 'onChangeMiniCourseOption(): '
     return unless User.current?
     courseOption = User.current.preferences.planet_hunter.course
 
@@ -150,22 +145,22 @@ class Classifier extends BaseController
     User.current?.setPreference 'course', courseOption
 
   onChangeCourseInterval: ->
-    console.log 'VALUE: ', @el.find('#course-interval').val()
+    # console.log 'VALUE: ', @el.find('#course-interval').val()
     defaultValue = 5
     value = +@el.find('#course-interval').val()
 
-    console.log 'VALUE IS NUMBER: ', (typeof value)
+    # console.log 'VALUE IS NUMBER: ', (typeof value)
 
     # validate integer values
     unless (typeof value is 'number') and (value % 1 is 0) and value > 0 and value < 100
       value = defaultValue
       @el.find('#course-interval').val(value)
     else
-      console.log 'SETTING VALUE TO: ', value
+      # console.log 'SETTING VALUE TO: ', value
       @course.setRate value
 
   onChangeCourseIntervalViaSupTut: ->
-    console.log 'onChangeCourseIntervalViaSupTut(): '
+    # console.log 'onChangeCourseIntervalViaSupTut(): '
     defaultValue = 5
     value = +@el.find('#course-interval-sup-tut').val()
 
@@ -174,7 +169,7 @@ class Classifier extends BaseController
       value = defaultValue
       @el.find('#course-interval-sup-tut').val(value)
     else
-      console.log 'SETTING VALUE TO: ', value
+      # console.log 'SETTING VALUE TO: ', value
     
     @course.setRate value
 
@@ -186,9 +181,7 @@ class Classifier extends BaseController
     @recordedClickEvents.push clickEvent
 
   onUserChange: (e, user) =>
-    console.log 'classify: onUserChange()'
-
-    # console.log 'SPLIT DESIGNATION: ', User.current.project.splits.mini_course_sup_tutorial
+    # console.log 'classify: onUserChange()'
     if User.current?
       @handleSplitDesignation()
       if User.current.preferences?.planet_hunter?
@@ -198,50 +191,46 @@ class Classifier extends BaseController
             @courseOptionIsChecked = false
           else if @splitDesignation in ['d', 'e', 'f', 'j', 'k', 'l']
             @courseOptionIsChecked = true
-
       if @courseOptionIsChecked
         User.current?.setPreference 'course', 'yes'
       else
         User.current?.setPreference 'course', 'no'
-    
+
     # handle first-time users
     if +preferences?.count? is 0 or not User.current?
-      console.log 'First-time user. Loading tutorial...'
-      # @onClickTutorial()
       @launchTutorial()
 
     Subject.next() unless @classification?
 
   handleSplitDesignation: ->
-    console.log 'handleSplitDesignation()'
     @splitDesignation = User.current.project.splits.mini_course_sup_tutorial
     @splitDesignation = 'd' # DEBUG CODE
 
     # HANDLE MINI-COURSE SPLITS
     if @splitDesignation in ['b', 'e']
-      console.log 'Setting mini-course interval to 10'
+      # console.log 'Setting mini-course interval to 10'
       @course.setRate 10
       $('#course-interval-setter').remove() # destroy custom course interval setter
 
     else if @splitDesignation in ['c', 'f']
-      console.log 'Setting mini-course interval to 25'
+      # console.log 'Setting mini-course interval to 25'
       @course.setRate 25
       $('#course-interval-setter').remove() # destroy custom course interval setter
 
     else if @splitDesignation in ['a', 'd']
-      console.log 'Setting mini-course interval to 5'
+      # console.log 'Setting mini-course interval to 5'
       @course.setRate 5 # set default
       @allowCustomCourseInterval = true
     else
-      console.log 'Setting mini-course interval to 5'
+      # console.log 'Setting mini-course interval to 5'
       @allowCustomCourseInterval = false
       @course.setRate 5 # set default
 
   onSubjectFetch: (e, user) =>
-    console.log 'onSubjectFetch(): '
+    # console.log 'onSubjectFetch(): '
 
   onSubjectSelect: (e, subject) =>
-    console.log 'onSubjectSelect(): '
+    # console.log 'onSubjectSelect(): '
     @subject = subject
     @classification = new Classification {subject}
     @loadSubjectData()
@@ -319,7 +308,7 @@ class Classifier extends BaseController
     # console.log '-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-'
 
   onClickZoom: ->
-    console.log 'onClickZoom()'
+    # console.log 'onClickZoom()'
 
     # # DO WE NEED THIS?
     # @prevZoomLevel = @zoomLevel
@@ -348,7 +337,7 @@ class Classifier extends BaseController
 
       # zoom in to new range
       @canvasGraph.zoomInTo(val, val+@zoomRanges[@zoomLevel])
-      console.log 'zoomInTo(', val, ',', val+@zoomRanges[@zoomLevel], ')'
+      # console.log 'zoomInTo(', val, ',', val+@zoomRanges[@zoomLevel], ')'
 
     
       # rebuild slider
@@ -460,7 +449,6 @@ class Classifier extends BaseController
         teff: "4056"
       selected_light_curve: 
         location: 'https://s3.amazonaws.com/demo.zooniverse.org/planet_hunter/beta_subjects/1873513_15-3.json'
-    console.log 'TUTORIAL SUBJECT: ', tutorialSubject
     tutorialSubject
 
   updateButtons: ->
