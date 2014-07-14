@@ -65,6 +65,8 @@ class Classifier extends BaseController
 
     window.classifier = @
 
+    @recordedClickEvents = [] # array to store all click events
+
     # zoom levels [days]: 2x, 10x, 20x
     @zoomRange = 15
     @zoomRanges = []
@@ -414,6 +416,11 @@ class Classifier extends BaseController
     @course.showPrompt()
     
   onClickTutorial: ->
+    clickEvent = { event: 'tutorialClicked', timestamp: (new Date).toUTCString() }
+    @recordedClickEvents.push clickEvent
+    @launchTutorial()
+
+  launchTutorial: ->
     if $('#graph-container').hasClass 'loading-lightcurve'
       @notify 'Please wait until current lightcurve is loaded.'
       return
@@ -568,7 +575,6 @@ class Classifier extends BaseController
     # SEND CLASSIFICATION
     @course.incrementCount()
     console.log 'YOU\'VE MARKED ', @course.count, ' LIGHT CURVES!'
-    @classification.annotate recordedClickEvents: [@recordedClickEvents...]
 
     @classification.annotate
       classification_type: 'light_curve'
@@ -582,6 +588,9 @@ class Classifier extends BaseController
         xMaxRelative: mark.dataXMaxRel
         xMinGlobal: mark.dataXMinGlobal
         xMaxGlobal: mark.dataXMaxGlobal
+
+    # dump all recorded click events to classification
+    @classification.set 'recordedClickEvents', [@recordedClickEvents...]
     
     # DEBUG CODE
     console.log JSON.stringify( @classification )
