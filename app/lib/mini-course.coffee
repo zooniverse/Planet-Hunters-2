@@ -79,6 +79,7 @@ class MiniCourse
     @course_el.find(".course-figure-credits").html figure_credits
 
   incrementCount: ->
+    return unless User.current?
     @count = @count + 1
     User.current.setPreference 'count', @count
 
