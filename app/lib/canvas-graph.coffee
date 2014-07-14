@@ -76,14 +76,13 @@ class CanvasGraph
     xClick = e.pageX - e.target.getBoundingClientRect().left - window.scrollX
     yClick = e.pageY - e.target.getBoundingClientRect().top - window.scrollY
     
-
     @plotPoints(val, val+zoomRanges[@zoomLevel])
     # @rescaleMarks(val, val+zoomRanges[@zoomLevel])
 
     if xClick < @leftPadding
       # draw triangle
       w = 10
-      s = w*Math.tan(@leftPadding)
+      s = 2*w*Math.tan(@leftPadding)
       
       @ctx.beginPath()
       @ctx.moveTo(w,yClick)
