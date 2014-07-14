@@ -129,9 +129,9 @@ class Classifier extends BaseController
   onChangeSupplementalOption: ->
     console.log 'onChangeSupplementalOption(): '
     return unless User.current?
-    supplementalOption = User.current.preferences.planet_hunter.supplemental_option
-    supplementalOption = not supplementalOption
-    User.current?.setPreference 'supplemental_option', supplementalOption
+    # supplementalOption = User.current.preferences.planet_hunter.supplemental_option
+    # supplementalOption = not supplementalOption
+    # User.current?.setPreference 'supplemental_option', supplementalOption
 
   onChangeMiniCourseOption: ->
     console.log 'onChangeMiniCourseOption(): '
@@ -193,9 +193,39 @@ class Classifier extends BaseController
 
     # console.log 'SPLIT DESIGNATION: ', User.current.project.splits.mini_course_sup_tutorial
     if User.current?
-      @splitDesignation = User.current.project.splits.mini_course_sup_tutorial
-      supplementalOption = User.current.preferences.planet_hunter.supplemental_option?
-      @splitDesignation = 'd' # DEBUG CODE
+      @handleSplitDesignation()
+
+      if User.current.preferences?.planet_hunter?
+        preferences = User.current.preferences.planet_hunter
+        if +preferences.count is 0
+          # HANDLE SUPPLEMENTAL TUTORIAL SPLITS
+          if @splitDesignation in ['a', 'b', 'c', 'g', 'h', 'i']
+            @courseOptionIsChecked = false
+            # supplementalOption = true  
+          else if @splitDesignation in ['d', 'e', 'f', 'j', 'k', 'l']
+            @courseOptionIsChecked = true
+            # supplementalOption = false
+        
+        # handle first-time users
+        if +preferences.count is 0 or not User.current?
+          console.log 'First-time user. Loading tutorial...'
+          # @onClickTutorial()
+          @launchTutorial()
+
+      # User.current?.setPreference 'supplemental_option', supplementalOption
+
+      if @courseOptionIsChecked
+        User.current?.setPreference 'course', 'yes'
+      else
+        User.current?.setPreference 'course', 'no'
+    
+    Subject.next() unless @classification?
+
+  handleSplitDesignation: ->
+    console.log 'handleSplitDesignation()'
+    @splitDesignation = User.current.project.splits.mini_course_sup_tutorial
+    # supplementalOption = User.current.preferences.planet_hunter.supplemental_option?
+    @splitDesignation = 'd' # DEBUG CODE
 
     # HANDLE MINI-COURSE SPLITS
     if @splitDesignation in ['b', 'e']
@@ -216,30 +246,6 @@ class Classifier extends BaseController
       console.log 'Setting mini-course interval to 5'
       @allowCustomCourseInterval = false
       @course.setRate 5 # set default
-
-    if +User.current?.preferences.planet_hunter.count is 0
-      # HANDLE SUPPLEMENTAL TUTORIAL SPLITS
-      if @splitDesignation in ['a', 'b', 'c', 'g', 'h', 'i']
-        @courseOptionIsChecked = false
-        # supplementalOption = true  
-      else if @splitDesignation in ['d', 'e', 'f', 'j', 'k', 'l']
-        @courseOptionIsChecked = true
-        # supplementalOption = false
-    
-    # handle first-time users
-    if +User.current?.preferences.planet_hunter.count is 0 or not User.current?
-      console.log 'First-time user. Loading tutorial...'
-      # @onClickTutorial()
-      @launchTutorial()
-
-    User.current?.setPreference 'supplemental_option', supplementalOption
-
-    if @courseOptionIsChecked
-      User.current?.setPreference 'course', 'yes'
-    else
-      User.current?.setPreference 'course', 'no'
-    
-    Subject.next() unless @classification?
 
   onSubjectFetch: (e, user) =>
     console.log 'onSubjectFetch(): '
