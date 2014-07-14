@@ -217,8 +217,8 @@ class Classifier extends BaseController
     if +User.current?.preferences.planet_hunter.count is 0 or not User.current?
       console.log 'First-time user. Loading tutorial...'
       # @onClickTutorial()
-      @launchTutorial
-      
+      @launchTutorial()
+
     User.current?.setPreference 'supplemental_option', supplementalOption
 
     if @courseOptionIsChecked
