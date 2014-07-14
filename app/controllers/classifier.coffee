@@ -144,6 +144,12 @@ class Classifier extends BaseController
     else
       courseOption = 'yes'  
 
+    clickEvent = 
+      event: 'miniCourseOptionChanged' 
+      value: courseOption 
+      timestamp: (new Date).toUTCString()
+    @recordedClickEvents.push clickEvent
+
     User.current?.setPreference 'course', courseOption
 
   onChangeCourseInterval: ->
@@ -175,6 +181,13 @@ class Classifier extends BaseController
     
     @course.setRate value
 
+    clickEvent = 
+      event: 'miniCourseIntervalChanged' 
+      value: value
+      via: 'supplementalTutorial'
+      timestamp: (new Date).toUTCString()
+    @recordedClickEvents.push clickEvent
+
   onUserChange: (e, user) =>
     console.log 'classify: onUserChange()'
 
@@ -182,7 +195,7 @@ class Classifier extends BaseController
     if User.current?
       @splitDesignation = User.current.project.splits.mini_course_sup_tutorial
       supplementalOption = User.current.preferences.planet_hunter.supplemental_option?
-      # @splitDesignation = 'a' # DEBUG CODE
+      @splitDesignation = 'd' # DEBUG CODE
 
     # HANDLE MINI-COURSE SPLITS
     if @splitDesignation in ['b', 'e']

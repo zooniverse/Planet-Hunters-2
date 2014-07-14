@@ -88,10 +88,10 @@ class MiniCourse
 
   coursesAvailable: ->
     if @curr >= @content.length
-      console.log 'WARNING: COURSES NOT AVAILABLE!!!'
+      # console.log 'WARNING: COURSES NOT AVAILABLE!!!'
       return false
     else
-      console.log 'AWESOME. COURSES AVAILABLE!!!'
+      # console.log 'AWESOME. COURSES AVAILABLE!!!'
       return true
 
   onClickCourseYes: ->
