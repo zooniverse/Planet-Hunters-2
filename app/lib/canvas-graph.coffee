@@ -198,6 +198,17 @@ class CanvasGraph
     @highlights.push {'xLeft': xLeft, 'xRight': xRight}
     @plotPoints()
 
+  drawHighlights: ->
+    for highlight in [ @highlights... ]
+      for i in [0...@dataLength]
+        if @data.x[i] >= highlight.xLeft and @data.x[i] <= highlight.xRight
+          x = ((+@data.x[i]+@toDays(@leftPadding)-@xMin)/(@xMax-@xMin)) * (@canvas.width-@leftPadding)
+          y = ((+@data.y[i]-@yMin)/(@yMax-@yMin)) * @canvas.height
+          y = -y + @canvas.height # flip y-values
+          # @ctx.beginPath()
+          @ctx.fillStyle = "rgba(252, 69, 65, 1.0)" #"#fc4541"
+          @ctx.fillRect(x,y,2,2)
+
   plotPoints: (xMin = @smallestX, xMax = @largestX, yMin = @smallestY, yMax = @largestY) ->
     # console.log 'plotPoints(): [',xMin,',',xMax,']'
     @xMin = xMin
@@ -220,12 +231,14 @@ class CanvasGraph
       @ctx.fillStyle = "#fff" #fc4541"
       @ctx.fillRect(x+@leftPadding,y,2,2)
 
-    # # draw y-axis gradient
-    # gradient = @ctx.createLinearGradient(0,0,60,0);
-    # gradient.addColorStop(0,'rgba(0,0,0,1.0)');
-    # gradient.addColorStop(1,'rgba(0,0,0,0.0');
-    # @ctx.fillStyle = gradient
-    # @ctx.fillRect(0,0,60,@canvas.height)
+    @drawHighlights()
+
+    # draw y-axis gradient
+    gradient = @ctx.createLinearGradient(0,0,60,0);
+    gradient.addColorStop(0,'rgba(0,0,0,1.0)');
+    gradient.addColorStop(1,'rgba(0,0,0,0.0');
+    @ctx.fillStyle = gradient
+    @ctx.fillRect(0,0,60,@canvas.height)
 
     if $('#graph-container').hasClass('showing-prev-data')
       @showPrevMarks()
@@ -238,16 +251,6 @@ class CanvasGraph
     @scale = (parseFloat(@largestX) - parseFloat(@smallestX)) / (parseFloat(@xMax) - parseFloat(@xMin))
     @rescaleMarks(xMin, xMax)
 
-    # draw highlights
-    for highlight in [ @highlights... ]
-      for i in [0...@dataLength]
-        if @data.x[i] >= highlight.xLeft and @data.x[i] <= highlight.xRight
-          x = ((+@data.x[i]+@toDays(@leftPadding)-@xMin)/(@xMax-@xMin)) * (@canvas.width-@leftPadding)
-          y = ((+@data.y[i]-@yMin)/(@yMax-@yMin)) * @canvas.height
-          y = -y + @canvas.height # flip y-values
-          @ctx.beginPath()
-          @ctx.fillStyle = "rgba(252, 69, 65, 1.0)" #"#fc4541"
-          @ctx.fillRect(x,y,2,2)
     
     return
 
