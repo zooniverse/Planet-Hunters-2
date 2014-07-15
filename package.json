@@ -6,7 +6,7 @@
     "publisssh": "~0.2.1",
     "stack-of-pages": "0.0.11",
     "t7e": "~0.2.3",
-    "zooniverse": "~0.6.13",
+    "zooniverse": "git://github.com/zooniverse/Zooniverse#0ed11f7bd000ea86070b4625eeeb0ebb09ec6f90",
     "zootorial": "~0.4.12"
   },
   "scripts": {
