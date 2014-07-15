@@ -10,6 +10,19 @@ customItemTemplate         = require '../views/custom-profile-item'
 Paginator                  = require 'zooniverse/controllers/paginator'
 {CanvasGraph, Marks, Mark} = require '../lib/canvas-graph'
 
+# Attempt at bringing code our of the view
+# Paginator::onItemFromClassification = (e, item) ->
+#   super
+#   console.log 'FOO: ', @subjects[0]
+#   location = @subjects[0].selected_light_curve.location
+#   $.getJSON @subjects[0].location, (data) => 
+#     newCanvas = $("##{@subjects[0].id}")[0] 
+#     newGraph = new CanvasGraph( newCanvas, data ) 
+#     newGraph.showAxes = false 
+#     newGraph.leftPadding = 0 
+#     newGraph.disableMarking() 
+#     newGraph.plotPoints() 
+
 class Profile extends BaseProfile
   className: 'profile'
   template: require '../views/profile'
@@ -32,5 +45,7 @@ class Profile extends BaseProfile
     setTimeout =>
       @greeting.html("Hello, #{User.current.name}!") if User.current
     , 1000
+
+
 
 module.exports = Profile

@@ -1,10 +1,13 @@
 <% {CanvasGraph, Marks, Mark} = require '../lib/canvas-graph' %>
+<%= console.log 'SUBJECT: ', @subjects[0] %>
 <div class='item'>
   <!--<a href="<%= @subjects[0].location %>">-->
     <div class="graph-container">
       <canvas class="graph" id="<%= @subjects[0].id %>">
       </canvas>
-      <% $.getJSON @subjects[0].location, (data) => %>
+      <% location = @subjects[0].selected_light_curve?.location %>
+      <% location ?= @subjects[0].location %> 
+      <% $.getJSON location, (data) => %>
         <% newCanvas = $("##{@subjects[0].id}")[0] %>
         <% newGraph = new CanvasGraph( newCanvas, data ) %>
         <% newGraph.showAxes = false %>
