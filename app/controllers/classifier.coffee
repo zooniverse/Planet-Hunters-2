@@ -49,13 +49,16 @@ class Classifier extends BaseController
     'click button[name="alt-join-convo"]'     : 'onClickAltJoinConvo'
     'click button[name="submit-talk"]'        : 'onClickSubmitTalk'
     'click button[name="alt-submit-talk"]'    : 'onClickSubmitTalkAlt'
-    'mouseenter #course-yes-container'        : 'onMouseoverCourseYes'
-    'mouseleave  #course-yes-container'       : 'onMouseoutCourseYes'
     'change #course-interval'                 : 'onChangeCourseInterval'
     'change #course-interval-sup-tut'         : 'onChangeCourseIntervalViaSupTut'
     'change .supplemental-option'             : 'onChangeSupplementalOption'
     'change input[name="mini-course-option"]' : 'onChangeMiniCourseOption'
-
+    'change input[name="course-opt-out"]'     : 'onChangeCourseOptOut'
+    
+    # CODE FOR PROMPT (NOT CURRENTLY IN USE)
+    # 'mouseenter #course-yes-container'        : 'onMouseoverCourseYes'
+    # 'mouseleave  #course-yes-container'       : 'onMouseoutCourseYes'
+    
   constructor: ->
     super    
 
@@ -64,7 +67,6 @@ class Classifier extends BaseController
       location.hash = "#/verify"
 
     window.classifier = @
-
     @recordedClickEvents = [] # array to store all click events
 
     # zoom levels [days]: 2x, 10x, 20x
@@ -76,13 +78,12 @@ class Classifier extends BaseController
 
     # classification counts at which to display supplementary tutorial
     @whenToDisplayTips = [1, 7] # TODO: don't forget to add 4 after beta version
+    @splitDesignation = null
 
     User.on 'change', @onUserChange
     Subject.on 'fetch', @onSubjectFetch
     Subject.on 'select', @onSubjectSelect
     @Subject = Subject
-
-    @splitDesignation = null
 
     $(document).on 'mark-change', => @updateButtons()
     @marksContainer = @el.find('#marks-container')[0]
@@ -97,75 +98,103 @@ class Classifier extends BaseController
 
     # mini course
     @course = new MiniCourse
-
     @el.find('#course-interval-setter').hide()
 
     # @verifyRate = 20
 
-    @recordedClickEvents = []
-
     @el.find('#no-transits').hide() #prop('disabled',true)
     @el.find('#finished-marking').hide() #prop('disabled',true)
     @el.find('#finished-feedback').hide() #prop('disabled',true)
-    
-  # /////////////////////////////////////////////////
-  onMouseoverCourseYes: ->
-    # console.log '*** ON ***'
-    return unless User.current?
-    return if @blockCourseIntervalDisplay
-    @blockCourseIntervalDisplay = true
-    @el.find('#course-interval-setter').show 400, =>
-      @blockCourseIntervalHide = false
 
-  onMouseoutCourseYes: ->
-    return unless User.current?
-    # console.log '*** OUT ***'
-    return if @blockCourseIntervalHide
-    @blockCourseIntervalHide = true
-    @el.find('#course-interval-setter').hide 400, =>
-      @blockCourseIntervalDisplay = false
+  # CODE FOR PROMPT (NOT CURRENTLY IN USE)    
+  # /////////////////////////////////////////////////
+  # onMouseoverCourseYes: ->
+  #   # console.log '*** ON ***'
+  #   return unless User.current?
+  #   return if @blockCourseIntervalDisplay
+  #   @blockCourseIntervalDisplay = true
+  #   @el.find('#course-interval-setter').show 400, =>
+  #     @blockCourseIntervalHide = false
+
+  # onMouseoutCourseYes: ->
+  #   return unless User.current?
+  #   # console.log '*** OUT ***'
+  #   return if @blockCourseIntervalHide
+  #   @blockCourseIntervalHide = true
+  #   @el.find('#course-interval-setter').hide 400, =>
+  #     @blockCourseIntervalDisplay = false
   # /////////////////////////////////////////////////
 
   onChangeSupplementalOption: ->
-    console.log 'onChangeSupplementalOption(): '
+    # console.log 'onChangeSupplementalOption(): '
     return unless User.current?
-    # supplementalOption = User.current.preferences.planet_hunter.supplemental_option
-    # supplementalOption = not supplementalOption
-    # User.current?.setPreference 'supplemental_option', supplementalOption
 
   onChangeMiniCourseOption: ->
     console.log 'onChangeMiniCourseOption(): '
     return unless User.current?
-    courseOption = User.current.preferences.planet_hunter.course
 
-    # toggle course option
-    if courseOption is 'yes'
-      courseOption = 'no'
+    @courseEnabled = not @courseEnabled
+
+    if @courseEnabled
+      User.current?.setPreference 'course', 'yes'
+      $("[name='course-opt-out']").prop 'checked', false 
     else
-      courseOption = 'yes'  
+      User.current?.setPreference 'course', 'no'
+      $("[name='course-opt-out']").prop 'checked', true  
 
     clickEvent = 
       event: 'miniCourseOptionChanged' 
-      value: courseOption 
+      value: @courseEnabled 
       timestamp: (new Date).toUTCString()
     @recordedClickEvents.push clickEvent
 
-    User.current?.setPreference 'course', courseOption
+  # onChangeMiniCourseOption: ->
+  #   console.log 'onChangeMiniCourseOption(): '
+  #   return unless User.current?
+  #   courseOption = User.current.preferences.planet_hunter.course
 
-  onChangeCourseInterval: ->
-    console.log 'VALUE: ', @el.find('#course-interval').val()
-    defaultValue = 5
-    value = +@el.find('#course-interval').val()
+  #   # toggle course option
+  #   if courseOption is 'yes'
+  #     courseOption = 'no'
+  #     # $("[name='course-opt-out']").prop 'checked', true 
+  #   else
+  #     courseOption = 'yes'
+  #     $("[name='course-opt-out']").prop 'checked', false  
 
-    console.log 'VALUE IS NUMBER: ', (typeof value)
+  #   clickEvent = 
+  #     event: 'miniCourseOptionChanged' 
+  #     value: courseOption 
+  #     timestamp: (new Date).toUTCString()
+  #   @recordedClickEvents.push clickEvent
 
-    # validate integer values
-    unless (typeof value is 'number') and (value % 1 is 0) and value > 0 and value < 100
-      value = defaultValue
-      @el.find('#course-interval').val(value)
+  #   User.current?.setPreference 'course', courseOption
+
+  onChangeCourseOptOut: ->
+    console.log 'onChangeCourseOptOut(): '
+    return unless User.current?
+    opt_out = $("[name='course-opt-out']").prop 'checked'
+    if opt_out
+      User.current?.setPreference 'course', 'no'
+      @courseEnabled = false # TODO: needs work!
     else
-      console.log 'SETTING VALUE TO: ', value
-      @course.setRate value
+      User.current?.setPreference 'course', 'yes'
+      @courseEnabled = true
+
+  # CODE FOR PROMPT (NOT CURRENTLY BEING USED)
+  # onChangeCourseInterval: ->
+  #   # console.log 'VALUE: ', @el.find('#course-interval').val()
+  #   defaultValue = 5
+  #   value = +@el.find('#course-interval').val()
+
+  #   # console.log 'VALUE IS NUMBER: ', (typeof value)
+
+  #   # validate integer values
+  #   unless (typeof value is 'number') and (value % 1 is 0) and value > 0 and value < 100
+  #     value = defaultValue
+  #     @el.find('#course-interval').val(value)
+  #   else
+  #     # console.log 'SETTING VALUE TO: ', value
+  #     @course.setRate value
 
   onChangeCourseIntervalViaSupTut: ->
     console.log 'onChangeCourseIntervalViaSupTut(): '
@@ -177,7 +206,7 @@ class Classifier extends BaseController
       value = defaultValue
       @el.find('#course-interval-sup-tut').val(value)
     else
-      console.log 'SETTING VALUE TO: ', value
+      # console.log 'SETTING VALUE TO: ', value
     
     @course.setRate value
 
@@ -189,43 +218,29 @@ class Classifier extends BaseController
     @recordedClickEvents.push clickEvent
 
   onUserChange: (e, user) =>
-    console.log 'classify: onUserChange()'
-
-    # console.log 'SPLIT DESIGNATION: ', User.current.project.splits.mini_course_sup_tutorial
+    # console.log 'classify: onUserChange()'
     if User.current?
       @handleSplitDesignation()
-
       if User.current.preferences?.planet_hunter?
         preferences = User.current.preferences.planet_hunter
         if +preferences.count is 0
-          # HANDLE SUPPLEMENTAL TUTORIAL SPLITS
           if @splitDesignation in ['a', 'b', 'c', 'g', 'h', 'i']
-            @courseOptionIsChecked = false
-            # supplementalOption = true  
+            @courseEnabled = false
+            User.current.setPreference 'course', 'no'
           else if @splitDesignation in ['d', 'e', 'f', 'j', 'k', 'l']
-            @courseOptionIsChecked = true
-            # supplementalOption = false
-        
-        # handle first-time users
-        if +preferences.count is 0 or not User.current?
-          console.log 'First-time user. Loading tutorial...'
-          # @onClickTutorial()
-          @launchTutorial()
+            @courseEnabled = true
+            User.current.setPreference 'course', 'yes'
+      
+    # handle first-time users
+    if +preferences?.count is 0 or not User.current?
+      @launchTutorial()
 
-      # User.current?.setPreference 'supplemental_option', supplementalOption
-
-      if @courseOptionIsChecked
-        User.current?.setPreference 'course', 'yes'
-      else
-        User.current?.setPreference 'course', 'no'
-    
     Subject.next() unless @classification?
 
   handleSplitDesignation: ->
-    console.log 'handleSplitDesignation()'
     @splitDesignation = User.current.project.splits.mini_course_sup_tutorial
-    # supplementalOption = User.current.preferences.planet_hunter.supplemental_option?
-    @splitDesignation = 'd' # DEBUG CODE
+    @splitDesignation = 'a' # DEBUG CODE
+    console.log 'SPLIT DESIGNATION IS: ', @splitDesignation
 
     # HANDLE MINI-COURSE SPLITS
     if @splitDesignation in ['b', 'e']
@@ -240,18 +255,20 @@ class Classifier extends BaseController
 
     else if @splitDesignation in ['a', 'd']
       console.log 'Setting mini-course interval to 5'
+      console.log 'Allowing custom course interval.'
       @course.setRate 5 # set default
       @allowCustomCourseInterval = true
     else
-      console.log 'Setting mini-course interval to 5'
+      console.log 'Setting mini-course interval to 5 (default)'      
+      console.log 'Allowing custom course interval.'
       @allowCustomCourseInterval = false
       @course.setRate 5 # set default
 
   onSubjectFetch: (e, user) =>
-    console.log 'onSubjectFetch(): '
+    # console.log 'onSubjectFetch(): '
 
   onSubjectSelect: (e, subject) =>
-    console.log 'onSubjectSelect(): '
+    # console.log 'onSubjectSelect(): '
     @subject = subject
     @classification = new Classification {subject}
     @loadSubjectData()
@@ -329,7 +346,7 @@ class Classifier extends BaseController
     # console.log '-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-'
 
   onClickZoom: ->
-    console.log 'onClickZoom()'
+    # console.log 'onClickZoom()'
 
     # # DO WE NEED THIS?
     # @prevZoomLevel = @zoomLevel
@@ -358,7 +375,7 @@ class Classifier extends BaseController
 
       # zoom in to new range
       @canvasGraph.zoomInTo(val, val+@zoomRanges[@zoomLevel])
-      console.log 'zoomInTo(', val, ',', val+@zoomRanges[@zoomLevel], ')'
+      # console.log 'zoomInTo(', val, ',', val+@zoomRanges[@zoomLevel], ')'
 
     
       # rebuild slider
@@ -470,7 +487,6 @@ class Classifier extends BaseController
         teff: "4056"
       selected_light_curve: 
         location: 'https://s3.amazonaws.com/demo.zooniverse.org/planet_hunter/beta_subjects/1873513_15-3.json'
-    console.log 'TUTORIAL SUBJECT: ', tutorialSubject
     tutorialSubject
 
   updateButtons: ->
@@ -550,27 +566,13 @@ class Classifier extends BaseController
 
     # display supplemental tutorial
     for classification_count in @whenToDisplayTips
-      # if User.current.preferences.planet_hunter.supplemental_option and @course.count is classification_count
       if @course.count is classification_count
         console.log "*** DISPLAY SUPPLEMENTAL TUTOTIAL # #{classification_count} *** "
         @supplementalTutorial.first = "displayOn_" + classification_count.toString()
         @supplementalTutorial.start()
 
+        # prompt user to opt in/out of mini course
         if @course.count is 7
-
-          # if @allowCustomCourseInterval
-          #   newElement = document.createElement('div')
-          #   newElement.setAttribute 'class', "custom-interval-setter"
-          #   newElement.setAttribute 'style', "padding-top: 20px;"
-          #   newElement.innerHTML = """
-          #     <div id="course-interval-setter">
-          #       <div class="course-interval-text">Launch mini-course every </div>
-          #       <input type="number" id="course-interval-sup-tut" name="course-interval-sup-tut" value="5"></input>
-          #       <div class="course-interval-text"> classifications!</div>
-          #     </div>
-          #   """
-          #   @supplementalTutorial.container.getElementsByClassName('zootorial-content')[0].appendChild(newElement)
-
           newElement = document.createElement('div')
           newElement.setAttribute 'class', "supplemental-tutorial-option-container"
           newElement.setAttribute 'style', "padding: 20px;"
@@ -578,7 +580,9 @@ class Classifier extends BaseController
             <input class=\"mini-course-option\" name=\"mini-course-option\" type=\"checkbox\"></input>
             <div id=\"course-opt-in-label\" style=\"float: left; font-style: italic; font-weight: 500;\"></div>
           """
+          # inject custom element into zootorial
           @supplementalTutorial.container.getElementsByClassName('zootorial-content')[0].appendChild(newElement)
+          
           if @allowCustomCourseInterval
             $('#course-opt-in-label').html """
               <!--<div id="course-interval-setter">-->
@@ -590,7 +594,8 @@ class Classifier extends BaseController
           else
             $('#course-opt-in-label').html "Yes, I want to learn more!"
 
-          $('.mini-course-option').prop 'checked', @courseOptionIsChecked
+          # check box only if mini-course enabled
+          $('.mini-course-option').prop 'checked', @courseEnabled
         
     # SEND CLASSIFICATION
     @course.incrementCount()
