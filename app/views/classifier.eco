@@ -22,7 +22,7 @@
 
     <!-- mini-course checkbox -->
     <div style="float: left; padding: 20px;">
-      <input class="mini-course-option" name="mini-course-option" type="checkbox"></input>
+      <input class="mini-course-option" name="course-opt-out" type="checkbox"></input>
       <div style="float: left; font-style: italic; font-weight: 500; color: #fff;">Do not show mini-course in the future.
       </div>
     </div>

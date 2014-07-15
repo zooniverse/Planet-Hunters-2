@@ -55,6 +55,7 @@ class Classifier extends BaseController
     'change #course-interval-sup-tut'         : 'onChangeCourseIntervalViaSupTut'
     'change .supplemental-option'             : 'onChangeSupplementalOption'
     'change input[name="mini-course-option"]' : 'onChangeMiniCourseOption'
+    'change input[name="course-opt-out"]'     : 'onChangeCourseOptOut'
 
   constructor: ->
     super    
@@ -126,15 +127,17 @@ class Classifier extends BaseController
     return unless User.current?
 
   onChangeMiniCourseOption: ->
-    # console.log 'onChangeMiniCourseOption(): '
+    console.log 'onChangeMiniCourseOption(): '
     return unless User.current?
     courseOption = User.current.preferences.planet_hunter.course
 
     # toggle course option
     if courseOption is 'yes'
       courseOption = 'no'
+      # $("[name='course-opt-out']").prop 'checked', true 
     else
-      courseOption = 'yes'  
+      courseOption = 'yes'
+      $("[name='course-opt-out']").prop 'checked', false  
 
     clickEvent = 
       event: 'miniCourseOptionChanged' 
@@ -143,6 +146,17 @@ class Classifier extends BaseController
     @recordedClickEvents.push clickEvent
 
     User.current?.setPreference 'course', courseOption
+
+  onChangeCourseOptOut: ->
+    console.log 'onChangeCourseOptOut(): '
+    return unless User.current?
+    opt_out = $("[name='course-opt-out']").prop 'checked'
+    if opt_out
+      User.current?.setPreference 'course', 'no'
+      @courseOptIn = false # TODO: needs work!
+    else
+      User.current?.setPreference 'course', 'yes'
+      # @courseOptIn = true
 
   onChangeCourseInterval: ->
     # console.log 'VALUE: ', @el.find('#course-interval').val()
@@ -188,16 +202,14 @@ class Classifier extends BaseController
         preferences = User.current.preferences.planet_hunter
         if +preferences.count is 0
           if @splitDesignation in ['a', 'b', 'c', 'g', 'h', 'i']
-            @courseOptionIsChecked = false
+            @courseOptIn = false
+            User.current.setPreference 'course', 'no'
           else if @splitDesignation in ['d', 'e', 'f', 'j', 'k', 'l']
-            @courseOptionIsChecked = true
-      if @courseOptionIsChecked
-        User.current?.setPreference 'course', 'yes'
-      else
-        User.current?.setPreference 'course', 'no'
-
+            @courseOptIn = true
+            User.current.setPreference 'course', 'yes'
+      
     # handle first-time users
-    if +preferences?.count? is 0 or not User.current?
+    if +preferences?.count is 0 or not User.current?
       @launchTutorial()
 
     Subject.next() unless @classification?
@@ -554,7 +566,7 @@ class Classifier extends BaseController
           else
             $('#course-opt-in-label').html "Yes, I want to learn more!"
 
-          $('.mini-course-option').prop 'checked', @courseOptionIsChecked
+          $('.mini-course-option').prop 'checked', @courseOptIn
         
     # SEND CLASSIFICATION
     @course.incrementCount()
