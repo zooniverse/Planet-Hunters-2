@@ -143,7 +143,7 @@ class Classifier extends BaseController
       $("[name='course-opt-out']").prop 'checked', true  
 
     clickEvent = 
-      event: 'miniCourseOptionChanged' 
+      event: 'courseEnabled' 
       value: @courseEnabled 
       timestamp: (new Date).toUTCString()
     @recordedClickEvents.push clickEvent
@@ -180,6 +180,13 @@ class Classifier extends BaseController
       User.current?.setPreference 'course', 'yes'
       @courseEnabled = true
 
+
+    clickEvent = 
+      event: 'courseOptedOut' 
+      value: out_out 
+      timestamp: (new Date).toUTCString()
+    @recordedClickEvents.push clickEvent
+
   # CODE FOR PROMPT (NOT CURRENTLY BEING USED)
   # onChangeCourseInterval: ->
   #   # console.log 'VALUE: ', @el.find('#course-interval').val()
@@ -211,9 +218,8 @@ class Classifier extends BaseController
     @course.setRate value
 
     clickEvent = 
-      event: 'miniCourseIntervalChanged' 
+      event: 'courseIntervalChanged' 
       value: value
-      via: 'supplementalTutorial'
       timestamp: (new Date).toUTCString()
     @recordedClickEvents.push clickEvent
 
