@@ -132,23 +132,42 @@ class Classifier extends BaseController
   onChangeMiniCourseOption: ->
     console.log 'onChangeMiniCourseOption(): '
     return unless User.current?
-    courseOption = User.current.preferences.planet_hunter.course
 
-    # toggle course option
-    if courseOption is 'yes'
-      courseOption = 'no'
-      # $("[name='course-opt-out']").prop 'checked', true 
+    @courseEnabled = not @courseEnabled
+
+    if @courseEnabled
+      User.current?.setPreference 'course', 'yes'
+      $("[name='course-opt-out']").prop 'checked', false 
     else
-      courseOption = 'yes'
-      $("[name='course-opt-out']").prop 'checked', false  
+      User.current?.setPreference 'course', 'no'
+      $("[name='course-opt-out']").prop 'checked', true  
 
     clickEvent = 
       event: 'miniCourseOptionChanged' 
-      value: courseOption 
+      value: @courseEnabled 
       timestamp: (new Date).toUTCString()
     @recordedClickEvents.push clickEvent
 
-    User.current?.setPreference 'course', courseOption
+  # onChangeMiniCourseOption: ->
+  #   console.log 'onChangeMiniCourseOption(): '
+  #   return unless User.current?
+  #   courseOption = User.current.preferences.planet_hunter.course
+
+  #   # toggle course option
+  #   if courseOption is 'yes'
+  #     courseOption = 'no'
+  #     # $("[name='course-opt-out']").prop 'checked', true 
+  #   else
+  #     courseOption = 'yes'
+  #     $("[name='course-opt-out']").prop 'checked', false  
+
+  #   clickEvent = 
+  #     event: 'miniCourseOptionChanged' 
+  #     value: courseOption 
+  #     timestamp: (new Date).toUTCString()
+  #   @recordedClickEvents.push clickEvent
+
+  #   User.current?.setPreference 'course', courseOption
 
   onChangeCourseOptOut: ->
     console.log 'onChangeCourseOptOut(): '
@@ -159,7 +178,7 @@ class Classifier extends BaseController
       @courseEnabled = false # TODO: needs work!
     else
       User.current?.setPreference 'course', 'yes'
-      # @courseEnabled = true
+      @courseEnabled = true
 
   # CODE FOR PROMPT (NOT CURRENTLY BEING USED)
   # onChangeCourseInterval: ->
@@ -220,7 +239,8 @@ class Classifier extends BaseController
 
   handleSplitDesignation: ->
     @splitDesignation = User.current.project.splits.mini_course_sup_tutorial
-    @splitDesignation = 'd' # DEBUG CODE
+    @splitDesignation = 'a' # DEBUG CODE
+    console.log 'SPLIT DESIGNATION IS: ', @splitDesignation
 
     # HANDLE MINI-COURSE SPLITS
     if @splitDesignation in ['b', 'e']
@@ -235,10 +255,12 @@ class Classifier extends BaseController
 
     else if @splitDesignation in ['a', 'd']
       console.log 'Setting mini-course interval to 5'
+      console.log 'Allowing custom course interval.'
       @course.setRate 5 # set default
       @allowCustomCourseInterval = true
     else
-      console.log 'Setting mini-course interval to 5'
+      console.log 'Setting mini-course interval to 5 (default)'      
+      console.log 'Allowing custom course interval.'
       @allowCustomCourseInterval = false
       @course.setRate 5 # set default
 
@@ -558,7 +580,9 @@ class Classifier extends BaseController
             <input class=\"mini-course-option\" name=\"mini-course-option\" type=\"checkbox\"></input>
             <div id=\"course-opt-in-label\" style=\"float: left; font-style: italic; font-weight: 500;\"></div>
           """
+          # inject custom element into zootorial
           @supplementalTutorial.container.getElementsByClassName('zootorial-content')[0].appendChild(newElement)
+          
           if @allowCustomCourseInterval
             $('#course-opt-in-label').html """
               <!--<div id="course-interval-setter">-->
@@ -570,6 +594,7 @@ class Classifier extends BaseController
           else
             $('#course-opt-in-label').html "Yes, I want to learn more!"
 
+          # check box only if mini-course enabled
           $('.mini-course-option').prop 'checked', @courseEnabled
         
     # SEND CLASSIFICATION
