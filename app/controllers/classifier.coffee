@@ -183,7 +183,7 @@ class Classifier extends BaseController
 
     clickEvent = 
       event: 'courseOptedOut' 
-      value: out_out 
+      value: opt_out 
       timestamp: (new Date).toUTCString()
     @recordedClickEvents.push clickEvent
 
