@@ -86,8 +86,8 @@
         <div class="three-column">
           <div class="content">
             <h1>Nice Work!</h1>
-            <p>Looks like you've found <span id="planet-num"></span> potential transits!</p>
-            <p>Look to your right and see if anyone is talking about the star, or start a conversation of your own.</p>
+            <!--<p>Looks like you've found <span id="planet-num"></span> potential transits!</p>
+            <p>Look to your right and see if anyone is talking about the star, or start a conversation of your own.</p>-->
             <p>Move on to the next subject when you're ready.</p>
           </div>
         </div>
