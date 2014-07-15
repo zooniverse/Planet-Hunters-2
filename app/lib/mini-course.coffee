@@ -27,13 +27,13 @@ class MiniCourse
       # needs to be changed to read user's last course number
       
       if DEBUG
-        console.log 'MiniCourse: running in DEBUG mode'
+        # console.log 'MiniCourse: running in DEBUG mode'
         @resetCourse() #unless User.current?.preferences[zooniverse.Api.current.project]?.hasOwnProperty 'prev_course'
       else
-        console.log 'MiniCourse: running in NORMAL mode'
+        # console.log 'MiniCourse: running in NORMAL mode'
         # get user preferences
-        @count  = +User.current?.preferences[zooniverse.Api.current.project]['count']
-        @curr   = +User.current?.preferences[zooniverse.Api.current.project]['curr_course_id']
+        @count  = +User.current?.preferences?.planet_hunter.count
+        @curr   = +User.current?.preferences?.planet_hunter.curr_course_id
 
       if User.current?
         @prompt_el.toggleClass 'signed-in'
