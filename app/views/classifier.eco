@@ -119,7 +119,7 @@
 
         <div class="three-column">
           <div class="content">
-            <div id=".ukirt">
+            <!--<div id=".ukirt">
               Additional light curve information: <br>
               <ul>
                 <li>
@@ -135,7 +135,7 @@
                 <span>Talk about this</span>
               </button>
             </div>
-<!--             <h2>Discussions about this star</h2>
+                 <h2>Discussions about this star</h2>
             <div id="alt-comments">
               <div class="formatted-comment">
                 <p>Some content for an alternate talk comment. Wow what a comment!</p>
