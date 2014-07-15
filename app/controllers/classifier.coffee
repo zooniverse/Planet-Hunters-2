@@ -49,14 +49,16 @@ class Classifier extends BaseController
     'click button[name="alt-join-convo"]'     : 'onClickAltJoinConvo'
     'click button[name="submit-talk"]'        : 'onClickSubmitTalk'
     'click button[name="alt-submit-talk"]'    : 'onClickSubmitTalkAlt'
-    'mouseenter #course-yes-container'        : 'onMouseoverCourseYes'
-    'mouseleave  #course-yes-container'       : 'onMouseoutCourseYes'
     'change #course-interval'                 : 'onChangeCourseInterval'
     'change #course-interval-sup-tut'         : 'onChangeCourseIntervalViaSupTut'
     'change .supplemental-option'             : 'onChangeSupplementalOption'
     'change input[name="mini-course-option"]' : 'onChangeMiniCourseOption'
     'change input[name="course-opt-out"]'     : 'onChangeCourseOptOut'
-
+    
+    # CODE FOR PROMPT (NOT CURRENTLY IN USE)
+    # 'mouseenter #course-yes-container'        : 'onMouseoverCourseYes'
+    # 'mouseleave  #course-yes-container'       : 'onMouseoutCourseYes'
+    
   constructor: ->
     super    
 
@@ -103,23 +105,24 @@ class Classifier extends BaseController
     @el.find('#no-transits').hide() #prop('disabled',true)
     @el.find('#finished-marking').hide() #prop('disabled',true)
     @el.find('#finished-feedback').hide() #prop('disabled',true)
-    
-  # /////////////////////////////////////////////////
-  onMouseoverCourseYes: ->
-    # console.log '*** ON ***'
-    return unless User.current?
-    return if @blockCourseIntervalDisplay
-    @blockCourseIntervalDisplay = true
-    @el.find('#course-interval-setter').show 400, =>
-      @blockCourseIntervalHide = false
 
-  onMouseoutCourseYes: ->
-    return unless User.current?
-    # console.log '*** OUT ***'
-    return if @blockCourseIntervalHide
-    @blockCourseIntervalHide = true
-    @el.find('#course-interval-setter').hide 400, =>
-      @blockCourseIntervalDisplay = false
+  # CODE FOR PROMPT (NOT CURRENTLY IN USE)    
+  # /////////////////////////////////////////////////
+  # onMouseoverCourseYes: ->
+  #   # console.log '*** ON ***'
+  #   return unless User.current?
+  #   return if @blockCourseIntervalDisplay
+  #   @blockCourseIntervalDisplay = true
+  #   @el.find('#course-interval-setter').show 400, =>
+  #     @blockCourseIntervalHide = false
+
+  # onMouseoutCourseYes: ->
+  #   return unless User.current?
+  #   # console.log '*** OUT ***'
+  #   return if @blockCourseIntervalHide
+  #   @blockCourseIntervalHide = true
+  #   @el.find('#course-interval-setter').hide 400, =>
+  #     @blockCourseIntervalDisplay = false
   # /////////////////////////////////////////////////
 
   onChangeSupplementalOption: ->
@@ -153,28 +156,29 @@ class Classifier extends BaseController
     opt_out = $("[name='course-opt-out']").prop 'checked'
     if opt_out
       User.current?.setPreference 'course', 'no'
-      @courseOptIn = false # TODO: needs work!
+      @courseEnabled = false # TODO: needs work!
     else
       User.current?.setPreference 'course', 'yes'
-      # @courseOptIn = true
+      # @courseEnabled = true
 
-  onChangeCourseInterval: ->
-    # console.log 'VALUE: ', @el.find('#course-interval').val()
-    defaultValue = 5
-    value = +@el.find('#course-interval').val()
+  # CODE FOR PROMPT (NOT CURRENTLY BEING USED)
+  # onChangeCourseInterval: ->
+  #   # console.log 'VALUE: ', @el.find('#course-interval').val()
+  #   defaultValue = 5
+  #   value = +@el.find('#course-interval').val()
 
-    # console.log 'VALUE IS NUMBER: ', (typeof value)
+  #   # console.log 'VALUE IS NUMBER: ', (typeof value)
 
-    # validate integer values
-    unless (typeof value is 'number') and (value % 1 is 0) and value > 0 and value < 100
-      value = defaultValue
-      @el.find('#course-interval').val(value)
-    else
-      # console.log 'SETTING VALUE TO: ', value
-      @course.setRate value
+  #   # validate integer values
+  #   unless (typeof value is 'number') and (value % 1 is 0) and value > 0 and value < 100
+  #     value = defaultValue
+  #     @el.find('#course-interval').val(value)
+  #   else
+  #     # console.log 'SETTING VALUE TO: ', value
+  #     @course.setRate value
 
   onChangeCourseIntervalViaSupTut: ->
-    # console.log 'onChangeCourseIntervalViaSupTut(): '
+    console.log 'onChangeCourseIntervalViaSupTut(): '
     defaultValue = 5
     value = +@el.find('#course-interval-sup-tut').val()
 
@@ -202,10 +206,10 @@ class Classifier extends BaseController
         preferences = User.current.preferences.planet_hunter
         if +preferences.count is 0
           if @splitDesignation in ['a', 'b', 'c', 'g', 'h', 'i']
-            @courseOptIn = false
+            @courseEnabled = false
             User.current.setPreference 'course', 'no'
           else if @splitDesignation in ['d', 'e', 'f', 'j', 'k', 'l']
-            @courseOptIn = true
+            @courseEnabled = true
             User.current.setPreference 'course', 'yes'
       
     # handle first-time users
@@ -220,21 +224,21 @@ class Classifier extends BaseController
 
     # HANDLE MINI-COURSE SPLITS
     if @splitDesignation in ['b', 'e']
-      # console.log 'Setting mini-course interval to 10'
+      console.log 'Setting mini-course interval to 10'
       @course.setRate 10
       $('#course-interval-setter').remove() # destroy custom course interval setter
 
     else if @splitDesignation in ['c', 'f']
-      # console.log 'Setting mini-course interval to 25'
+      console.log 'Setting mini-course interval to 25'
       @course.setRate 25
       $('#course-interval-setter').remove() # destroy custom course interval setter
 
     else if @splitDesignation in ['a', 'd']
-      # console.log 'Setting mini-course interval to 5'
+      console.log 'Setting mini-course interval to 5'
       @course.setRate 5 # set default
       @allowCustomCourseInterval = true
     else
-      # console.log 'Setting mini-course interval to 5'
+      console.log 'Setting mini-course interval to 5'
       @allowCustomCourseInterval = false
       @course.setRate 5 # set default
 
@@ -545,8 +549,8 @@ class Classifier extends BaseController
         @supplementalTutorial.first = "displayOn_" + classification_count.toString()
         @supplementalTutorial.start()
 
+        # prompt user to opt in/out of mini course
         if @course.count is 7
-
           newElement = document.createElement('div')
           newElement.setAttribute 'class', "supplemental-tutorial-option-container"
           newElement.setAttribute 'style', "padding: 20px;"
@@ -566,7 +570,7 @@ class Classifier extends BaseController
           else
             $('#course-opt-in-label').html "Yes, I want to learn more!"
 
-          $('.mini-course-option').prop 'checked', @courseOptIn
+          $('.mini-course-option').prop 'checked', @courseEnabled
         
     # SEND CLASSIFICATION
     @course.incrementCount()
