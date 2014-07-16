@@ -7,12 +7,7 @@ require '../lib/en-us'
 $ = window.jQuery
 
 class MiniCourse
-
-  # set debug flag
-  DEBUG = false
-
   @transitionTime = 1000
-
   constructor: ->
     @prompt_el = $(classifier.el).find("#course-prompt")
     @course_el = $(classifier.el).find("#course-container")
@@ -24,17 +19,6 @@ class MiniCourse
     @content = miniCourseContent # TODO: remove (unnecessary?)
     
     User.on 'change', =>
-      # needs to be changed to read user's last course number
-      
-      if DEBUG
-        # console.log 'MiniCourse: running in DEBUG mode'
-        @resetCourse() #unless User.current?.preferences[zooniverse.Api.current.project]?.hasOwnProperty 'prev_course'
-      else
-        # console.log 'MiniCourse: running in NORMAL mode'
-        # get user preferences
-        @count  = +User.current?.preferences?.planet_hunter.count
-        @curr   = +User.current?.preferences?.planet_hunter.curr_course_id
-
       if User.current?
         @prompt_el.toggleClass 'signed-in'
         @prompt_el.find('.course-button').show()
@@ -120,15 +104,16 @@ class MiniCourse
   displayCourse: ->
     console.log "@curr: #{@curr}, @num_courses: #{@num_courses}"
     return unless @coursesAvailable()
-    unless User.current is null
-      @loadContent()
-      @curr = +@curr + 1
-      console.log 'SETTING CURRENT COURSE ID TO: ', @curr
-      User.current.setPreference 'curr_course_id', @curr
-      @course_el.fadeIn(@transitionTime)
-      @subject_el.fadeOut(@transitionTime)
-      @subject_el.toggleClass("hidden")
-      @course_el.toggleClass("visible")
+    return unless User.current?
+    @loadContent()
+    @curr = +@curr + 1
+    console.log 'SETTING CURRENT COURSE ID TO: ', @curr
+    User.current.setPreference 'curr_course_id', @curr
+    console.log 'FOO: ',  @course_el.find("[name='course-opt-out']").prop 'checked', (not classifier.courseEnabled)
+    @course_el.fadeIn(@transitionTime)
+    @subject_el.fadeOut(@transitionTime)
+    @subject_el.toggleClass("hidden")
+    @course_el.toggleClass("visible")
 
   hideCourse: ->
     @subject_el.fadeIn(@transitionTime)
@@ -143,17 +128,18 @@ class MiniCourse
     @prompt_el.fadeOut(delay)
 
   getPref: ->
-    @pref = User.current?.preferences[zooniverse.Api.current.project]['course']
-    # console.log 'course preference: ', @pref # DEBUG CODE
+    return unless User.current?
+    @pref = User.current?.preferences?.planet_hunter?.course
     return @pref
 
   resetCourse: ->
-    unless User.current is null
-      User.current.setPreference 'course', 'yes'
-      User.current.setPreference 'count', 0
-      User.current.setPreference 'curr_course_id', 0 
-      User.current.setPreference 'supplemental_option', true
-      @count = 0
-      @curr  = 0
+    return unless User.current?
+    console.log 'initializing mini-course...'
+    # User.current.setPreference 'course', 'yes'
+    User.current.setPreference 'count', 0
+    User.current.setPreference 'curr_course_id', 0 
+    # User.current.setPreference 'supplemental_option', true
+    @count = 0
+    @curr  = 0
 
 module.exports = MiniCourse

@@ -1,5 +1,4 @@
 <% {CanvasGraph, Marks, Mark} = require '../lib/canvas-graph' %>
-<%= console.log 'SUBJECT: ', @subjects[0] %>
 <div class='item'>
   <!--<a href="<%= @subjects[0].location %>">-->
     <div class="graph-container">

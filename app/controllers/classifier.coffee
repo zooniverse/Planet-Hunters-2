@@ -51,7 +51,6 @@ class Classifier extends BaseController
     'click button[name="alt-submit-talk"]'    : 'onClickSubmitTalkAlt'
     'change #course-interval'                 : 'onChangeCourseInterval'
     'change #course-interval-sup-tut'         : 'onChangeCourseIntervalViaSupTut'
-    'change .supplemental-option'             : 'onChangeSupplementalOption'
     'change input[name="mini-course-option"]' : 'onChangeMiniCourseOption'
     'change input[name="course-opt-out"]'     : 'onChangeCourseOptOut'
     
@@ -125,10 +124,6 @@ class Classifier extends BaseController
   #     @blockCourseIntervalDisplay = false
   # /////////////////////////////////////////////////
 
-  onChangeSupplementalOption: ->
-    # console.log 'onChangeSupplementalOption(): '
-    return unless User.current?
-
   onChangeMiniCourseOption: ->
     console.log 'onChangeMiniCourseOption(): '
     return unless User.current?
@@ -145,6 +140,23 @@ class Classifier extends BaseController
     clickEvent = 
       event: 'courseEnabled' 
       value: @courseEnabled 
+      timestamp: (new Date).toUTCString()
+    @recordedClickEvents.push clickEvent
+
+  onChangeCourseOptOut: ->
+    console.log 'onChangeCourseOptOut(): '
+    return unless User.current?
+    opt_out = $("[name='course-opt-out']").prop 'checked'
+    if opt_out
+      User.current?.setPreference 'course', 'no'
+      @courseEnabled = false # TODO: needs work!
+    else
+      User.current?.setPreference 'course', 'yes'
+      @courseEnabled = true
+
+    clickEvent = 
+      event: 'courseOptedOut' 
+      value: opt_out 
       timestamp: (new Date).toUTCString()
     @recordedClickEvents.push clickEvent
 
@@ -168,24 +180,6 @@ class Classifier extends BaseController
   #   @recordedClickEvents.push clickEvent
 
   #   User.current?.setPreference 'course', courseOption
-
-  onChangeCourseOptOut: ->
-    console.log 'onChangeCourseOptOut(): '
-    return unless User.current?
-    opt_out = $("[name='course-opt-out']").prop 'checked'
-    if opt_out
-      User.current?.setPreference 'course', 'no'
-      @courseEnabled = false # TODO: needs work!
-    else
-      User.current?.setPreference 'course', 'yes'
-      @courseEnabled = true
-
-
-    clickEvent = 
-      event: 'courseOptedOut' 
-      value: opt_out 
-      timestamp: (new Date).toUTCString()
-    @recordedClickEvents.push clickEvent
 
   # CODE FOR PROMPT (NOT CURRENTLY BEING USED)
   # onChangeCourseInterval: ->
@@ -224,31 +218,44 @@ class Classifier extends BaseController
     @recordedClickEvents.push clickEvent
 
   onUserChange: (e, user) =>
-    # console.log 'classify: onUserChange()'
-    if User.current?
-      @handleSplitDesignation()
-      if User.current.preferences?.planet_hunter?
-        preferences = User.current.preferences.planet_hunter
-        if +preferences.count is 0
-          if @splitDesignation in ['a', 'b', 'c', 'g', 'h', 'i']
-            @courseEnabled = false
-            User.current.setPreference 'course', 'no'
-          else if @splitDesignation in ['d', 'e', 'f', 'j', 'k', 'l']
-            @courseEnabled = true
-            User.current.setPreference 'course', 'yes'
-      
-    # handle first-time users
-    if +preferences?.count is 0 or not User.current?
-      @launchTutorial()
+    console.log 'classify: onUserChange()'    
+    if User.current? # user logged in
 
-    Subject.next() unless @classification?
+      # first visit, initialize preference
+      unless User.current.preferences?.planet_hunter?.count?
+        @initializeMiniCourse()
+      else 
+        @course.count  = +User.current?.preferences?.planet_hunter?.count
+        @course.curr   = +User.current?.preferences?.planet_hunter?.curr_course_id
+      @handleSplitDesignation()
+      
+    # handle tutorial launch
+    if @course.count is 0 or not User.current?
+      @launchTutorial()
+    else
+      Subject.next() unless classification?
+
+  initializeMiniCourse: ->
+    return unless User.current?
+    console.log 'First visit. Initializing preferences...'
+    User.current.setPreference 'count', 0
+    User.current.setPreference 'curr_course_id', 0
+    @course.count = 0
+    @course.curr = 0
 
   handleSplitDesignation: ->
-    @splitDesignation = User.current.project.splits.mini_course_sup_tutorial
+    if User.current.project.splits?.mini_course_sup_tutorial?
+      console.log 'SPLIT DESIGNATION ASSIGNED'
+      @splitDesignation = User.current.project.splits.mini_course_sup_tutorial
+    else
+      console.log 'NO SPLIT DESIGNATION ASSIGNED. USING DEFAULT.'
+      @splitDesignation = 'a' # default split designation
+    
     @splitDesignation = 'a' # DEBUG CODE
+
     console.log 'SPLIT DESIGNATION IS: ', @splitDesignation
 
-    # HANDLE MINI-COURSE SPLITS
+    # SET MINI-COURSE INTERVAL
     if @splitDesignation in ['b', 'e']
       console.log 'Setting mini-course interval to 10'
       @course.setRate 10
@@ -269,6 +276,20 @@ class Classifier extends BaseController
       console.log 'Allowing custom course interval.'
       @allowCustomCourseInterval = false
       @course.setRate 5 # set default
+
+    # SET MINI-COURSE DEFAULT OPT-IN/OUT PREFS
+    if @splitDesignation in ['a', 'b', 'c', 'g', 'h', 'i']
+      @courseEnabled = false
+      User.current.setPreference 'course', 'no'
+      # initialize checkboxes
+      $("[name='course-opt-out']").prop 'checked', true
+      $("[name='mini-course-option']").prop 'checked', false
+    else if @splitDesignation in ['d', 'e', 'f', 'j', 'k', 'l']
+      @courseEnabled = true
+      User.current.setPreference 'course', 'yes'
+      # initialize checkboxes
+      $("[name='course-opt-out']").prop 'checked', false
+      $("[name='mini-course-option']").prop 'checked', false
 
   onSubjectFetch: (e, user) =>
     # console.log 'onSubjectFetch(): '
