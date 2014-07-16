@@ -303,7 +303,7 @@ class Classifier extends BaseController
   loadSubjectData: () ->
     $('#graph-container').addClass 'loading-lightcurve'
     jsonFile = @subject.selected_light_curve.location
-    console.log 'jsonFile: ', jsonFile # DEBUG CODE
+    # console.log 'jsonFile: ', jsonFile # DEBUG CODE
 
     # handle ui elements
     @el.find('#loading-screen').fadeIn()
@@ -574,7 +574,7 @@ class Classifier extends BaseController
     # @noTransitsButton.show()
     @classifySummary.fadeOut(150)
     @nextSubjectButton.hide()
-    @canvasGraph.marks.destroyAll() #clear old marks
+    # @canvasGraph.marks.destroyAll() #clear old marks
     # @canvas.outerHTML = ""
     @resetTalkComment @talkComment
     @resetTalkComment @altTalkComment
@@ -626,12 +626,13 @@ class Classifier extends BaseController
         
     # SEND CLASSIFICATION
     @course.incrementCount()
-    console.log 'YOU\'VE MARKED ', @course.count, ' LIGHT CURVES!'
+    # console.log 'YOU\'VE MARKED ', @course.count, ' LIGHT CURVES!'
 
     @classification.annotate
       classification_type: 'light_curve'
       selected_id:          @subject.selected_light_curve._id
       location:             @subject.selected_light_curve.location
+    
     for mark in [@canvasGraph.marks.all...]
       @classification.annotate
         timestamp: mark.timestamp
@@ -644,14 +645,15 @@ class Classifier extends BaseController
     # dump all recorded click events to classification
     @classification.set 'recordedClickEvents', [@recordedClickEvents...]
     
-    # DEBUG CODE
-    console.log JSON.stringify( @classification )
-    console.log '********************************************'
+    # # DEBUG CODE
+    # console.log JSON.stringify( @classification )
+    # console.log '********************************************'
     
     # send classification (except for tutorial subject)
     unless @classification.subject.id is 'TUTORIAL_SUBJECT'
       @classification.send()
 
+    @canvasGraph.marks.destroyAll() #clear old marks
     @recordedClickEvents = []
     @Subject.next()
 
