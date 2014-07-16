@@ -59,7 +59,7 @@ class SiteNavigation extends BaseController
     @userIcon.toggleClass('active')
 
   onWindowResize: ->
-    if window.innerWidth > 820
+    if window.innerWidth > 960
       icon.hide() for icon in [@hamburger, @closeIcon, @userIcon]
       @links.show()
       $('.zooniverse-top-bar').show()

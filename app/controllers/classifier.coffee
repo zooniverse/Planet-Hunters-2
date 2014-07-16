@@ -125,7 +125,7 @@ class Classifier extends BaseController
   # /////////////////////////////////////////////////
 
   onChangeMiniCourseOption: ->
-    console.log 'onChangeMiniCourseOption(): '
+    # console.log 'onChangeMiniCourseOption(): '
     return unless User.current?
 
     @courseEnabled = not @courseEnabled
@@ -144,7 +144,7 @@ class Classifier extends BaseController
     @recordedClickEvents.push clickEvent
 
   onChangeCourseOptOut: ->
-    console.log 'onChangeCourseOptOut(): '
+    # console.log 'onChangeCourseOptOut(): '
     return unless User.current?
     opt_out = $("[name='course-opt-out']").prop 'checked'
     if opt_out
@@ -198,7 +198,7 @@ class Classifier extends BaseController
   #     @course.setRate value
 
   onChangeCourseIntervalViaSupTut: ->
-    console.log 'onChangeCourseIntervalViaSupTut(): '
+    # console.log 'onChangeCourseIntervalViaSupTut(): '
     defaultValue = 5
     value = +@el.find('#course-interval-sup-tut').val()
 
@@ -218,7 +218,7 @@ class Classifier extends BaseController
     @recordedClickEvents.push clickEvent
 
   onUserChange: (e, user) =>
-    console.log 'classify: onUserChange()'    
+    # console.log 'classify: onUserChange()'    
     if User.current? # user logged in
 
       # first visit, initialize preference
@@ -237,7 +237,7 @@ class Classifier extends BaseController
 
   initializeMiniCourse: ->
     return unless User.current?
-    console.log 'First visit. Initializing preferences...'
+    # console.log 'First visit. Initializing preferences...'
     User.current.setPreference 'count', 0
     User.current.setPreference 'curr_course_id', 0
     @course.count = 0
@@ -245,35 +245,35 @@ class Classifier extends BaseController
 
   handleSplitDesignation: ->
     if User.current.project.splits?.mini_course_sup_tutorial?
-      console.log 'SPLIT DESIGNATION ASSIGNED'
+      # console.log 'SPLIT DESIGNATION ASSIGNED'
       @splitDesignation = User.current.project.splits.mini_course_sup_tutorial
     else
-      console.log 'NO SPLIT DESIGNATION ASSIGNED. USING DEFAULT.'
+      # console.log 'NO SPLIT DESIGNATION ASSIGNED. USING DEFAULT.'
       @splitDesignation = 'a' # default split designation
     
     @splitDesignation = 'a' # DEBUG CODE
 
-    console.log 'SPLIT DESIGNATION IS: ', @splitDesignation
+    # console.log 'SPLIT DESIGNATION IS: ', @splitDesignation
 
     # SET MINI-COURSE INTERVAL
     if @splitDesignation in ['b', 'e']
-      console.log 'Setting mini-course interval to 10'
+      # console.log 'Setting mini-course interval to 10'
       @course.setRate 10
       $('#course-interval-setter').remove() # destroy custom course interval setter
 
     else if @splitDesignation in ['c', 'f']
-      console.log 'Setting mini-course interval to 25'
+      # console.log 'Setting mini-course interval to 25'
       @course.setRate 25
       $('#course-interval-setter').remove() # destroy custom course interval setter
 
     else if @splitDesignation in ['a', 'd']
-      console.log 'Setting mini-course interval to 5'
-      console.log 'Allowing custom course interval.'
+      # console.log 'Setting mini-course interval to 5'
+      # console.log 'Allowing custom course interval.'
       @course.setRate 5 # set default
       @allowCustomCourseInterval = true
     else
-      console.log 'Setting mini-course interval to 5 (default)'      
-      console.log 'Allowing custom course interval.'
+      # console.log 'Setting mini-course interval to 5 (default)'      
+      # console.log 'Allowing custom course interval.'
       @allowCustomCourseInterval = false
       @course.setRate 5 # set default
 
@@ -303,7 +303,7 @@ class Classifier extends BaseController
   loadSubjectData: () ->
     $('#graph-container').addClass 'loading-lightcurve'
     jsonFile = @subject.selected_light_curve.location
-    console.log 'jsonFile: ', jsonFile # DEBUG CODE
+    # console.log 'jsonFile: ', jsonFile # DEBUG CODE
 
     # handle ui elements
     @el.find('#loading-screen').fadeIn()
@@ -574,7 +574,7 @@ class Classifier extends BaseController
     # @noTransitsButton.show()
     @classifySummary.fadeOut(150)
     @nextSubjectButton.hide()
-    @canvasGraph.marks.destroyAll() #clear old marks
+    # @canvasGraph.marks.destroyAll() #clear old marks
     # @canvas.outerHTML = ""
     @resetTalkComment @talkComment
     @resetTalkComment @altTalkComment
@@ -594,7 +594,7 @@ class Classifier extends BaseController
     # display supplemental tutorial
     for classification_count in @whenToDisplayTips
       if @course.count is classification_count
-        console.log "*** DISPLAY SUPPLEMENTAL TUTOTIAL # #{classification_count} *** "
+        # console.log "*** DISPLAY SUPPLEMENTAL TUTOTIAL # #{classification_count} *** "
         @supplementalTutorial.first = "displayOn_" + classification_count.toString()
         @supplementalTutorial.start()
 
@@ -626,12 +626,13 @@ class Classifier extends BaseController
         
     # SEND CLASSIFICATION
     @course.incrementCount()
-    console.log 'YOU\'VE MARKED ', @course.count, ' LIGHT CURVES!'
+    # console.log 'YOU\'VE MARKED ', @course.count, ' LIGHT CURVES!'
 
     @classification.annotate
       classification_type: 'light_curve'
       selected_id:          @subject.selected_light_curve._id
       location:             @subject.selected_light_curve.location
+    
     for mark in [@canvasGraph.marks.all...]
       @classification.annotate
         timestamp: mark.timestamp
@@ -644,14 +645,15 @@ class Classifier extends BaseController
     # dump all recorded click events to classification
     @classification.set 'recordedClickEvents', [@recordedClickEvents...]
     
-    # DEBUG CODE
-    console.log JSON.stringify( @classification )
-    console.log '********************************************'
+    # # DEBUG CODE
+    # console.log JSON.stringify( @classification )
+    # console.log '********************************************'
     
     # send classification (except for tutorial subject)
     unless @classification.subject.id is 'TUTORIAL_SUBJECT'
       @classification.send()
 
+    @canvasGraph.marks.destroyAll() #clear old marks
     @recordedClickEvents = []
     @Subject.next()
 
