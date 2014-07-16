@@ -125,7 +125,7 @@ class Classifier extends BaseController
   # /////////////////////////////////////////////////
 
   onChangeMiniCourseOption: ->
-    console.log 'onChangeMiniCourseOption(): '
+    # console.log 'onChangeMiniCourseOption(): '
     return unless User.current?
 
     @courseEnabled = not @courseEnabled
@@ -144,7 +144,7 @@ class Classifier extends BaseController
     @recordedClickEvents.push clickEvent
 
   onChangeCourseOptOut: ->
-    console.log 'onChangeCourseOptOut(): '
+    # console.log 'onChangeCourseOptOut(): '
     return unless User.current?
     opt_out = $("[name='course-opt-out']").prop 'checked'
     if opt_out
@@ -198,7 +198,7 @@ class Classifier extends BaseController
   #     @course.setRate value
 
   onChangeCourseIntervalViaSupTut: ->
-    console.log 'onChangeCourseIntervalViaSupTut(): '
+    # console.log 'onChangeCourseIntervalViaSupTut(): '
     defaultValue = 5
     value = +@el.find('#course-interval-sup-tut').val()
 
@@ -594,7 +594,7 @@ class Classifier extends BaseController
     # display supplemental tutorial
     for classification_count in @whenToDisplayTips
       if @course.count is classification_count
-        console.log "*** DISPLAY SUPPLEMENTAL TUTOTIAL # #{classification_count} *** "
+        # console.log "*** DISPLAY SUPPLEMENTAL TUTOTIAL # #{classification_count} *** "
         @supplementalTutorial.first = "displayOn_" + classification_count.toString()
         @supplementalTutorial.start()
 
