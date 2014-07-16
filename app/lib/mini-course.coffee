@@ -102,14 +102,13 @@ class MiniCourse
       @hidePrompt()
 
   displayCourse: ->
-    console.log "@curr: #{@curr}, @num_courses: #{@num_courses}"
+    # console.log "@curr: #{@curr}, @num_courses: #{@num_courses}"
     return unless @coursesAvailable()
     return unless User.current?
     @loadContent()
     @curr = +@curr + 1
-    console.log 'SETTING CURRENT COURSE ID TO: ', @curr
+    # console.log 'SETTING CURRENT COURSE ID TO: ', @curr
     User.current.setPreference 'curr_course_id', @curr
-    console.log 'FOO: ',  @course_el.find("[name='course-opt-out']").prop 'checked', (not classifier.courseEnabled)
     @course_el.fadeIn(@transitionTime)
     @subject_el.fadeOut(@transitionTime)
     @subject_el.toggleClass("hidden")
@@ -134,7 +133,7 @@ class MiniCourse
 
   resetCourse: ->
     return unless User.current?
-    console.log 'initializing mini-course...'
+    # console.log 'initializing mini-course...'
     # User.current.setPreference 'course', 'yes'
     User.current.setPreference 'count', 0
     User.current.setPreference 'curr_course_id', 0 

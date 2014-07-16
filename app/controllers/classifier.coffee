@@ -218,7 +218,7 @@ class Classifier extends BaseController
     @recordedClickEvents.push clickEvent
 
   onUserChange: (e, user) =>
-    console.log 'classify: onUserChange()'    
+    # console.log 'classify: onUserChange()'    
     if User.current? # user logged in
 
       # first visit, initialize preference
@@ -237,7 +237,7 @@ class Classifier extends BaseController
 
   initializeMiniCourse: ->
     return unless User.current?
-    console.log 'First visit. Initializing preferences...'
+    # console.log 'First visit. Initializing preferences...'
     User.current.setPreference 'count', 0
     User.current.setPreference 'curr_course_id', 0
     @course.count = 0
@@ -245,35 +245,35 @@ class Classifier extends BaseController
 
   handleSplitDesignation: ->
     if User.current.project.splits?.mini_course_sup_tutorial?
-      console.log 'SPLIT DESIGNATION ASSIGNED'
+      # console.log 'SPLIT DESIGNATION ASSIGNED'
       @splitDesignation = User.current.project.splits.mini_course_sup_tutorial
     else
-      console.log 'NO SPLIT DESIGNATION ASSIGNED. USING DEFAULT.'
+      # console.log 'NO SPLIT DESIGNATION ASSIGNED. USING DEFAULT.'
       @splitDesignation = 'a' # default split designation
     
     @splitDesignation = 'a' # DEBUG CODE
 
-    console.log 'SPLIT DESIGNATION IS: ', @splitDesignation
+    # console.log 'SPLIT DESIGNATION IS: ', @splitDesignation
 
     # SET MINI-COURSE INTERVAL
     if @splitDesignation in ['b', 'e']
-      console.log 'Setting mini-course interval to 10'
+      # console.log 'Setting mini-course interval to 10'
       @course.setRate 10
       $('#course-interval-setter').remove() # destroy custom course interval setter
 
     else if @splitDesignation in ['c', 'f']
-      console.log 'Setting mini-course interval to 25'
+      # console.log 'Setting mini-course interval to 25'
       @course.setRate 25
       $('#course-interval-setter').remove() # destroy custom course interval setter
 
     else if @splitDesignation in ['a', 'd']
-      console.log 'Setting mini-course interval to 5'
-      console.log 'Allowing custom course interval.'
+      # console.log 'Setting mini-course interval to 5'
+      # console.log 'Allowing custom course interval.'
       @course.setRate 5 # set default
       @allowCustomCourseInterval = true
     else
-      console.log 'Setting mini-course interval to 5 (default)'      
-      console.log 'Allowing custom course interval.'
+      # console.log 'Setting mini-course interval to 5 (default)'      
+      # console.log 'Allowing custom course interval.'
       @allowCustomCourseInterval = false
       @course.setRate 5 # set default
 
