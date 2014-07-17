@@ -61,9 +61,9 @@ class Classifier extends BaseController
   constructor: ->
     super    
 
-    # if mobile device detected, go to verify mode
-    if window.matchMedia("(min-device-width: 320px)").matches and window.matchMedia("(max-device-width: 480px)").matches
-      location.hash = "#/verify"
+    # # if mobile device detected, go to verify mode
+    # if window.matchMedia("(min-device-width: 320px)").matches and window.matchMedia("(max-device-width: 480px)").matches
+    #   location.hash = "#/verify"
 
     window.classifier = @
     @recordedClickEvents = [] # array to store all click events
@@ -580,8 +580,9 @@ class Classifier extends BaseController
     @resetTalkComment @altTalkComment
     # show courses
 
-    if @course.count % @verifyRate is 0
-      location.hash = "#/verify"
+    # # switch to verify mode
+    # if @course.count % @verifyRate is 0
+    #   location.hash = "#/verify"
 
     # if @course.getPref() isnt 'never' and @course.count % @course.rate is 0 and @course.coursesAvailable() and @course.count isnt 0
     #   @el.find('#notification-message').hide() # get any notification out of the way
