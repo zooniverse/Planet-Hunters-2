@@ -10,6 +10,19 @@
       <%- translate 'a', 'home.header.beginClassifying', href: '#/classify', id: "begin-classifying" %>
       <%- translate 'a', 'home.header.learnMore', href: '', id: "learn-more" %>
     </div>
+
+
+
+    <div id='social-media'>
+      <div id='social-icons'>
+        <a href='http://www.facebook.com/planethunters'><img src='./images/social-media/facebook.svg'></a>
+        <a href='https://plus.google.com/109754226869605076230/posts'><img src='./images/social-media/googplus.svg'></a>
+        <a href='http://www.twitter.com/planethunters'><img src='./images/social-media/twit.svg'></a>
+      </div>
+    </div>
+
+
+
   </div>
 </div>
 
