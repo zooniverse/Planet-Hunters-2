@@ -80,12 +80,14 @@ movePlanet = ->
   # console.log 'hourFrac   = ', hourFrac
   # console.log 'dayFrac    = ', dayFrac
 
+  dayFrac = 10/24
   scaleFactor = dayFrac
+
   for planet in [$(".bg-planet")...]
-    planet.style.top    = Math.round( scaleFactor * 100) + '%'
-    planet.style.left   = Math.round( scaleFactor * 100) + '%'
-    planet.style.width  = Math.round( scaleFactor * 2*530) + 'px'
-    planet.style.height = Math.round( scaleFactor * 2*530) + 'px'
+    planet.style.top    = Math.round( scaleFactor * 100-30)+20 + '%'
+    planet.style.left   = Math.round( scaleFactor * 100-30)+20 + '%'
+    planet.style.width  = Math.round( scaleFactor * 2*(530-100))+200 + 'px'
+    planet.style.height = Math.round( scaleFactor * 2*(530-100))+200 + 'px'
 
     # # DEBUG CODE
     # console.log '-------------------------------'
