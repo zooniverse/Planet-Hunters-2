@@ -46,9 +46,9 @@ class CanvasGraph
   disableMarking: ->
     # console.log 'CANVAS GRAPH: disableMarking()'
     @markingDisabled = true
-    @canvas.removeEventListener 'mousedown', (e) => @onMouseDown(e)
-    @canvas.removeEventListener 'touchstart', (e) => @addMarkToGraph(e)
-    @canvas.removeEventListener 'mousemove', (e) => @onMouseMove(e) # TODO: FIX (disabled for now)
+    # @canvas.removeEventListener 'mousedown', (e) => @onMouseDown(e)
+    # @canvas.removeEventListener 'touchstart', (e) => @addMarkToGraph(e)
+    # @canvas.removeEventListener 'mousemove', (e) => @onMouseMove(e) # TODO: FIX (disabled for now)
 
   enableMarking: ->
     # console.log 'CANVAS GRAPH: enableMarking()'
@@ -69,7 +69,6 @@ class CanvasGraph
     @addMarkToGraph(e)
 
   onMouseMove: (e) =>
-    # console.log 'onMouseMove()'
     # return # just for now
     return if @markingDisabled
     return if classifier.el.find('#graph').hasClass('is-zooming')
@@ -294,7 +293,7 @@ class CanvasGraph
     return
 
   zoomOut: (callback) ->
-    classifier.el.find('#graph').addClass('is-zooming')
+    # classifier.el.find('#graph').addClass('is-zooming')
     @plotPoints(@smallestX, @largestX)
 
     [cMin, cMax] = [@xMin, @xMax]

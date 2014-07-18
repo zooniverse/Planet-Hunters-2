@@ -28,10 +28,6 @@ class LightcurveViewer extends BaseController
     super    
     window.viewer = @
 
-    # zoom levels [days]: 2x, 10x, 20x
-    @zoomRange = 15
-    @zoomRanges = []
-    @zoomLevel = 0
     isZoomed: false
     ifFaved: false
 
@@ -74,13 +70,13 @@ class LightcurveViewer extends BaseController
     $.getJSON jsonFile, (data) =>
       @marksContainer.appendChild(@canvas)
       @canvasGraph = new CanvasGraph(@canvas, data)
+      @zoomReset()
       @canvasGraph.plotPoints()
       @el.find('#loading-screen').fadeOut()
       $('#graph-container').removeClass 'loading-lightcurve'
       @canvasGraph.enableMarking()
-      @zoomRanges = [@canvasGraph.largestX, 10, 2]
       @magnification = [ '1x (all days)', '10 days', '2 days' ]
-      @showZoomMessage(@magnification[@zoomLevel])
+      @showZoomMessage(@magnification[@canvasGraph.zoomLevel])
       @el.find("#ui-slider").noUiSlider
         start: 0
         range:
@@ -106,33 +102,33 @@ class LightcurveViewer extends BaseController
 
   onChangeScaleSlider: ->
     val = +@el.find("#ui-slider").val()    
-    @canvasGraph.plotPoints( val, val + @zoomRanges[@zoomLevel] )
+    @canvasGraph.plotPoints( val, val + @canvasGraph.zoomRanges[@canvasGraph.zoomLevel] )
 
   onClickZoom: ->    
     val = +@el.find("#ui-slider").val()
-    @zoomLevel = @zoomLevel + 1
-    if @zoomLevel > 2
-      @zoomLevel = 0
-    if @zoomLevel is 0
+    @canvasGraph.zoomLevel = @canvasGraph.zoomLevel + 1
+    if @canvasGraph.zoomLevel > 2
+      @canvasGraph.zoomLevel = 0
+    if @canvasGraph.zoomLevel is 0
       @zoomReset()
     else 
-      @canvasGraph.zoomInTo(val, val+@zoomRanges[@zoomLevel])
+      @canvasGraph.zoomInTo(val, val+@canvasGraph.zoomRanges[@canvasGraph.zoomLevel])
       # rebuild slider
       @el.find("#ui-slider").noUiSlider
         start: 0 #+@el.find("#ui-slider").val()
         range:
           'min': @canvasGraph.smallestX,
-          'max': @canvasGraph.largestX - @zoomRanges[@zoomLevel]
+          'max': @canvasGraph.largestX - @canvasGraph.zoomRanges[@canvasGraph.zoomLevel]
       , true
       
       # update attributes/properties
       @el.find('#ui-slider').removeAttr('disabled')
       @el.find("#zoom-button").addClass("zoomed")
-      if @zoomLevel is 2
+      if @canvasGraph.zoomLevel is 2
         @el.find("#zoom-button").addClass("allowZoomOut")
       else
         @el.find("#zoom-button").removeClass("allowZoomOut")
-    @showZoomMessage(@magnification[@zoomLevel])
+    @showZoomMessage(@magnification[@canvasGraph.zoomLevel])
   
   zoomReset: =>
     # reset slider value
@@ -144,7 +140,7 @@ class LightcurveViewer extends BaseController
 
     @canvasGraph.zoomOut()
     @isZoomed = false
-    @zoomLevel = 0
+    @canvasGraph.zoomLevel = 0
 
     # update buttons
     @el.find("#zoom-button").removeClass("zoomed")
