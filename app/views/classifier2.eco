@@ -1,0 +1,206 @@
+<% translate = require 't7e' %>
+<div class="content-block">
+
+  <!-- COURSE  -->
+  <div id="course-container">
+    <div id="course-title"></div>
+    <div class="course-close">
+      Close
+      <!-- <img src="./images/icons/marking-closex.png"> -->
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="8px" height="8px">
+        <defs></defs>
+        <path fill-rule="evenodd" fill="rgb(255,255,255)" d=" M8.01144 1.38207 C8.01144 1.38207 6.63064 0.00572705 6.63064 0.00572705 C6.63064 0.00572705 4.00746 2.62077 4.00746 2.62077 C4.00746 2.62077 1.38411 0.00572705 1.38411 0.00572705 C1.38411 0.00572705 0.00340843 1.38207 0.00340843 1.38207 C0.00340843 1.38207 2.62685 3.99735 2.62685 3.99735 C2.62685 3.99735 0.00340843 6.61246 0.00340843 6.61246 C0.00340843 6.61246 1.38411 7.9888 1.38411 7.9888 C1.38411 7.9888 4.00746 5.37378 4.00746 5.37378 C4.00746 5.37378 6.63064 7.9888 6.63064 7.9888 C6.63064 7.9888 8.01144 6.61246 8.01144 6.61246 C8.01144 6.61246 5.38809 3.99735 5.38809 3.99735 C5.38809 3.99735 8.01144 1.38207 8.01144 1.38207 Z"/>
+      </svg>
+    </div>
+    <div id="course-body">
+      <div class="course-figure-container horizontal">
+        <img id="course-figure" src="">
+        <div class="course-figure-credits"></div>
+      </div>
+      <div class="course-text horizontal"></div>
+    </div>
+
+    <!-- mini-course checkbox -->
+    <div style="float: left; padding: 20px;">
+      <input class="mini-course-option" name="course-opt-out" type="checkbox"></input>
+      <div style="float: left; font-style: italic; font-weight: 500; color: #fff;">Do not show mini-course in the future.
+      </div>
+    </div>
+    <button name="course-close" class="course-close std-btn yellow">Close</button>
+  </div>
+  <!-- COURSE -->
+
+  <div id="subject-container">
+    <div class="subject-header">
+      <div class="do-you-see-a-transit">
+        <h3>Do you see a transit?</h3>
+        <p>If so, highlight it on the light curve below!</p>
+      </div>
+      <div id="notification">
+        <div id="notification-message"></div>
+        <div id="course-prompt">
+          <svg id="course-alert" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="15px" height="15px">
+            <defs></defs>
+            <path fill-rule="evenodd" fill="rgb(255,255,255)" d=" M7.50001 15 C3.35788 15 7.15798e-006 11.6421 7.15798e-006 7.50001 C7.15798e-006 3.35788 3.35788 2.27523e-006 7.50001 2.27523e-006 C11.6421 2.27523e-006 15 3.35788 15 7.50001 C15 11.6421 11.6421 15 7.50001 15 Z M7.50001 1 C3.91016 1 0.999995 3.91015 0.999995 7.50001 C0.999995 11.0898 3.91016 14 7.50001 14 C11.0898 14 14 11.0898 14 7.50001 C14 3.91015 11.0898 1 7.50001 1 Z M7.51562 11.916 C7.1875 11.916 6.93354 11.829 6.75391 11.6553 C6.5742 11.4815 6.48438 11.2363 6.48438 10.9199 C6.48438 10.5918 6.57227 10.3438 6.74805 10.1758 C6.92383 10.0079 7.17964 9.92383 7.51562 9.92383 C7.83982 9.92383 8.09076 10.0098 8.26856 10.1816 C8.44627 10.3536 8.53517 10.5997 8.53517 10.9199 C8.53517 11.2286 8.44526 11.4717 8.26562 11.6494 C8.08591 11.8271 7.83589 11.916 7.51562 11.916 Z M6.80665 8.91602 C6.80665 8.91602 6.50781 3.19141 6.50781 3.19141 C6.50781 3.19141 8.53517 3.19141 8.53517 3.19141 C8.53517 3.19141 8.23633 8.91602 8.23633 8.91602 C8.23633 8.91602 6.80665 8.91602 6.80665 8.91602 Z"/>
+          </svg>
+          <div id="course-message" class="course-message">
+            <%- translate 'course.prompt.login_message' %>
+          </div>
+
+          <div id="course-yes-container">
+            <div id="course-yes">Yes</div>
+            <div id="course-interval-setter" class="course-interval-setter">
+              <div class="course-interval-text">, remind me every </div>
+              <input type="number" id="course-interval" class="course-interval" name="course-interval" value="5"></input>
+              <div class="course-interval-text"> classifications!</div>
+            </div>
+          </div>
+
+          <button id="course-no" name="course-no" class="course-button">No</button>
+          <button id="course-never" name="course-never" class="course-button">Never</button>
+          <svg id="course-prompt-close" class="course-prompt-close" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="7px" height="7px">
+            <defs></defs>
+            <path fill-rule="evenodd" fill="rgb(255,255,255)" d=" M8.01144 1.38207 C8.01144 1.38207 6.63064 0.00572705 6.63064 0.00572705 C6.63064 0.00572705 4.00746 2.62077 4.00746 2.62077 C4.00746 2.62077 1.38411 0.00572705 1.38411 0.00572705 C1.38411 0.00572705 0.00340843 1.38207 0.00340843 1.38207 C0.00340843 1.38207 2.62685 3.99735 2.62685 3.99735 C2.62685 3.99735 0.00340843 6.61246 0.00340843 6.61246 C0.00340843 6.61246 1.38411 7.9888 1.38411 7.9888 C1.38411 7.9888 4.00746 5.37378 4.00746 5.37378 C4.00746 5.37378 6.63064 7.9888 6.63064 7.9888 C6.63064 7.9888 8.01144 6.61246 8.01144 6.61246 C8.01144 6.61246 5.38809 3.99735 5.38809 3.99735 C5.38809 3.99735 8.01144 1.38207 8.01144 1.38207 Z"/>
+          </svg>
+        </div>
+      </div>
+
+    </div>
+    <div id="graph-container">
+      <!-- additional tutorial stuff -->
+      <div class="tutorial-annotations x-axis">
+        <p>This part of the light curve shows the time spent observing the star.</p>
+      </div>
+      <div class="tutorial-annotations y-axis">
+        <!-- <p>This part of the light curve shows the star's observed brightness.</p> -->
+      </div>
+
+      <div id='loading-screen'>
+        <h3>Loading...</h3>
+        <div class="spinner"></div>
+      </div>
+      <div id="marks-container">
+      </div>
+      <div id="zoom-notification"></div>
+      <div id="classify-summary">
+        <div class="three-column">
+          <div class="content">
+            <h1>Nice Work!</h1>
+            <!--<p>Looks like you've found <span id="planet-num"></span> potential transits!</p>
+            <p>Look to your right and see if anyone is talking about the star, or start a conversation of your own.</p>-->
+            <p>Move on to the next subject when you're ready.</p>
+          </div>
+        </div>
+        <div class="three-column">
+          <div class="content">
+<!--             <h2>Discussions about this star</h2>
+            <div id="comments">
+              <div class="formatted-comment">
+                <p>Some content for a comment</p>
+                <p>by <strong>someAuthor</strong> X minutes ago</p>
+              </div>
+              <div class="formatted-comment">
+                <p>Some content for a comment</p>
+                <p>by <strong>someAuthor</strong> X minutes ago</p>
+              </div>
+              <div class="formatted-comment">
+                <p>Some content for a longer comment. Some content for a longer comment. Some content for a longer comment.</p>
+                <p>by <strong>someAuthor</strong> X minutes ago</p>
+              </div>
+            </div>
+            <button class="std-btn transparent" name="join-convo">Join the Conversation</button>
+
+            <div class="talk-pill">
+              <textarea placeholder="Type something..." name="talk-comment"></textarea>
+              <button name="submit-talk">Submit</button>
+            </div> -->
+          </div>
+        </div>
+
+        <div class="three-column">
+          <div class="content">
+            <!--<div id=".ukirt">
+              Additional light curve information: <br>
+              <ul>
+                <li>
+                  <a id="ukirt-url" href="">UKIRT Source</a>
+                </li>
+              </ul>
+            </div>
+            <div id="summary-tools">
+              <button class="summary-button" id="summary-fav-button">
+                <span>Add to favorites</span>
+              </button>
+              <button class="summary-button" id="summary-talk-button">
+                <span>Talk about this</span>
+              </button>
+            </div>
+                 <h2>Discussions about this star</h2>
+            <div id="alt-comments">
+              <div class="formatted-comment">
+                <p>Some content for an alternate talk comment. Wow what a comment!</p>
+                <p>by <strong>someAuthor</strong> X minutes ago</p>
+              </div>
+            </div>
+            <button class="std-btn transparent" name="alt-join-convo">Join the Conversation</button>
+
+            <div class="talk-pill">
+              <textarea placeholder="Type something..." name="alt-talk-comment"></textarea>
+              <button name="alt-submit-talk">Submit</button>
+            </div> -->
+          </div>
+        </div>
+      </div>
+
+      <div id="tools">
+        <h3>TOOLS</h3>
+        <button class="tool-button" id="zoom-button">
+          <span>Zoom</span>
+        </button>
+        <button class="tool-button" id="toggle-fav">
+          <span>+Fav</span>
+        </button>
+        <button class="tool-button" id="help" disabled>
+          <span>Help</span>
+        </button>
+        <button class="tool-button" id="tutorial">
+          <span>Tutorial</span>
+        </button>
+      </div>
+
+      <div id="slider-container">
+        <div id="numbers-container"></div>
+        <div id="ui-slider"></div>
+      </div>
+    </div>
+
+    <div id="subject-metadata">
+      <h4>Star Information</h4>
+      <div class="meta-field meta star-id">Zooniverse Id</div>     <div id="zooniverse-id" class="meta-value meta star-id">N/A</div>
+      <div class="meta-field meta star-id">Kepler Id</div>         <div id="kepler-id" class="meta-value meta star-id">N/A</div>
+      <!-- <div id="zooniverse-id" class="meta"></div> -->
+      <div class='meta-field meta'>Type</div>       <div id="star-type"     class="meta-value meta">N/A</div>
+      <div class='meta-field meta'>Magnitude</div>  <div id="magnitude"     class="meta-value meta">N/A</div>
+      <div class='meta-field meta'>Temperature</div><div id="temperature"   class="meta-value meta">N/A</div>
+      <div class='meta-field meta'>Radius</div>     <div id="radius"        class="meta-value meta">N/A</div>
+
+      <div id="button-container">
+        <button class="std-btn yellow" name="finished-marking">Finished</button>
+        <button class="std-btn yellow" name="finished-feedback">Next</button>
+        <button class="std-btn yellow" name="next-subject">Next Subject</button>
+        <button id="no-transits" name="no-transits" class="std-btn white" id="tutorial">No Transits</button>
+      </div>
+
+    </div>
+
+
+  </div><!-- end subject container -->
+</div>
+
+<!-- PLANET TIME -->
+<div class="bg-starfield-sun">
+  <div class="bg-planet-container">
+    <img class="bg-planet" src="./images/planet.png">
+  </div>
+</div>
+<div class="bg-overlay"></div>
