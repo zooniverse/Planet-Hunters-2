@@ -80,7 +80,6 @@ movePlanet = ->
   # console.log 'hourFrac   = ', hourFrac
   # console.log 'dayFrac    = ', dayFrac
 
-  dayFrac = 10/24
   scaleFactor = dayFrac
 
   for planet in [$(".bg-planet")...]
