@@ -14,7 +14,7 @@ getParameterByName = (name) ->
   (if not results? then "" else decodeURIComponent(results[1].replace(/\+/g, " ")))
 
 JSON_FILE = getParameterByName "JsonFile"
-console.log 'JSON_FILE: ', JSON_FILE
+# console.log 'JSON_FILE: ', JSON_FILE # DEBUG code
 
 class LightcurveViewer extends BaseController
   className: 'lightcurve-viewer'
