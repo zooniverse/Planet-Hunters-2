@@ -160,7 +160,7 @@
         <button class="tool-button" id="toggle-fav">
           <span>+Fav</span>
         </button>
-        <button class="tool-button" id="help">
+        <button class="tool-button" id="help" disabled>
           <span>Help</span>
         </button>
         <button class="tool-button" id="tutorial">

@@ -476,8 +476,8 @@ class Classifier extends BaseController
       @notify('Added to Favorites.')
 
   onClickHelp: ->
-    @el.find('#notification-message').hide() # get any notification out of the way
-    @course.showPrompt()
+    # @el.find('#notification-message').hide() # get any notification out of the way
+    # @course.showPrompt() # DEBUG ONLY
     
   onClickTutorial: ->
     clickEvent = { event: 'tutorialClicked', timestamp: (new Date).toUTCString() }
