@@ -12,9 +12,9 @@ supplementalTutorialSteps  = require '../lib/supplemental-tutorial-steps'
 {CanvasGraph, Marks, Mark} = require "../lib/canvas-graph"
 $ = window.jQuery
 
-class Classifier2 extends BaseController
-  className: 'classifier2'
-  template: require '../views/classifier2'
+class LightcurveViewer extends BaseController
+  className: 'lightcurve-viewer'
+  template: require '../views/lightcurve-viewer'
 
   elements:
     '#zoom-button'                      : 'zoomButton'
@@ -704,4 +704,4 @@ class Classifier2 extends BaseController
     """).animate({ scrollTop: container[0].scrollHeight}, 1000)
     @resetTalkComment comment
 
-module.exports = Classifier2
+module.exports = LightcurveViewer
