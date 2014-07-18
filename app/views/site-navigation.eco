@@ -59,9 +59,13 @@
     <%- translate 'a', 'siteNavigation.science',   foohref: '#/science',   class: 'link disabled-navlink' %>
     <%- translate 'a', 'siteNavigation.about',     foohref: '#/about',     class: 'link disabled-navlink' %>
     <%- translate 'a', 'siteNavigation.profile',   href: '#/profile',   class: 'link' %>
+    <a href="https://docs.google.com/forms/d/1eBV5VR52L-EPfxXi6t6Bvn1Bo98vD8MJt_w0UnF3Yys/viewform" class="link">Feedback</a>
+
+    <!--
     <%- translate 'a', 'siteNavigation.education', foohref: '#/education', class: 'link disabled-navlink' %>
     <%- translate 'a', 'siteNavigation.talk',      foohref: '#/discuss',   class: 'link disabled-navlink' %>
     <%- translate 'a', 'siteNavigation.blog',      foohref: '#/blog',      class: 'link disabled-navlink' %>
+    -->
   </div>
 </div>
 
