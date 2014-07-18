@@ -16,57 +16,13 @@ class LightcurveViewer extends BaseController
   className: 'lightcurve-viewer'
   template: require '../views/lightcurve-viewer'
 
-  elements:
-    '#zoom-button'                      : 'zoomButton'
-    '#toggle-fav'                       : 'favButton'
-    '#help'                             : 'helpButton'
-    '#tutorial'                         : 'tutorialButton'
-    'numbers-container'                 : 'numbersContainer'
-    '#classify-summary'                 : 'classifySummary'
-    '#comments'                         : 'comments'
-    '#planet-num'                       : 'planetNum'
-    '#alt-comments'                     : 'altComments'
-    'button[name="no-transits"]'        : 'noTransitsButton'
-    'button[name="finished-marking"]'   : 'finishedMarkingButton'
-    'button[name="finished-feedback"]'  : 'finishedFeedbackButton'
-    'button[name="next-subject"]'       : 'nextSubjectButton'
-    'button[name="join-convo"]'         : 'joinConvoBtn'
-    'button[name="alt-join-convo"]'     : 'altJoinConvoBtn'
-    'textarea[name="talk-comment"]'     : 'talkComment'
-    'textarea[name="alt-talk-comment"]' : 'altTalkComment'
-
   events:
     'click button[id="zoom-button"]'          : 'onClickZoom'
-    'click button[id="toggle-fav"]'           : 'onToggleFav'
-    'click button[id="help"]'                 : 'onClickHelp'
-    'click button[id="tutorial"]'             : 'onClickTutorial'
-    'click button[name="no-transits"]'        : 'onClickNoTransits'
-    'click button[name="next-subject"]'       : 'onClickNextSubject'
-    'click button[name="finished-marking"]'   : 'onClickFinishedMarking'
-    'click button[name="finished-feedback"]'  : 'onClickFinishedFeedback'
     'slide #ui-slider'                        : 'onChangeScaleSlider'
-    'click button[name="join-convo"]'         : 'onClickJoinConvo'
-    'click button[name="alt-join-convo"]'     : 'onClickAltJoinConvo'
-    'click button[name="submit-talk"]'        : 'onClickSubmitTalk'
-    'click button[name="alt-submit-talk"]'    : 'onClickSubmitTalkAlt'
-    'change #course-interval'                 : 'onChangeCourseInterval'
-    'change #course-interval-sup-tut'         : 'onChangeCourseIntervalViaSupTut'
-    'change input[name="mini-course-option"]' : 'onChangeMiniCourseOption'
-    'change input[name="course-opt-out"]'     : 'onChangeCourseOptOut'
-    
-    # CODE FOR PROMPT (NOT CURRENTLY IN USE)
-    # 'mouseenter #course-yes-container'        : 'onMouseoverCourseYes'
-    # 'mouseleave  #course-yes-container'       : 'onMouseoutCourseYes'
     
   constructor: ->
     super    
-
-    # # if mobile device detected, go to verify mode
-    # if window.matchMedia("(min-device-width: 320px)").matches and window.matchMedia("(max-device-width: 480px)").matches
-    #   location.hash = "#/verify"
-
-    window.classifier2 = @
-    @recordedClickEvents = [] # array to store all click events
+    window.viewer = @
 
     # zoom levels [days]: 2x, 10x, 20x
     @zoomRange = 15
@@ -75,16 +31,11 @@ class LightcurveViewer extends BaseController
     isZoomed: false
     ifFaved: false
 
-    # classification counts at which to display supplementary tutorial
-    @whenToDisplayTips = [1, 7] # TODO: don't forget to add 4 after beta version
-    @splitDesignation = null
-
     User.on 'change', @onUserChange
     Subject.on 'fetch', @onSubjectFetch
     Subject.on 'select', @onSubjectSelect
     @Subject = Subject
 
-    $(document).on 'mark-change', => @updateButtons()
     @marksContainer = @el.find('#marks-container')[0]
 
     @initialTutorial = new Tutorial
