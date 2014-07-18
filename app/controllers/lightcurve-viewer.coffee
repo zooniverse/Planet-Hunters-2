@@ -6,6 +6,16 @@ translate                  = require 't7e'
 {CanvasGraph, Marks, Mark} = require "../lib/canvas-graph"
 $ = window.jQuery
 
+
+getParameterByName = (name) ->
+  name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]")
+  regex = new RegExp("[\\?&]" + name + "=([^&#]*)")
+  results = regex.exec(location.search)
+  (if not results? then "" else decodeURIComponent(results[1].replace(/\+/g, " ")))
+
+JSON_FILE = getParameterByName "JsonFile"
+console.log 'JSON_FILE: ', JSON_FILE
+
 class LightcurveViewer extends BaseController
   className: 'lightcurve-viewer'
   template: require '../views/lightcurve-viewer'
@@ -44,7 +54,7 @@ class LightcurveViewer extends BaseController
 
   loadSubjectData: () ->
     $('#graph-container').addClass 'loading-lightcurve'
-    jsonFile = @subject.selected_light_curve.location
+    jsonFile = JSON_FILE #@subject.selected_light_curve.location
     # console.log 'jsonFile: ', jsonFile # DEBUG CODE
 
     # handle ui elements
