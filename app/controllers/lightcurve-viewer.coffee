@@ -24,9 +24,12 @@ class LightcurveViewer extends BaseController
     'click button[id="zoom-button"]'          : 'onClickZoom'
     'slide #ui-slider'                        : 'onChangeScaleSlider'
     
-  constructor: ->
+  constructor: (jsonFile) ->
     super    
     window.viewer = @
+
+    if jsonFile?
+      JSON_FILE = jsonFile
 
     isZoomed: false
     ifFaved: false

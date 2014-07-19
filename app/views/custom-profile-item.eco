@@ -1,10 +1,10 @@
 <% location = @subjects[0].selected_light_curve?.location %>
 <% location ?= @subjects[0].location %>
-<a href=<%= "?JsonFile=#{location}#/viewer" %>>
+<!-- <a href=<%= "?JsonFile=#{location}#/viewer" %>> -->
 <div class="item">
   <div class="graph-container">
     <canvas class="graph" id="<%= @subjects[0].id %>"></canvas>
     <p class="caption"><%= @subjects[0].zooniverse_id %></p>
   </div>
 </div>
-</a>
+<!-- </a> -->

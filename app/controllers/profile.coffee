@@ -9,6 +9,7 @@ User                       = require 'zooniverse/models/user'
 customItemTemplate         = require '../views/custom-profile-item'
 Paginator                  = require 'zooniverse/controllers/paginator'
 {CanvasGraph, Marks, Mark} = require '../lib/canvas-graph'
+LightcurveViewer           = require '../controllers/lightcurve-viewer'
 
 Paginator::addItemToContainer = (item) ->
   itemEl = @getItemEl item
@@ -39,11 +40,24 @@ class Profile extends BaseProfile
   events:
     'click button[name="unfavorite"]': 'onClickUnfavorite'
     'click button[name="turn-page"]': 'onTurnPage'
+    'click .item': 'onClickItem'
 
   elements:
     "#greeting": "greeting"
     'nav': 'navigation'
     'button[name="turn-page"]': 'pageTurners'
+
+  onClickItem: (e) ->
+    for viewer in [ $('.lightcurve-viewer')... ]
+      viewer.remove()
+
+    console.log 'CLICK', @  
+
+    lightcurveViewer = new LightcurveViewer location
+
+    lightcurveViewer.el.prependTo e.currentTarget
+    # console.log lightcurveViewer.el[0]
+    # lightcurveViewer.appendTo e.currentTarget
 
   constructor: ->
     super
