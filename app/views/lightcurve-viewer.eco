@@ -1,91 +1,59 @@
-<% translate = require 't7e' %>
-<div class="content-block">
+<div class="zooniverse-dialog">
+  <div class="content-block">
+    <div id="subject-container">
+      <div class="subject-header">
+        <div class="do-you-see-a-transit">
+          <h3 style="text-transform: uppercase;">Lightcurve Viewer</h3>
+          <!-- <p>If so, highlight it on the light curve below!</p> -->
+        </div>
+        <div id="notification">
+          <div id="notification-message"></div>
+        </div>
 
-  <!-- COURSE  -->
-  <div id="course-container">
-    <div id="course-title"></div>
-    <div class="course-close">
-      Close
-      <!-- <img src="./images/icons/marking-closex.png"> -->
-      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="8px" height="8px">
-        <defs></defs>
-        <path fill-rule="evenodd" fill="rgb(255,255,255)" d=" M8.01144 1.38207 C8.01144 1.38207 6.63064 0.00572705 6.63064 0.00572705 C6.63064 0.00572705 4.00746 2.62077 4.00746 2.62077 C4.00746 2.62077 1.38411 0.00572705 1.38411 0.00572705 C1.38411 0.00572705 0.00340843 1.38207 0.00340843 1.38207 C0.00340843 1.38207 2.62685 3.99735 2.62685 3.99735 C2.62685 3.99735 0.00340843 6.61246 0.00340843 6.61246 C0.00340843 6.61246 1.38411 7.9888 1.38411 7.9888 C1.38411 7.9888 4.00746 5.37378 4.00746 5.37378 C4.00746 5.37378 6.63064 7.9888 6.63064 7.9888 C6.63064 7.9888 8.01144 6.61246 8.01144 6.61246 C8.01144 6.61246 5.38809 3.99735 5.38809 3.99735 C5.38809 3.99735 8.01144 1.38207 8.01144 1.38207 Z"/>
-      </svg>
-    </div>
-    <div id="course-body">
-      <div class="course-figure-container horizontal">
-        <img id="course-figure" src="">
-        <div class="course-figure-credits"></div>
       </div>
-      <div class="course-text horizontal"></div>
-    </div>
+      <div id="graph-container">
 
-    <!-- mini-course checkbox -->
-    <div style="float: left; padding: 20px;">
-      <input class="mini-course-option" name="course-opt-out" type="checkbox"></input>
-      <div style="float: left; font-style: italic; font-weight: 500; color: #fff;">Do not show mini-course in the future.
+        <div id='loading-screen'>
+          <h3>Loading...</h3>
+          <div class="spinner"></div>
+        </div>
+        <div id="marks-container"></div>
+        <div id="zoom-notification"></div>
+
+        <div id="tools">
+          <h3>TOOLS</h3>
+          <button class="tool-button" id="zoom-button">
+            <span>Zoom</span>
+          </button>
+          <button class="tool-button" id="toggle-fav" disabled>
+            <span>+Fav</span>
+          </button>
+          <button class="tool-button" id="help" disabled>
+            <span>Help</span>
+          </button>
+          <button class="tool-button" id="tutorial" disabled>
+            <span>Tutorial</span>
+          </button>
+        </div>
+
+        <div id="slider-container">
+          <div id="numbers-container"></div>
+          <div id="ui-slider"></div>
+        </div>
       </div>
-    </div>
-    <button name="course-close" class="course-close std-btn yellow">Close</button>
+
+      <div id="subject-metadata">
+        <h4>Star Information</h4>
+        <div class="meta-field meta star-id">Zooniverse Id</div>     <div id="zooniverse-id" class="meta-value meta star-id">N/A</div>
+        <div class="meta-field meta star-id">Kepler Id</div>         <div id="kepler-id" class="meta-value meta star-id">N/A</div>
+        <!-- <div id="zooniverse-id" class="meta"></div> -->
+        <div class='meta-field meta'>Type</div>       <div id="star-type"     class="meta-value meta">N/A</div>
+        <div class='meta-field meta'>Magnitude</div>  <div id="magnitude"     class="meta-value meta">N/A</div>
+        <div class='meta-field meta'>Temperature</div><div id="temperature"   class="meta-value meta">N/A</div>
+        <div class='meta-field meta'>Radius</div>     <div id="radius"        class="meta-value meta">N/A</div>
+      </div>
+    </div><!-- end subject container -->
   </div>
-  <!-- COURSE -->
-
-  <div id="subject-container">
-    <div class="subject-header">
-      <div class="do-you-see-a-transit">
-        <h3 style="text-transform: uppercase;">Lightcurve Viewer</h3>
-        <!-- <p>If so, highlight it on the light curve below!</p> -->
-      </div>
-      <div id="notification">
-        <div id="notification-message"></div>
-      </div>
-
-    </div>
-    <div id="graph-container">
-
-      <div id='loading-screen'>
-        <h3>Loading...</h3>
-        <div class="spinner"></div>
-      </div>
-      <div id="marks-container"></div>
-      <div id="zoom-notification"></div>
-
-      <div id="tools">
-        <h3>TOOLS</h3>
-        <button class="tool-button" id="zoom-button">
-          <span>Zoom</span>
-        </button>
-        <button class="tool-button" id="toggle-fav" disabled>
-          <span>+Fav</span>
-        </button>
-        <button class="tool-button" id="help" disabled>
-          <span>Help</span>
-        </button>
-        <button class="tool-button" id="tutorial" disabled>
-          <span>Tutorial</span>
-        </button>
-      </div>
-
-      <div id="slider-container">
-        <div id="numbers-container"></div>
-        <div id="ui-slider"></div>
-      </div>
-    </div>
-
-    <div id="subject-metadata">
-      <h4>Star Information</h4>
-      <div class="meta-field meta star-id">Zooniverse Id</div>     <div id="zooniverse-id" class="meta-value meta star-id">N/A</div>
-      <div class="meta-field meta star-id">Kepler Id</div>         <div id="kepler-id" class="meta-value meta star-id">N/A</div>
-      <!-- <div id="zooniverse-id" class="meta"></div> -->
-      <div class='meta-field meta'>Type</div>       <div id="star-type"     class="meta-value meta">N/A</div>
-      <div class='meta-field meta'>Magnitude</div>  <div id="magnitude"     class="meta-value meta">N/A</div>
-      <div class='meta-field meta'>Temperature</div><div id="temperature"   class="meta-value meta">N/A</div>
-      <div class='meta-field meta'>Radius</div>     <div id="radius"        class="meta-value meta">N/A</div>
-
-    </div>
-
-
-  </div><!-- end subject container -->
 </div>
 
 <!-- PLANET TIME -->

@@ -1,11 +1,10 @@
 BaseController             = require 'zooniverse/controllers/base-controller'
-User                       = require 'zooniverse/models/user'
-Subject                    = require 'zooniverse/models/subject'
+# User                       = require 'zooniverse/models/user'
+# Subject                    = require 'zooniverse/models/subject'
 NoUiSlider                 = require '../lib/jquery.nouislider.min'
-translate                  = require 't7e'
+# translate                  = require 't7e'
 {CanvasGraph, Marks, Mark} = require "../lib/canvas-graph"
 $ = window.jQuery
-
 
 getParameterByName = (name) ->
   name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]")
@@ -30,26 +29,28 @@ class LightcurveViewer extends BaseController
 
     if jsonFile?
       JSON_FILE = jsonFile
+      console.log 'jsonFile: ', JSON_FILE
 
     isZoomed: false
     ifFaved: false
 
-    User.on 'change', @onUserChange
-    Subject.on 'fetch', @onSubjectFetch
-    Subject.on 'select', @onSubjectSelect
-    @Subject = Subject
+    # User.on 'change', @onUserChange
+    # Subject.on 'fetch', @onSubjectFetch
+    # Subject.on 'select', @onSubjectSelect
+    # @Subject = Subject
+    
     @marksContainer = @el.find('#marks-container')[0]
 
-  onUserChange: (e, user) =>
-    # if User.current? # user logged in
-    #   # do something
+  # onUserChange: (e, user) =>
+  #   # if User.current? # user logged in
+  #   #   # do something
 
-  onSubjectFetch: (e, user) =>
+  # onSubjectFetch: (e, user) =>
 
-  onSubjectSelect: (e, subject) =>
-    @subject = subject
-    # @classification = new Classification {subject}
-    @loadSubjectData()
+  # onSubjectSelect: (e, subject) =>
+  #   @subject = subject
+  #   # @classification = new Classification {subject}
+  #   @loadSubjectData()
 
   loadSubjectData: () ->
     $('#graph-container').addClass 'loading-lightcurve'

@@ -48,16 +48,11 @@ class Profile extends BaseProfile
     'button[name="turn-page"]': 'pageTurners'
 
   onClickItem: (e) ->
-    for viewer in [ $('.lightcurve-viewer')... ]
-      viewer.remove()
-
-    console.log 'CLICK', @  
-
-    lightcurveViewer = new LightcurveViewer location
-
-    lightcurveViewer.el.prependTo e.currentTarget
-    # console.log lightcurveViewer.el[0]
-    # lightcurveViewer.appendTo e.currentTarget
+    # for viewer in [ $('.lightcurve-viewer')... ]
+    #   viewer.remove()
+    lightcurveViewer = new LightcurveViewer
+    $('#lightcurve-viewer').html lightcurveViewer.el
+    # lightcurveViewer.el.prependTo e.currentTarget
 
   constructor: ->
     super
