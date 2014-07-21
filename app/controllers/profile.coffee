@@ -54,7 +54,9 @@ class Profile extends BaseProfile
 
     for item in [ $('.item')... ]
       $(item).removeClass 'viewing'
-    
+
+    # $(e.currentTarget).find('.graph-container').slideUp()
+
     for viewer in [ $('.lightcurve-viewer')... ]
       viewer.remove()
     lightcurveViewer = new LightcurveViewer
@@ -63,8 +65,11 @@ class Profile extends BaseProfile
     # lightcurveViewer.el.insertAfter e.currentTarget
     console.log 'BLAH: ', e.currentTarget["div.item"]
     $(e.currentTarget).addClass('viewing')
+    # lightcurveViewer.hide()
     lightcurveViewer.el.appendTo e.currentTarget
+    # lightcurveViewer.fadeIn()
 
+    $('html,body').animate({scrollTop: lightcurveViewer.el.offset().top-100});
 
   constructor: ->
     super
