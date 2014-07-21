@@ -1,5 +1,7 @@
 .lightcurve-viewer
   color inherit
+  transition all 2s ease
+  width 100%
   .content-block
     overflow-x visible
   .bg-overlay
@@ -128,7 +130,7 @@
         width 50%
   #subject-container
     position relative
-    width 1090px
+    width 1026px
     height 400px
     margin-top 0px
     margin-bottom 0px
@@ -233,7 +235,7 @@
       position relative
       #loading-screen
         position absolute
-        width 1024px
+        width 960px
         height 420px
         background-color rgba(0,0,0,0.25)
         background-repeat no-repeat
@@ -252,7 +254,7 @@
         user-select none
       #marks-container
         height 420px
-        width 1026px
+        width 962px
         overflow hidden
         float left
         position relative
@@ -264,111 +266,7 @@
         padding 20px
         opacity 0.5
         
-      #classify-summary
-        display none
-        position absolute
-        top 0px
-        height 442px
-        width 1090px
-        z-index 100
-        border-radius 5px
-        #ukirt-url
-          text-decoration underline
-          
-        .three-column
-          margin 0
-          padding 0
-          float left
-          width 33.33%
-          height 100%
-          background-color rgba(13,21,24,0.9)
-          &:nth-child(1)
-            background-color #fc4541
-            border-radius 5px 0 0 5px
-          &:nth-child(3)
-            border-radius 0 5px 5px 0
-          .content
-            padding 20px
-            color #fff
-            p
-              margin-bottom 10px
-            h1, h2
-              margin-bottom 30px
-            h1
-              font-weight 300
-              font-size 24px
-            h2
-              text-transform uppercase
-              font-size 14px
-              line-height 36px
-            button
-              width 100%
-            .talk-pill
-              display none
-              button
-                vertical-align middle
-                border 2px solid #fff
-                height 64px
-                border-radius 0 5px 5px 0
-                margin-left -10px
-                width 33%
-                background-color #fff
-                color black
-                border-left none
-                &:active
-                  transform translateY(0px)
-              textarea
-                outline none
-                padding 0
-                border-right none
-                resize none
-                width 66%
-                vertical-align middle
-                height 60px
-                color #fff
-                background transparent
-                border 2px solid #fff
-                border-radius 5px 0 0 5px
-            #comments, #alt-comments
-              height 240px
-              overflow-y scroll
-              .formatted-comment
-                border-bottom 1px solid #848b92
-                margin-bottom 20px
-                word-wrap break-word
-                &:last-child
-                  border-bottom none
-                p
-                  &:not(:nth-child(1))
-                    font-size 10px
-                    font-style italic
-                    span
-                      color #fff
-
-      .summary-button
-        width 60px
-        height 60px
-        border-radius 0.3em
-        // transition 0.3s
-        background-color rgb(50,50,50)
-        span
-          top 20px
-          position relative
-          display inline-block
-          margin-bottom 10px
-        &#summary-fav-button
-          background url("images/icons/favorite-nofill.svg") no-repeat 50% 35%
-          &:hover
-            background #323232 url("images/icons/favorite-nofill.svg") no-repeat 50% 35%
-          &:active
-            background #151a1b url("images/icons/favorite-filled.svg") no-repeat 50% 35%
-        &#summary-talk-button
-          background url("images/icons/talk-icon.svg") no-repeat 50% 35%
-          &:hover
-            background #323232 url("images/icons/talk-icon.svg") no-repeat 50% 35%
-          &:active
-            background #151a1b url("images/icons/talk-icon.svg") no-repeat 50% 35%
-        
+      
       #tools
         float right
         width 54px
@@ -432,7 +330,7 @@
         height 22px
         background rgba(13,21,24,0.75)
         #ui-slider
-          width 1026px
+          width 962px
           height 20px
           position relative
           float left
@@ -481,23 +379,10 @@
           font-style italic
           font 12px
           background rgb(50,50,50)
-        #numbers-container
-          display inline
-          position absolute
-          background rgba(13,21,24,0.75)
-          // width 954px
-          width 1024px
-          height 20px
-          text-align justify
-          display inline-table
-          color #525c5b
-          border 1px solid #323232
-          span
-            display table-cell
     #subject-metadata
-      position relative
-      display inline-block
-      width 1090px
+      // position relative
+      // display inline-block
+      // width 1090px
       height 40px
       margin-top 12px
       .meta

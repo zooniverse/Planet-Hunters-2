@@ -21,6 +21,8 @@ Paginator::addItemToContainer = (item) ->
 
   $.getJSON location, (data) =>
     newCanvas = $("##{ subjects[0].id }")[0]
+    newCanvas.width = 1050
+    newCanvas.height = 158
     newGraph = new CanvasGraph newCanvas, data
     newGraph.showAxes = false
     newGraph.leftPadding = 0
@@ -48,11 +50,21 @@ class Profile extends BaseProfile
     'button[name="turn-page"]': 'pageTurners'
 
   onClickItem: (e) ->
-    # for viewer in [ $('.lightcurve-viewer')... ]
-    #   viewer.remove()
+    console.log 'e', e
+
+    for item in [ $('.item')... ]
+      $(item).removeClass 'viewing'
+    
+    for viewer in [ $('.lightcurve-viewer')... ]
+      viewer.remove()
     lightcurveViewer = new LightcurveViewer
-    $('#lightcurve-viewer').html lightcurveViewer.el
-    # lightcurveViewer.el.prependTo e.currentTarget
+    # $('#lightcurve-viewer').html lightcurveViewer.el
+    
+    # lightcurveViewer.el.insertAfter e.currentTarget
+    console.log 'BLAH: ', e.currentTarget["div.item"]
+    $(e.currentTarget).addClass('viewing')
+    lightcurveViewer.el.appendTo e.currentTarget
+
 
   constructor: ->
     super

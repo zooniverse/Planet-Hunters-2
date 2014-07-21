@@ -78,7 +78,7 @@ class LightcurveViewer extends BaseController
       @canvasGraph.plotPoints()
       @el.find('#loading-screen').fadeOut()
       $('#graph-container').removeClass 'loading-lightcurve'
-      @canvasGraph.enableMarking()
+      # @canvasGraph.enableMarking()
       @magnification = [ '1x (all days)', '10 days', '2 days' ]
       @showZoomMessage(@magnification[@canvasGraph.zoomLevel])
       @el.find("#ui-slider").noUiSlider

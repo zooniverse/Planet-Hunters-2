@@ -2,8 +2,6 @@
   <h1>Your Profile</h1>
 </div>
 
-<div id="lightcurve-viewer"></div>
-
 <div id="secondary-white" class="secondary-white">
   <div class="content">
     <div class="intro content">
