@@ -19,6 +19,8 @@ Paginator::addItemToContainer = (item) ->
   location = subjects[0].selected_light_curve?.location
   location ?= subjects[0].location
 
+  itemEl.data "location", location
+
   $.getJSON location, (data) =>
     newCanvas = $("##{ subjects[0].id }")[0]
     newCanvas.width = 1050
@@ -59,19 +61,22 @@ class Profile extends BaseProfile
     , 1000
 
   onClickItem: (e) ->
+    return if $(e.currentTarget).hasClass('viewing')
+
     @resetItemVisibility()
     @currentElement = $(e.currentTarget)
     
-    return if $(e.currentTarget).hasClass('viewing')
-      
+
     for item in [ $('.item')... ]
       $(item).removeClass 'viewing'
 
     for viewer in [ $('.lightcurve-viewer')... ]
       viewer.remove()
-    lightcurveViewer = new LightcurveViewer
-    
-    $(e.currentTarget).addClass('viewing')
+
+    $(e.currentTarget).addClass 'viewing'
+
+    lightcurveViewer = new LightcurveViewer @currentElement.data('location')
+
     lightcurveViewer.el.appendTo e.currentTarget
     $(e.currentTarget).find('#subject-container').slideDown()
     $(e.currentTarget).find('.graph-container').hide()

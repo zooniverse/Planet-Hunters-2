@@ -12,7 +12,7 @@ getParameterByName = (name) ->
   results = regex.exec(location.search)
   (if not results? then "" else decodeURIComponent(results[1].replace(/\+/g, " ")))
 
-JSON_FILE = getParameterByName "JsonFile"
+# JSON_FILE = getParameterByName "JsonFile"
 # console.log 'JSON_FILE: ', JSON_FILE # DEBUG code
 
 class LightcurveViewer extends BaseController
@@ -27,9 +27,10 @@ class LightcurveViewer extends BaseController
     super    
     window.viewer = @
 
-    if jsonFile?
-      JSON_FILE = jsonFile
-      console.log 'jsonFile: ', JSON_FILE
+    @jsonFile = jsonFile
+    # if jsonFile?
+    #   JSON_FILE = jsonFile
+      # console.log 'jsonFile: ', JSON_FILE
 
     isZoomed: false
     ifFaved: false
@@ -40,6 +41,7 @@ class LightcurveViewer extends BaseController
     # @Subject = Subject
     
     @marksContainer = @el.find('#marks-container')[0]
+    @loadSubjectData()
 
   # onUserChange: (e, user) =>
   #   # if User.current? # user logged in
@@ -53,8 +55,9 @@ class LightcurveViewer extends BaseController
   #   @loadSubjectData()
 
   loadSubjectData: () ->
+    console.log  'JSON_FILE: ', @jsonFile
     $('#graph-container').addClass 'loading-lightcurve'
-    jsonFile = JSON_FILE #@subject.selected_light_curve.location
+    # jsonFile = JSON_FILE #@subject.selected_light_curve.location
     # console.log 'jsonFile: ', jsonFile # DEBUG CODE
 
     # handle ui elements
@@ -71,7 +74,7 @@ class LightcurveViewer extends BaseController
     @canvas.height = 420
 
     # read json data
-    $.getJSON jsonFile, (data) =>
+    $.getJSON @jsonFile, (data) =>
       @marksContainer.appendChild(@canvas)
       @canvasGraph = new CanvasGraph(@canvas, data)
       @zoomReset()
@@ -90,19 +93,19 @@ class LightcurveViewer extends BaseController
     @insertMetadata()
 
   insertMetadata: ->
-    # ukirt data
-    @ra      = @subject.coords[0]
-    @dec     = @subject.coords[1]
-    ukirtUrl = "http://surveys.roe.ac.uk:8080/wsa/GetImage?ra=" + @ra + "&dec=" + @dec + "&database=wserv4v20101019&frameType=stack&obsType=object&programmeID=10209&mode=show&archive=%20wsa&project=wserv4"
+    # # ukirt data
+    # @ra      = @subject.coords[0]
+    # @dec     = @subject.coords[1]
+    # ukirtUrl = "http://surveys.roe.ac.uk:8080/wsa/GetImage?ra=" + @ra + "&dec=" + @dec + "&database=wserv4v20101019&frameType=stack&obsType=object&programmeID=10209&mode=show&archive=%20wsa&project=wserv4"
     
-    metadata = @Subject.current.metadata
-    @el.find('#zooniverse-id').html @Subject.current.zooniverse_id 
-    @el.find('#kepler-id').html     metadata.kepler_id
-    @el.find('#star-type').html     metadata.spec_type
-    @el.find('#magnitude').html     metadata.magnitudes.kepler
-    @el.find('#temperature').html   metadata.teff.toString().concat("(K)")
-    @el.find('#radius').html        metadata.radius.toString().concat("x Sol")
-    @el.find('#ukirt-url').attr("href", ukirtUrl)
+    # metadata = @Subject.current.metadata
+    # @el.find('#zooniverse-id').html @Subject.current.zooniverse_id 
+    # @el.find('#kepler-id').html     metadata.kepler_id
+    # @el.find('#star-type').html     metadata.spec_type
+    # @el.find('#magnitude').html     metadata.magnitudes.kepler
+    # @el.find('#temperature').html   metadata.teff.toString().concat("(K)")
+    # @el.find('#radius').html        metadata.radius.toString().concat("x Sol")
+    # @el.find('#ukirt-url').attr("href", ukirtUrl)
 
   onChangeScaleSlider: ->
     val = +@el.find("#ui-slider").val()    
