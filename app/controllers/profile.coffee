@@ -35,6 +35,8 @@ class Profile extends BaseProfile
   className: 'profile'
   template: require '../views/profile'
 
+  @currElement = null
+
   # use custom template for light curves
   recentTemplate: customItemTemplate
   favoriteTemplate: customItemTemplate
@@ -43,6 +45,7 @@ class Profile extends BaseProfile
     'click button[name="unfavorite"]': 'onClickUnfavorite'
     'click button[name="turn-page"]': 'onTurnPage'
     'click .item': 'onClickItem'
+    'click button[class="lightcurve-viewer-close"]': 'onClickClose'
 
   elements:
     "#greeting": "greeting"
@@ -50,31 +53,46 @@ class Profile extends BaseProfile
     'button[name="turn-page"]': 'pageTurners'
 
   onClickItem: (e) ->
-    console.log 'e', e
+    console.log 'onClickItem(): '
+
+    @currentElement = $(e.currentTarget)
+    
+    if $(e.currentTarget).hasClass('viewing')
+      console.log 'ALREADY VIEWING'
+      return
 
     for item in [ $('.item')... ]
       $(item).removeClass 'viewing'
 
-    # $(e.currentTarget).find('.graph-container').slideUp()
+    # $(e.target).find('.graph-container').hide()
 
     for viewer in [ $('.lightcurve-viewer')... ]
       viewer.remove()
     lightcurveViewer = new LightcurveViewer
-    # $('#lightcurve-viewer').html lightcurveViewer.el
     
-    # lightcurveViewer.el.insertAfter e.currentTarget
-    console.log 'BLAH: ', e.currentTarget["div.item"]
     $(e.currentTarget).addClass('viewing')
     # lightcurveViewer.hide()
     lightcurveViewer.el.appendTo e.currentTarget
-    # lightcurveViewer.fadeIn()
+    $(e.currentTarget).find('#subject-container').slideDown()
+    $(e.currentTarget).find('.graph-container').hide()
 
-    $('html,body').animate({scrollTop: lightcurveViewer.el.offset().top-100});
+    $('html,body').animate({scrollTop: lightcurveViewer.el.offset().top-200});
 
   constructor: ->
     super
     setTimeout =>
       @greeting.html("Hello, #{User.current.name}!") if User.current
     , 1000
+
+  onClickClose: (e) ->
+    console.log 'onClickClose(): '
+    @currentElement.find('.graph-container').fadeIn()
+
+    
+    # remove all previous lightcurve viewers
+    viewer.remove() for viewer in [ $('.lightcurve-viewer')... ]
+    $(e.currentTarget).removeClass('viewing')
+
+    console.log 'GRAPH CONTAINERS: ', $(e.currentTarget).find('.graph-container')
 
 module.exports = Profile
