@@ -83,9 +83,9 @@ class Profile extends BaseProfile
 
   onClickClose: (e) ->
     @resetItemVisibility()
+    $(e.currentTarget).removeClass('viewing')
 
     # remove all previous lightcurve viewers
     viewer.remove() for viewer in [ $('.lightcurve-viewer')... ]
-    $(e.currentTarget).removeClass('viewing')
-
+    
 module.exports = Profile

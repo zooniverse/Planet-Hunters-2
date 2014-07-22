@@ -1,5 +1,5 @@
 <div id="subject-container">
-  <div id="graph-container">  
+  <div class="lightcurve-viewer">  
     <button class="lightcurve-viewer-close">
       Close
       <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="8px" height="8px">
