@@ -52,47 +52,40 @@ class Profile extends BaseProfile
     'nav': 'navigation'
     'button[name="turn-page"]': 'pageTurners'
 
-  onClickItem: (e) ->
-    console.log 'onClickItem(): '
-
-    @currentElement = $(e.currentTarget)
-    
-    if $(e.currentTarget).hasClass('viewing')
-      console.log 'ALREADY VIEWING'
-      return
-
-    for item in [ $('.item')... ]
-      $(item).removeClass 'viewing'
-
-    # $(e.target).find('.graph-container').hide()
-
-    for viewer in [ $('.lightcurve-viewer')... ]
-      viewer.remove()
-    lightcurveViewer = new LightcurveViewer
-    
-    $(e.currentTarget).addClass('viewing')
-    # lightcurveViewer.hide()
-    lightcurveViewer.el.appendTo e.currentTarget
-    $(e.currentTarget).find('#subject-container').slideDown()
-    $(e.currentTarget).find('.graph-container').hide()
-
-    $('html,body').animate({scrollTop: lightcurveViewer.el.offset().top-200});
-
   constructor: ->
     super
     setTimeout =>
       @greeting.html("Hello, #{User.current.name}!") if User.current
     , 1000
 
-  onClickClose: (e) ->
-    console.log 'onClickClose(): '
-    @currentElement.find('.graph-container').fadeIn()
-
+  onClickItem: (e) ->
+    @resetItemVisibility()
+    @currentElement = $(e.currentTarget)
     
+    return if $(e.currentTarget).hasClass('viewing')
+      
+    for item in [ $('.item')... ]
+      $(item).removeClass 'viewing'
+
+    for viewer in [ $('.lightcurve-viewer')... ]
+      viewer.remove()
+    lightcurveViewer = new LightcurveViewer
+    
+    $(e.currentTarget).addClass('viewing')
+    lightcurveViewer.el.appendTo e.currentTarget
+    $(e.currentTarget).find('#subject-container').slideDown()
+    $(e.currentTarget).find('.graph-container').hide()
+
+    $('html,body').animate({scrollTop: lightcurveViewer.el.offset().top-200});
+
+  resetItemVisibility: ->
+    @el.find('.item .graph-container').fadeIn()
+
+  onClickClose: (e) ->
+    @resetItemVisibility()
+
     # remove all previous lightcurve viewers
     viewer.remove() for viewer in [ $('.lightcurve-viewer')... ]
     $(e.currentTarget).removeClass('viewing')
-
-    console.log 'GRAPH CONTAINERS: ', $(e.currentTarget).find('.graph-container')
 
 module.exports = Profile
