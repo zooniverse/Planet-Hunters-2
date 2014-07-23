@@ -49,6 +49,8 @@ class Profile extends BaseProfile
     'click button[name="turn-page"]': 'onTurnPage'
     'click .item': 'onClickItem'
     'click button[class="lightcurve-viewer-close"]': 'onClickClose'
+    'mouseover .item': 'onMouseOver'
+    'mouseout .item': 'onMouseOut'
 
   elements:
     "#greeting": "greeting"
@@ -60,6 +62,12 @@ class Profile extends BaseProfile
     setTimeout =>
       @greeting.html("Hello, #{User.current.name}!") if User.current
     , 1000
+
+  onMouseOver: (e) ->
+    $(e.currentTarget).find('.caption').hide()
+
+  onMouseOut: (e) ->
+    $(e.currentTarget).find('.caption').show()
 
   onClickItem: (e) ->
     # console.log 'onClickItem(): '
@@ -77,23 +85,22 @@ class Profile extends BaseProfile
 
     lightcurveViewer = new LightcurveViewer @currentItem.data('location')
     lightcurveViewer.el.appendTo e.currentTarget
-    @currentItem.find('#subject-container').slideDown(500)
+    @currentItem.find('#subject-container').slideDown(1000)
     @currentItem.find('.graph-container').hide()
+    @currentItem.find('.lightcurve-viewer-close').fadeIn()
 
-    $('html,body').animate({scrollTop: lightcurveViewer.el.offset().top-($(window).height()-502)/2});
-    console.log '********************************************'
+    $('html,body').animate({scrollTop: lightcurveViewer.el.offset().top-($(window).height()-502)/2}, 1000);
 
   resetItems: ->
     # console.log 'resetItems(): '
     @el.find('.item .graph-container').show()
-    @el.find('.items').removeClass('viewing')
+    @el.find('.lightcurve-viewer-close').hide()
 
   onClickClose: (e) ->
     # console.log 'onClickClose(): '
-    e.stopPropagation()
+    e.stopPropagation() # otherwise, lightcurve viewer reopens
     @resetItems()
     @currentItem.removeClass('viewing')
-    @currentItem = null
 
     # remove all previous lightcurve viewers
     viewer.remove() for viewer in [ $('.lightcurve-viewer')... ]

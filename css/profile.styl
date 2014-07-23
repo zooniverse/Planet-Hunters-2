@@ -23,9 +23,6 @@
       // box-shadow: 0 3px 5px rgba(#000, 0.5)
       transition all 0.3s
 
-  .caption
-    text-align center
-
   & > nav
       display: none
       overflow: hidden
@@ -63,6 +60,16 @@
         margin-right: 20px
         // overflow: hidden;
 
+        .lightcurve-viewer-close
+          position relative
+          top -10px
+          display none
+          color black
+          font-weight 900
+          float right
+          &:hover
+            border none
+
         .item
           box-sizing: border-box
           float left
@@ -86,6 +93,16 @@
           canvas
             width 100%
             border-radius 8px
+
+          .caption
+            color rgba(0,0,0,0.25)
+            text-align center
+            text-transform uppercase
+            font-weight 900
+            position absolute
+            font-size 72px
+            top 24px   // eyeballed it (probaby needs tweaking)
+            left 284px // same as above
 
     .empty-message
       display: none
