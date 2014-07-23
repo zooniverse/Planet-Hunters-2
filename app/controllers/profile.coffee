@@ -63,27 +63,21 @@ class Profile extends BaseProfile
 
   onClickItem: (e) ->
     @currentItem = $(e.currentTarget)
-
     return if @currentItem.hasClass('viewing')
+
+    @resetItemVisibility()
 
     for item in [ $('.item')... ]
       $(item).removeClass 'viewing'
 
-    @resetItemVisibility()
-    
-
-
-
     for viewer in [ $('.lightcurve-viewer')... ]
       viewer.remove()
-
-    $(e.currentTarget).addClass 'viewing'
+    @currentItem.addClass 'viewing'
 
     lightcurveViewer = new LightcurveViewer @currentItem.data('location')
-
     lightcurveViewer.el.appendTo e.currentTarget
-    $(e.currentTarget).find('#subject-container').slideDown(500)
-    $(e.currentTarget).find('.graph-container').hide()
+    @currentItem.find('#subject-container').slideDown(500)
+    @currentItem.find('.graph-container').hide()
 
     $('html,body').animate({scrollTop: lightcurveViewer.el.offset().top-($(window).height()-502)/2});
 
@@ -91,8 +85,8 @@ class Profile extends BaseProfile
     @el.find('.item .graph-container').show()
 
   onClickClose: (e) ->
-    @resetItemVisibility()
-    $('.item').removeClass('viewing')
+    # @resetItemVisibility()
+    @currentItem.removeClass('viewing')
 
     # remove all previous lightcurve viewers
     viewer.remove() for viewer in [ $('.lightcurve-viewer')... ]

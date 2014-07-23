@@ -37,7 +37,7 @@
   </div>
 
   <div id="subject-metadata">
-    <h4>Star Information</h4>
+    <!-- <h4>Star Information</h4> -->
     <div class="meta-field meta star-id">Zooniverse Id</div>     <div id="zooniverse-id" class="meta-value meta star-id">N/A</div>
     <div class="meta-field meta star-id">Kepler Id</div>         <div id="kepler-id" class="meta-value meta star-id">N/A</div>
     <!-- <div id="zooniverse-id" class="meta"></div> -->
