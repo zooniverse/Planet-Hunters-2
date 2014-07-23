@@ -64,10 +64,10 @@ class Profile extends BaseProfile
     , 1000
 
   onMouseOver: (e) ->
-    $(e.currentTarget).find('.caption').hide()
+    $(e.currentTarget).find('.caption').attr 'opacity', 0.25
 
   onMouseOut: (e) ->
-    $(e.currentTarget).find('.caption').show()
+    $(e.currentTarget).find('.caption').attr 'opacity', 1.0
 
   onClickItem: (e) ->
     # console.log 'onClickItem(): '
