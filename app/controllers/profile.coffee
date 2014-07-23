@@ -62,35 +62,37 @@ class Profile extends BaseProfile
     , 1000
 
   onClickItem: (e) ->
-    return if $(e.currentTarget).hasClass('viewing')
+    @currentItem = $(e.currentTarget)
 
-    @resetItemVisibility()
-    @currentElement = $(e.currentTarget)
-    
+    return if @currentItem.hasClass('viewing')
 
     for item in [ $('.item')... ]
       $(item).removeClass 'viewing'
+
+    @resetItemVisibility()
+    
+
+
 
     for viewer in [ $('.lightcurve-viewer')... ]
       viewer.remove()
 
     $(e.currentTarget).addClass 'viewing'
 
-    lightcurveViewer = new LightcurveViewer @currentElement.data('location')
+    lightcurveViewer = new LightcurveViewer @currentItem.data('location')
 
     lightcurveViewer.el.appendTo e.currentTarget
-    $(e.currentTarget).find('#subject-container').slideDown()
+    $(e.currentTarget).find('#subject-container').slideDown(500)
     $(e.currentTarget).find('.graph-container').hide()
 
-    console.log 'WINDOW HEIGHT: ', $(window).height()
     $('html,body').animate({scrollTop: lightcurveViewer.el.offset().top-($(window).height()-502)/2});
 
   resetItemVisibility: ->
-    @el.find('.item .graph-container').fadeIn()
+    @el.find('.item .graph-container').show()
 
   onClickClose: (e) ->
     @resetItemVisibility()
-    $(e.currentTarget).removeClass('viewing')
+    $('.item').removeClass('viewing')
 
     # remove all previous lightcurve viewers
     viewer.remove() for viewer in [ $('.lightcurve-viewer')... ]
