@@ -28,6 +28,7 @@ Paginator::addItemToContainer = (item) ->
     newGraph = new CanvasGraph newCanvas, data
     newGraph.showAxes = false
     newGraph.leftPadding = 0
+    # newGraph.enableMarking()
     newGraph.disableMarking()
     newGraph.plotPoints()
 
@@ -81,7 +82,8 @@ class Profile extends BaseProfile
     $(e.currentTarget).find('#subject-container').slideDown()
     $(e.currentTarget).find('.graph-container').hide()
 
-    $('html,body').animate({scrollTop: lightcurveViewer.el.offset().top-200});
+    console.log 'WINDOW HEIGHT: ', $(window).height()
+    $('html,body').animate({scrollTop: lightcurveViewer.el.offset().top-($(window).height()-502)/2});
 
   resetItemVisibility: ->
     @el.find('.item .graph-container').fadeIn()
