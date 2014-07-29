@@ -644,8 +644,10 @@ class Classifier extends BaseController
         xMaxGlobal: mark.dataXMaxGlobal
 
     # dump all recorded click events to classification
-    @classification.set 'recordedClickEvents', [@recordedClickEvents...]
-    
+    # @classification.set 'recordedClickEvents', [@recordedClickEvents...]
+    @classification.annotate
+      recordedClickEvents: [@recordedClickEvents...]
+
     # # DEBUG CODE
     # console.log JSON.stringify( @classification )
     # console.log '********************************************'
