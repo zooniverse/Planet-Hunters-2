@@ -29,7 +29,7 @@ class CanvasGraph
       @data.x[idx] = xValue - @smallestX
 
     # remove outliers and normalize
-    @removeOutliers(nsigma=3)
+    @removeOutliers(nsigma=8)
 
     # update min/max values
     @smallestX = Math.min @data.x...
