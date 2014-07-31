@@ -1,19 +1,8 @@
 BaseController             = require 'zooniverse/controllers/base-controller'
-# User                       = require 'zooniverse/models/user'
-# Subject                    = require 'zooniverse/models/subject'
 NoUiSlider                 = require '../lib/jquery.nouislider.min'
-# translate                  = require 't7e'
 {CanvasGraph, Marks, Mark} = require "../lib/canvas-graph"
+
 $ = window.jQuery
-
-getParameterByName = (name) ->
-  name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]")
-  regex = new RegExp("[\\?&]" + name + "=([^&#]*)")
-  results = regex.exec(location.search)
-  (if not results? then "" else decodeURIComponent(results[1].replace(/\+/g, " ")))
-
-# JSON_FILE = getParameterByName "JsonFile"
-# console.log 'JSON_FILE: ', JSON_FILE # DEBUG code
 
 class LightcurveViewer extends BaseController
   className: 'lightcurve-viewer'
@@ -26,38 +15,17 @@ class LightcurveViewer extends BaseController
   constructor: (jsonFile) ->
     super    
     window.viewer = @
-
     @jsonFile = jsonFile
-    # if jsonFile?
-    #   JSON_FILE = jsonFile
-      # console.log 'jsonFile: ', JSON_FILE
 
     isZoomed: false
     ifFaved: false
-
-    # User.on 'change', @onUserChange
-    # Subject.on 'fetch', @onSubjectFetch
-    # Subject.on 'select', @onSubjectSelect
-    # @Subject = Subject
     
     @marksContainer = @el.find('#marks-container')[0]
     @loadSubjectData()
 
-  # onUserChange: (e, user) =>
-  #   # if User.current? # user logged in
-  #   #   # do something
-
-  # onSubjectFetch: (e, user) =>
-
-  # onSubjectSelect: (e, subject) =>
-  #   @subject = subject
-  #   # @classification = new Classification {subject}
-  #   @loadSubjectData()
-
   loadSubjectData: () ->
     console.log  'JSON_FILE: ', @jsonFile
     $('#graph-container').addClass 'loading-lightcurve'
-    # jsonFile = JSON_FILE #@subject.selected_light_curve.location
     # console.log 'jsonFile: ', jsonFile # DEBUG CODE
 
     # handle ui elements
