@@ -77,15 +77,15 @@ class Profile extends BaseProfile
 
     lightcurveViewer = new LightcurveViewer @currentItem.data('location')
     lightcurveViewer.el.appendTo e.currentTarget
-    @currentItem.find('#subject-container').slideDown(1000)
-    @currentItem.find('.graph-container').delay(1000).slideUp(1000)
-    @currentItem.find('.lightcurve-viewer-close').fadeIn(1000)
+    @currentItem.find('#subject-container').slideDown(300)
+    @currentItem.find('.graph-container').delay(300).slideUp(300)
+    @currentItem.find('.lightcurve-viewer-close').fadeIn(300)
 
     $('html,body').animate({scrollTop: lightcurveViewer.el.offset().top-($(window).height()-502)/2}, 1000);
 
   resetItems: ->
     # console.log 'resetItems(): '
-    @el.find('.item .graph-container').show()
+    @el.find('.item .graph-container').fadeIn(300)
     @el.find('.lightcurve-viewer-close').hide()
 
   onClickClose: (e) ->
