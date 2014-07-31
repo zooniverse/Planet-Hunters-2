@@ -4,27 +4,20 @@
     padding-top 20px
     padding-left 20px
     max-width 1090px
-  .secondary-white
-    overflow hidden
+  // .secondary-white
+  //   overflow hidden
 
   // #greeting
   //   font-size 20px
 
-  .graph
-    background-color rgba(19,34,44,0.75)
-    box-shadow
-    // border solid thin white
-    width 530px
+  .graph-container
     height 128px
-
-    &:hover
-      background-color rgba(19,34,44,0.92)
-      // border solid thin black
-      box-shadow: 0 3px 5px rgba(#000, 0.5)
-      transition all 0.3s
-
-  .caption
-    text-align center
+    .graph
+      background-color rgba(19,34,44,0.75)
+      box-shadow
+      // border solid thin white
+      width 530px
+      height 128px
 
   & > nav
       display: none
@@ -61,20 +54,58 @@
       .items
         margin-top: 1em
         margin-right: 20px
-        overflow: hidden;
+        // overflow: hidden;
+
+        .lightcurve-viewer-close
+          position relative
+          top -10px
+          display none
+          color #fff
+          font-weight 900
+          float right
+          &:hover
+            border none
 
         .item
           box-sizing: border-box
-          float: left
-          padding: 10px
-          position: relative
-          width: 50%
-          min-width 256px
+          float left
+          padding 10px
+          margin-bottom 10px
+          position relative
+          width 100%
+          min-width 1058px
+          border solid 2px rgba(0,0,0,0)
+          .caption
+            color white
+            opacity 1
+            transition opacity 0.5s ease 
+            color rgba(0,0,0,0.5)
+            text-align center
+            font-weight 900
+            position relative
+            font-size 72px
+            top -119px   
+
+          &:hover
+            border-radius 8px
+            background-color rgba(19,34,44,0.5)
+            .caption
+              color black
+              opacity 0.25
+
+          &.viewing
+            background-color rgba(48,61,70,1)
+            border-radius 8px
+            margin-bottom 10px
+            box-shadow 4px 4px 10px
           a
             font-style bold
           canvas
+            opacity 1
             width 100%
+            border-radius 8px
 
+            
     .empty-message
       display: none
       margin: 1em 0

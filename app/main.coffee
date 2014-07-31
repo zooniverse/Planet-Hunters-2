@@ -35,6 +35,7 @@ stack = new StackOfPages
   '#/discuss'   : require './controllers/discuss'
   '#/blog'      : require './controllers/blog'
   "#/verify"    : require './controllers/verification'
+  "#/viewer"    : require './controllers/lightcurve-viewer'
   NOT_FOUND: '<div class="content-block"><div class="content-container"><h1>Page not found!</h1></div></div>'
   ERROR: '<div class="content-block"><div class="content-container"><h1>There was an error!</h1></div></div>'
 document.body.appendChild stack.el

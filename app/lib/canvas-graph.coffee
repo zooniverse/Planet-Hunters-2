@@ -37,15 +37,18 @@ class CanvasGraph
     @largestX = Math.max  @data.x...
     @largestY = Math.max  @data.y...
 
+    @zoomRanges = [@largestX, 10, 2]
+    @zoomLevel = 0
+
     @prevZoomMin = @smallestX
     @prevZoomMax = @largestX
 
   disableMarking: ->
     # console.log 'CANVAS GRAPH: disableMarking()'
     @markingDisabled = true
-    @canvas.removeEventListener 'mousedown', (e) => @onMouseDown(e)
-    @canvas.removeEventListener 'touchstart', (e) => @addMarkToGraph(e)
-    @canvas.removeEventListener 'mousemove', (e) => @onMouseMove(e) # TODO: FIX (disabled for now)
+    # @canvas.removeEventListener 'mousedown', (e) => @onMouseDown(e)
+    # @canvas.removeEventListener 'touchstart', (e) => @addMarkToGraph(e)
+    # @canvas.removeEventListener 'mousemove', (e) => @onMouseMove(e) # TODO: FIX (disabled for now)
 
   enableMarking: ->
     # console.log 'CANVAS GRAPH: enableMarking()'
@@ -66,17 +69,16 @@ class CanvasGraph
     @addMarkToGraph(e)
 
   onMouseMove: (e) =>
-    # console.log 'onMouseMove()'
     # return # just for now
     return if @markingDisabled
     return if classifier.el.find('#graph').hasClass('is-zooming')
-    @zoomLevel = classifier.zoomLevel
-    zoomRanges = classifier.zoomRanges
+    # @zoomLevel = classifier.zoomLevel
+    # @zoomRanges = classifier.zoomRanges
     val = +classifier.el.find("#ui-slider").val()
     xClick = e.pageX - e.target.getBoundingClientRect().left - window.scrollX
     yClick = e.pageY - e.target.getBoundingClientRect().top - window.scrollY
     
-    @plotPoints(val, val+zoomRanges[@zoomLevel])
+    @plotPoints(val, val+@zoomRanges[@zoomLevel])
     # @rescaleMarks(val, val+zoomRanges[@zoomLevel])
 
     if xClick < @leftPadding
@@ -218,8 +220,8 @@ class CanvasGraph
 
     # get necessary values from classifier
     val = +classifier.el.find('#ui-slider').val()
-    zoomRanges = classifier.zoomRanges
-    @zoomLevel  = classifier.zoomLevel
+    # zoomRanges = classifier.zoomRanges
+    # @zoomLevel  = classifier.zoomLevel
     
     # draw points
     for i in [0...@dataLength]
@@ -291,7 +293,7 @@ class CanvasGraph
     return
 
   zoomOut: (callback) ->
-    classifier.el.find('#graph').addClass('is-zooming')
+    # classifier.el.find('#graph').addClass('is-zooming')
     @plotPoints(@smallestX, @largestX)
 
     [cMin, cMax] = [@xMin, @xMax]
