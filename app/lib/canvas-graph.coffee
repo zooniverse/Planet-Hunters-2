@@ -2,13 +2,7 @@
 
 class CanvasGraph
 
-  events:
-    'click button[name="unfavorite"]': 'onClickUnfavorite'
-    'click button[name="turn-page"]': 'onTurnPage'
-
-  elements:
-    'nav': 'navigation'
-    'button[name="turn-page"]': 'pageTurners'
+  DEBUG = false
 
   constructor: (@canvas, @data) ->
     @leftPadding = 60
@@ -28,8 +22,8 @@ class CanvasGraph
     for xValue, idx in [@data.x...]
       @data.x[idx] = xValue - @smallestX
 
-    # remove outliers and normalize
-    @removeOutliers(nsigma=8)
+    # normalize
+    @processLightcurve()
 
     # update min/max values
     @smallestX = Math.min @data.x...
@@ -107,36 +101,34 @@ class CanvasGraph
       @ctx.textAlign = 'left'
       @ctx.fillText( @toDataYCoord((-yClick+@canvas.height)).toFixed(4), 15, yClick+5 ) # don't forget to flip y-axis values
       
-  removeOutliers: (nsigma) ->
-    mean = @mean(@data.y)
-    std = @std(@data.y)
-    x_new = []
+  processLightcurve: () ->
+    @data.y = @removeOutliers(@data.y, nsigma=8) # NOTE: nsigma < 8 removes tutorial subject transits
+    @data.y = @normalize(@data.y)
+
+  normalize: (data) ->
     y_new = []
-    for value, i in [@data.y...]
-      if Math.sqrt( Math.pow( value - mean, 2 ) ) > nsigma * std
-        # console.log 'removed outlier!'
-        continue
-      else
-        x_new.push @data.x[i]
-        y_new.push @data.y[i]
+    mean = @mean(data)
+    std = @std(data)
 
-    # normalize
-    yMax = Math.max y_new...
-    yMin = Math.min y_new...
-
-    mean = @mean(y_new)
-    std = @std(y_new)
-
-    # console.log 'MEAN: ', mean
-    # console.log 'STD : ', std
-
-    for y, i in [ y_new... ]
+    for y, i in [ data... ]
       y_new[i] = (y-1)/(std)
       y_new[i] = y/(mean)
      
-    @data.x = x_new
-    @data.y = y_new
+    return y_new
 
+  removeOutliers: (data, nsigma) -> 
+    y_new = []
+    mean = @mean(data)
+    std = @std(data)
+    
+    for y, i in [data...]
+      if Math.sqrt( Math.pow( y - mean, 2 ) ) > nsigma * std
+        console.log 'removed outlier' if DEBUG
+        continue # skip (outlier)
+      else
+        y_new.push data[i]
+
+    return y_new
 
   std: (data) ->
     mean = @mean(data)
