@@ -238,7 +238,6 @@ class CanvasGraph
 
     # draw axes
     if @showAxes
-      # console.log "(ymin,ymax): (#{yMin},#{yMax})"
       @drawXTickMarks(xMin, xMax)
       @drawYTickMarks(yMin, yMax)
 
@@ -426,15 +425,10 @@ class CanvasGraph
     meanTickIndexIsEven = false
     tickIdx = 0
 
-    nStepsUpFromOne = Math.ceil (yMax-1.0)/yStep
-    nStepsDownFromOne = Math.round (1.0-yMin)/yStep
+    numStepsUp = Math.ceil (yMax-1.0)/yStep
+    numStepsDown = Math.round (1.0-yMin)/yStep
 
-    console.log 'yStep: ', yStep
-    console.log "[yMin,yMax] = [#{yMin},#{yMax}]"
-    console.log 'nStepsUpFromOne: ', nStepsUpFromOne
-    console.log 'nStepsDownFromOne: ', nStepsDownFromOne
-
-    for stepFactor in [-nStepsDownFromOne..nStepsUpFromOne]
+    for stepFactor in [-numStepsDown..numStepsUp]
       tickValue = 1+stepFactor*yStep
       unless tickValue >= yMax or tickValue <=yMin
         if tickValue is 1.0 
@@ -442,8 +436,6 @@ class CanvasGraph
             meanTickIndexIsEven = true
         yTicks.push tickValue
         tickIdx++
-
-    console.log 'yTicks: ', yTicks...
 
     if yStep < 0.001
       textDecimals = 4
