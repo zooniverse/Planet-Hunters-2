@@ -300,6 +300,8 @@ class Classifier extends BaseController
   loadSubjectData: () ->
     $('#graph-container').addClass 'loading-lightcurve'
     jsonFile = @subject.selected_light_curve.location
+    jsonFile = 'https://s3.amazonaws.com/demo.zooniverse.org/planet_hunter/beta_subjects/2300039_9-3.json
+'
     # console.log 'jsonFile: ', jsonFile # DEBUG CODE
 
     # handle ui elements
