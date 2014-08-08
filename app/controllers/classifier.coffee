@@ -300,9 +300,7 @@ class Classifier extends BaseController
   loadSubjectData: () ->
     $('#graph-container').addClass 'loading-lightcurve'
     jsonFile = @subject.selected_light_curve.location
-    jsonFile = ' https://s3.amazonaws.com/demo.zooniverse.org/planet_hunter/beta_subjects/2300039_9-3.json'
-    # console.log 'jsonFile: ', jsonFile # DEBUG CODE
-
+    
     # handle ui elements
     @el.find('#loading-screen').fadeIn()
     @el.find('.star-id').hide()
@@ -481,6 +479,8 @@ class Classifier extends BaseController
   onClickTutorial: ->
     clickEvent = { event: 'tutorialClicked', timestamp: (new Date).toUTCString() }
     @recordedClickEvents.push clickEvent
+    @canvasGraph.marks.destroyAll() # clear previous marks
+    @updateButtons()
     @launchTutorial()
 
   launchTutorial: ->
