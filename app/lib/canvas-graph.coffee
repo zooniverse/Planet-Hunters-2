@@ -61,11 +61,11 @@ class CanvasGraph
     # return # just for now
     return if @markingDisabled
     return if classifier.el.find('#graph').hasClass('is-zooming')
-    val = +classifier.el.find("#ui-slider").val()
+    @sliderValue = +classifier.el.find("#ui-slider").val()
     xClick = e.pageX - e.target.getBoundingClientRect().left - window.scrollX
     yClick = e.pageY - e.target.getBoundingClientRect().top - window.scrollY
     
-    @plotPoints(val, val+@zoomRanges[@zoomLevel])
+    @plotPoints(@sliderValue, @sliderValue+@zoomRanges[@zoomLevel])
 
     if xClick < @leftPadding
       # draw triangle
@@ -169,6 +169,8 @@ class CanvasGraph
     @plotPoints()
 
   drawHighlights: ->
+    sliderOffset = ( (@xMin) / (@xMax - @xMin) ) * ( @canvas.width-@leftPadding )
+
     for highlight in [ @highlights... ]
       for i in [0...@dataLength]
         if @data.x[i] >= highlight.xLeft and @data.x[i] <= highlight.xRight
@@ -177,7 +179,8 @@ class CanvasGraph
           y = -y + @canvas.height # flip y-values
           # @ctx.beginPath()
           @ctx.fillStyle = "rgba(252, 69, 65, 1.0)" #"#fc4541"
-          @ctx.fillRect(x,y,2,2)
+          continue if x-sliderOffset < 60
+          @ctx.fillRect(x-sliderOffset,y,2,2)
 
   plotPoints: (xMin = @smallestX, xMax = @largestX, yMin = @smallestY, yMax = @largestY) ->
     @xMin = xMin
@@ -187,7 +190,7 @@ class CanvasGraph
     @clearCanvas()
 
     # get necessary values from classifier
-    val = +classifier.el.find('#ui-slider').val()
+    @sliderValue = parseFloat classifier.el.find('#ui-slider').val()
     
     # draw points
     for i in [0...@dataLength]
@@ -215,12 +218,12 @@ class CanvasGraph
 
   rescaleMarks: (xMin, xMax) ->
     # console.log 'RESCALING MARKS.....'
-    val = +classifier.el.find('#ui-slider').val()
+    @sliderValue = parseFloat classifier.el.find('#ui-slider').val()
     # draw marks
     if @marks
       for mark in @marks.all
-        scaledMin = ((parseFloat(mark.dataXMinRel) + parseFloat(@toDays(@leftPadding)) - parseFloat(xMin) - parseFloat(val) ) / (parseFloat(xMax) - parseFloat(xMin)) ) * parseFloat(@canvas.width-@leftPadding)
-        scaledMax = ((parseFloat(mark.dataXMaxRel) + parseFloat(@toDays(@leftPadding)) - parseFloat(xMin) - parseFloat(val) ) / (parseFloat(xMax) - parseFloat(xMin)) ) * parseFloat(@canvas.width-@leftPadding)
+        scaledMin = ((parseFloat(mark.dataXMinRel) + parseFloat(@toDays(@leftPadding)) - parseFloat(xMin) - parseFloat(@sliderValue) ) / (parseFloat(xMax) - parseFloat(xMin)) ) * parseFloat(@canvas.width-@leftPadding)
+        scaledMax = ((parseFloat(mark.dataXMaxRel) + parseFloat(@toDays(@leftPadding)) - parseFloat(xMin) - parseFloat(@sliderValue) ) / (parseFloat(xMax) - parseFloat(xMin)) ) * parseFloat(@canvas.width-@leftPadding)
         #                                ^ prevents from moving towards left                          ^ prevents marks from moving towards right
         mark.element.style.width = (parseFloat(scaledMax)-parseFloat(scaledMin)) + "px"
         mark.element.style.left = parseFloat(scaledMin) + "px"
@@ -432,7 +435,17 @@ class CanvasGraph
 
   clearCanvas: -> @ctx.clearRect(0,0,@canvas.width, @canvas.height)
 
-  toPixels: (dataPoint) -> ((parseFloat(dataPoint) - parseFloat(@xMin)) / (parseFloat(@xMax) - parseFloat(@xMin))) * (parseFloat(@canvas.width)-parseFloat(@leftPadding))
+  toPixels: (dataPoint, printValue) -> 
+    pixel = ( (parseFloat(dataPoint) - parseFloat(@xMin)) / (parseFloat(@xMax) - parseFloat(@xMin)) ) * \
+      ( parseFloat(@canvas.width) - parseFloat(@leftPadding) )
+    if printValue
+      console.log "[xMin,xMax]  = [#{@xMin},#{@xMax}]"
+      console.log "canvas.width = #{@canvas.width}"
+      console.log "leftPadding  = #{@leftPadding}"
+      console.log "dataPoint    = #{dataPoint}"
+      console.log "pixel        = #{pixel}"
+    return pixel
+
   toCanvasYCoord: (dataPoint) -> ((parseFloat(dataPoint) - parseFloat(@yMin)) / (parseFloat(@yMax) - parseFloat(@yMin))) * (parseFloat(@canvas.height))
   toDays: (canvasPoint) -> ((parseFloat(canvasPoint) / (parseFloat(@canvas.width)-parseFloat(@leftPadding))) * (parseFloat(@xMax) - parseFloat(@xMin))) + parseFloat(@xMin)
   toDataYCoord: (canvasPoint) -> ((parseFloat(canvasPoint) / parseFloat(@canvas.height)) * (parseFloat(@yMax) - parseFloat(@yMin))) + parseFloat(@yMin)
@@ -530,7 +543,7 @@ class Mark
     @element.style.textAlign = 'center'
     @element.style.cursor = "move"
 
-    val = classifier.el.find('#ui-slider').val()
+    @sliderValue = classifier.el.find('#ui-slider').val()
     @initialLeft = @toCanvasXPoint(e) - (@minWidth()/2)
     @dragging = true
 
