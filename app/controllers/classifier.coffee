@@ -355,103 +355,6 @@ class Classifier extends BaseController
     @el.find('#temperature').html   metadata.teff.toString().concat("(K)")
     @el.find('#radius').html        metadata.radius.toString().concat("x Sol")
     @el.find('#ukirt-url').attr("href", ukirtUrl)
-
-  onChangeScaleSlider: ->
-    val = +@el.find("#ui-slider").val()
-    # if @zoomLevel is 0 or @zoomLevel > @zoomRanges.length
-    #   console.log 'RETURNING!!!!!!'
-    #   return 
-    
-    @canvasGraph.plotPoints( val, val + @canvasGraph.zoomRanges[@canvasGraph.zoomLevel] )
-    # # DEBUG CODE
-    # console.log 'onChangeScaleSlider(): '
-    # console.log '    SLIDER VALUE (val): ', val
-    # console.log '    PLOT RANGE          [',val,',',val+@zoomRanges[@zoomLevel],']'
-    # console.log '-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-'
-
-  onClickZoom: ->
-    # console.log 'onClickZoom()'
-
-    # # DO WE NEED THIS?
-    # @prevZoomLevel = @zoomLevel
-
-    # console.log '*** PREV ZOOM LEVEL: ',@prevZoomLevel,' ***'
-    
-    val = +@el.find("#ui-slider").val()
-
-    # increment zoom level
-    @canvasGraph.zoomLevel = @canvasGraph.zoomLevel + 1
-
-    # reset zoom
-    if @canvasGraph.zoomLevel > 2
-      @canvasGraph.zoomLevel = 0
-
-    if @canvasGraph.zoomLevel is 0
-      @zoomReset()
-    else 
-      # # DO WE NEED THIS?
-      # # set slider for current zoom level
-      # if val isnt 0 and @prevZoomLevel isnt 2
-      #   val = val + 0.5*( @zoomRanges[@prevZoomLevel] - @zoomRanges[@zoomLevel] )
-      # if @prevZoomLevel is 2
-      #   val = 0
-      # @el.find("#ui-slider").val(val) 
-
-      # zoom in to new range
-      @canvasGraph.zoomInTo(val, val+@canvasGraph.zoomRanges[@canvasGraph.zoomLevel])
-      # console.log 'zoomInTo(', val, ',', val+@zoomRanges[@zoomLevel], ')'
-
-    
-      # rebuild slider
-      @el.find("#ui-slider").noUiSlider
-        start: 0 #+@el.find("#ui-slider").val()
-        range:
-          'min': @canvasGraph.smallestX,
-          'max': @canvasGraph.largestX - @canvasGraph.zoomRanges[@canvasGraph.zoomLevel]
-      , true
-      
-      # update attributes/properties
-      @el.find('#ui-slider').removeAttr('disabled')
-      @el.find("#zoom-button").addClass("zoomed")
-      if @canvasGraph.zoomLevel is 2
-        @el.find("#zoom-button").addClass("allowZoomOut")
-      else
-        @el.find("#zoom-button").removeClass("allowZoomOut")
-
-    # DEBUG CODE        
-    # console.log 'onClickZoom(): '
-    # console.log 'SLIDER VALUE: ', val
-    # console.log 'PLOT RANGE [', val, ',', val+@zoomRanges[@zoomLevel], ']'
-    # console.log '******************************************************************************************'
-
-    # # DO WE NEED THIS?
-    # @prevZoomMin = 0
-    # @prevZoomMax = @zoomRanges[@zoomLevel]
-
-    # console.log 'PREV ZOOM WINDOW: [',@prevZoomMin,',',,']'
-
-    @showZoomMessage(@magnification[@canvasGraph.zoomLevel])
-    @recordedClickEvents.push { event: 'clickedZoomLevel'+@canvasGraph.zoomLevel, timestamp: (new Date).toUTCString() }
-  
-  zoomReset: =>
-    # reset slider value
-    @el.find('#ui-slider').val(0)
-
-    # don't need slider when zoomed out
-    @el.find('#ui-slider').attr('disabled',true)
-    @el.find(".noUi-handle").fadeOut(150)
-
-    @canvasGraph.zoomOut()
-    @isZoomed = false
-    @canvasGraph.zoomLevel = 0
-
-    # update buttons
-    @el.find("#zoom-button").removeClass("zoomed")
-    @el.find("#zoom-button").removeClass("allowZoomOut")
-    @el.find("#toggle-fav").removeClass("toggled")
-
-  showZoomMessage: (message) =>
-    @el.find('#zoom-notification').html(message).fadeIn(100).delay(1000).fadeOut()
     
   notify: (message) =>
     @course.hidePrompt(0) # get the prompt out of the way
@@ -703,6 +606,74 @@ class Classifier extends BaseController
         <p>by <strong>#{'currentUser'}</strong> 0 minutes ago</p>
       </div>
     """).animate({ scrollTop: container[0].scrollHeight}, 1000)
-    @resetTalkComment comment
+    @resetTalkComment comment\
+
+  #
+  # BEGIN CANVAS GRAPH-RELATED CODE >>>
+  #
+  onChangeScaleSlider: ->
+    val = +@el.find("#ui-slider").val()
+    @canvasGraph.plotPoints( val, val + @canvasGraph.zoomRanges[@canvasGraph.zoomLevel] )
+
+  onClickZoom: ->
+    # console.log 'onClickZoom()'
+    
+    val = +@el.find("#ui-slider").val()
+
+    # increment zoom level
+    @canvasGraph.zoomLevel = @canvasGraph.zoomLevel + 1
+
+    # reset zoom
+    if @canvasGraph.zoomLevel > 2
+      @canvasGraph.zoomLevel = 0
+
+    if @canvasGraph.zoomLevel is 0
+      @zoomReset()
+    else 
+      # zoom in to new range
+      @canvasGraph.zoomInTo(val, val+@canvasGraph.zoomRanges[@canvasGraph.zoomLevel])
+
+      # rebuild slider
+      @el.find("#ui-slider").noUiSlider
+        start: 0 #+@el.find("#ui-slider").val()
+        range:
+          'min': @canvasGraph.smallestX,
+          'max': @canvasGraph.largestX - @canvasGraph.zoomRanges[@canvasGraph.zoomLevel]
+      , true
+      
+      # update attributes/properties
+      @el.find('#ui-slider').removeAttr('disabled')
+      @el.find("#zoom-button").addClass("zoomed")
+      if @canvasGraph.zoomLevel is 2
+        @el.find("#zoom-button").addClass("allowZoomOut")
+      else
+        @el.find("#zoom-button").removeClass("allowZoomOut")
+
+    @showZoomMessage(@magnification[@canvasGraph.zoomLevel])
+    @recordedClickEvents.push { event: 'clickedZoomLevel'+@canvasGraph.zoomLevel, timestamp: (new Date).toUTCString() }
+  
+  zoomReset: =>
+    # reset slider value
+    @el.find('#ui-slider').val(0)
+
+    # don't need slider when zoomed out
+    @el.find('#ui-slider').attr('disabled',true)
+    @el.find(".noUi-handle").fadeOut(150)
+
+    @canvasGraph.zoomOut()
+    @isZoomed = false
+    @canvasGraph.zoomLevel = 0
+
+    # update buttons
+    @el.find("#zoom-button").removeClass("zoomed")
+    @el.find("#zoom-button").removeClass("allowZoomOut")
+    @el.find("#toggle-fav").removeClass("toggled")
+
+  showZoomMessage: (message) =>
+    @el.find('#zoom-notification').html(message).fadeIn(100).delay(1000).fadeOut()
+
+  #
+  # <<< END CANVAS GRAPH-RELATED CODE
+  #
 
 module.exports = Classifier
