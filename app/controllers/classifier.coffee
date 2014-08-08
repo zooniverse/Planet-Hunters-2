@@ -218,6 +218,9 @@ class Classifier extends BaseController
     # console.log 'classify: onUserChange()'    
     if User.current? # user logged in
 
+      # hide tutorial
+      @initialTutorial.end()
+
       # first visit, initialize preference
       unless User.current.preferences?.planet_hunter?.count?
         @initializeMiniCourse()
