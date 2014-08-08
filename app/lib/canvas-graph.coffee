@@ -1,5 +1,3 @@
-# $ = window.jQuery
-
 class CanvasGraph
 
   DEBUG = false
@@ -40,9 +38,6 @@ class CanvasGraph
   disableMarking: ->
     # console.log 'CANVAS GRAPH: disableMarking()'
     @markingDisabled = true
-    # @canvas.removeEventListener 'mousedown', (e) => @onMouseDown(e)
-    # @canvas.removeEventListener 'touchstart', (e) => @addMarkToGraph(e)
-    # @canvas.removeEventListener 'mousemove', (e) => @onMouseMove(e) # TODO: FIX (disabled for now)
 
   enableMarking: ->
     # console.log 'CANVAS GRAPH: enableMarking()'
@@ -66,14 +61,11 @@ class CanvasGraph
     # return # just for now
     return if @markingDisabled
     return if classifier.el.find('#graph').hasClass('is-zooming')
-    # @zoomLevel = classifier.zoomLevel
-    # @zoomRanges = classifier.zoomRanges
     val = +classifier.el.find("#ui-slider").val()
     xClick = e.pageX - e.target.getBoundingClientRect().left - window.scrollX
     yClick = e.pageY - e.target.getBoundingClientRect().top - window.scrollY
     
     @plotPoints(val, val+@zoomRanges[@zoomLevel])
-    # @rescaleMarks(val, val+zoomRanges[@zoomLevel])
 
     if xClick < @leftPadding
       # draw triangle
@@ -138,8 +130,6 @@ class CanvasGraph
     return Math.sqrt( sum / data.length )
 
   mean: (data) ->
-    # console.log 'mean()'
-    # console.log 'length: ', data.length
     sum = 0
     for value in data
       sum = sum + value
@@ -156,19 +146,6 @@ class CanvasGraph
     for entry in [@prevMarks...]
       # console.log '[',entry.xL,',',entry.xR,']' # DEBUG
       @highlightCurve(entry.xL,entry.xR)
-      
-    # DEBUG
-    # @zoomOut( =>
-    #   maxMarks = 5
-    #   minMarks = 1 
-    #   howMany = Math.floor( Math.random() * (maxMarks-minMarks) + minMarks )
-    #   # console.log 'randomly generating ', howMany, ' (fake) marks' # DEBUG
-    #   @generateFakePrevMarks( howMany )
-    #   for entry in [@prevMarks...]
-    #     # console.log '[',entry.xL,',',entry.xR,']' # DEBUG
-    #     @highlightCurve(entry.xL,entry.xR)
-    #   return howMany
-    # )
 
   generateFakePrevMarks: (n) ->
     minWid = 0.5 # [days]
@@ -203,7 +180,6 @@ class CanvasGraph
           @ctx.fillRect(x,y,2,2)
 
   plotPoints: (xMin = @smallestX, xMax = @largestX, yMin = @smallestY, yMax = @largestY) ->
-    # console.log 'plotPoints(): [',xMin,',',xMax,']'
     @xMin = xMin
     @xMax = xMax
     @yMin = yMin
@@ -212,8 +188,6 @@ class CanvasGraph
 
     # get necessary values from classifier
     val = +classifier.el.find('#ui-slider').val()
-    # zoomRanges = classifier.zoomRanges
-    # @zoomLevel  = classifier.zoomLevel
     
     # draw points
     for i in [0...@dataLength]
@@ -226,13 +200,6 @@ class CanvasGraph
 
     @drawHighlights()
 
-    # # draw y-axis gradient
-    # gradient = @ctx.createLinearGradient(0,0,60,0);
-    # gradient.addColorStop(0,'rgba(0,0,0,1.0)');
-    # gradient.addColorStop(1,'rgba(0,0,0,0.0');
-    # @ctx.fillStyle = gradient
-    # @ctx.fillRect(0,0,60,@canvas.height)
-
     if $('#graph-container').hasClass('showing-prev-data')
       @showPrevMarks()
 
@@ -244,7 +211,6 @@ class CanvasGraph
     @scale = (parseFloat(@largestX) - parseFloat(@smallestX)) / (parseFloat(@xMax) - parseFloat(@xMin))
     @rescaleMarks(xMin, xMax)
 
-    
     return
 
   rescaleMarks: (xMin, xMax) ->
@@ -253,8 +219,6 @@ class CanvasGraph
     # draw marks
     if @marks
       for mark in @marks.all
-        # scaledMin = ((mark.dataXMinRel - xMin) / (xMax - xMin)) * @canvas.width
-        # scaledMax = ((mark.dataXMaxRel - xMin) / (xMax - xMin)) * @canvas.width
         scaledMin = ((parseFloat(mark.dataXMinRel) + parseFloat(@toDays(@leftPadding)) - parseFloat(xMin) - parseFloat(val) ) / (parseFloat(xMax) - parseFloat(xMin)) ) * parseFloat(@canvas.width-@leftPadding)
         scaledMax = ((parseFloat(mark.dataXMaxRel) + parseFloat(@toDays(@leftPadding)) - parseFloat(xMin) - parseFloat(val) ) / (parseFloat(xMax) - parseFloat(xMin)) ) * parseFloat(@canvas.width-@leftPadding)
         #                                ^ prevents from moving towards left                          ^ prevents marks from moving towards right
@@ -262,25 +226,6 @@ class CanvasGraph
         mark.element.style.left = parseFloat(scaledMin) + "px"
         mark.save(scaledMin, scaledMax)
 
-    # console.log """
-    #               -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-    #               ---------------- RESCALE MARKS ----------------
-    #                                     val: #{val}  <--- slider value
-    #                       canvasGraph.scale: #{@scale}
-    #                                    xMin: #{xMin}  <------------- lightcurve display limits                    
-    #                                    xMax: #{xMax}    
-    #                               scaledMin: #{scaledMin} <---/------ mark limits
-    #                               scaledMax: #{scaledMax} <--/ 
-    #                        mark.dataXMinRel: #{mark.dataXMinRel} <-- data limits        
-    #                        mark.dataXMaxRel: #{mark.dataXMaxRel}   
-    #                       mark width (data): #{(mark.dataXMaxRel-mark.dataXMinRel)}
-    #                     mark width (canvas): #{mark.element.style.width}       <----- CSS style    
-    #                 mark.element.style.left: #{mark.element.style.left}
-    #               -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-    #             """
-
-
-    # @highlightCurve(10,14) # test
     @scale = (@largestX - @smallestX) / (@xMax - @xMin)
     return
 
@@ -320,10 +265,6 @@ class CanvasGraph
   zoomInTo: (wMin, wMax) ->
     classifier.el.find('#graph').addClass('is-zooming')
     [cMin, cMax] = [@xMin, @xMax]
-
-    # # DEBUG CODE
-    # @plotPoints(wMin,wMax)
-    # @rescaleMarks(wMin,wMax)
 
     zoom = setInterval (=>
       @plotPoints(cMin,cMax)
@@ -454,14 +395,6 @@ class CanvasGraph
 
     # REQUIRED FOR MEAN NORMALIZATION
     yMean = @mean(@data.y)
-
-    # # DRAW MEAN LINE (DEBUG PURPOSE)
-    # yPos = -@toCanvasYCoord(yMean) + @canvas.height
-    # @ctx.moveTo( 0, yPos )
-    # @ctx.lineTo( @canvas.width, yPos ) # minor tick
-    # @ctx.lineWidth = 1
-    # @ctx.strokeStyle = tickColor
-    # @ctx.stroke()
 
     for tick, i in [yTicks...]
       continue if i is 0               # skip first value
