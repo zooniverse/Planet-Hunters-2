@@ -606,12 +606,13 @@ class Classifier extends BaseController
         <p>by <strong>#{'currentUser'}</strong> 0 minutes ago</p>
       </div>
     """).animate({ scrollTop: container[0].scrollHeight}, 1000)
-    @resetTalkComment comment\
+    @resetTalkComment comment
 
   #
   # BEGIN CANVAS GRAPH-RELATED CODE >>>
   #
   onChangeScaleSlider: ->
+    # console.log 'onChangeScaleSlider(): '
     val = +@el.find("#ui-slider").val()
     @canvasGraph.plotPoints( val, val + @canvasGraph.zoomRanges[@canvasGraph.zoomLevel] )
 
