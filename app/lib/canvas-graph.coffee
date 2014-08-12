@@ -20,14 +20,7 @@ class CanvasGraph
     for xValue, idx in [@data.x...]
       @data.x[idx] = xValue - @smallestX
 
-    # normalize
     @processLightcurve()
-
-    # update min/max values
-    @smallestX = Math.min @data.x...
-    @smallestY = Math.min @data.y...
-    @largestX = Math.max  @data.x...
-    @largestY = Math.max  @data.y...
 
     @zoomRanges = [@largestX, 10, 2]
     @zoomLevel = 0
@@ -94,8 +87,14 @@ class CanvasGraph
       @ctx.fillText( @toDataYCoord((-yClick+@canvas.height)).toFixed(4), 15, yClick+5 ) # don't forget to flip y-axis values
       
   processLightcurve: () ->
-    @data.y = @removeOutliers(@data.y, nsigma=8) # NOTE: nsigma < 8 removes tutorial subject transits
+    @data.y = @removeOutliers(@data.y, nsigma=3) # NOTE: nsigma < 8 removes tutorial subject transits
     @data.y = @normalize(@data.y)
+
+    # update min/max values
+    @smallestX = Math.min @data.x...
+    @smallestY = Math.min @data.y...
+    @largestX = Math.max  @data.x...
+    @largestY = Math.max  @data.y...
 
   normalize: (data) ->
     y_new = []
