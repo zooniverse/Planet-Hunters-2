@@ -52,7 +52,7 @@ class CanvasGraph
     @sliderValue = +classifier.el.find("#ui-slider").val()
     xClick = e.pageX - e.target.getBoundingClientRect().left - window.scrollX
     yClick = e.pageY - e.target.getBoundingClientRect().top - window.scrollY
-    
+
     @plotPoints(@sliderValue, @sliderValue+@zoomRanges[@zoomLevel])
 
     if xClick < @leftPadding
@@ -83,17 +83,23 @@ class CanvasGraph
       
   processLightcurve: (removeOutliers=false) ->
 
+    console.log 'sliderValue: ', @sliderValue
+    classifier.el.find("#ui-slider").val(0) # reset slider value
+    @zoomOut()
+
+    # restore original values
+    @data.x = @data_raw.x
+    @data.y = @data_raw.y
+
     # this step is necessary or (top) x-axis breaks
     @smallestX = Math.min @data_raw.x...
     @originalMin = @smallestX
-    for xValue, idx in [@data_raw.x...]
-      @data.x[idx] = xValue - @smallestX
+    for x, i in [@data.x...]
+      @data.x[i] = x - @smallestX
 
     if removeOutliers
       @data = @removeOutliers(@data_raw, nsigma=3) # NOTE: nsigma < 8 removes tutorial subject transits
-    else
-      @data.y = @data_raw.y # restore to original values
-
+    
     @data.y = @normalize(@data.y)
 
     # update min/max values
@@ -103,6 +109,8 @@ class CanvasGraph
     @largestY = Math.max  @data.y...
 
     @plotPoints()
+    
+    return
 
   normalize: (data) ->
     y_new = []
@@ -116,8 +124,6 @@ class CanvasGraph
     return y_new
 
   removeOutliers: (data, nsigma) -> 
-    console.log 'data.x.length: ', data.x.length
-    console.log 'data.y.length: ', data.y.length
     data_new = {}
     data_new.x = []
     data_new.y = []
@@ -246,11 +252,21 @@ class CanvasGraph
 
   zoomOut: (callback) ->
     # classifier.el.find('#graph').addClass('is-zooming')
+
+    @zoomLevel = 0
     @plotPoints(@smallestX, @largestX)
 
     [cMin, cMax] = [@xMin, @xMax]
     [wMin, wMax] = [@smallestX, @largestX]
-    
+
+    classifier.el.find("#zoom-button").removeClass("zoomed")
+    classifier.el.find("#zoom-button").removeClass("allowZoomOut") # for last zoom level
+    classifier.el.find('#ui-slider').attr('disabled',true)
+    classifier.el.find('.noUi-handle').fadeOut(150)
+
+
+
+
     # TODO: broken (a major pain in my ass)
     # step = 1.5
     # zoom = setInterval (=>
