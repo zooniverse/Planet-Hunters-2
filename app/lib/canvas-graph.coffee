@@ -76,16 +76,17 @@ class CanvasGraph
       @ctx.textAlign = 'left'
       @ctx.fillText( @toDataYCoord((-yClick+@canvas.height)).toFixed(4), 15, yClick+5 ) # don't forget to flip y-axis values
       
-  processLightcurve: () ->
+  processLightcurve: (removeOutliers=false) ->
 
+    # this step is necessary or (top) x-axis breaks
     @smallestX = Math.min @data.x...
-
-    # reset first point to day 1
     @originalMin = @smallestX
     for xValue, idx in [@data.x...]
       @data.x[idx] = xValue - @smallestX
 
-    @data.y = @removeOutliers(@data.y, nsigma=3) # NOTE: nsigma < 8 removes tutorial subject transits
+    if removeOutliers
+      @data.y = @removeOutliers(@data.y, nsigma=3) # NOTE: nsigma < 8 removes tutorial subject transits
+
     @data.y = @normalize(@data.y)
 
     # update min/max values
@@ -93,6 +94,8 @@ class CanvasGraph
     @smallestY = Math.min @data.y...
     @largestX = Math.max  @data.x...
     @largestY = Math.max  @data.y...
+
+    @plotPoints()
 
   normalize: (data) ->
     y_new = []
