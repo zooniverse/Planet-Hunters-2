@@ -10,6 +10,11 @@ class CanvasGraph
 
     @dataLength = Math.min @data.x.length, @data.y.length
 
+    # save raw data points
+    @data_raw = {}
+    @data_raw.x = @data.x.slice(0)
+    @data_raw.y = @data.y.slice(0)
+
     @processLightcurve()
 
     @zoomRanges = [@largestX, 10, 2]
