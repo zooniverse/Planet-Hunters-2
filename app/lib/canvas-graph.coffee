@@ -6,19 +6,9 @@ class CanvasGraph
     @leftPadding = 60
     @showAxes    = true
     @ctx = @canvas.getContext('2d')
-
-    @smallestX = Math.min @data.x...
-    @smallestY = Math.min @data.y...
-    @largestX  = Math.max @data.x...
-    @largestY  = Math.max @data.y...
-
     @highlights = []
 
     @dataLength = Math.min @data.x.length, @data.y.length
-
-    @originalMin = @smallestX
-    for xValue, idx in [@data.x...]
-      @data.x[idx] = xValue - @smallestX
 
     @processLightcurve()
 
@@ -87,6 +77,14 @@ class CanvasGraph
       @ctx.fillText( @toDataYCoord((-yClick+@canvas.height)).toFixed(4), 15, yClick+5 ) # don't forget to flip y-axis values
       
   processLightcurve: () ->
+
+    @smallestX = Math.min @data.x...
+
+    # reset first point to day 1
+    @originalMin = @smallestX
+    for xValue, idx in [@data.x...]
+      @data.x[idx] = xValue - @smallestX
+
     @data.y = @removeOutliers(@data.y, nsigma=3) # NOTE: nsigma < 8 removes tutorial subject transits
     @data.y = @normalize(@data.y)
 
