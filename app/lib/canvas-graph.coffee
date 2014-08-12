@@ -84,13 +84,15 @@ class CanvasGraph
   processLightcurve: (removeOutliers=false) ->
 
     # this step is necessary or (top) x-axis breaks
-    @smallestX = Math.min @data.x...
+    @smallestX = Math.min @data_raw.x...
     @originalMin = @smallestX
-    for xValue, idx in [@data.x...]
+    for xValue, idx in [@data_raw.x...]
       @data.x[idx] = xValue - @smallestX
 
     if removeOutliers
-      @data.y = @removeOutliers(@data.y, nsigma=3) # NOTE: nsigma < 8 removes tutorial subject transits
+      @data = @removeOutliers(@data_raw, nsigma=3) # NOTE: nsigma < 8 removes tutorial subject transits
+    else
+      @data.y = @data_raw.y # restore to original values
 
     @data.y = @normalize(@data.y)
 
@@ -114,18 +116,23 @@ class CanvasGraph
     return y_new
 
   removeOutliers: (data, nsigma) -> 
-    y_new = []
-    mean = @mean(data)
-    std = @std(data)
+    console.log 'data.x.length: ', data.x.length
+    console.log 'data.y.length: ', data.y.length
+    data_new = {}
+    data_new.x = []
+    data_new.y = []
+    mean = @mean(data.y)
+    std = @std(data.y)
     
-    for y, i in [data...]
+    for y, i in [data.y...]
       if Math.sqrt( Math.pow( y - mean, 2 ) ) > nsigma * std
         console.log 'removed outlier' if DEBUG
         continue # skip (outlier)
       else
-        y_new.push data[i]
+        data_new.x.push data.x[i]
+        data_new.y.push data.y[i]
 
-    return y_new
+    return data_new
 
   std: (data) ->
     mean = @mean(data)
