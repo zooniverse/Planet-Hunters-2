@@ -131,12 +131,9 @@ class CanvasGraph
     std = @std(data.y)
     
     for y, i in [data.y...]
-      if Math.sqrt( Math.pow( y - mean, 2 ) ) > nsigma * std
-        console.log 'removed outlier' if DEBUG
-        continue # skip (outlier)
-      else
-        data_new.x.push data.x[i]
-        data_new.y.push data.y[i]
+      continue if Math.sqrt( Math.pow( y - mean, 2 ) ) > nsigma * std # skip outlier
+      data_new.x.push data.x[i]
+      data_new.y.push data.y[i]
 
     return data_new
 
