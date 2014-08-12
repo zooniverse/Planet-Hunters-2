@@ -6,28 +6,16 @@ class CanvasGraph
     @leftPadding = 60
     @showAxes    = true
     @ctx = @canvas.getContext('2d')
-
-    @smallestX = Math.min @data.x...
-    @smallestY = Math.min @data.y...
-    @largestX  = Math.max @data.x...
-    @largestY  = Math.max @data.y...
-
     @highlights = []
 
     @dataLength = Math.min @data.x.length, @data.y.length
 
-    @originalMin = @smallestX
-    for xValue, idx in [@data.x...]
-      @data.x[idx] = xValue - @smallestX
+    # save raw data points
+    @data_raw = {}
+    @data_raw.x = @data.x.slice(0)
+    @data_raw.y = @data.y.slice(0)
 
-    # normalize
     @processLightcurve()
-
-    # update min/max values
-    @smallestX = Math.min @data.x...
-    @smallestY = Math.min @data.y...
-    @largestX = Math.max  @data.x...
-    @largestY = Math.max  @data.y...
 
     @zoomRanges = [@largestX, 10, 2]
     @zoomLevel = 0
@@ -64,7 +52,7 @@ class CanvasGraph
     @sliderValue = +classifier.el.find("#ui-slider").val()
     xClick = e.pageX - e.target.getBoundingClientRect().left - window.scrollX
     yClick = e.pageY - e.target.getBoundingClientRect().top - window.scrollY
-    
+
     @plotPoints(@sliderValue, @sliderValue+@zoomRanges[@zoomLevel])
 
     if xClick < @leftPadding
@@ -93,9 +81,36 @@ class CanvasGraph
       @ctx.textAlign = 'left'
       @ctx.fillText( @toDataYCoord((-yClick+@canvas.height)).toFixed(4), 15, yClick+5 ) # don't forget to flip y-axis values
       
-  processLightcurve: () ->
-    @data.y = @removeOutliers(@data.y, nsigma=8) # NOTE: nsigma < 8 removes tutorial subject transits
+  processLightcurve: (removeOutliers=false) ->
+
+    console.log 'sliderValue: ', @sliderValue
+    classifier.el.find("#ui-slider").val(0) # reset slider value
+    @zoomOut()
+
+    # restore original values
+    @data.x = @data_raw.x
+    @data.y = @data_raw.y
+
+    # this step is necessary or (top) x-axis breaks
+    @smallestX = Math.min @data_raw.x...
+    @originalMin = @smallestX
+    for x, i in [@data.x...]
+      @data.x[i] = x - @smallestX
+
+    if removeOutliers
+      @data = @removeOutliers(@data_raw, nsigma=3) # NOTE: nsigma < 8 removes tutorial subject transits
+    
     @data.y = @normalize(@data.y)
+
+    # update min/max values
+    @smallestX = Math.min @data.x...
+    @smallestY = Math.min @data.y...
+    @largestX = Math.max  @data.x...
+    @largestY = Math.max  @data.y...
+
+    @plotPoints()
+    
+    return
 
   normalize: (data) ->
     y_new = []
@@ -109,18 +124,18 @@ class CanvasGraph
     return y_new
 
   removeOutliers: (data, nsigma) -> 
-    y_new = []
-    mean = @mean(data)
-    std = @std(data)
+    data_new = {}
+    data_new.x = []
+    data_new.y = []
+    mean = @mean(data.y)
+    std = @std(data.y)
     
-    for y, i in [data...]
-      if Math.sqrt( Math.pow( y - mean, 2 ) ) > nsigma * std
-        console.log 'removed outlier' if DEBUG
-        continue # skip (outlier)
-      else
-        y_new.push data[i]
+    for y, i in [data.y...]
+      continue if Math.sqrt( Math.pow( y - mean, 2 ) ) > nsigma * std # skip outlier
+      data_new.x.push data.x[i]
+      data_new.y.push data.y[i]
 
-    return y_new
+    return data_new
 
   std: (data) ->
     mean = @mean(data)
@@ -234,11 +249,21 @@ class CanvasGraph
 
   zoomOut: (callback) ->
     # classifier.el.find('#graph').addClass('is-zooming')
+
+    @zoomLevel = 0
     @plotPoints(@smallestX, @largestX)
 
     [cMin, cMax] = [@xMin, @xMax]
     [wMin, wMax] = [@smallestX, @largestX]
-    
+
+    classifier.el.find("#zoom-button").removeClass("zoomed")
+    classifier.el.find("#zoom-button").removeClass("allowZoomOut") # for last zoom level
+    classifier.el.find('#ui-slider').attr('disabled',true)
+    classifier.el.find('.noUi-handle').fadeOut(150)
+
+
+
+
     # TODO: broken (a major pain in my ass)
     # step = 1.5
     # zoom = setInterval (=>
