@@ -630,10 +630,6 @@ class Classifier extends BaseController
 
     # find center point
     @canvasGraph.graphCenter = (@canvasGraph.zoomRanges[@canvasGraph.zoomLevel]/2)+@canvasGraph.sliderValue
-    console.log 'graphCenter: ', @canvasGraph.graphCenter
-
-
-
 
     # reset zoom
     if @canvasGraph.zoomLevel > 2
@@ -641,6 +637,8 @@ class Classifier extends BaseController
 
     if @canvasGraph.zoomLevel is 0
       @zoomReset()
+      # reset center point
+      @canvasGraph.graphCenter = @canvasGraph.zoomRanges[@canvasGraph.zoomLevel]/2
     else 
       # zoom in to new range
       @canvasGraph.zoomInTo(@canvasGraph.sliderValue, @canvasGraph.sliderValue+@canvasGraph.zoomRanges[@canvasGraph.zoomLevel])
@@ -661,16 +659,15 @@ class Classifier extends BaseController
       else
         @el.find("#zoom-button").removeClass("allowZoomOut")
 
+    console.log 'graphCenter: ', @canvasGraph.graphCenter
+
+
     @showZoomMessage(@magnification[@canvasGraph.zoomLevel])
     @recordedClickEvents.push { event: 'clickedZoomLevel'+@canvasGraph.zoomLevel, timestamp: (new Date).toUTCString() }
   
   zoomReset: =>
     # reset slider value
     # @el.find('#ui-slider').val(0)
-
-    # reset center point
-    # @canvasGraph.graphCenter = @canvasGraph.zoomRanges[@canvasGraph.zoomLevel]/2
-    # console.log 'dlsjkdjhsl: ', @canvasGraph.graphCenter
 
     # don't need slider when zoomed out
     @el.find('#ui-slider').attr('disabled',true)

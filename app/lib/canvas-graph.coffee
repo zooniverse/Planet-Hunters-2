@@ -17,8 +17,6 @@ class CanvasGraph
 
     @processLightcurve()
 
-    @graphCenter = null
-
     @zoomRanges = [@largestX, 10, 2]
     @zoomLevel = 0
 
@@ -255,12 +253,6 @@ class CanvasGraph
     @zoomLevel = 0
     @plotPoints(@smallestX, @largestX)
 
-    @graphCenter = (@largestX-@smallestX)/2
-    console.log 'aslkja: ', @largestX
-    console.log 'aslkja: ', @smallestX
-    console.log 'ZcENTER: ', @graphCenter
-
-
     [cMin, cMax] = [@xMin, @xMax]
     [wMin, wMax] = [@smallestX, @largestX]
 
@@ -268,8 +260,6 @@ class CanvasGraph
     classifier.el.find("#zoom-button").removeClass("allowZoomOut") # for last zoom level
     classifier.el.find('#ui-slider').attr('disabled',true)
     classifier.el.find('.noUi-handle').fadeOut(150)
-
-
 
 
     # TODO: broken (a major pain in my ass)
