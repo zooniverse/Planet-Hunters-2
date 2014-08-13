@@ -17,6 +17,8 @@ class CanvasGraph
 
     @processLightcurve()
 
+    @graphCenter = null
+
     @zoomRanges = [@largestX, 10, 2]
     @zoomLevel = 0
 
@@ -205,7 +207,7 @@ class CanvasGraph
     @clearCanvas()
 
     # get necessary values from classifier
-    @sliderValue = parseFloat classifier.el.find('#ui-slider').val()
+    @sliderValue = +classifier.el.find('#ui-slider').val()
     
     # draw points
     for i in [0...@dataLength]
@@ -233,7 +235,7 @@ class CanvasGraph
 
   rescaleMarks: (xMin, xMax) ->
     # console.log 'RESCALING MARKS.....'
-    @sliderValue = parseFloat classifier.el.find('#ui-slider').val()
+    @sliderValue = +classifier.el.find('#ui-slider').val()
     # draw marks
     if @marks
       for mark in @marks.all
@@ -252,6 +254,12 @@ class CanvasGraph
 
     @zoomLevel = 0
     @plotPoints(@smallestX, @largestX)
+
+    @graphCenter = (@largestX-@smallestX)/2
+    console.log 'aslkja: ', @largestX
+    console.log 'aslkja: ', @smallestX
+    console.log 'ZcENTER: ', @graphCenter
+
 
     [cMin, cMax] = [@xMin, @xMax]
     [wMin, wMax] = [@smallestX, @largestX]
@@ -568,7 +576,7 @@ class Mark
     @element.style.textAlign = 'center'
     @element.style.cursor = "move"
 
-    @sliderValue = classifier.el.find('#ui-slider').val()
+    @sliderValue = +classifier.el.find('#ui-slider').val()
     @initialLeft = @toCanvasXPoint(e) - (@minWidth()/2)
     @dragging = true
 

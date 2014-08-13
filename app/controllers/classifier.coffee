@@ -616,17 +616,24 @@ class Classifier extends BaseController
   #
   onChangeScaleSlider: ->
     # console.log 'onChangeScaleSlider(): '
-    @canvasGraph.sliderValue = parseFloat @el.find("#ui-slider").val()
+    @canvasGraph.sliderValue = +@el.find("#ui-slider").val()
     # console.log "sliderValue = #{@canvasGraph.sliderValue}"
     @canvasGraph.plotPoints( @canvasGraph.sliderValue, @canvasGraph.sliderValue + @canvasGraph.zoomRanges[@canvasGraph.zoomLevel] )
 
   onClickZoom: ->
     # console.log 'onClickZoom()'
     
-    @canvasGraph.sliderValue = parseFloat @el.find("#ui-slider").val()
+    @canvasGraph.sliderValue = +@el.find("#ui-slider").val()
 
     # increment zoom level
     @canvasGraph.zoomLevel = @canvasGraph.zoomLevel + 1
+
+    # find center point
+    @canvasGraph.graphCenter = (@canvasGraph.zoomRanges[@canvasGraph.zoomLevel]/2)+@canvasGraph.sliderValue
+    console.log 'graphCenter: ', @canvasGraph.graphCenter
+
+
+
 
     # reset zoom
     if @canvasGraph.zoomLevel > 2
@@ -659,7 +666,11 @@ class Classifier extends BaseController
   
   zoomReset: =>
     # reset slider value
-    @el.find('#ui-slider').val(0)
+    # @el.find('#ui-slider').val(0)
+
+    # reset center point
+    # @canvasGraph.graphCenter = @canvasGraph.zoomRanges[@canvasGraph.zoomLevel]/2
+    # console.log 'dlsjkdjhsl: ', @canvasGraph.graphCenter
 
     # don't need slider when zoomed out
     @el.find('#ui-slider').attr('disabled',true)
