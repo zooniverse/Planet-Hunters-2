@@ -616,14 +616,14 @@ class Classifier extends BaseController
   #
   onChangeScaleSlider: ->
     # console.log 'onChangeScaleSlider(): '
-    @sliderValue = parseFloat @el.find("#ui-slider").val()
-    # console.log "sliderValue = #{@sliderValue}"
-    @canvasGraph.plotPoints( @sliderValue, @sliderValue + @canvasGraph.zoomRanges[@canvasGraph.zoomLevel] )
+    @canvasGraph.sliderValue = parseFloat @el.find("#ui-slider").val()
+    # console.log "sliderValue = #{@canvasGraph.sliderValue}"
+    @canvasGraph.plotPoints( @canvasGraph.sliderValue, @canvasGraph.sliderValue + @canvasGraph.zoomRanges[@canvasGraph.zoomLevel] )
 
   onClickZoom: ->
     # console.log 'onClickZoom()'
     
-    @sliderValue = parseFloat @el.find("#ui-slider").val()
+    @canvasGraph.sliderValue = parseFloat @el.find("#ui-slider").val()
 
     # increment zoom level
     @canvasGraph.zoomLevel = @canvasGraph.zoomLevel + 1
@@ -636,7 +636,7 @@ class Classifier extends BaseController
       @zoomReset()
     else 
       # zoom in to new range
-      @canvasGraph.zoomInTo(@sliderValue, @sliderValue+@canvasGraph.zoomRanges[@canvasGraph.zoomLevel])
+      @canvasGraph.zoomInTo(@canvasGraph.sliderValue, @canvasGraph.sliderValue+@canvasGraph.zoomRanges[@canvasGraph.zoomLevel])
 
       # rebuild slider
       @el.find("#ui-slider").noUiSlider
