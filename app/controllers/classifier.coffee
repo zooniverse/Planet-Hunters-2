@@ -620,6 +620,12 @@ class Classifier extends BaseController
     # console.log "sliderValue = #{@canvasGraph.sliderValue}"
     @canvasGraph.plotPoints( @canvasGraph.sliderValue, @canvasGraph.sliderValue + @canvasGraph.zoomRanges[@canvasGraph.zoomLevel] )
 
+    # add offset to center point
+    @canvasGraph.graphCenter = (@canvasGraph.zoomRanges[@canvasGraph.zoomLevel]/2)+@canvasGraph.sliderValue
+
+    console.log 'CENTER POINT: ', @canvasGraph.graphCenter
+
+
   onClickZoom: ->
     # console.log 'onClickZoom()'
     
