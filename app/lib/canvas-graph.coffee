@@ -15,18 +15,14 @@ class CanvasGraph
     @data_raw.x = @data.x.slice(0)
     @data_raw.y = @data.y.slice(0)
 
-    @processLightcurve()
-
-    @zoomRanges = [@largestX, 10, 2]
 
     # initialize zoom parameters
+    @zoomRanges = [@largestX, 10, 2]
     @zoomLevel = 0
     @graphCenter = 5
-    # @graphCenter = (@largestX-@smallestX)/2
 
-    # # currently unused
-    # @prevZoomMin = @smallestX
-    # @prevZoomMax = @largestX
+    # apply normalization, outlier removal, etc.
+    @processLightcurve()
 
   disableMarking: ->
     # console.log 'CANVAS GRAPH: disableMarking()'
@@ -86,11 +82,15 @@ class CanvasGraph
     #   @ctx.textAlign = 'left'
     #   @ctx.fillText( @toDataYCoord((-yClick+@canvas.height)).toFixed(4), 15, yClick+5 ) # don't forget to flip y-axis values
       
+
+  toggleOutliers: ->
+    # @processLightcurve()
+
+    
   processLightcurve: (removeOutliers=false) ->
 
-    console.log 'sliderValue: ', @sliderValue
-    classifier.el.find("#ui-slider").val(0) # reset slider value
-    @zoomOut()
+    # classifier.el.find("#ui-slider").val(0) # reset slider value
+    # @zoomOut()
 
     # restore original values
     @data.x = @data_raw.x
@@ -262,7 +262,7 @@ class CanvasGraph
     @zoomLevel = 0
 
     # update slider position
-    classifier.el.find('#ui-slider').val(@smallestX)
+    classifier.el.find('#ui-slider').val(@graphCenter-@zoomRanges[@zoomLevel]/2)
     
     @plotPoints(@smallestX, @largestX)
 
@@ -312,15 +312,18 @@ class CanvasGraph
     if boundL < @smallestX
       boundL = @smallestX
       boundR = @smallestX + @zoomRanges[@zoomLevel]/2
-      console.log "ENFORCING BOUNDS: [#{boundL},#{boundR}]"
+      console.log "ENFORCING BOUNDS: [#{boundL},#{boundR}] (exceeded left bound)"
 
     if boundR > @largestX
       boundR = @largestX
       boundL = @largestX - @zoomRanges[@zoomLevel]/2
-      console.log "ENFORCING BOUNDS: [#{boundL},#{boundR}]"
+      console.log "ENFORCING BOUNDS: [#{boundL},#{boundR}] (exceeded right bound)"
 
     # update slider position
     classifier.el.find('#ui-slider').val(boundL)
+    console.log "ZOOMING TO: [#{boundL},#{boundR}] (exceeded right bound)"
+
+    console.log 
 
     @plotPoints(boundL,boundR)
 

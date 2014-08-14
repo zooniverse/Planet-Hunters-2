@@ -611,20 +611,13 @@ class Classifier extends BaseController
     """).animate({ scrollTop: container[0].scrollHeight}, 1000)
     @resetTalkComment comment
 
-  #
-  # BEGIN CANVAS GRAPH-RELATED CODE >>>
-  #
   onChangeScaleSlider: ->
-    # console.log 'onChangeScaleSlider(): '
     @canvasGraph.sliderValue = +@el.find("#ui-slider").val()
-    # console.log "sliderValue = #{@canvasGraph.sliderValue}"
     @canvasGraph.plotPoints( @canvasGraph.sliderValue, @canvasGraph.sliderValue + @canvasGraph.zoomRanges[@canvasGraph.zoomLevel] )
 
-    # add offset to center point
+    # update center point
     @canvasGraph.graphCenter = (@canvasGraph.zoomRanges[@canvasGraph.zoomLevel]/2)+@canvasGraph.sliderValue
-
-    console.log 'CENTER POINT: ', @canvasGraph.graphCenter
-
+    console.log 'CENTER POINT: ', @canvasGraph.graphCenter # DEBUG CODE
 
   onClickZoom: ->
     # increment zoom level
@@ -668,27 +661,17 @@ class Classifier extends BaseController
     @recordedClickEvents.push { event: 'clickedZoomLevel'+@canvasGraph.zoomLevel, timestamp: (new Date).toUTCString() }
   
   zoomReset: =>
-    # reset slider value
-    # @el.find('#ui-slider').val(0)
+    @canvasGraph.zoomOut()
 
-    # don't need slider when zoomed out
+    # update view
     @el.find('#ui-slider').attr('disabled',true)
     @el.find(".noUi-handle").fadeOut(150)
-
-    @canvasGraph.zoomOut()
-    @isZoomed = false
-    @canvasGraph.zoomLevel = 0
-
-    # update buttons
     @el.find("#zoom-button").removeClass("zoomed")
     @el.find("#zoom-button").removeClass("allowZoomOut")
     @el.find("#toggle-fav").removeClass("toggled")
+    @isZoomed = false
 
   showZoomMessage: (message) =>
     @el.find('#zoom-notification').html(message).fadeIn(100).delay(1000).fadeOut()
-
-  #
-  # <<< END CANVAS GRAPH-RELATED CODE
-  #
 
 module.exports = Classifier
