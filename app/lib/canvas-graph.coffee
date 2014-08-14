@@ -238,7 +238,11 @@ class CanvasGraph
 
   rescaleMarks: (xMin, xMax) ->
     # console.log 'RESCALING MARKS.....'
-    @sliderValue = +classifier.el.find('#ui-slider').val()
+    if @zoomLevel is 0
+      @sliderValue = 0
+    else
+      @sliderValue = +classifier.el.find('#ui-slider').val()
+    
     # draw marks
     if @marks
       for mark in @marks.all
@@ -307,9 +311,13 @@ class CanvasGraph
     # ensure zooming within bounds
     if boundL < @smallestX
       boundL = @smallestX
+      boundR = @smallestX + @zoomRanges[@zoomLevel]/2
+      console.log "ENFORCING BOUNDS: [#{boundL},#{boundR}]"
 
     if boundR > @largestX
       boundR = @largestX
+      boundL = @largestX - @zoomRanges[@zoomLevel]/2
+      console.log "ENFORCING BOUNDS: [#{boundL},#{boundR}]"
 
     # update slider position
     classifier.el.find('#ui-slider').val(boundL)

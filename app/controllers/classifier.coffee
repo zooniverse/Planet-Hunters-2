@@ -638,14 +638,13 @@ class Classifier extends BaseController
       @canvasGraph.zoomLevel = 0
 
     if @canvasGraph.zoomLevel is 0
-      debugger
       @zoomReset()
     else 
       if offset is 0
         console.log 'slider hasn\'t moved, CENTER: ', @canvasGraph.zoomRanges[@canvasGraph.zoomLevel]/2
         @canvasGraph.zoomToCenter( @canvasGraph.zoomRanges[@canvasGraph.zoomLevel]/2 )
       else
-        console.log 'slider moved'
+        console.log 'slider moved, CENTER: ', @canvasGraph.graphCenter
         @canvasGraph.zoomToCenter(@canvasGraph.graphCenter)
 
       # rebuild slider
@@ -655,7 +654,7 @@ class Classifier extends BaseController
           'min': @canvasGraph.smallestX,
           'max': @canvasGraph.largestX - @canvasGraph.zoomRanges[@canvasGraph.zoomLevel]
       , true
-      
+      1
       # update attributes/properties
       @el.find('#ui-slider').removeAttr('disabled')
       @el.find("#zoom-button").addClass("zoomed")
