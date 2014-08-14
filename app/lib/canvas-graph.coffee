@@ -18,10 +18,14 @@ class CanvasGraph
     @processLightcurve()
 
     @zoomRanges = [@largestX, 10, 2]
-    @zoomLevel = 0
 
-    @prevZoomMin = @smallestX
-    @prevZoomMax = @largestX
+    # initialize zoom parameters
+    @zoomLevel = 0
+    @graphCenter = (@largestX-@smallestX)/2
+
+    # # currently unused
+    # @prevZoomMin = @smallestX
+    # @prevZoomMax = @largestX
 
   disableMarking: ->
     # console.log 'CANVAS GRAPH: disableMarking()'
@@ -53,33 +57,33 @@ class CanvasGraph
     xClick = e.pageX - e.target.getBoundingClientRect().left - window.scrollX
     yClick = e.pageY - e.target.getBoundingClientRect().top - window.scrollY
 
-    @plotPoints(@sliderValue, @sliderValue+@zoomRanges[@zoomLevel])
+    # @plotPoints(@sliderValue, @sliderValue+@zoomRanges[@zoomLevel])
 
-    if xClick < @leftPadding
-      # draw triangle
-      w = 10
-      s = 2*w*Math.tan(@leftPadding)
+    # if xClick < @leftPadding
+    #   # draw triangle
+    #   w = 10
+    #   s = 2*w*Math.tan(@leftPadding)
       
-      @ctx.beginPath()
-      @ctx.moveTo(w,yClick)
-      @ctx.lineTo(0,yClick+s)
-      @ctx.lineTo(0,yClick-s)
-      @ctx.fillStyle = '#FC4542'      
-      @ctx.fill()
+    #   @ctx.beginPath()
+    #   @ctx.moveTo(w,yClick)
+    #   @ctx.lineTo(0,yClick+s)
+    #   @ctx.lineTo(0,yClick-s)
+    #   @ctx.fillStyle = '#FC4542'      
+    #   @ctx.fill()
 
-      @ctx.beginPath()
-      @ctx.moveTo(w,yClick)
-      @ctx.lineWidth = 1
-      @ctx.strokeStyle = 'rgba(252,69,66,0.9)'
-      @ctx.moveTo( 60, yClick )
-      @ctx.lineTo( @canvas.width, yClick )
-      @ctx.moveTo( 0, yClick )
-      @ctx.lineTo( 10, yClick )
-      @ctx.stroke()
+    #   @ctx.beginPath()
+    #   @ctx.moveTo(w,yClick)
+    #   @ctx.lineWidth = 1
+    #   @ctx.strokeStyle = 'rgba(252,69,66,0.9)'
+    #   @ctx.moveTo( 60, yClick )
+    #   @ctx.lineTo( @canvas.width, yClick )
+    #   @ctx.moveTo( 0, yClick )
+    #   @ctx.lineTo( 10, yClick )
+    #   @ctx.stroke()
 
-      @ctx.font = '10pt Arial'
-      @ctx.textAlign = 'left'
-      @ctx.fillText( @toDataYCoord((-yClick+@canvas.height)).toFixed(4), 15, yClick+5 ) # don't forget to flip y-axis values
+    #   @ctx.font = '10pt Arial'
+    #   @ctx.textAlign = 'left'
+    #   @ctx.fillText( @toDataYCoord((-yClick+@canvas.height)).toFixed(4), 15, yClick+5 ) # don't forget to flip y-axis values
       
   processLightcurve: (removeOutliers=false) ->
 
@@ -287,6 +291,41 @@ class CanvasGraph
     #       classifier.el.find('.noUi-handle').fadeOut(150)
     # ), 30
     # return
+
+
+  zoomToCenter: (center) ->
+    console.log 'zoomToCenter, CENTER = ', center
+    # classifier.el.find('#graph').addClass('is-zooming')
+    boundL = center - @zoomRanges[@zoomLevel]/2
+    boundR = center + @zoomRanges[@zoomLevel]/2
+
+    # ensure zooming within bounds
+    if boundL < @smallestX
+      boundL = @smallestX
+
+    if boundR > @largestX
+      boundR = @largestX
+
+    # update slider position
+    classifier.el.find('#ui-slider').val(boundL)
+
+    @plotPoints(boundL,boundR)
+
+    # console.log "ZOOM TO CENTER: [#{left},#{right}]"    
+
+    # [cMin, cMax] = [@xMin, @xMax]
+
+    # zoom = setInterval (=>
+    #   @plotPoints(cMin,cMax)
+    #   @rescaleMarks(cMin,cMax)
+    #   cMin += 1.5 unless cMin >= wMin
+    #   cMax -= 1.5 unless cMax <= wMax
+    #   if cMin >= wMin and cMax <= wMax # when 'animation' is done...
+    #     clearInterval zoom
+    #     classifier.el.find('#graph').removeClass('is-zooming')
+    #     @plotPoints(wMin,wMax)
+    #     @resc
+
 
   zoomInTo: (wMin, wMax) ->
     classifier.el.find('#graph').addClass('is-zooming')

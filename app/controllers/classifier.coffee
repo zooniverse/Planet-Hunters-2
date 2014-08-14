@@ -627,27 +627,32 @@ class Classifier extends BaseController
 
 
   onClickZoom: ->
-    # console.log 'onClickZoom()'
-    
-    @canvasGraph.sliderValue = +@el.find("#ui-slider").val()
-
     # increment zoom level
     @canvasGraph.zoomLevel = @canvasGraph.zoomLevel + 1
 
+    @canvasGraph.sliderValue = +@el.find("#ui-slider").val()
+    offset = @canvasGraph.sliderValue
+
     # find center point
-    @canvasGraph.graphCenter = (@canvasGraph.zoomRanges[@canvasGraph.zoomLevel]/2)+@canvasGraph.sliderValue
+    @canvasGraph.graphCenter = (@canvasGraph.zoomRanges[@canvasGraph.zoomLevel]/2)+offset
 
     # reset zoom
     if @canvasGraph.zoomLevel > 2
       @canvasGraph.zoomLevel = 0
 
     if @canvasGraph.zoomLevel is 0
+      # # reset center point
+      # @canvasGraph.graphCenter = @canvasGraph.zoomRanges[@canvasGraph.zoomLevel]/2
       @zoomReset()
-      # reset center point
-      @canvasGraph.graphCenter = @canvasGraph.zoomRanges[@canvasGraph.zoomLevel]/2
     else 
-      # zoom in to new range
-      @canvasGraph.zoomInTo(@canvasGraph.sliderValue, @canvasGraph.sliderValue+@canvasGraph.zoomRanges[@canvasGraph.zoomLevel])
+      if offset isnt 0
+        zoomRange = @canvasGraph.zoomRanges[@canvasGraph.zoomLevel]
+        graphCenter = @canvasGraph.graphCenter
+        @canvasGraph.zoomInTo(graphCenter-zoomRange/2+offset, graphCenter+zoomRange/2+offset)
+      else
+        # @canvasGraph.zoomInTo(@canvasGraph.graphCenter)
+        @canvasGraph.zoomInTo(offset, @canvasGraph.zoomRanges[@canvasGraph.zoomLevel]+offset)
+
 
       # rebuild slider
       @el.find("#ui-slider").noUiSlider
@@ -665,8 +670,10 @@ class Classifier extends BaseController
       else
         @el.find("#zoom-button").removeClass("allowZoomOut")
 
-    console.log 'graphCenter: ', @canvasGraph.graphCenter
+    @canvasGraph.graphCenter = @canvasGraph.zoomRanges[@canvasGraph.zoomLevel]/2
 
+
+    console.log 'CENTER POINT (onClickZoom): ', @canvasGraph.graphCenter
 
     @showZoomMessage(@magnification[@canvasGraph.zoomLevel])
     @recordedClickEvents.push { event: 'clickedZoomLevel'+@canvasGraph.zoomLevel, timestamp: (new Date).toUTCString() }
