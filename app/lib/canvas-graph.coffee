@@ -81,11 +81,6 @@ class CanvasGraph
     #   @ctx.font = '10pt Arial'
     #   @ctx.textAlign = 'left'
     #   @ctx.fillText( @toDataYCoord((-yClick+@canvas.height)).toFixed(4), 15, yClick+5 ) # don't forget to flip y-axis values
-      
-
-  toggleOutliers: ->
-    # @processLightcurve()
-
     
   processLightcurve: (removeOutliers=false) ->
 
