@@ -256,6 +256,10 @@ class CanvasGraph
     # classifier.el.find('#graph').addClass('is-zooming')
 
     @zoomLevel = 0
+
+    # update slider position
+    classifier.el.find('#ui-slider').val(@smallestX)
+    
     @plotPoints(@smallestX, @largestX)
 
     [cMin, cMax] = [@xMin, @xMax]

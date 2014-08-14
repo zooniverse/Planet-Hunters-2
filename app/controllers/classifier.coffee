@@ -638,6 +638,7 @@ class Classifier extends BaseController
       @canvasGraph.zoomLevel = 0
 
     if @canvasGraph.zoomLevel is 0
+      debugger
       @zoomReset()
     else 
       if offset is 0
