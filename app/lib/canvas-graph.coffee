@@ -21,7 +21,8 @@ class CanvasGraph
 
     # initialize zoom parameters
     @zoomLevel = 0
-    @graphCenter = (@largestX-@smallestX)/2
+    @graphCenter = 5
+    # @graphCenter = (@largestX-@smallestX)/2
 
     # # currently unused
     # @prevZoomMin = @smallestX

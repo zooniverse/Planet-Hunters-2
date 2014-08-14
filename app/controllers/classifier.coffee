@@ -640,7 +640,12 @@ class Classifier extends BaseController
     if @canvasGraph.zoomLevel is 0
       @zoomReset()
     else 
-      @canvasGraph.zoomToCenter(@canvasGraph.graphCenter)
+      if offset is 0
+        console.log 'slider hasn\'t moved, CENTER: ', @canvasGraph.zoomRanges[@canvasGraph.zoomLevel]/2
+        @canvasGraph.zoomToCenter( @canvasGraph.zoomRanges[@canvasGraph.zoomLevel]/2 )
+      else
+        console.log 'slider moved'
+        @canvasGraph.zoomToCenter(@canvasGraph.graphCenter)
 
       # rebuild slider
       @el.find("#ui-slider").noUiSlider
