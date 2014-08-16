@@ -60,6 +60,7 @@ initialTutorialSteps =
       next:        'spotTransits'
 
       next: ->
+        @el.style.setProperty("width", "15%") # narrow element
         window.classifier.canvasGraph.highlightCurve(2.75,3.00)
         return 'spotTransits'
 
@@ -67,19 +68,9 @@ initialTutorialSteps =
       # progress:    6 
       header:      translate 'span', 'initialTutorial.spotTransits.header'
       content:     translate 'span', 'initialTutorial.spotTransits.content'
-      attachment:  [0.5, 0.5, "#graph-container", 0.5, 0.9]
+      attachment:  [0.5, 0.5, "#graph-container", 0.0, 0.5]
       next: ->
-        return 'showTransits'
-
-    showTransits:
-      # progress:    7 
-      header:      translate 'span', 'initialTutorial.showTransits.header'
-      instruction: translate 'span', 'initialTutorial.showTransits.content'
-      attachment:  [0.5, 0.5, "#graph-container", 0.5, 0.9]
-      next:        'zooming'
-
-      demo: -> # TODO: Fix. This doesn't work!
-        # modify this to fit the light curve
+        @el.style.setProperty("width", "15%") # narrow element
         window.classifier.canvasGraph.highlightCurve(2.75,3.00)
         window.classifier.canvasGraph.highlightCurve(6.00,6.30)
         window.classifier.canvasGraph.highlightCurve(9.25,9.50)
@@ -91,6 +82,32 @@ initialTutorialSteps =
         window.classifier.canvasGraph.highlightCurve(29.00,29.34)
         window.classifier.canvasGraph.highlightCurve(32.34,32.60)
         $('.mark').fadeOut(600)
+        return 'showTransits'
+
+    showTransits:
+      # progress:    7 
+      header:      translate 'span', 'initialTutorial.showTransits.header'
+      instruction: translate 'span', 'initialTutorial.showTransits.content'
+      attachment:  [0.5, 0.5, "#graph-container", 0.0, 0.5]
+
+      # demo: -> # TODO: Fix. This doesn't work!
+      #   # modify this to fit the light curve
+      #   window.classifier.canvasGraph.highlightCurve(2.75,3.00)
+      #   window.classifier.canvasGraph.highlightCurve(6.00,6.30)
+      #   window.classifier.canvasGraph.highlightCurve(9.25,9.50)
+      #   window.classifier.canvasGraph.highlightCurve(12.60,12.85)
+      #   window.classifier.canvasGraph.highlightCurve(15.80,16.12)
+      #   window.classifier.canvasGraph.highlightCurve(19.15,19.45)
+      #   window.classifier.canvasGraph.highlightCurve(22.48,22.75)
+      #   window.classifier.canvasGraph.highlightCurve(25.72,26.00)
+      #   window.classifier.canvasGraph.highlightCurve(29.00,29.34)
+      #   window.classifier.canvasGraph.highlightCurve(32.34,32.60)
+      #   $('.mark').fadeOut(600)
+
+      next: ->
+        @el.style.setProperty("width", "35%") # reset element width
+        'zooming'
+
 
     zooming: 
       # progress:    8
