@@ -57,7 +57,7 @@ module.exports =
 
     markingTransits:
       header: 'Marking Transits'
-      content: 'Try marking this transit. Click and then drag left or right to highlight the transit points. Release the mouse button when you\'re done. You can go back and adjust the box width by selecting the transit box and using the handles.'
+      content: 'Try marking this transit (highlighted in red). Click and then drag left or right to highlight the transit points. Release the mouse button when you\'re done. You can go back and adjust the box width by selecting the transit box and using the handles.'
 
     spotTransits:
       header: 'Can you spot the transits?'
@@ -65,7 +65,7 @@ module.exports =
     
     showTransits:
       header: 'Did you spot them?'
-      content: 'Each light curve is reviewed by several volunteers so don\'t be discouraged if you missed a hard to spot transit. Transit hunting can be tricky and requires practice. Just do your best.'
+      content: 'The remaining transits have been highlighted in red. Each light curve is reviewed by several volunteers so don\'t be discouraged if you missed a hard to spot transit. Transit hunting can be tricky and requires practice. Just do your best.'
 
     zooming:
       header: 'Zoom'
