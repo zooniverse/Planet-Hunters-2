@@ -68,7 +68,7 @@ initialTutorialSteps =
       # progress:    6 
       header:      translate 'span', 'initialTutorial.spotTransits.header'
       content:     translate 'span', 'initialTutorial.spotTransits.content'
-      attachment:  [0.5, 0.5, "#graph-container", 0.0, 0.5]
+      attachment:  [0.0, 0.5, "#graph-container", 0.0, 0.5]
       next: ->
         @el.style.setProperty("width", "15%") # narrow element
         window.classifier.canvasGraph.highlightCurve(2.75,3.00)
@@ -88,7 +88,7 @@ initialTutorialSteps =
       # progress:    7 
       header:      translate 'span', 'initialTutorial.showTransits.header'
       instruction: translate 'span', 'initialTutorial.showTransits.content'
-      attachment:  [0.5, 0.5, "#graph-container", 0.0, 0.5]
+      attachment:  [0.0, 0.5, "#graph-container", 0.0, 0.5]
 
       # demo: -> # TODO: Fix. This doesn't work!
       #   # modify this to fit the light curve
