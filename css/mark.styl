@@ -1,0 +1,63 @@
+$color = #fc4541
+
+#marks-container > .mark
+  background-color: rgba(252, 69, 65, 0.4)
+  border-bottom: 2px solid $color
+  cursor: move
+  left: 0
+  pointer: auto
+  position: absolute
+  text-align: center
+  top: 0
+
+  .top-bar
+    background-color: $color
+    cursor: pointer
+    top: 0
+
+    img
+      border: 0
+
+  .left-border,
+  .right-border
+    background-color: $color
+    cursor: ew-resize
+    height: 100%
+    padding: 0 0 2px 0
+    position: absolute
+    top: 0
+    width: 2px
+    z-index: 100
+
+  .left-border
+    left: -1px
+
+  .right-border
+    right: -1px
+
+  .left-handle,
+  .right-handle
+    background-color: $color
+    border-radius: 3px
+    color: #b7061e
+    font-size: 8px
+    height: 12px
+    left: -5px
+    letter-spacing: 1px
+    position: absolute
+    top: 50%
+    visibility: hidden
+    width: 12px
+
+  .left-handle
+    left: -5px
+
+  .right-handle
+    right: -5px
+
+  &:hover
+    background-color: rgba(252, 69, 65, 0.6)
+
+    .left-handle,
+    .right-handle
+      visibility: visible
