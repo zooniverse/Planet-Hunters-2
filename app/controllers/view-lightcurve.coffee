@@ -11,6 +11,13 @@ Paginator                  = require 'zooniverse/controllers/paginator'
 {CanvasGraph, Marks, Mark} = require '../lib/canvas-graph'
 LightcurveViewer           = require '../controllers/lightcurve-viewer'
 
+
+getParameterByName = (name) ->
+  name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]")
+  regex = new RegExp("[\\?&]" + name + "=([^&#]*)")
+  results = regex.exec(location.search)
+  (if not results? then "" else decodeURIComponent(results[1].replace(/\+/g, " ")))
+
 Paginator::addItemToContainer = (item) ->
   itemEl = @getItemEl item
   itemEl.prependTo @itemsContainer
@@ -57,9 +64,15 @@ class ViewLightcurve extends BaseProfile
 
   constructor: ->
     super
-    setTimeout =>
-      @greeting.html("Hello, #{User.current.name}!") if User.current
-    , 1000
+
+    star_id = getParameterByName "star_id"
+    quarter = getParameterByName "quarter"
+
+    console.log 'star_id: ', star_id
+    console.log 'quarter: ', quarter
+    console.log "https://dev.zooniverse.org/projects/planet_hunter/subjects/?star_id=#{star_id}&quarter=#{quarter}"
+
+
 
   onClickItem: (e) ->
     # console.log 'onClickItem(): '
