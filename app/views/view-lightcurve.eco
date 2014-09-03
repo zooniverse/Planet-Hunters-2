@@ -4,10 +4,6 @@
 
 <div id="secondary-white" class="secondary-white">
   <div class="content">
-    <div class="intro content">
-      <!-- <p id="greeting"></p> -->
-    </div>
-    <%- require('zooniverse/views/profile')() %>
   </div>
 </div>
 
