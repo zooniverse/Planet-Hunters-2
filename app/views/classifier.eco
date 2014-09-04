@@ -160,7 +160,7 @@
         <button class="tool-button hide-unless-user" id="toggle-fav">
           <span>+Fav</span>
         </button>
-        <button class="tool-button" id="help" disabled>
+        <button class="tool-button" id="help">
           <span>Help</span>
         </button>
         <button class="tool-button" id="tutorial">
@@ -206,6 +206,22 @@
 
   </div><!-- end subject container -->
 </div>
+
+<div id="spotters-guide">
+  <div class="content">
+    <h2>Spotter's Guide</h2>
+
+    <div class="two-column">
+      <h3>Column 1</h3>
+    </div>
+
+    <div class="two-column">
+      <h3>Column 2</h3>
+    </div>
+
+  </div>
+</div>
+
 
 <!-- PLANET TIME -->
 <div class="bg-starfield-sun">
