@@ -36,7 +36,7 @@ class Mark
 
   minWidth: -> 10
 
-  maxWidth: -> 200
+  maxWidth: -> 200 * @canvasGraph.scale
 
   handleWidth: -> 16 * (@canvasGraph.scale || 1)
 
