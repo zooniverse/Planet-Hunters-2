@@ -211,6 +211,19 @@
   <div class="content">
     <h2>Spotter's Guide</h2>
 
+    <h3>Gaps</h3>
+    <img class="example-image" src="images/guide/gaps1.png" />
+    <img class="example-image" src="images/guide/gaps2.png" />
+
+    <h3>Pulsator</h3>
+    <img class="example-image" src="images/guide/pulsator1.png" />
+    <img class="example-image" src="images/guide/pulsator2.png" />
+
+    <h3>Star Spots</h3>
+    <img class="example-image" src="images/guide/starspots1.png" />
+    <img class="example-image" src="images/guide/starspots2.png" />
+
+    <!--
     <div class="two-column">
       <h3>Column 1</h3>
     </div>
@@ -218,6 +231,7 @@
     <div class="two-column">
       <h3>Column 2</h3>
     </div>
+    -->
 
   </div>
 </div>

@@ -26,7 +26,7 @@ class ViewLightcurve extends BaseController
 
     $.getJSON "https://dev.zooniverse.org/projects/planet_hunter/subjects/#{star_id}", (foo) =>
       location = foo.location["#{quarter}"]
-      console.log 'location: ', location
+      # console.log 'location: ', location
 
       if location is undefined
         @el.find('.content').append '<p>LIGHT CURVE NOT FOUND</p>'
