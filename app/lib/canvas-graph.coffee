@@ -202,9 +202,9 @@ class CanvasGraph
           y = ((+@data.y[i]-@yMin)/(@yMax-@yMin)) * @canvas.height
           y = -y + @canvas.height # flip y-values
           # @ctx.beginPath()
-          @ctx.fillStyle = "rgba(252, 69, 65, 1.0)" #"#fc4541"
+          @ctx.fillStyle = "rgba(255, 0, 0, 1.0)" #"#fc4541"
           continue if x-sliderOffset < 60 # skip if overlap with y-axis
-          @ctx.fillRect(x-sliderOffset,y,2,2)
+          @ctx.fillRect(x - sliderOffset, y, 4, 4)
 
   plotPoints: (xMin = @smallestX, xMax = @largestX, yMin = @smallestY, yMax = @largestY) ->
     @xMin = xMin

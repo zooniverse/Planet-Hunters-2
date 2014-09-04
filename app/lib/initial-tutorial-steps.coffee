@@ -81,7 +81,6 @@ initialTutorialSteps =
         window.classifier.canvasGraph.highlightCurve(25.72,26.00)
         window.classifier.canvasGraph.highlightCurve(29.00,29.34)
         window.classifier.canvasGraph.highlightCurve(32.34,32.60)
-        $('.mark').fadeOut(600)
         return 'showTransits'
 
     showTransits:
