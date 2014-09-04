@@ -359,6 +359,7 @@ class Classifier extends BaseController
     metadata = @Subject.current.metadata
     @el.find('#zooniverse-id').html @Subject.current.zooniverse_id 
     @el.find('#kepler-id').html     metadata.kepler_id
+    @el.find('#quarter').html @Subject.current.selected_light_curve.quarter
     @el.find('#star-type').html     metadata.spec_type
     @el.find('#magnitude').html     metadata.magnitudes.kepler
     @el.find('#temperature').html   metadata.teff.toString().concat("(K)")
