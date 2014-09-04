@@ -34,7 +34,7 @@ class Mark
 
   toPixels: (dataPoint) -> ((parseFloat(dataPoint) - parseFloat(@xMin)) / (parseFloat(@xMax) - parseFloat(@xMin))) * (parseFloat(@canvas.width)-parseFloat(@leftPadding))
 
-  minWidth: -> 10
+  minWidth: -> 15
 
   maxWidth: -> 200 * @canvasGraph.scale
 
