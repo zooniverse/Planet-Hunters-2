@@ -35,6 +35,7 @@ class Classifier extends BaseController
     'button[name="alt-join-convo"]'     : 'altJoinConvoBtn'
     'textarea[name="talk-comment"]'     : 'talkComment'
     'textarea[name="alt-talk-comment"]' : 'altTalkComment'
+    '#spotters-guide'                   : 'spottersGuide'
 
   events:
     'click button[id="zoom-button"]'          : 'onClickZoom'
@@ -76,6 +77,8 @@ class Classifier extends BaseController
     # classification counts at which to display supplementary tutorial
     @whenToDisplayTips = [1, 7] # TODO: don't forget to add 4 after beta version
     @splitDesignation = null
+
+    @guideShowing = false
 
     User.on 'change', @onUserChange
     Subject.on 'fetch', @onSubjectFetch
@@ -385,6 +388,17 @@ class Classifier extends BaseController
   onClickHelp: ->
     # @el.find('#notification-message').hide() # get any notification out of the way
     # @course.showPrompt() # DEBUG ONLY
+
+    if @guideShowing
+      @spottersGuide.slideUp()
+    else
+      @spottersGuide.show()
+      $("html, body").animate scrollTop: @spottersGuide.offset().top - 20, 500
+      # clickEvent = { event: 'guideActivated', timestamp: (new Date).toUTCString() }
+      # @recordedClickEvents.push clickEvent
+    @guideShowing = !@guideShowing
+
+
     
   onClickTutorial: ->
     clickEvent = { event: 'tutorialClicked', timestamp: (new Date).toUTCString() }

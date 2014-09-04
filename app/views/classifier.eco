@@ -207,6 +207,22 @@
   </div><!-- end subject container -->
 </div>
 
+<div id="spotters-guide">
+  <div class="content">
+    <h2>Spotter's Guide</h2>
+
+    <div class="two-column">
+      <h3>Column 1</h3>
+    </div>
+
+    <div class="two-column">
+      <h3>Column 2</h3>
+    </div>
+
+  </div>
+</div>
+
+
 <!-- PLANET TIME -->
 <div class="bg-starfield-sun">
   <div class="bg-planet-container">
