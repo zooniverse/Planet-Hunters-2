@@ -50,7 +50,10 @@ browserDialog.check msie: 9
 
 # get user
 User = require 'zooniverse/models/user'
-u = User.fetch()
+User.on 'change', (e, user) ->
+  $('html').toggleClass 'user-logged-in', user?
+
+User.fetch()
 
 # footer
 footerContainer = document.createElement 'div'

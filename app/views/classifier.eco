@@ -157,7 +157,7 @@
         <button class="tool-button" id="zoom-button">
           <span>Zoom</span>
         </button>
-        <button class="tool-button" id="toggle-fav">
+        <button class="tool-button hide-unless-user" id="toggle-fav">
           <span>+Fav</span>
         </button>
         <button class="tool-button" id="help" disabled>
