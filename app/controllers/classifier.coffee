@@ -582,6 +582,10 @@ class Classifier extends BaseController
     @el.find('#finished-marking').hide() #prop('disabled',true)
     @el.find('#finished-feedback').hide() #prop('disabled',true)
 
+    # Hide tutorials
+    tutorials = ['initialTutorial', 'supplementalTutorial']
+    @["#{ tutorial }"].end() for tutorial in tutorials
+
     # show summary
     @el.find('.do-you-see-a-transit').fadeOut()
     @el.find('.star-id').fadeIn()
