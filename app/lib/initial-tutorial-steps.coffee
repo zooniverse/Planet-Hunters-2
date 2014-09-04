@@ -45,24 +45,25 @@ initialTutorialSteps =
     transits: 
       # progress:    4
       header:      translate 'span', 'initialTutorial.transits.header'
-      content:     translate 'span', 'initialTutorial.transits.content'
+      instruction: translate 'span', 'initialTutorial.transits.content'
       attachment:  [0.5, 0.5, "#graph-container", 0.5, 0.5]
       next: ->
         window.classifier.canvasGraph.highlightCurve(2.75,3.00)
         return 'markingTransits'
 
     markingTransits:
-      # progress:    5 
       header:      translate 'span', 'initialTutorial.markingTransits.header'
       instruction: translate 'span', 'initialTutorial.markingTransits.content'
       attachment:  [0.0, 0.5, "#graph-container", 0.20, 0.2]
       arrow:       'left'
-      next:        'spotTransits'
 
-      next: ->
+      onBeforeLoad: ->
+        console.log 'here'
         @el.style.setProperty("width", "15%") # narrow element
         window.classifier.canvasGraph.highlightCurve(2.75,3.00)
-        return 'spotTransits'
+
+      next:
+        'mouseup #marks-container': 'spotTransits'
 
     spotTransits:
       # progress:    6 
