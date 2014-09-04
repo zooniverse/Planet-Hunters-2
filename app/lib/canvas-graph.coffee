@@ -84,7 +84,7 @@ class CanvasGraph
     #   @ctx.textAlign = 'left'
     #   @ctx.fillText( @toDataYCoord((-yClick+@canvas.height)).toFixed(4), 15, yClick+5 ) # don't forget to flip y-axis values
     
-  processLightcurve: (removeOutliers=false) ->
+  processLightcurve: (removeOutliers=true) ->
 
     @removeOutliers = removeOutliers
 
@@ -102,8 +102,8 @@ class CanvasGraph
       @data.x[i] = x - @smallestX
 
     if removeOutliers
-      @data = @processOutliers(@data_raw, nsigma=3) # NOTE: nsigma < 8 removes tutorial subject transits
-    
+      @data = @processOutliers(@data_raw, nsigma=4)
+      
     @data.y = @normalize(@data.y)
 
     # update min/max values
