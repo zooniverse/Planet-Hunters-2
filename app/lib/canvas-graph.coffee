@@ -84,6 +84,8 @@ class CanvasGraph
     
   processLightcurve: (removeOutliers=false) ->
 
+    @removeOutliers = removeOutliers
+
     # classifier.el.find("#ui-slider").val(0) # reset slider value
     # @zoomOut()
 
@@ -98,7 +100,7 @@ class CanvasGraph
       @data.x[i] = x - @smallestX
 
     if removeOutliers
-      @data = @removeOutliers(@data_raw, nsigma=3) # NOTE: nsigma < 8 removes tutorial subject transits
+      @data = @processOutliers(@data_raw, nsigma=3) # NOTE: nsigma < 8 removes tutorial subject transits
     
     @data.y = @normalize(@data.y)
 
@@ -112,6 +114,11 @@ class CanvasGraph
     
     return
 
+  toggleOutliers: ->
+    @removeOutliers = !@removeOutliers
+    @processLightcurve(@removeOutliers)
+    return
+
   normalize: (data) ->
     y_new = []
     mean = @mean(data)
@@ -123,7 +130,7 @@ class CanvasGraph
      
     return y_new
 
-  removeOutliers: (data, nsigma) -> 
+  processOutliers: (data, nsigma) -> 
     data_new = {}
     data_new.x = []
     data_new.y = []
