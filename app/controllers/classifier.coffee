@@ -297,9 +297,6 @@ class Classifier extends BaseController
       $("[name='course-opt-out']").prop 'checked', false
       $("[name='mini-course-option']").prop 'checked', false
 
-  onSubjectFetch: (e, user) =>
-    # console.log 'onSubjectFetch(): '
-
   onSubjectSelect: (e, subject) =>
     # console.log 'onSubjectSelect(): '
     @subject = subject
