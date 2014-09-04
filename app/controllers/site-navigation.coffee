@@ -9,7 +9,6 @@ class SiteNavigation extends BaseController
   activeClass: 'active'
 
   elements:
-    '.link'      : 'link'
     'a'          : 'navLinks'
     '.links'     : 'links'
     '.learn-more': 'learnMore'

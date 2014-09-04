@@ -1,4 +1,5 @@
 <% translate = require 't7e' %>
+
 <div>
   <img id="hamburger" src="./images/mobile-icons/hamburger-menu.svg">
 
@@ -55,29 +56,12 @@
   <img id="user-icon" src="./images/mobile-icons/user-icon.svg">
 
   <div class="links">
-    <%- translate 'a', 'siteNavigation.classify',  href: '#/classify',  class: 'link' %>
-    <%- translate 'a', 'siteNavigation.science',   foohref: '#/science',   class: 'link disabled-navlink' %>
-    <%- translate 'a', 'siteNavigation.about',     foohref: '#/about',     class: 'link disabled-navlink' %>
-    <%- translate 'a', 'siteNavigation.profile',   href: '#/profile',   class: 'link' %>
-    <a href="https://docs.google.com/forms/d/1eBV5VR52L-EPfxXi6t6Bvn1Bo98vD8MJt_w0UnF3Yys/viewform" class="link">Feedback</a>
-
-    <!--
-    <%- translate 'a', 'siteNavigation.education', foohref: '#/education', class: 'link disabled-navlink' %>
-    <%- translate 'a', 'siteNavigation.talk',      foohref: '#/discuss',   class: 'link disabled-navlink' %>
-    <%- translate 'a', 'siteNavigation.blog',      foohref: '#/blog',      class: 'link disabled-navlink' %>
-    -->
+    <%- translate 'a', 'siteNavigation.classify', href: '#/classify' %>
+    <%- translate 'a', 'siteNavigation.science', href: '#/science'%>
+    <%- translate 'a', 'siteNavigation.about', href: '#/about' %>
+    <%- translate 'a', 'siteNavigation.education', href: '#/education' %>
+    <%- translate 'a', 'siteNavigation.profile', href: '#/profile' %>
+    <%- translate 'a', 'siteNavigation.talk', href: 'http://talk.planethunters.org' %>
+    <%- translate 'a', 'siteNavigation.blog', href: 'http://blog.planethunters.org' %>
   </div>
 </div>
-
-
-<!-- <div class="for-home-page">
-  <div class="content-block">
-    <%- translate 'h1', 'home.header.title' %>
-    <%- translate 'p', 'home.header.content' %>
-    <p class="action">
-      <%- translate 'a.call-to-action', 'home.header.start', href: '#/classify' %>
-      <%- translate 'a.learn-more', 'home.header.learnMore', href: '#/' %>
-    </p>
-  </div>
-</div> -->
-
