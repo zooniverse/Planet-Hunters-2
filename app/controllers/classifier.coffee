@@ -4,6 +4,7 @@ Subject                    = require 'zooniverse/models/subject'
 Classification             = require 'zooniverse/models/classification'
 MiniCourse                 = require '../lib/mini-course'
 NoUiSlider                 = require '../lib/jquery.nouislider.min'
+StackOfPages               = require 'stack-of-pages'
 translate                  = require 't7e'
 {Tutorial}                 = require 'zootorial'
 {Step}                     = require 'zootorial'
@@ -102,6 +103,8 @@ class Classifier extends BaseController
     @el.find('#finished-marking').hide() #prop('disabled',true)
     @el.find('#finished-feedback').hide() #prop('disabled',true)
 
+    @el.on StackOfPages::activateEvent, @activate
+
   # CODE FOR PROMPT (NOT CURRENTLY IN USE)    
   # /////////////////////////////////////////////////
   # onMouseoverCourseYes: ->
@@ -120,6 +123,9 @@ class Classifier extends BaseController
   #   @el.find('#course-interval-setter').hide 400, =>
   #     @blockCourseIntervalDisplay = false
   # /////////////////////////////////////////////////
+
+  activate: ->
+    @initialTutorial?.attach() if Subject.current?.tutorial?
 
   onChangeMiniCourseOption: ->
     # console.log 'onChangeMiniCourseOption(): '
@@ -409,6 +415,7 @@ class Classifier extends BaseController
     tutorialSubject = new Subject
       id: 'TUTORIAL_SUBJECT'
       zooniverse_id: 'APH0000009'
+      tutorial: true
       metadata:
         kepler_id: "1431599"
         logg: "4.673"
