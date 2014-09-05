@@ -66,9 +66,9 @@ footer.el.appendTo footerContainer
 $("<div id='social-media'>
     <span>Zooniverse: The universe is too big to explore without you.</span>
     <div id='social-icons'>
-      <a href='http://www.facebook.com/planethunters'><img src='./images/social-media/facebook.svg'></a>
-      <a href='https://plus.google.com/109754226869605076230/posts'><img src='./images/social-media/googplus.svg'></a>
-      <a href='http://www.twitter.com/planethunters'><img src='./images/social-media/twit.svg'></a>
+      <a href='http://www.facebook.com/therealzooniverse'><img src='./images/social-media/facebook.svg'></a>
+      <a href='https://plus.google.com/+ZooniverseOrgReal'><img src='./images/social-media/googplus.svg'></a>
+      <a href='https://twitter.com/the_zooniverse'><img src='./images/social-media/twit.svg'></a>
     </div>
   </div>").appendTo footerContainer
 
