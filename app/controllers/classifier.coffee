@@ -603,11 +603,17 @@ class Classifier extends BaseController
     # show summary
     @el.find('.do-you-see-a-transit').fadeOut()
     @el.find('.star-id').fadeIn()
-    @classifySummary.fadeIn(150)
-    @nextSubjectButton.show()
-    @planetNum.html @canvasGraph.marks.all.length # number of marks
-    # @noTransitsButton.hide()
-    @finishedMarkingButton.hide()
+
+    console.log "tutorial subject at end ", @Subject()
+
+    if Subject.current?.tutorial?
+      @Subject.next()
+    else
+      @classifySummary.fadeIn(150)
+      @nextSubjectButton.show()
+      @planetNum.html @canvasGraph.marks.all.length # number of marks
+      # @noTransitsButton.hide()
+      @finishedMarkingButton.hide()
 
     # reset zoom parameters
     @zoomReset()
