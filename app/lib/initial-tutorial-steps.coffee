@@ -58,7 +58,6 @@ initialTutorialSteps =
       arrow:       'left'
 
       onBeforeLoad: ->
-        console.log 'here'
         @el.style.setProperty("width", "15%") # narrow element
         window.classifier.canvasGraph.highlightCurve(2.75,3.00)
 
