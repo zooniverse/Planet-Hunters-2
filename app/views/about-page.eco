@@ -22,12 +22,65 @@
 
       <div class="content sub-nav-about-teams">
         <h1>Teams</h1>
-        <p>This will be the content for the teams section</p>
+
+        <h2>Science Team</h2>
+        <div class="team-members">
+          <div class="team-member">
+            <div class="name">Debra Fischer</div>
+            <div class="location">Yale University (USA)</div>
+            <div class="bio">Debra is a Professor of Astronomy at Yale University, with a joint appointment in Geology &amp; Geophysics. She has been on the hunt for extra solar planets since 1997 -- just after the first planet outside our solar system was discovered -- and she searches out answers (and more good questions!) about the mysteries of exoplanets, their location, and their composition night and day.</div>
+          </div>
+          <div class="team-member">
+            <div class="name">Tabetha Boyajian</div>
+            <div class="location">Yale University (USA)</div>
+            <div class="bio">Tabetha is a postdoctoral fellow in the exoplanets group at Yale. She is interested in exoplanet detection, the precise characterization of exoplanets and their host stars, and the fundamental properties of eclipsing binaries and nearby single stars.</div>
+          </div>
+          <div class="team-member">
+            <div class="name">Chris Lintott</div>
+            <div class="location">Oxford University (UK)</div>
+            <div class="bio">Chris runs the Zooniverse collaboration and works on how galaxies form and evolve; particularly interested in the effects of active galactic nuclei and mergers. In his 'spare' time, he hunts for planets, presents the BBC's long-running Sky at Night program and cooks.</div>
+          </div>
+          <div class="team-member">
+            <div class="name">Joey Schmitt</div>
+            <div class="location">Yale University (USA)</div>
+            <div class="bio">Joey is a third year graduate student at Yale University. He's originally from Iowa and received his B.S. at the University of Iowa. Joey now works on detecting and characterizing exoplanets and their atmospheres.  </div>
+          </div>
+          <div class="team-member">
+            <div class="name">Meg Schwamb</div>
+            <div class="location">Institute of Astronomy and Astrophysics, Academia Sinica (Taiwan)</div>
+            <div class="bio">Meg is a planetary scientist and astronomer interested in how planets and solar systems form and evolve. In addition to working on exoplanets, she explores the small bodies residing in the outer Solar System and dabbles in the study of the Martian climate with the Planet Four project. Meg has a fondness for baking, soccer, and champagne. </div>
+          </div>
+          <div class="team-member">
+            <div class="name">Ji Wang</div>
+            <div class="location">Yale University (USA)</div>
+            <div class="bio">Ji is Postdoc at Yale University. He is interested in finding Tatooines, planets in binary stars. He is an ultimate sports fan in his spare time.</div>
+          </div>
+        </div>
+
+        <h2>Moderators</h2>
+        <div class="team-members">
+          <div class="team-member">
+            <div class="name">Tony Hoffman (TonyJHoffman)</div>
+            <div class="bio">Tony is a technology analyst for PCMag.com. A director of the Amateur Astronomers Association of New York, Tony has participated in the SOHO comets program, Spacewatch FMO Project, and several Zooniverse citizen science projects in addition to Planet Hunters.</div>
+          </div>
+          <div class="team-member">
+            <div class="name">Joe Constant (constovich)</div>
+            <div class="bio">Joe is an Event Investigator for Duke Energy at Catawba Nuclear Station. He is a moderator for the Planet Hunters Talk Boards.</div>
+          </div>
+          <div class="team-member">
+            <div class="name">Jo Echo Syan (echo-lily-mai)</div>
+            <div class="bio">Jo has been a member of the Zooniverse since 2009 and is also a Merger Zoo moderator over on the Galaxy Zoo forum. Completing a 1st class degree in fine art is currently exploring how art and science can fuse together with Enjoy Chaos.</div>
+          </div>
+        </div>
       </div>
 
       <div class="content sub-nav-about-organizations">
         <h1>Organizations</h1>
-        <p>This will be the content for the about section</p>
+        <h2>The Adler Planetarium</h2>
+        <p>The Adler Planetarium - America's First Planetarium - was founded in 1930 by Chicago business leader Max Adler. The Adler is a recognized leader in science education, with a focus on inspiring young people to pursue careers in science, technology, engineering and math. Throughout 80 years, the Adler has inspired the next generation of explorers by sharing the personal stories of space exploration and America’s space heroes.</p>
+
+        <h2>The University of Oxford</h2>
+        <p>The University of Oxford is the oldest in the English-speaking world having been founded in the 11th or 12th centuries. Today, it combines research in the humanities with major effort in the natural sciences and medicine. Citizen science is supported by the Department of Physics, the Division of Mathematics, Physical and Life Sciences, and the Oxford Martin Schools.</p>
       </div>
     </div>
     <div class="right-column">
