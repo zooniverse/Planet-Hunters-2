@@ -10,7 +10,10 @@ translate                  = require 't7e'
 {Step}                     = require 'zootorial'
 initialTutorialSteps       = require '../lib/initial-tutorial-steps'
 supplementalTutorialSteps  = require '../lib/supplemental-tutorial-steps'
-{CanvasGraph, Marks, Mark} = require "../lib/canvas-graph"
+{CanvasGraph, Marks, Mark} = require '../lib/canvas-graph'
+{loadImage}                = require '../lib/utils'
+Modal                      = require '../lib/modal'
+
 $ = window.jQuery
 
 class Classifier extends BaseController
@@ -35,7 +38,8 @@ class Classifier extends BaseController
     'button[name="alt-join-convo"]'     : 'altJoinConvoBtn'
     'textarea[name="talk-comment"]'     : 'talkComment'
     'textarea[name="alt-talk-comment"]' : 'altTalkComment'
-    '#spotters-guide'                   : 'spottersGuide'
+    '#spotters-guide'                   : 'spottersGuide'    
+    '.examples img'                     : 'exampleImages'
 
   events:
     'click button[id="zoom-button"]'          : 'onClickZoom'
@@ -105,6 +109,10 @@ class Classifier extends BaseController
     @el.find('#no-transits').hide() #prop('disabled',true)
     @el.find('#finished-marking').hide() #prop('disabled',true)
     @el.find('#finished-feedback').hide() #prop('disabled',true)
+
+    @exampleImages.on 'click', (e) ->
+      console.log 'MODAL: ', e.currentTarget.src
+      new Modal src: e.currentTarget.src
 
     @el.on StackOfPages::activateEvent, @activate
 

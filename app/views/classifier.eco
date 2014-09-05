@@ -210,10 +210,11 @@
 <div id="spotters-guide">
   <div class="content">
     <h2>Spotter's Guide</h2>
-
     <h3>Gaps</h3>
-    <img class="example-image" src="images/guide/gaps1.png" />
-    <img class="example-image" src="images/guide/gaps2.png" />
+    <div class="examples">
+      <span><img src="images/guide/gaps1.png" /></span>
+      <span><img src="images/guide/gaps2.png" /></span>
+    </div>
 
     <h3>Pulsator</h3>
     <img class="example-image" src="images/guide/pulsator1.png" />

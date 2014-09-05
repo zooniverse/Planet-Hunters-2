@@ -634,3 +634,24 @@
 
 .zooniverse-dialog
   z-index 1000
+
+.block-images
+  clearfix()
+  align-items: center
+  display: flex
+  flex-wrap: wrap
+  justify-content: center
+  margin: 25px -50px
+  text-align: center
+
+  &.short
+
+    > *
+      max-height: 155px
+
+  img
+    border: 3px solid white
+    box-sizing: border-box
+    cursor: pointer
+    flex-grow: 1
+    margin: 15px
