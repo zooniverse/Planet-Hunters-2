@@ -67,6 +67,8 @@ class Classifier extends BaseController
     # if window.matchMedia("(min-device-width: 320px)").matches and window.matchMedia("(max-device-width: 480px)").matches
     #   location.hash = "#/verify"
 
+    @loggedOutClassificationCount = 0
+
     window.classifier = @
     @recordedClickEvents = [] # array to store all click events
 
@@ -550,7 +552,15 @@ class Classifier extends BaseController
           $('.mini-course-option').prop 'checked', @courseEnabled
 
     # SEND CLASSIFICATION
-    @course.incrementCount()
+
+    if User.current?
+      @course.incrementCount()
+    else
+      @loggedOutClassificationCount += 1
+      if @loggedOutClassificationCount%5 == 0
+        @course.showPrompt()
+
+
     # console.log 'YOU\'VE MARKED ', @course.count, ' LIGHT CURVES!'
 
     @classification.annotate
