@@ -55,13 +55,13 @@ class Classifier extends BaseController
     'change #course-interval-sup-tut'         : 'onChangeCourseIntervalViaSupTut'
     'change input[name="mini-course-option"]' : 'onChangeMiniCourseOption'
     'change input[name="course-opt-out"]'     : 'onChangeCourseOptOut'
-    
+
     # CODE FOR PROMPT (NOT CURRENTLY IN USE)
     # 'mouseenter #course-yes-container'        : 'onMouseoverCourseYes'
     # 'mouseleave  #course-yes-container'       : 'onMouseoutCourseYes'
-    
+
   constructor: ->
-    super    
+    super
 
     # # if mobile device detected, go to verify mode
     # if window.matchMedia("(min-device-width: 320px)").matches and window.matchMedia("(max-device-width: 480px)").matches
@@ -108,7 +108,7 @@ class Classifier extends BaseController
 
     @el.on StackOfPages::activateEvent, @activate
 
-  # CODE FOR PROMPT (NOT CURRENTLY IN USE)    
+  # CODE FOR PROMPT (NOT CURRENTLY IN USE)
   # /////////////////////////////////////////////////
   # onMouseoverCourseYes: ->
   #   # console.log '*** ON ***'
@@ -138,14 +138,14 @@ class Classifier extends BaseController
 
     if @courseEnabled
       User.current?.setPreference 'course', 'yes'
-      $("[name='course-opt-out']").prop 'checked', false 
+      $("[name='course-opt-out']").prop 'checked', false
     else
       User.current?.setPreference 'course', 'no'
-      $("[name='course-opt-out']").prop 'checked', true  
+      $("[name='course-opt-out']").prop 'checked', true
 
-    clickEvent = 
-      event: 'courseEnabled' 
-      value: @courseEnabled 
+    clickEvent =
+      event: 'courseEnabled'
+      value: @courseEnabled
       timestamp: (new Date).toUTCString()
     @recordedClickEvents.push clickEvent
 
@@ -160,9 +160,9 @@ class Classifier extends BaseController
       User.current?.setPreference 'course', 'yes'
       @courseEnabled = true
 
-    clickEvent = 
-      event: 'courseOptedOut' 
-      value: opt_out 
+    clickEvent =
+      event: 'courseOptedOut'
+      value: opt_out
       timestamp: (new Date).toUTCString()
     @recordedClickEvents.push clickEvent
 
@@ -174,14 +174,14 @@ class Classifier extends BaseController
   #   # toggle course option
   #   if courseOption is 'yes'
   #     courseOption = 'no'
-  #     # $("[name='course-opt-out']").prop 'checked', true 
+  #     # $("[name='course-opt-out']").prop 'checked', true
   #   else
   #     courseOption = 'yes'
-  #     $("[name='course-opt-out']").prop 'checked', false  
+  #     $("[name='course-opt-out']").prop 'checked', false
 
-  #   clickEvent = 
-  #     event: 'miniCourseOptionChanged' 
-  #     value: courseOption 
+  #   clickEvent =
+  #     event: 'miniCourseOptionChanged'
+  #     value: courseOption
   #     timestamp: (new Date).toUTCString()
   #   @recordedClickEvents.push clickEvent
 
@@ -214,17 +214,17 @@ class Classifier extends BaseController
       @el.find('#course-interval-sup-tut').val(value)
     else
       # console.log 'SETTING VALUE TO: ', value
-    
+
     @course.setRate value
 
-    clickEvent = 
-      event: 'courseIntervalChanged' 
+    clickEvent =
+      event: 'courseIntervalChanged'
       value: value
       timestamp: (new Date).toUTCString()
     @recordedClickEvents.push clickEvent
 
   onUserChange: (e, user) =>
-    # console.log 'classify: onUserChange()'    
+    # console.log 'classify: onUserChange()'
     if User.current? # user logged in
 
       # hide tutorial
@@ -233,11 +233,11 @@ class Classifier extends BaseController
       # first visit, initialize preference
       unless User.current.preferences?.planet_hunter?.count?
         @initializeMiniCourse()
-      else 
+      else
         @course.count  = +User.current?.preferences?.planet_hunter?.count
         @course.curr   = +User.current?.preferences?.planet_hunter?.curr_course_id
       @handleSplitDesignation()
-      
+
     # handle tutorial launch
     if @course.count is 0 or not User.current?
       @launchTutorial()
@@ -259,7 +259,7 @@ class Classifier extends BaseController
     else
       # console.log 'NO SPLIT DESIGNATION ASSIGNED. USING DEFAULT.'
       @splitDesignation = 'a' # default split designation
-    
+
     @splitDesignation = 'a' # DEBUG CODE
 
     # console.log 'SPLIT DESIGNATION IS: ', @splitDesignation
@@ -281,7 +281,7 @@ class Classifier extends BaseController
       @course.setRate 5 # set default
       @allowCustomCourseInterval = true
     else
-      # console.log 'Setting mini-course interval to 5 (default)'      
+      # console.log 'Setting mini-course interval to 5 (default)'
       # console.log 'Allowing custom course interval.'
       @allowCustomCourseInterval = false
       @course.setRate 5 # set default
@@ -309,13 +309,13 @@ class Classifier extends BaseController
   loadSubjectData: () ->
     $('#graph-container').addClass 'loading-lightcurve'
     jsonFile = @subject.selected_light_curve.location
-    
+
     # handle ui elements
     @el.find('#loading-screen').fadeIn()
     @el.find('.star-id').hide()
     @el.find('#ui-slider').attr('disabled',true)
     @el.find(".noUi-handle").fadeOut(150)
-    
+
     # remove any previous canvas; create new one
     @canvas?.remove()
     @canvas = document.createElement('canvas')
@@ -325,7 +325,7 @@ class Classifier extends BaseController
 
     # read json data
     $.getJSON jsonFile, (data) =>
-      @canvasGraph?.marks.destroyAll()  
+      @canvasGraph?.marks.destroyAll()
       @marksContainer.appendChild(@canvas)
       @canvasGraph = new CanvasGraph(@canvas, data)
       @zoomReset()
@@ -355,9 +355,9 @@ class Classifier extends BaseController
     @ra      = @subject.coords[0]
     @dec     = @subject.coords[1]
     ukirtUrl = "http://surveys.roe.ac.uk:8080/wsa/GetImage?ra=" + @ra + "&dec=" + @dec + "&database=wserv4v20101019&frameType=stack&obsType=object&programmeID=10209&mode=show&archive=%20wsa&project=wserv4"
-    
+
     metadata = @Subject.current.metadata
-    @el.find('#zooniverse-id').html @Subject.current.zooniverse_id 
+    @el.find('#zooniverse-id').html @Subject.current.zooniverse_id
     @el.find('#kepler-id').html     metadata.kepler_id
     @el.find('#quarter').html @Subject.current.selected_light_curve.quarter
     @el.find('#star-type').html     metadata.spec_type
@@ -365,7 +365,7 @@ class Classifier extends BaseController
     @el.find('#temperature').html   metadata.teff.toString().concat("(K)")
     @el.find('#radius').html        metadata.radius.toString().concat("x Sol")
     @el.find('#ukirt-url').attr("href", ukirtUrl)
-    
+
   notify: (message) =>
     @course.hidePrompt(0) # get the prompt out of the way
     return if @el.find('#notification').hasClass('notifying')
@@ -399,7 +399,7 @@ class Classifier extends BaseController
     @guideShowing = !@guideShowing
 
 
-    
+
   onClickTutorial: ->
     clickEvent = { event: 'tutorialClicked', timestamp: (new Date).toUTCString() }
     @recordedClickEvents.push clickEvent
@@ -426,18 +426,18 @@ class Classifier extends BaseController
     # create tutorial subject
     tutorialSubject = new Subject
       id: 'TUTORIAL_SUBJECT'
-      zooniverse_id: 'APH0000009'
+      zooniverse_id: 'APH0000039'
       tutorial: true
       metadata:
-        kepler_id: "1431599"
-        logg: "4.673"
+        kepler_id: "9631995"
+        logg: "4.493"
         magnitudes:
-          kepler: "12.320"
-        mass: "0.57"
-        radius: "0.577"
-        teff: "4056"
-      selected_light_curve: 
-        location: 'https://s3.amazonaws.com/demo.zooniverse.org/planet_hunter/beta_subjects/1873513_15-3.json'
+          kepler: "13.435"
+        mass: ""
+        radius: "0.966"
+        teff: "6076"
+      selected_light_curve:
+        location: 'https://s3.amazonaws.com/demo.zooniverse.org/planet_hunter/beta_subjects/9631995_16-2.json'
     tutorialSubject
 
   updateButtons: ->
@@ -451,7 +451,7 @@ class Classifier extends BaseController
 
   onClickNoTransits: ->
     # console.log 'onClickNoTransits()'
-    # giveFeedback() 
+    # giveFeedback()
     @finishSubject()
 
   onClickFinishedMarking: ->
@@ -464,7 +464,7 @@ class Classifier extends BaseController
     # @finishedMarkingButton.hide()
     # @el.find('#zoom-button').attr('disabled',true)
     # @giveFeedback()
-  
+
   giveFeedback: ->
     # console.log 'giveFeedback()'
 
@@ -489,7 +489,7 @@ class Classifier extends BaseController
 
     # keep drawing highlighted points while displaying previous data
     # TODO: fix, kindda cluegy
-    $("#graph-container").removeClass('showing-prev-data')    
+    $("#graph-container").removeClass('showing-prev-data')
 
     @finishSubject()
 
@@ -510,7 +510,7 @@ class Classifier extends BaseController
 
     # if @course.getPref() isnt 'never' and @course.count % @course.rate is 0 and @course.coursesAvailable() and @course.count isnt 0
     #   @el.find('#notification-message').hide() # get any notification out of the way
-    #   @course.showPrompt() 
+    #   @course.showPrompt()
 
     if @course.getPref() is "yes" and @course.count % @course.rate is 0 and @course.coursesAvailable() and @course.count isnt 0
       @notify 'Loading mini-course...'
@@ -534,7 +534,7 @@ class Classifier extends BaseController
           """
           # inject custom element into zootorial
           @supplementalTutorial.container.getElementsByClassName('zootorial-content')[0].appendChild(newElement)
-          
+
           if @allowCustomCourseInterval
             $('#course-opt-in-label').html """
               <!--<div id="course-interval-setter">-->
@@ -548,7 +548,7 @@ class Classifier extends BaseController
 
           # check box only if mini-course enabled
           $('.mini-course-option').prop 'checked', @courseEnabled
-        
+
     # SEND CLASSIFICATION
     @course.incrementCount()
     # console.log 'YOU\'VE MARKED ', @course.count, ' LIGHT CURVES!'
@@ -557,7 +557,7 @@ class Classifier extends BaseController
       classification_type: 'light_curve'
       selected_id:          @subject.selected_light_curve._id
       location:             @subject.selected_light_curve.location
-    
+
     for mark in [@canvasGraph.marks.all...]
       @classification.annotate
         timestamp: mark.timestamp
@@ -575,7 +575,7 @@ class Classifier extends BaseController
     # # DEBUG CODE
     # console.log JSON.stringify( @classification )
     # console.log '********************************************'
-    
+
     # send classification (except for tutorial subject)
     unless @classification.subject.id is 'TUTORIAL_SUBJECT'
       @classification.send()
@@ -587,7 +587,7 @@ class Classifier extends BaseController
   finishSubject: ->
     # console.log 'finishSubject()'
     @finishedFeedbackButton.hide()
-    
+
     # re-enable zoom button (after feedback)
     @el.find('#zoom-button').attr('disabled',false)
 
@@ -611,7 +611,7 @@ class Classifier extends BaseController
 
     # reset zoom parameters
     @zoomReset()
-    
+
   onClickJoinConvo: -> @joinConvoBtn.hide().siblings().show()
   onClickAltJoinConvo: -> @altJoinConvoBtn.hide().siblings().show()
 
@@ -655,7 +655,7 @@ class Classifier extends BaseController
 
     if @canvasGraph.zoomLevel is 0
       @zoomReset()
-    else 
+    else
       if offset is 0
         console.log 'slider hasn\'t moved, CENTER: ', @canvasGraph.zoomRanges[@canvasGraph.zoomLevel]/2
         @canvasGraph.zoomToCenter( @canvasGraph.zoomRanges[@canvasGraph.zoomLevel]/2 )
@@ -682,7 +682,7 @@ class Classifier extends BaseController
     console.log 'CENTER POINT (onClickZoom): ', @canvasGraph.graphCenter
     @showZoomMessage(@magnification[@canvasGraph.zoomLevel])
     @recordedClickEvents.push { event: 'clickedZoomLevel'+@canvasGraph.zoomLevel, timestamp: (new Date).toUTCString() }
-  
+
   zoomReset: =>
     @canvasGraph.zoomOut()
 
