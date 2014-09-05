@@ -437,7 +437,7 @@ class Classifier extends BaseController
         radius: "0.966"
         teff: "6076"
       selected_light_curve:
-        location: 'https://s3.amazonaws.com/demo.zooniverse.org/planet_hunter/beta_subjects/9631995_16-2.json'
+        location: 'https://s3.amazonaws.com/demo.zooniverse.org/planet_hunter/subjects/09631995_16-3.json'
     tutorialSubject
 
   updateButtons: ->
