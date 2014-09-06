@@ -393,20 +393,15 @@ class Classifier extends BaseController
       @notify('Added to Favorites.')
 
   onClickHelp: ->
-    # @el.find('#notification-message').hide() # get any notification out of the way
-    # @course.showPrompt() # DEBUG ONLY
-
     if @guideShowing
       @spottersGuide.slideUp()
     else
-      @spottersGuide.show()
+      @spottersGuide.slideDown()
       $("html, body").animate scrollTop: @spottersGuide.offset().top - 20, 500
-      # clickEvent = { event: 'guideActivated', timestamp: (new Date).toUTCString() }
-      # @recordedClickEvents.push clickEvent
+      clickEvent = { event: 'guideActivated', timestamp: (new Date).toUTCString() }
+      @recordedClickEvents.push clickEvent
     @guideShowing = !@guideShowing
 
-
-    
   onClickTutorial: ->
     clickEvent = { event: 'tutorialClicked', timestamp: (new Date).toUTCString() }
     @recordedClickEvents.push clickEvent
