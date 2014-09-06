@@ -111,7 +111,6 @@ class Classifier extends BaseController
     @el.find('#finished-feedback').hide() #prop('disabled',true)
 
     @exampleImages.on 'click', (e) ->
-      console.log 'MODAL: ', e.currentTarget.src
       new Modal src: e.currentTarget.src
 
     @el.on StackOfPages::activateEvent, @activate
