@@ -103,7 +103,7 @@ class CanvasGraph
 
     if removeOutliers
       @data = @processOutliers(@data_raw, nsigma=4)
-      
+
     @data.y = @normalize(@data.y)
 
     # update min/max values
@@ -584,6 +584,6 @@ class Marks
     markBelow = Math.abs mouseLocation - @closestXBelow(mouseLocation)
     markAbove = Math.abs mouseLocation - @closestXAbove(mouseLocation)
     # 22 is width of mark plus some room on each side
-    markBelow < (10*scale) or markAbove < (10*scale) or mouseLocation in @sortedXCoords()
+    markBelow < (scale) or markAbove < (scale) or mouseLocation in @sortedXCoords()
 
 module?.exports = CanvasGraph: CanvasGraph, Marks: Marks, Mark: Mark
