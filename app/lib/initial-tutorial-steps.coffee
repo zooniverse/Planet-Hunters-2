@@ -5,14 +5,14 @@ translate  = require 't7e'
 initialTutorialSteps =
   steps:
     # /// BEGIN TUTORIAL STEPS ///
-    first: 
+    first:
       # progress:    1
       header:      translate 'span', 'initialTutorial.first.header'
       content:     translate 'span', 'initialTutorial.first.content'
       attachment:  [0.5, 0.5, "#graph-container", 0.5, 0.5]
       next:        'theData'
 
-    theData: 
+    theData:
       # progress:    2
       header:      translate 'span', 'initialTutorial.theData.header'
       content:     translate 'span', 'initialTutorial.theData.content'
@@ -21,7 +21,7 @@ initialTutorialSteps =
         $('.tutorial-annotations.x-axis').addClass('visible')
         return 'xAxis' # go on to next step
 
-    xAxis: 
+    xAxis:
       # progress:    3
       header:      translate 'span', 'initialTutorial.xAxis.header'
       content:     translate 'span', 'initialTutorial.xAxis.content'
@@ -32,59 +32,59 @@ initialTutorialSteps =
         $('.tutorial-annotations.y-axis').addClass('visible')
         return 'yAxis'
 
-    yAxis: 
+    yAxis:
       # progress:    3
       header:      translate 'span', 'initialTutorial.yAxis.header'
       content:     translate 'span', 'initialTutorial.yAxis.content'
       attachment:  [0.0, 0.5, "#graph-container", 0.08, 0.5]
       arrow:       'left'
-      next: ->       
+      next: ->
         $('.tutorial-annotations.y-axis').removeClass('visible')
         return 'transits'
 
-    transits: 
+    transits:
       # progress:    4
       header:      translate 'span', 'initialTutorial.transits.header'
       instruction: translate 'span', 'initialTutorial.transits.content'
       attachment:  [0.5, 0.5, "#graph-container", 0.5, 0.5]
       next: ->
-        window.classifier.canvasGraph.highlightCurve(2.75,3.00)
+        window.classifier.canvasGraph.highlightCurve(5.14, 5.32)
         return 'markingTransits'
 
     markingTransits:
       header:      translate 'span', 'initialTutorial.markingTransits.header'
       instruction: translate 'span', 'initialTutorial.markingTransits.content'
-      attachment:  [0.0, 0.5, "#graph-container", 0.20, 0.2]
+      attachment:  [0.0, 0.5, "#graph-container", 0.25, 0.2]
       arrow:       'left'
 
       onBeforeLoad: ->
-        @el.style.setProperty("width", "15%") # narrow element
-        window.classifier.canvasGraph.highlightCurve(2.75,3.00)
+        @el.style.setProperty("width", "10%") # narrow element
+        window.classifier.canvasGraph.highlightCurve(5.14, 5.32)
 
       next:
         'mouseup #marks-container': 'spotTransits'
 
     spotTransits:
-      # progress:    6 
+      # progress:    6
       header:      translate 'span', 'initialTutorial.spotTransits.header'
       content:     translate 'span', 'initialTutorial.spotTransits.content'
       attachment:  [0.0, 0.5, "#graph-container", 0.0, 0.5]
       next: ->
-        @el.style.setProperty("width", "15%") # narrow element
-        window.classifier.canvasGraph.highlightCurve(2.75,3.00)
-        window.classifier.canvasGraph.highlightCurve(6.00,6.30)
-        window.classifier.canvasGraph.highlightCurve(9.25,9.50)
-        window.classifier.canvasGraph.highlightCurve(12.60,12.85)
-        window.classifier.canvasGraph.highlightCurve(15.80,16.12)
-        window.classifier.canvasGraph.highlightCurve(19.15,19.45)
-        window.classifier.canvasGraph.highlightCurve(22.48,22.75)
-        window.classifier.canvasGraph.highlightCurve(25.72,26.00)
-        window.classifier.canvasGraph.highlightCurve(29.00,29.34)
-        window.classifier.canvasGraph.highlightCurve(32.34,32.60)
+        @el.style.setProperty("width", "10%") # narrow element
+        window.classifier.canvasGraph.highlightCurve(5.14, 5.32)
+        window.classifier.canvasGraph.highlightCurve(13.027,13.208)
+        window.classifier.canvasGraph.highlightCurve(20.91933566343474,21.09933566343474)
+        # window.classifier.canvasGraph.highlightCurve(12.60,12.85)
+        # window.classifier.canvasGraph.highlightCurve(15.80,16.12)
+        # window.classifier.canvasGraph.highlightCurve(19.15,19.45)
+        # window.classifier.canvasGraph.highlightCurve(22.48,22.75)
+        # window.classifier.canvasGraph.highlightCurve(25.72,26.00)
+        # window.classifier.canvasGraph.highlightCurve(29.00,29.34)
+        # window.classifier.canvasGraph.highlightCurve(32.34,32.60)
         return 'showTransits'
 
     showTransits:
-      # progress:    7 
+      # progress:    7
       header:      translate 'span', 'initialTutorial.showTransits.header'
       instruction: translate 'span', 'initialTutorial.showTransits.content'
       attachment:  [0.0, 0.5, "#graph-container", 0.0, 0.5]
@@ -108,7 +108,7 @@ initialTutorialSteps =
         'zooming'
 
 
-    zooming: 
+    zooming:
       # progress:    8
       header:      translate 'span', 'initialTutorial.zooming.header'
       content:     translate 'span', 'initialTutorial.zooming.content'
@@ -118,12 +118,12 @@ initialTutorialSteps =
       next:        'goodLuck'
       # next:        'click [id="zoom-button"]': 'goodLuck'
 
-    goodLuck: 
+    goodLuck:
       # progress:    9
       header:      translate 'span', 'initialTutorial.goodLuck.header'
       content:     translate 'span', 'initialTutorial.goodLuck.content'
       attachment:  [0.5, 0.5, "#graph-container", 0.5, 0.5]
       next: ->
-    # /// END TUTORIAL STEPS /// 
+    # /// END TUTORIAL STEPS ///
 
 module.exports = initialTutorialSteps
