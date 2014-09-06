@@ -202,40 +202,9 @@
       </div>
 
     </div>
-
-
   </div><!-- end subject container -->
 </div>
 
-<div id="spotters-guide">
-  <div class="content">
-    <h2>Spotter's Guide</h2>
-    <h3>Gaps</h3>
-    <div class="examples">
-      <span><img src="images/guide/gaps1.png" /></span>
-      <span><img src="images/guide/gaps2.png" /></span>
-    </div>
-
-    <h3>Pulsator</h3>
-    <img class="example-image" src="images/guide/pulsator1.png" />
-    <img class="example-image" src="images/guide/pulsator2.png" />
-
-    <h3>Star Spots</h3>
-    <img class="example-image" src="images/guide/starspots1.png" />
-    <img class="example-image" src="images/guide/starspots2.png" />
-
-    <!--
-    <div class="two-column">
-      <h3>Column 1</h3>
-    </div>
-
-    <div class="two-column">
-      <h3>Column 2</h3>
-    </div>
-    -->
-
-  </div>
-</div>
 
 
 <!-- PLANET TIME -->
@@ -245,3 +214,25 @@
   </div>
 </div>
 <div class="bg-overlay"></div>
+
+
+<div id="spotters-guide">
+  <div class="content">
+    <h2>Spotter's Guide</h2>
+    <h3>Gaps</h3>
+    <div class="image-blocks examples">
+      <span><img src="images/guide/gaps1.png" /></span>
+      <span><img src="images/guide/gaps2.png" /></span>
+    </div>
+    <div class="image-blocks examples">
+      <h3>Pulsator</h3>
+      <img src="images/guide/pulsator1.png" />
+      <img src="images/guide/pulsator2.png" />
+    </div>
+    <div class="image-blocks examples">
+      <h3>Star Spots</h3>
+      <img src="images/guide/starspots1.png" />
+      <img src="images/guide/starspots2.png" />
+    </div>
+  </div>
+</div>
