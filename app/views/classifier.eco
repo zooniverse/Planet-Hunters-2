@@ -119,7 +119,7 @@
 
         <div class="three-column">
           <div class="content">
-            <!--<div id=".ukirt">
+            <!-- <div id=".ukirt">
               Additional light curve information: <br>
               <ul>
                 <li>
@@ -134,8 +134,9 @@
               <button class="summary-button" id="summary-talk-button">
                 <span>Talk about this</span>
               </button>
-            </div>
-                 <h2>Discussions about this star</h2>
+            </div> -->
+            9
+            <h2>Discussions about this star</h2>
             <div id="alt-comments">
               <div class="formatted-comment">
                 <p>Some content for an alternate talk comment. Wow what a comment!</p>
@@ -147,7 +148,7 @@
             <div class="talk-pill">
               <textarea placeholder="Type something..." name="alt-talk-comment"></textarea>
               <button name="alt-submit-talk">Submit</button>
-            </div> -->
+            </div> 
           </div>
         </div>
       </div>
