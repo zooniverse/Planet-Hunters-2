@@ -726,7 +726,7 @@ class Classifier extends BaseController
       commentsContainer.append """
       <div class="formatted-comment">
         <p>#{comment.body}</p>
-        <p>by <strong>#{comment.user_name}</strong> X minutes ago</p>
+        <p>by <strong>#{comment.user_name}</strong> #{comment.created_at}</p>
       </div>
 
       """
