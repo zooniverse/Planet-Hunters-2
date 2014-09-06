@@ -13,6 +13,7 @@ supplementalTutorialSteps  = require '../lib/supplemental-tutorial-steps'
 {CanvasGraph, Marks, Mark} = require '../lib/canvas-graph'
 {loadImage}                = require '../lib/utils'
 Modal                      = require '../lib/modal'
+Api                        = require 'zooniverse/lib/api'
 
 $ = window.jQuery
 
@@ -314,6 +315,7 @@ class Classifier extends BaseController
     @subject = subject
     @classification = new Classification {subject}
     @loadSubjectData()
+    @fetchComments()
 
   loadSubjectData: () ->
     $('#graph-container').addClass 'loading-lightcurve'
@@ -616,7 +618,7 @@ class Classifier extends BaseController
     @el.find('.do-you-see-a-transit').fadeOut()
     @el.find('.star-id').fadeIn()
 
-    console.log "tutorial subject at end ", @Subject()
+    # console.log "tutorial subject at end ", @Subject()
 
     if Subject.current?.tutorial?
       @Subject.next()
@@ -714,5 +716,35 @@ class Classifier extends BaseController
 
   showZoomMessage: (message) =>
     @el.find('#zoom-notification').html(message).fadeIn(100).delay(1000).fadeOut()
+
+
+  onCommentsFetch: ({discussion}) =>
+    @comments = discussion.comments
+    
+    commentsContainer = @el.find '#comments'
+    for comment in @comments
+      commentsContainer.append """
+      <div class="formatted-comment">
+        <p>#{comment.body}</p>
+        <p>by <strong>#{comment.user_name}</strong> X minutes ago</p>
+      </div>
+
+      """
+
+    #   comment.timeago = $.timeago comment.updated_at
+    #   comment.date = DateWidget.formatDate 'd MM yy', new Date comment.updated_at
+    # @render()
+
+  fetchComments: =>
+    # request = Api.current.get "/projects/#{Api.current.project}/talk/subjects/#{Subject.current?.zooniverse_id}"
+    console.log "requesting comments: /projects/#{Api.current.project}/talk/subjects/#{Subject.current?.zooniverse_id}"
+    request = Api.current.get "https://api.zooniverse.org/projects/asteroid/talk/subjects/AAZ0000fi0"
+    request.done @onCommentsFetch
+    
+    clearTimeout @timeout if @timeout?
+    
+    @timeout = setTimeout => 
+      @fetchComments()
+    , @refresh * 1000 if @refresh?
 
 module.exports = Classifier

@@ -93,9 +93,9 @@
         </div>
         <div class="three-column">
           <div class="content">
-<!--             <h2>Discussions about this star</h2>
+            <h2>Discussions about this star</h2>
             <div id="comments">
-              <div class="formatted-comment">
+              <!-- <div class="formatted-comment">
                 <p>Some content for a comment</p>
                 <p>by <strong>someAuthor</strong> X minutes ago</p>
               </div>
@@ -106,14 +106,14 @@
               <div class="formatted-comment">
                 <p>Some content for a longer comment. Some content for a longer comment. Some content for a longer comment.</p>
                 <p>by <strong>someAuthor</strong> X minutes ago</p>
-              </div>
+              </div> -->
             </div>
             <button class="std-btn transparent" name="join-convo">Join the Conversation</button>
 
             <div class="talk-pill">
               <textarea placeholder="Type something..." name="talk-comment"></textarea>
               <button name="submit-talk">Submit</button>
-            </div> -->
+            </div>
           </div>
         </div>
 
@@ -126,7 +126,7 @@
                   <a id="ukirt-url" href="">UKIRT Source</a>
                 </li>
               </ul>
-            </div>
+            </div> -->
             <div id="summary-tools">
               <button class="summary-button" id="summary-fav-button">
                 <span>Add to favorites</span>
@@ -134,21 +134,8 @@
               <button class="summary-button" id="summary-talk-button">
                 <span>Talk about this</span>
               </button>
-            </div> -->
-            9
-            <h2>Discussions about this star</h2>
-            <div id="alt-comments">
-              <div class="formatted-comment">
-                <p>Some content for an alternate talk comment. Wow what a comment!</p>
-                <p>by <strong>someAuthor</strong> X minutes ago</p>
-              </div>
             </div>
-            <button class="std-btn transparent" name="alt-join-convo">Join the Conversation</button>
 
-            <div class="talk-pill">
-              <textarea placeholder="Type something..." name="alt-talk-comment"></textarea>
-              <button name="alt-submit-talk">Submit</button>
-            </div> 
           </div>
         </div>
       </div>
