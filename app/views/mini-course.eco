@@ -19,7 +19,6 @@
   </div>
   <div class="course arrow right">&#x3009;</div>
 
-
   <!-- mini-course checkbox -->
   <div style="float: left; padding: 20px;">
     <input class="mini-course-option" name="course-opt-out" type="checkbox"></input>
