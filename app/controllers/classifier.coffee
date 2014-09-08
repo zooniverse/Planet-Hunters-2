@@ -236,7 +236,7 @@ class Classifier extends BaseController
   onUserChange: (e, user) =>
 
     @classifySummary.fadeOut(150)
-
+    @nextSubjectButton.hide()
 
     # console.log 'classify: onUserChange()'
     if User.current? # user logged in
