@@ -54,7 +54,7 @@ content = [
         <p>Not all changes in a star’s brightness are caused by transiting planets. There are a few other things we have to rule out first. These are called false-positives.</p>
         <p>Some stars intrinsically vary in brightness on a level that is comparable to that of a planetary transit. However, if the star is observed for a long period of time, the pattern of the variation can be easily differentiated from that of a planet transit. These variations normally happen over a much longer time than a planet transit.</p>
         """
-      figure: "missing"
+      figure: "./images/mini-course/5-FalsePositives.png"
       figure_credits: ""
 
   }
@@ -79,7 +79,7 @@ content = [
       text: """
         Stellar flares may be spotted in the lightcurves on Planet Hunters. They are characterised by rapid spikes in brightness. These are large explosions from the surface of the star, just like solar flares that we observe on our star the Sun. Below is an example of a lightcurve with flare features.
         """
-      figure: "missing"
+      figure: "./images/mini-course/7-Flares.png"
       figure_credits: ""
 
   }
@@ -91,7 +91,7 @@ content = [
       text: """
         The idea of planets orbiting other stars in our galaxy has been around for hundreds of years (in fact 16th century Italian astronomer Giordano Bruno was burnt at the stake at least in part for his beliefs on the matter!). However, it was not until 1992 that the first exoplanet was confirmed. It was found orbiting a pulsar, the rapidly-spinning, dense core of a dead star. The first confirmed planet orbiting a Sun-like star, 51 Pegesi b, was announced in 1995. Since then over one thousand exoplanets have been confirmed and many more candidates identified. The graph below shows the distribution of planet candidates discovered by the Kepler mission as of November 2013.
         """
-      figure: "missing"
+      figure: "./images/mini-course/8-size-candidates.jpg"
       figure_credits: "NASA"
 
   }
@@ -103,7 +103,7 @@ content = [
       text: """
         The first confirmed planet discovered by volunteers, like you, on Planet Hunters was PH1b (also known as Kepler-64b). It is a Neptune-sized giant planet with a radius 6 times greater than that of the Earth. The really interesting thing about PH1b is that it’s a circumbinary planet, meaning it orbits around two stars! Those two stars are also in orbit around another binary star system, which makes PH1b the first planet ever discovered in a quadruple star system.
         """
-      figure: "missing"
+      figure: "./images/mini-course/9-FirstPlanet.png"
       figure_credits: "NASA"
 
   }
@@ -115,7 +115,7 @@ content = [
       text: """
         PH2b is the second planet discovered by volunteers on Planet Hunters. It is a Jupiter-sized, gas giant planet in orbit around a star very similar to our Sun. It’s orbit is only 17% smaller than that of the Earth, putting it in a region known as the habitable zone, the distance from a star where the conditions may be right for life. You will learn more about the habitable zone later.
         """
-      figure: "missing"
+      figure: "./images/mini-course/10-2b.png"
       figure_credits: "NASA"
 
   }
@@ -127,7 +127,7 @@ content = [
       text: """
         The third confirmed exoplanet discovered by volunteers on Planet Hunters is in a system known as Kepler-90 and now has the designation Kepler-90h. This system already had six confirmed exoplanets and the discovery of the seventh bu Planet Hunters volunteers made it the most populous planetary system known apart from our own.
         """
-      figure: "missing"
+      figure: "./images/mini-course/11-kepler90.png"
       figure_credits: "NASA"
 
   }
@@ -139,7 +139,7 @@ content = [
       text: """
         Stars are mostly made of hydrogen, which is also true for some gas giant planets such as Jupiter. The difference is that stars are massive enough to ignite nuclear fusion of hydrogen into helium in their cores. The smallest stars are roughly 75 times more massive than Jupiter, and the largest planets are about 13 times more massive than Jupiter.
         """
-      figure: "missing"
+      figure: "./images/mini-course/12-star-v-planet.jpg"
       figure_credits: "NASA"
 
   }
@@ -151,7 +151,7 @@ content = [
       text: """
         A star spends the majority of its active life burning the hydrogen in its core. Stars that are in this phase are known as main sequence stars. Main sequence stars are split into 7 main groups named O, B, A, F, G, K and M in order from hottest to coolest. Our Sun is a G-type star but the vast majority of stars in our galaxy are smaller, cooler M-type stars.
         """
-      figure: "missing"
+      figure: "./images/mini-course/13-spectral-chart.jpg"
       figure_credits: "NASA"
 
   }
@@ -163,7 +163,7 @@ content = [
       text: """
         There exists a region around a star inside which a planet may be considered habitable by life as we understand it. Habitability can depend on many factors but the main one is the potential for liquid water to exist on the surface of a planet. This therefore depends primarily on the distance of the planet from its host star. Too close and the water will boil, too far and it will freeze. Stars that are smaller and cooler than our Sun (such as M-dwarfs) will have habitable zones that are much closer in, which means potentially habitable planets around them will have shorter orbital periods than a year.
         """
-      figure: "missing"
+      figure: "./images/mini-course/14-HabitableZone.png"
       figure_credits: "NASA"
 
   }
@@ -189,7 +189,7 @@ content = [
       text: """
         The radial velocity method has been used to discover hundreds of exoplanets to date, however it has one major disadvantage; it cannot be used to determine the angle of the planetary system to our line-of-sight, so perhaps we are only seeing a small fraction of the star’s movement? This means that only a minimum measurement of the star’s speed can be calculated, leading to only a minimum possible value for the mass of the exoplanet.
         """
-      figure: "missing"
+      figure: "./images/mini-course/16-radial-velocity.jpg"
       figure_credits: "NASA"
 
   }
@@ -201,7 +201,7 @@ content = [
       text: """
         The gravitational field of a star is strong enough to noticeably bend light. When one star passes directly in front of a more distant star as seen from Earth it can bend and focus the light of the distant star causing it to appear brighter for a short period of time. This is known as gravitational microlensing and the closer star is called the lens. If there is a planet orbiting the lens it will sometimes add a noticeable component to the lens effect allowing us to confirm its existence.
         """
-      figure: "missing"
+      figure: "./images/mini-course/17-micro-lensing.jpg"
       figure_credits: "NASA"
 
   }
@@ -250,7 +250,7 @@ content = [
         <p>The separation and extreme difference in brightness between exoplanets and their host stars makes it very difficult to image them directly. However, there are a handful of exoplanet candidates  that have been discovered this way. All of them have very large radii and lie in distant orbits.</p>
         <p>Below is an image showing the directly imaged exoplanet candidate orbiting in the debris disk around the star Formalhaut.</p>
         """
-      figure: "missing"
+      figure: "./images/mini-course/21-DirectImaging.png"
       figure_credits: "NASA"
 
   }
@@ -262,7 +262,19 @@ content = [
       text: """
         The first planets discovered using the transit method were very strange. They are the same size as Jupiter but so close to their star that they only take a few days to complete one orbit! We knew of nothing like this in our Solar System and theories suggest it is impossible for a Jupiter-sized planet to form in the high temperature environment that close to a star.
         """
-      figure: "missing"
+      figure: "./images/mini-course/22-HotJupiters.png"
+      figure_credits: "NASA"
+
+  }
+
+  {
+    course_number: 23
+    material:
+      title: "Hot Jupiters - Migration"
+      text: """
+        For the Hot Jupiters to have gotten to their observed location they would have to have first formed much farther out where it was colder and then migrated inwards through the system. Multiple theories on how this migration occurs have been proposed, including interactions with other material orbiting the star in the early stages of the system and gravitational scattering involving other large bodies.
+        """
+      figure: "./images/mini-course/23-HotJupiters.png"
       figure_credits: "NASA"
 
   }
