@@ -636,7 +636,9 @@ class Classifier extends BaseController
     # reset zoom parameters
     @zoomReset()
 
-  onClickJoinConvo: -> @joinConvoBtn.hide().siblings().show()
+  onClickJoinConvo: -> 
+    # @joinConvoBtn.hide().siblings().show()
+  
   onClickAltJoinConvo: -> @altJoinConvoBtn.hide().siblings().show()
 
   onClickSubmitTalk: ->
