@@ -99,6 +99,9 @@ class Classifier extends BaseController
       parent: window.classifier.el.children()[0]
       steps: initialTutorialSteps.steps
 
+    $(window).on "resize", =>
+       @initialTutorial.attach()
+
     @supplementalTutorial = new Tutorial
       parent: window.classifier.el.children()[0]
       steps: supplementalTutorialSteps.steps
@@ -636,9 +639,9 @@ class Classifier extends BaseController
     # reset zoom parameters
     @zoomReset()
 
-  onClickJoinConvo: -> 
+  onClickJoinConvo: ->
     # @joinConvoBtn.hide().siblings().show()
-  
+
   onClickAltJoinConvo: -> @altJoinConvoBtn.hide().siblings().show()
 
   onClickSubmitTalk: ->
@@ -725,7 +728,7 @@ class Classifier extends BaseController
 
   onCommentsFetch: ({discussion}) =>
     @comments = discussion.comments
-    
+
     commentsContainer = @el.find '#comments'
     for comment in @comments
       commentsContainer.append """
@@ -747,10 +750,10 @@ class Classifier extends BaseController
     console.log "requesting comments: /projects/#{Api.current.project}/talk/subjects/#{Subject.current?.zooniverse_id}"
     request = Api.current.get "https://api.zooniverse.org/projects/asteroid/talk/subjects/AAZ0000fi0"
     request.done @onCommentsFetch
-    
+
     clearTimeout @timeout if @timeout?
-    
-    @timeout = setTimeout => 
+
+    @timeout = setTimeout =>
       @fetchComments()
     , @refresh * 1000 if @refresh?
 

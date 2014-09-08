@@ -58,7 +58,7 @@ initialTutorialSteps =
       arrow:       'left'
 
       onBeforeLoad: ->
-        @el.style.setProperty("width", "10%") # narrow element
+        @el.style.setProperty("width", "170px") # narrow element
         window.classifier.canvasGraph.highlightCurve(5.14, 5.32)
 
       next:
@@ -70,7 +70,7 @@ initialTutorialSteps =
       content:     translate 'span', 'initialTutorial.spotTransits.content'
       attachment:  [0.0, 0.5, "#graph-container", 0.0, 0.5]
       next: ->
-        @el.style.setProperty("width", "10%") # narrow element
+        @el.style.setProperty("width", "170px") # narrow element
         window.classifier.canvasGraph.highlightCurve(5.14, 5.32)
         window.classifier.canvasGraph.highlightCurve(13.027,13.208)
         window.classifier.canvasGraph.highlightCurve(20.91933566343474,21.09933566343474)
