@@ -234,6 +234,10 @@ class Classifier extends BaseController
     @recordedClickEvents.push clickEvent
 
   onUserChange: (e, user) =>
+
+    @classifySummary.fadeOut(150)
+
+
     # console.log 'classify: onUserChange()'
     if User.current? # user logged in
 
@@ -717,7 +721,6 @@ class Classifier extends BaseController
   showZoomMessage: (message) =>
     @el.find('#zoom-notification').html(message).fadeIn(100).delay(1000).fadeOut()
 
-
   onCommentsFetch: ({discussion}) =>
     @comments = discussion.comments
     
@@ -736,6 +739,8 @@ class Classifier extends BaseController
     # @render()
 
   fetchComments: =>
+    commentsContainer = @el.find '#comments'
+    commentsContainer.html "" # delete existing comments
     # request = Api.current.get "/projects/#{Api.current.project}/talk/subjects/#{Subject.current?.zooniverse_id}"
     console.log "requesting comments: /projects/#{Api.current.project}/talk/subjects/#{Subject.current?.zooniverse_id}"
     request = Api.current.get "https://api.zooniverse.org/projects/asteroid/talk/subjects/AAZ0000fi0"
