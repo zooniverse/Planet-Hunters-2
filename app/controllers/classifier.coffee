@@ -61,9 +61,8 @@ class Classifier extends BaseController
     'change input[name="mini-course-option"]' : 'onChangeMiniCourseOption'
     'change input[name="course-opt-out"]'     : 'onChangeCourseOptOut'
 
-    'click .arrow.left'                       : 'onClickCourseBack'
-    'click .arrow.right'                      : 'onClickCourseForward'
-
+    'click .arrow.left'  : 'onClickCourseBack'
+    'click .arrow.right' : 'onClickCourseForward'
 
     # CODE FOR PROMPT (NOT CURRENTLY IN USE)
     # 'mouseenter #course-yes-container'        : 'onMouseoverCourseYes'
@@ -141,6 +140,13 @@ class Classifier extends BaseController
   #     @blockCourseIntervalDisplay = false
   # /////////////////////////////////////////////////
 
+  onClickCourseBack: ->
+    console.log 'onClickCourseBack(): '
+
+  onClickCourseForward: ->
+    console.log 'onClickCourseForward():'
+
+
   activate: ->
     @initialTutorial?.attach() if Subject.current?.tutorial?
 
@@ -216,11 +222,6 @@ class Classifier extends BaseController
   #   else
   #     # console.log 'SETTING VALUE TO: ', value
   #     @course.setRate value
-
-  onClickCourseBack: ->
-    console.log 'onClickCourseBack(): '
-  onClickCourseForward: ->
-    console.log 'onClickCourseForward():'
 
   onChangeCourseIntervalViaSupTut: ->
     # console.log 'onChangeCourseIntervalViaSupTut(): '

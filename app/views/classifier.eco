@@ -169,8 +169,6 @@
 
 <%- require('../views/spotters-guide')() %>
 
-
-
 <!-- PLANET TIME -->
 <div class="bg-starfield-sun">
   <div class="bg-planet-container">

@@ -1,3 +1,4 @@
+BaseController    = require 'zooniverse/controllers/base-controller'
 User              = require 'zooniverse/models/user'
 Api               = require 'zooniverse/lib/api'
 loginDialog       = require 'zooniverse/controllers/login-dialog'
@@ -6,12 +7,14 @@ miniCourseContent = require '../lib/mini-course-content'
 require '../lib/en-us'
 $ = window.jQuery
 
-class MiniCourse
+class MiniCourse extends BaseController
   className: 'mini-course'
   template: require '../views/mini-course'
-  
+
   @transitionTime = 1000
+
   constructor: ->
+    super
     @prompt_el = $(classifier.el).find("#course-prompt")
     @course_el = $(classifier.el).find("#course-container")
     @subject_el = $(classifier.el).find("#subject-container")
