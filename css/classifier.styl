@@ -55,6 +55,7 @@
     &.visible
       margin-right 50%
       transition margin 1s
+
     .course-figure-credits
       text-align center
       font-style italic
@@ -83,6 +84,24 @@
       color black
       border-radius 15px
       overflow hidden
+
+    .arrow
+      font-size 100px
+      color white
+      position absolute
+      top 170px
+      transition opacity 0.25s
+      opacity 0.5
+      &.left
+        left -100px
+      &.right
+        left 640px
+      &:hover
+        opacity 1.0
+        // color red
+      &:disabled
+        opacity 0.25
+
     #course-title
       margin 0
       display block
