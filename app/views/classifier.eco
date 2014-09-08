@@ -1,38 +1,8 @@
 <% translate = require 't7e' %>
 <div class="content-block">
 
-  <!-- COURSE  -->
-  <div id="course-container">
-    <div id="course-title"></div>
-    <div class="course-close">
-      Close
-      <!-- <img src="./images/icons/marking-closex.png"> -->
-      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="8px" height="8px">
-        <defs></defs>
-        <path fill-rule="evenodd" fill="rgb(255,255,255)" d=" M8.01144 1.38207 C8.01144 1.38207 6.63064 0.00572705 6.63064 0.00572705 C6.63064 0.00572705 4.00746 2.62077 4.00746 2.62077 C4.00746 2.62077 1.38411 0.00572705 1.38411 0.00572705 C1.38411 0.00572705 0.00340843 1.38207 0.00340843 1.38207 C0.00340843 1.38207 2.62685 3.99735 2.62685 3.99735 C2.62685 3.99735 0.00340843 6.61246 0.00340843 6.61246 C0.00340843 6.61246 1.38411 7.9888 1.38411 7.9888 C1.38411 7.9888 4.00746 5.37378 4.00746 5.37378 C4.00746 5.37378 6.63064 7.9888 6.63064 7.9888 C6.63064 7.9888 8.01144 6.61246 8.01144 6.61246 C8.01144 6.61246 5.38809 3.99735 5.38809 3.99735 C5.38809 3.99735 8.01144 1.38207 8.01144 1.38207 Z"/>
-      </svg>
-    </div>
-
-    <div class="course arrow left">&#x3008;</div>
-    <div id="course-body">
-      <div class="course-figure-container horizontal">
-        <img id="course-figure" src="">
-        <div class="course-figure-credits"></div>
-      </div>
-      <div class="course-text horizontal"></div>
-    </div>
-    <div class="course arrow right">&#x3009;</div>
-
-
-    <!-- mini-course checkbox -->
-    <div style="float: left; padding: 20px;">
-      <input class="mini-course-option" name="course-opt-out" type="checkbox"></input>
-      <div style="float: left; font-style: italic; font-weight: 500; color: #fff;">Do not show mini-course in the future.
-      </div>
-    </div>
-    <button name="course-close" class="course-close std-btn yellow">Close</button>
-  </div>
-  <!-- COURSE -->
+  <!-- MINI-COURSE  -->
+  <%- require('../views/mini-course')() %>
 
   <div id="subject-container">
     <div class="subject-header">

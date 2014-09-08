@@ -7,6 +7,9 @@ require '../lib/en-us'
 $ = window.jQuery
 
 class MiniCourse
+  className: 'mini-course'
+  template: require '../views/mini-course'
+  
   @transitionTime = 1000
   constructor: ->
     @prompt_el = $(classifier.el).find("#course-prompt")
