@@ -1,0 +1,101 @@
+#course-container
+  position absolute
+  top 96px
+  width 640px
+  height 400px
+  z-index 999
+  margin-top 0
+  margin-bottom 0
+  margin-right -50%
+  margin-left auto
+  right -320px
+  transition margin 1s
+  &.visible
+    margin-right 50%
+    transition margin 1s
+  .course-figure-credits
+    text-align center
+    font-style italic
+    font-size 12px
+    padding-left 20px
+    padding-right 20px
+    padding-top 0px
+    padding-bottom 20px
+  button
+    margin 0 auto
+    margin-top 10px
+    align center
+  .course-close
+    margin 10px
+    display block     
+    float right 
+    color white
+    cursor pointer
+    img
+      padding-left 9px
+  #course-body
+    width inherit
+    height inherit
+    margin 0 auto
+    float left
+    color black
+    border-radius 15px
+    overflow hidden
+  .arrow
+    font-size 100px
+    color white
+    position absolute
+    top 170px
+    transition opacity 0.25s
+    opacity 0.5
+    &.left
+      left -100px
+    &.right
+      left 640px
+    &:hover
+      opacity 1.0
+    &:disabled
+      opacity 0.25
+  #course-title
+    margin 0
+    display block
+    float left  
+    padding-left 20px
+    padding-right 20px
+    color white
+    font-size 16px
+  .course-figure-container
+    display block
+    background-color black
+    border-top-left-radius 15px
+    border-top-right-radius 15px
+    height 50%
+    width 100%
+    &.horizontal
+      border-top-left-radius 15px
+      border-top-right-radius 15px
+      height 50%
+      width 100%
+    &.vertical
+      float left
+      border-top-left-radius 15px
+      border-bottom-left-radius 15px
+      width 50%
+    img
+      display block
+      margin auto
+      max-height 100%
+      max-width 100%
+  .course-text
+    overflow visible
+    background-color white
+    font-size 14px
+    padding 20px
+    &.horizontal
+      border-bottom-left-radius 15px
+      height 50%
+    &.vertical
+      float right
+      border-top-right-radius 15px
+      border-bottom-right-radius 15px
+      width 50%

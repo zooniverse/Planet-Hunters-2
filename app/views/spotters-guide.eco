@@ -1,0 +1,60 @@
+<div id="spotters-guide">
+  <div class="content">
+
+    <!-- <h1>Spotter's Guide</h1> -->
+
+    <h2>Transits</h2>
+    
+    <h3>Single Transit</h3>
+    <div class="examples">
+      <img class="example-image" src="images/guide/singletransit1.png" />
+    </div>
+
+    <h3>Multiple Transits</h3>
+    
+    <div class="examples">
+      <img class="example-image" src="images/guide/multitransits1.png" />
+      <img class="example-image" src="images/guide/multitransits2.png" />
+    </div>
+
+    <h3>Eclipsing Binaries</h3>
+   
+    <div class="examples">
+      <img class="example-image" src="images/guide/eb1.png" />
+      <img class="example-image" src="images/guide/eb2.png" />
+    </div>
+
+    <h3>More Examples</h3>
+
+    <div class="examples">
+      <img class="example-image" src="images/guide/more_examples1.png" />
+      <img class="example-image" src="images/guide/more_examples2.png" />
+      <img class="example-image" src="images/guide/more_examples3.png" />
+      <img class="example-image" src="images/guide/more_examples4.png" />
+    </div>
+
+    <h2>Non-Transits</h2>
+
+    <h3>Gaps</h3>
+
+    <div class="examples">
+      <img class="example-image" src="images/guide/gaps1.png" />
+      <img class="example-image" src="images/guide/gaps2.png" />
+    </div>
+
+    <h3>Pulsator</h3>
+
+    <div class="examples">
+      <img class="example-image" src="images/guide/pulsator1.png" />
+      <img class="example-image" src="images/guide/pulsator2.png" />
+    </div>
+
+    <h3>Star Spots</h3>
+
+    <div class="examples">
+      <img class="example-image" src="images/guide/starspots1.png" />
+      <img class="example-image" src="images/guide/starspots2.png" />
+    </div>
+
+  </div>
+</div>

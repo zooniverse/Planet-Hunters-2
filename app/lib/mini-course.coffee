@@ -1,3 +1,4 @@
+BaseController    = require 'zooniverse/controllers/base-controller'
 User              = require 'zooniverse/models/user'
 Api               = require 'zooniverse/lib/api'
 loginDialog       = require 'zooniverse/controllers/login-dialog'
@@ -6,9 +7,14 @@ miniCourseContent = require '../lib/mini-course-content'
 require '../lib/en-us'
 $ = window.jQuery
 
-class MiniCourse
+class MiniCourse extends BaseController
+  className: 'mini-course'
+  template: require '../views/mini-course'
+
   @transitionTime = 1000
+
   constructor: ->
+    super
     @prompt_el = $(classifier.el).find("#course-prompt")
     @course_el = $(classifier.el).find("#course-container")
     @subject_el = $(classifier.el).find("#subject-container")
@@ -39,53 +45,13 @@ class MiniCourse
     $(classifier.el).on "click", ".sign-in", (e) => loginDialog.show() 
     $(classifier.el).on "click", ".sign-up", (e) => signupDialog.show() 
 
-  loadContent: ->
-    unless @coursesAvailable()
-      title  = "That\'s all, folks!"
-      text   = "This concludes the mini-course series. Thanks for tuning in!"
-      figure = ""
-      # TODO: maybe set preference to "never" after this?
-    else
-      title          = @content[@curr].material.title
-      text           = @content[@curr].material.text
-      figure         = @content[@curr].material.figure
-      figure_credits = @content[@curr].material.figure_credits
-
-    # # DEBUG CODE
-    # console.log 'title         : ', title
-    # console.log 'text          : ', text
-    # console.log 'figure        : ', figure
-    # console.log 'figure_credits: ', figure_credits
-
-    @course_el.find("#course-title").html title
-    @course_el.find(".course-text").html text
-    @course_el.find("#course-figure").attr 'src', figure
-    @course_el.find(".course-figure-credits").html figure_credits
-
-  incrementCount: ->
-    return unless User.current?
-    @count = @count + 1
-    User.current.setPreference 'count', @count
-
-  setRate: (rate) ->
-    @rate = rate
-    $('#course-interval').val(@rate)
-
-  coursesAvailable: ->
-    if @curr >= @content.length
-      # console.log 'WARNING: COURSES NOT AVAILABLE!!!'
-      return false
-    else
-      # console.log 'AWESOME. COURSES AVAILABLE!!!'
-      return true
-
   onClickCourseYes: ->
     unless User.current is null
       User.current.setPreference 'course', 'yes'
       $('.course-button').removeClass('selected')
       $('#course-yes').addClass('selected')
       @prompt_el.fadeOut(0)
-      @displayCourse()
+      # @displayLatest() # THIS NEEDS TO CHANGE
 
   onClickCourseNo: ->
     unless User.current is null
@@ -101,18 +67,90 @@ class MiniCourse
       $('#course-never').addClass('selected')
       @hidePrompt()
 
-  displayCourse: ->
-    # console.log "@curr: #{@curr}, @num_courses: #{@num_courses}"
+  incrementCount: ->
+    return unless User.current?
+    @count = @count + 1
+    User.current.setPreference 'count', @count
+
+  setRate: (rate) ->
+    @rate = rate
+    $('#course-interval').val(@rate)
+
+  coursesAvailable: ->
+    if @idx_last >= @content.length
+      # console.log 'WARNING: COURSES NOT AVAILABLE!!!'
+      return false
+    else
+      # console.log 'AWESOME. COURSES AVAILABLE!!!'
+      return true
+
+  launch: ->
+    console.log "idx_curr: ", @idx_curr
+    console.log "idx_last: ", @idx_last
+    return unless @coursesAvailable()
+    @display(@idx_last)
+    @toggleInterface()
+    @unlockNext()
+
+  toggleInterface: ->
     return unless @coursesAvailable()
     return unless User.current?
-    @loadContent()
-    @curr = +@curr + 1
-    # console.log 'SETTING CURRENT COURSE ID TO: ', @curr
-    User.current.setPreference 'curr_course_id', @curr
     @course_el.fadeIn(@transitionTime)
     @subject_el.fadeOut(@transitionTime)
     @subject_el.toggleClass("hidden")
     @course_el.toggleClass("visible")
+
+  display: (index) ->
+    prevBtn = $('.arrow.left')
+    nextBtn = $('.arrow.right') 
+
+    if index > @idx_last
+      console.log "You cannot view this course yet!"
+      nextBtn.hide()
+      return
+    else
+      console.log "Displaying course."
+
+    if index is 0
+      prevBtn.hide() # already at first course
+    else
+      prevBtn.show()
+
+    if index is @idx_latest
+      nextBtn.hide()
+    else
+      nextBtn.show()
+
+    @idx_curr = index
+    @loadContent(index)
+
+  unlockNext: ->
+    return unless @coursesAvailable()
+    return unless User.current?
+    @idx_curr = @idx_last - 1
+    @idx_last = @idx_last + 1
+    User.current.setPreference 'curr_course_id', @idx_last
+    console.log 'NEXT MINI-COURSE WILL BE: ', @idx_last
+
+  loadContent: (index) ->
+    if typeof index is undefined
+      index = @idx_last # default to latest
+
+    unless @coursesAvailable()
+      title  = "That\'s all, folks!"
+      text   = "This concludes the mini-course series. Thanks for tuning in!"
+      figure = ""
+      # TODO: maybe set preference to "never" after this?
+    else
+      title          = @content[index].material.title
+      text           = @content[index].material.text
+      figure         = @content[index].material.figure
+      figure_credits = @content[index].material.figure_credits
+
+    @course_el.find("#course-title").html title
+    @course_el.find(".course-text").html text
+    @course_el.find("#course-figure").attr 'src', figure
+    @course_el.find(".course-figure-credits").html figure_credits
 
   hideCourse: ->
     @subject_el.fadeIn(@transitionTime)
@@ -139,6 +177,7 @@ class MiniCourse
     User.current.setPreference 'curr_course_id', 0 
     # User.current.setPreference 'supplemental_option', true
     @count = 0
-    @curr  = 0
+    @idx_last = 0
+    @idx_curr = 0
 
 module.exports = MiniCourse
