@@ -21,6 +21,8 @@ class MiniCourse extends BaseController
     @prompt_el.hide()
     @course_el.hide()
 
+    @idx_curr = 0
+
     # get content
     @content = miniCourseContent # TODO: remove (unnecessary?)
     
@@ -78,23 +80,23 @@ class MiniCourse extends BaseController
 
   coursesAvailable: ->
     if @idx_last >= @content.length
-      # console.log 'WARNING: COURSES NOT AVAILABLE!!!'
+      console.log 'WARNING: COURSES NOT AVAILABLE!!!'
       return false
     else
-      # console.log 'AWESOME. COURSES AVAILABLE!!!'
+      console.log 'AWESOME. COURSES AVAILABLE!!!'
       return true
 
   launch: ->
     console.log "idx_curr: ", @idx_curr
     console.log "idx_last: ", @idx_last
+    return unless User.current?
     return unless @coursesAvailable()
+    @idx_curr = @idx_last
     @display(@idx_last)
     @toggleInterface()
     @unlockNext()
 
   toggleInterface: ->
-    return unless @coursesAvailable()
-    return unless User.current?
     @course_el.fadeIn(@transitionTime)
     @subject_el.fadeOut(@transitionTime)
     @subject_el.toggleClass("hidden")
@@ -109,32 +111,33 @@ class MiniCourse extends BaseController
       nextBtn.hide()
       return
     else
-      console.log "Displaying course."
+      @idx_curr = +index
+      console.log "Displaying course #{@idx_curr}"
 
     if index is 0
       prevBtn.hide() # already at first course
     else
       prevBtn.show()
 
-    if index is @idx_latest
+    if index is @idx_last
       nextBtn.hide()
     else
       nextBtn.show()
 
-    @idx_curr = index
-    @loadContent(index)
+    @loadContent(@idx_curr)
 
   unlockNext: ->
     return unless @coursesAvailable()
     return unless User.current?
-    @idx_curr = @idx_last - 1
+    @idx_curr = @idx_last
     @idx_last = @idx_last + 1
     User.current.setPreference 'curr_course_id', @idx_last
     console.log 'NEXT MINI-COURSE WILL BE: ', @idx_last
 
   loadContent: (index) ->
-    if typeof index is undefined
-      index = @idx_last # default to latest
+    console.log "LOADING CONTENT FOR LESSON: ", index
+    # if typeof index is undefined
+    #   index = @idx_last # default to latest
 
     unless @coursesAvailable()
       title  = "That\'s all, folks!"
@@ -177,7 +180,11 @@ class MiniCourse extends BaseController
     User.current.setPreference 'curr_course_id', 0 
     # User.current.setPreference 'supplemental_option', true
     @count = 0
-    @idx_last = 0
-    @idx_curr = 0
+    @idx_last = +0
+    @idx_curr = +0
+    console.log """
+    idx_curr = #{@idx_curr}
+    idx_last = #{@idx_last}
+    """
 
 module.exports = MiniCourse

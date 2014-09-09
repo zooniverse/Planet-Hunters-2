@@ -150,12 +150,18 @@ class Classifier extends BaseController
     (if not results? then "" else decodeURIComponent(results[1].replace(/\+/g, " ")))
 
   onClickCourseBack: ->
+    return unless @course.idx_curr >= 0
     console.log 'onClickCourseBack(): '
-    @course.display(@course.idx_curr-1)
+    @course.idx_curr = @course.idx_curr-1
+    console.log 'onClickCourseBack(): ', @course.idx_curr
+    @course.display(@course.idx_curr)
 
   onClickCourseForward: ->
+    return unless @course.idx_curr < @course.content.length
     console.log 'onClickCourseForward():'
-    @course.display(@course.idx_curr+1)
+    @course.idx_curr = @course.idx_curr+1
+    console.log 'onClickCourseForward(): ', @course.idx_curr
+    @course.display(@course.idx_curr)
 
   activate: ->
     @initialTutorial?.attach() if Subject.current?.tutorial?
