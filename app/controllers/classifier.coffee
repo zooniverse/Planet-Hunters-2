@@ -143,6 +143,12 @@ class Classifier extends BaseController
   #     @blockCourseIntervalDisplay = false
   # /////////////////////////////////////////////////
 
+  getParameterByName: (name) ->
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]")
+    regex = new RegExp("[\\?&]" + name + "=([^&#]*)")
+    results = regex.exec(location.search)
+    (if not results? then "" else decodeURIComponent(results[1].replace(/\+/g, " ")))
+
   onClickCourseBack: ->
     console.log 'onClickCourseBack(): '
     @course.display(@course.idx_curr-1)
@@ -288,9 +294,12 @@ class Classifier extends BaseController
       # console.log 'NO SPLIT DESIGNATION ASSIGNED. USING DEFAULT.'
       @splitDesignation = 'a' # default split designation
 
-    @splitDesignation = 'a' # DEBUG CODE
+    # @splitDesignation = 'a' # DEBUG CODE
 
-    # console.log 'SPLIT DESIGNATION IS: ', @splitDesignation
+    unless @getParameterByName("split") is ""
+      @splitDesignation = @getParameterByName("split")
+
+    console.log 'SPLIT DESIGNATION IS: ', @splitDesignation
 
     # SET MINI-COURSE INTERVAL
     if @splitDesignation in ['b', 'e']
