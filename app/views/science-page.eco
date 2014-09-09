@@ -6,16 +6,16 @@
   <div class="secondary-content">
     <nav class="sub-nav-science">
       <button name="faq">FAQ</button>
-      <button name="transits">Transits</button>
+<!--       <button name="transits">Transits</button>
       <button name="your-task">Your Task</button>
       <button name="goals">Goals</button>
-      <button name="results">Results</button>
+      <button name="results">Results</button> -->
     </nav>
   </div>
 
   <div class="secondary-content">
     <div class="left-column">
-      <div class="content sub-nav-science-planets">
+      <div class="content sub-nav-science-faq">
         <h1>Frequently Asked Questions</h1>
         <!-- <a href="#data">Where does the data come from?</a> -->
 
@@ -72,7 +72,6 @@
         <p>Keep an eye on the <a href="http://blog.planethunters.org">Planet Hunters blog</a>. We frequently post science results and site news there as well have posts discussing the science behind the project. You can also receive updates on Planet Hunters through the project's Twitter, and Google+ accounts.</p>
 
         <p><strong>Didn't find an answer to your question? Visit <a href="http://talk.planethunters.org">Planet Hunters Talk</a> and ask the Planet Hunters community.<strong></p>
-
 
       </div>
 
