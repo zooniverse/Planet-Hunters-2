@@ -13,10 +13,13 @@
   <div class="secondary-content">
     <div class="left-column">
       <div class="content sub-nav-about-about">
-        <h1>What is Planet Hunters</h1>
-        <p>
-          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-        </p>
+        <h1>Our Mission</h1>
+        <p>Welcome to Planet Hunters. With your help, we are looking for planets around other stars.</p>
+        <p>NASA's Kepler spacecraft is one of the most powerful tools in the search for extrasolar planets (exoplanets), planets orbiting stars outside of our own Solar System, and its discoveries continue to revolutionize our understanding of how planetary systems grow and evolve. Approximately every 30 minutes, Kepler monitors the brightness of many thousands of stars simultaneously for the signature of exoplanets via the transit technique. When an exoplanet passes or transits in front of its parent star, the star momentarily dims. This decrease in brightness is detectable by Kepler and lasts for a few hours or more and repeats once per orbit of the planet.</p>
+
+        <p>The time series of brightness measurements for a star is called a light curve. Automated computers are sifting through the Kepler light curves looking for the repeating signal of a planet transit, but we think there will be planets which can only be found via the innate human ability for pattern recognition. At Planet Hunters we are enlisting the public's help to inspect the Kepler light curves and find these planets missed by automated detection algorithms. No training required! All you need is your keen eyes and a web browser to join the hunt.</p>
+
+        <p>It's just possible that you might be the first to know that a star somewhere out there in the Milky Way has a companion, just as our Sun does. Fancy giving it a try?</p>
 
       </div>
 
