@@ -78,6 +78,7 @@ class Mark
     @element.style.left = leftXPos + "px"
     @save leftXPos, markRightX
 
+  # NOT SURE WHAT THIS IS USED FOR???
   save: (@canvasXMin, @canvasXMax) ->
     #data coords
     @dataXMinRel = @canvasGraph.toDays(@canvasXMin-@canvasGraph.leftPadding)

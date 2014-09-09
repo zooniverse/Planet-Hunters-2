@@ -252,10 +252,9 @@ class CanvasGraph
       for mark in @marks.all
         scaledMin = ((parseFloat(mark.dataXMinRel) + parseFloat(@toDays(@leftPadding)) - parseFloat(xMin) - parseFloat(@sliderValue) ) / (parseFloat(xMax) - parseFloat(xMin)) ) * parseFloat(@canvas.width-@leftPadding)
         scaledMax = ((parseFloat(mark.dataXMaxRel) + parseFloat(@toDays(@leftPadding)) - parseFloat(xMin) - parseFloat(@sliderValue) ) / (parseFloat(xMax) - parseFloat(xMin)) ) * parseFloat(@canvas.width-@leftPadding)
-        #                                ^ prevents from moving towards left                          ^ prevents marks from moving towards right
         mark.element.style.width = (parseFloat(scaledMax)-parseFloat(scaledMin)) + "px"
         mark.element.style.left = parseFloat(scaledMin) + "px"
-        mark.save(scaledMin, scaledMax)
+        # mark.save(scaledMin, scaledMax)
 
     @scale = (@largestX - @smallestX) / (@xMax - @xMin)
     return
@@ -268,7 +267,7 @@ class CanvasGraph
     # update slider position
     classifier.el.find('#ui-slider').val(@graphCenter-@zoomRanges[@zoomLevel]/2)
     
-    @plotPoints(@smallestX, @largestX)
+    # @plotPoints(@smallestX, @largestX)
 
     [cMin, cMax] = [@xMin, @xMax]
     [wMin, wMax] = [@smallestX, @largestX]
@@ -278,32 +277,31 @@ class CanvasGraph
     classifier.el.find('#ui-slider').attr('disabled',true)
     classifier.el.find('.noUi-handle').fadeOut(150)
 
-
     # TODO: broken (a major pain in my ass)
-    # step = 1.5
-    # zoom = setInterval (=>
+    step = 1.5
+    zoom = setInterval (=>
       
-    #   # gradually expand zooming bounds
-    #   cMin -= step
-    #   if cMin < @smallestX then cMin = @smallestX
-    #   cMax += step
-    #   if cMax > @largestX then cMax = @largestX
+      # gradually expand zooming bounds
+      cMin -= step
+      if cMin < @smallestX then cMin = @smallestX
+      cMax += step
+      if cMax > @largestX then cMax = @largestX
       
-    #   # console.log "[cMin,cMax] = [#{cMin},#{cMax}]"
-    #   @plotPoints(cMin,cMax)
+      # console.log "[cMin,cMax] = [#{cMin},#{cMax}]"
+      @plotPoints(cMin,cMax)
 
-    #   if cMin <= @smallestX and cMax >= @largestX  # finished zooming
-    #     clearInterval zoom
-    #     classifier.el.find('#graph').removeClass('is-zooming')
-    #     @plotPoints(@smallestX, @largestX)
-    #     unless callback is undefined 
-    #       callback.apply()
-    #       classifier.el.find("#zoom-button").removeClass("zoomed")
-    #       classifier.el.find("#zoom-button").removeClass("allowZoomOut") # for last zoom level
-    #       classifier.el.find('#ui-slider').attr('disabled',true)
-    #       classifier.el.find('.noUi-handle').fadeOut(150)
-    # ), 30
-    # return
+      if cMin <= @smallestX and cMax >= @largestX  # finished zooming
+        clearInterval zoom
+        classifier.el.find('#graph').removeClass('is-zooming')
+        @plotPoints(@smallestX, @largestX)
+        unless callback is undefined 
+          callback.apply()
+          classifier.el.find("#zoom-button").removeClass("zoomed")
+          classifier.el.find("#zoom-button").removeClass("allowZoomOut") # for last zoom level
+          classifier.el.find('#ui-slider').attr('disabled',true)
+          classifier.el.find('.noUi-handle').fadeOut(150)
+    ), 30
+    return
 
 
   zoomToCenter: (center) ->
@@ -327,24 +325,21 @@ class CanvasGraph
     classifier.el.find('#ui-slider').val(boundL)
     console.log "ZOOMING TO: [#{boundL},#{boundR}] (exceeded right bound)"
 
-    console.log 
+    # @plotPoints(boundL,boundR) # SKIP ANIMATION
 
-    @plotPoints(boundL,boundR)
+    [cMin, cMax] = [@xMin, @xMax]
 
-    # console.log "ZOOM TO CENTER: [#{left},#{right}]"    
-
-    # [cMin, cMax] = [@xMin, @xMax]
-
-    # zoom = setInterval (=>
-    #   @plotPoints(cMin,cMax)
-    #   @rescaleMarks(cMin,cMax)
-    #   cMin += 1.5 unless cMin >= wMin
-    #   cMax -= 1.5 unless cMax <= wMax
-    #   if cMin >= wMin and cMax <= wMax # when 'animation' is done...
-    #     clearInterval zoom
-    #     classifier.el.find('#graph').removeClass('is-zooming')
-    #     @plotPoints(wMin,wMax)
-    #     @resc
+    zoom = setInterval (=>
+      @plotPoints(cMin,cMax)
+      @rescaleMarks(cMin,cMax)
+      cMin += 1.5 unless cMin >= boundL
+      cMax -= 1.5 unless cMax <= boundR
+      if cMin >= boundL and cMax <= boundR # when 'animation' is done...
+        clearInterval zoom
+        classifier.el.find('#graph').removeClass('is-zooming')
+        @plotPoints(boundL,boundR)
+        @rescaleMarks(boundL,boundR)
+    ), 30
 
 
   zoomInTo: (wMin, wMax) ->

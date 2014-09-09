@@ -780,7 +780,7 @@ class Classifier extends BaseController
     commentsContainer.html "" # delete existing comments
     # request = Api.current.get "/projects/#{Api.current.project}/talk/subjects/#{Subject.current?.zooniverse_id}"
     console.log "requesting comments: /projects/#{Api.current.project}/talk/subjects/#{Subject.current?.zooniverse_id}"
-    request = Api.current.get "https://api.zooniverse.org/projects/asteroid/talk/subjects/AAZ0000fi0"
+    request = Api.current.get "https://dev.zooniverse.org/projects/planet_hunter/talk/subjects/APH000001x"
     request.done @onCommentsFetch
 
     clearTimeout @timeout if @timeout?
