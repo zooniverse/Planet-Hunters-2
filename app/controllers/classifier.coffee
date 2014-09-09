@@ -142,10 +142,11 @@ class Classifier extends BaseController
 
   onClickCourseBack: ->
     console.log 'onClickCourseBack(): '
+    @course.display(@course.idx_curr-1)
 
   onClickCourseForward: ->
     console.log 'onClickCourseForward():'
-
+    @course.display(@course.idx_curr+1)
 
   activate: ->
     @initialTutorial?.attach() if Subject.current?.tutorial?
@@ -258,8 +259,8 @@ class Classifier extends BaseController
       unless User.current.preferences?.planet_hunter?.count?
         @initializeMiniCourse()
       else
-        @course.count  = +User.current?.preferences?.planet_hunter?.count
-        @course.curr   = +User.current?.preferences?.planet_hunter?.curr_course_id
+        @course.count      = +User.current?.preferences?.planet_hunter?.count
+        @course.idx_last   = +User.current?.preferences?.planet_hunter?.curr_course_id
       @handleSplitDesignation()
 
     # handle tutorial launch
@@ -274,7 +275,7 @@ class Classifier extends BaseController
     User.current.setPreference 'count', 0
     User.current.setPreference 'curr_course_id', 0
     @course.count = 0
-    @course.curr = 0
+    @course.idx_last = 0
 
   handleSplitDesignation: ->
     if User.current.project.splits?.mini_course_sup_tutorial?
@@ -534,7 +535,9 @@ class Classifier extends BaseController
 
     if @course.getPref() is "yes" and @course.count % @course.rate is 0 and @course.coursesAvailable() and @course.count isnt 0
       @notify 'Loading mini-course...'
-      @course.displayCourse()
+      @course.launch()
+      
+      # @course.displayLatest()
 
     # display supplemental tutorial
     for classification_count in @whenToDisplayTips
