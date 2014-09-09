@@ -45,15 +45,6 @@ class MiniCourse extends BaseController
     $(classifier.el).on "click", ".sign-in", (e) => loginDialog.show() 
     $(classifier.el).on "click", ".sign-up", (e) => signupDialog.show() 
 
-
-
-
-
-
-
-
-
-
   onClickCourseYes: ->
     unless User.current is null
       User.current.setPreference 'course', 'yes'
@@ -93,18 +84,15 @@ class MiniCourse extends BaseController
       # console.log 'AWESOME. COURSES AVAILABLE!!!'
       return true
 
-
-
-
-
   launch: ->
+    console.log "idx_curr: ", @idx_curr
+    console.log "idx_last: ", @idx_last
     return unless @coursesAvailable()
     @display(@idx_last)
-    @unlockLatest()
     @toggleInterface()
+    @unlockNext()
 
   toggleInterface: ->
-    @idx_last   = +User.current?.preferences?.planet_hunter?.curr_course_id
     return unless @coursesAvailable()
     return unless User.current?
     @course_el.fadeIn(@transitionTime)
@@ -136,26 +124,13 @@ class MiniCourse extends BaseController
     @idx_curr = index
     @loadContent(index)
 
-  unlockLatest: ->
-    # console.log "@idx_last: #{@idx_last}, @num_courses: #{@num_courses}"
+  unlockNext: ->
     return unless @coursesAvailable()
     return unless User.current?
-
-    # @toggleInterface()
-    # @display(@idx_last)
-    
-    @idx_last = +@idx_last + 1
+    @idx_curr = @idx_last - 1
+    @idx_last = @idx_last + 1
     User.current.setPreference 'curr_course_id', @idx_last
     console.log 'NEXT MINI-COURSE WILL BE: ', @idx_last
-
-    # $(".arrow.right").hide()
-    # rightArrow = @el.find('.arrow.right')
-    # rightArrow.hide()
-
-    # @course_el.fadeIn(@transitionTime)
-    # @subject_el.fadeOut(@transitionTime)
-    # @subject_el.toggleClass("hidden")
-    # @course_el.toggleClass("visible")
 
   loadContent: (index) ->
     if typeof index is undefined
@@ -172,23 +147,10 @@ class MiniCourse extends BaseController
       figure         = @content[index].material.figure
       figure_credits = @content[index].material.figure_credits
 
-    # # DEBUG CODE
-    # console.log 'title         : ', title
-    # console.log 'text          : ', text
-    # console.log 'figure        : ', figure
-    # console.log 'figure_credits: ', figure_credits
-
     @course_el.find("#course-title").html title
     @course_el.find(".course-text").html text
     @course_el.find("#course-figure").attr 'src', figure
     @course_el.find(".course-figure-credits").html figure_credits
-
-
-
-
-
-
-
 
   hideCourse: ->
     @subject_el.fadeIn(@transitionTime)
@@ -215,6 +177,7 @@ class MiniCourse extends BaseController
     User.current.setPreference 'curr_course_id', 0 
     # User.current.setPreference 'supplemental_option', true
     @count = 0
-    @idx_last  = 0
+    @idx_last = 0
+    @idx_curr = 0
 
 module.exports = MiniCourse
