@@ -5,7 +5,7 @@
 <div class="secondary-white">
   <div class="secondary-content">
     <nav class="sub-nav-science">
-      <button name="planets">Planets</button>
+      <button name="faq">FAQ</button>
       <button name="transits">Transits</button>
       <button name="your-task">Your Task</button>
       <button name="goals">Goals</button>
