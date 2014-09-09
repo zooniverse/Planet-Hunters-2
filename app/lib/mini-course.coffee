@@ -23,6 +23,9 @@ class MiniCourse extends BaseController
 
     @idx_curr = 0
 
+    @ADMIN_MODE = false
+
+
     # get content
     @content = miniCourseContent # TODO: remove (unnecessary?)
     
@@ -108,21 +111,23 @@ class MiniCourse extends BaseController
 
     if index > @idx_last
       console.log "You cannot view this course yet!"
-      nextBtn.hide()
-      return
+      unless @ADMIN_MODE
+        nextBtn.hide()
+        return        
     else
       @idx_curr = +index
-      console.log "Displaying course #{@idx_curr}"
 
-    if index is 0
-      prevBtn.hide() # already at first course
-    else
-      prevBtn.show()
+    unless @ADMIN_MODE
+      # hide arrows at ends
+      if index is 0
+        prevBtn.hide() # already at first course
+      else
+        prevBtn.show()
 
-    if index is @idx_last
-      nextBtn.hide()
-    else
-      nextBtn.show()
+      if index >= @idx_last
+        nextBtn.hide()
+      else
+        nextBtn.show()
 
     @loadContent(@idx_curr)
 

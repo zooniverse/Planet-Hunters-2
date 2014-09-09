@@ -124,6 +124,14 @@ class Classifier extends BaseController
 
     @el.on StackOfPages::activateEvent, @activate
 
+    show_all_courses = @getParameterByName("show_all_courses")
+
+    if show_all_courses is "true"
+      console.log "COURSE ADMIN MODE ENABLED"
+      @course.ADMIN_MODE = true
+    else
+      @course.ADMIN_MODE = false
+
   # CODE FOR PROMPT (NOT CURRENTLY IN USE)
   # /////////////////////////////////////////////////
   # onMouseoverCourseYes: ->
@@ -151,16 +159,12 @@ class Classifier extends BaseController
 
   onClickCourseBack: ->
     return unless @course.idx_curr >= 0
-    console.log 'onClickCourseBack(): '
     @course.idx_curr = @course.idx_curr-1
-    console.log 'onClickCourseBack(): ', @course.idx_curr
     @course.display(@course.idx_curr)
 
   onClickCourseForward: ->
     return unless @course.idx_curr < @course.content.length
-    console.log 'onClickCourseForward():'
     @course.idx_curr = @course.idx_curr+1
-    console.log 'onClickCourseForward(): ', @course.idx_curr
     @course.display(@course.idx_curr)
 
   activate: ->
