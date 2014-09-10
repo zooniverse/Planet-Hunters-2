@@ -43,12 +43,13 @@ class Profile extends BaseProfile
   # use custom template for light curves
   recentTemplate: customItemTemplate
   favoriteTemplate: customItemTemplate
-  
+
   events:
     'click button[name="unfavorite"]': 'onClickUnfavorite'
     'click button[name="turn-page"]': 'onTurnPage'
     'click .item': 'onClickItem'
     'click button[class="lightcurve-viewer-close"]': 'onClickClose'
+    'click .mini-course-trigge'    : 'onMiniCourseTrigger'
 
   elements:
     "#greeting": "greeting"
@@ -59,7 +60,23 @@ class Profile extends BaseProfile
     super
     setTimeout =>
       @greeting.html("Hello, #{User.current.name}!") if User.current
+      @onNavLoad =>
+        $(".profile nav").append("<button style='float:right;width:100px' class='mini-course-trigger'><span>Mini Course</span></button>")
+        $(".profile nav .mini-course-trigger ").on "click", @onMiniCourseTrigger
     , 1000
+
+  onNavLoad:(task)=>
+    console.log @, @nav
+    if $(".profile nav")
+      console.log "appending"
+      task()
+    else
+      console.log "waiting"
+      setTimeout @onNavLoad, 200
+
+  onMiniCourseTrigger:->
+    window.location = 'index.html#/classify'
+    classifier.course.launch()
 
   onClickItem: (e) ->
     # console.log 'onClickItem(): '
@@ -96,5 +113,5 @@ class Profile extends BaseProfile
 
     # remove all previous lightcurve viewers
     viewer.remove() for viewer in [ $('.lightcurve-viewer')... ]
-    
+
 module.exports = Profile
