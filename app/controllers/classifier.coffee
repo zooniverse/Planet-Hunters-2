@@ -356,6 +356,7 @@ class Classifier extends BaseController
 
   loadSubjectData: () ->
     $('#graph-container').addClass 'loading-lightcurve'
+    # jsonFile = 'offline/simulation_feedback_example.json'
     jsonFile = @subject.selected_light_curve.location
 
     # handle ui elements
@@ -373,6 +374,11 @@ class Classifier extends BaseController
 
     # read json data
     $.getJSON jsonFile, (data) =>
+      console.log 'data: ', data
+      if data.metadata.known_transits
+        console.log '-=|||||||| THIS SUBJECT HAS KNOWN TRANSITS! ||||||||=-'
+        @known_transits = data.metadata.known_transits
+        
       @canvasGraph?.marks.destroyAll()
       @marksContainer.appendChild(@canvas)
       @canvasGraph = new CanvasGraph(@canvas, data)
