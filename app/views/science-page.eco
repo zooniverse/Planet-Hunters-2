@@ -1,3 +1,6 @@
+
+
+
 <div class="secondary-header">
   <h1>The Science</h1>
 </div>
@@ -17,13 +20,14 @@
     <div class="left-column">
       <div class="content sub-nav-science-faq">
         <h1>Frequently Asked Questions</h1>
-        <!-- <a href="#data">Where does the data come from?</a> -->
+        <h2 class="faq-link" target="news-target">How do I keep up to date on the latest Planet Hunters news?</h2>
 
-        <h2>Where does the data come from?</h2>
+
+        <h2 id="faq-data">Where does the data come from?</h2>
 
         <p>The observations we show on the Planet Hunters come from the NASA Kepler spacecraft. They are brightness measurements of stars in the Kepler field during the main Kepler mission and from fields observed in the K2 phase. You can learn more about the Kepler field and K2 on the science page. NASA is archiving the Kepler data products and resulting catalogs at the <a href="http://archive.stsci.edu/kepler">Mikulski Archive for Space Telescopes (MAST)</a> and the <a href="http://exoplanetarchive.ipac.caltech.edu/docs/KeplerMission.html">NASA Exoplanet Archive</a></p>
 
-        <h2>I have a question or I found something interesting, who should I talk to?</h2>
+        <h2 id="sascha">I have a question or I found something interesting, who should I talk to?</h2>
 
         <p>You can go to the star's Planet Hunters Talk page and make a 140 character comment, label the star with a hashtag, start a side discussion, or post a new thread in Talk's message board forum. On Talk you can discuss and further analyze the available data for the star as well as interact with the rest the Planet Hunters community including members of the science team. You can directly access Talk after classifying a star's light curve or at <a href="http://talk.planethunters.org">http://talk.planethunters.org</a></p>
 
@@ -67,7 +71,7 @@
 
         <p>The simulated transits will enable the science team to understand exactly what kinds of planets the project can find and which ones are difficult for humans to spot by eye in the light curves. We will use this information to estimate the abundance of planets in our Galaxy. You can learn more about the simulations on the Science Page.</p>
 
-        <h2>How do I keep up to date on the latest Planet Hunters news?</h2>
+        <h2 id="news-target">How do I keep up to date on the latest Planet Hunters news?</h2>
 
         <p>Keep an eye on the <a href="http://blog.planethunters.org">Planet Hunters blog</a>. We frequently post science results and site news there as well have posts discussing the science behind the project. You can also receive updates on Planet Hunters through the project's Twitter, and Google+ accounts.</p>
 

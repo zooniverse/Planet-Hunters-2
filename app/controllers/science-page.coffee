@@ -6,8 +6,17 @@ class SciencePage extends BaseController
   className: 'science-page'
   template: require '../views/science-page'
 
+  events:
+    'click .faq-link': 'scrollToLink'
+
   constructor: ->
     super
     activateSubNav = new SubNav("science")
+
+
+  scrollToLink: (e) ->
+    $('body').animate({
+        scrollTop: $("##{e.target.getAttribute "target"}").offset().top
+    }, 1000);
 
 module.exports = SciencePage
