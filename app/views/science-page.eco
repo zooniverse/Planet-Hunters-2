@@ -62,7 +62,52 @@
 
       <div class="content sub-nav-science-transits">
         <h1>Transits</h1>
-        <p>This will be the transits section</p>
+        
+        <h2>The Transit Technique for Hunting Planets</h2>
+
+        <p>Transits occur when a planet passes in front of its host star as viewed from the Earth. A portion of the star's light is blocked out, and the brightness observed decreases.The Kepler mission measures the brightness of stars with such incredible precision that it is sensitive enough to detect transits of planets approaching the size of the Earth. At Planet Hunters, we need your help in the hunt for extrasolar planets (exoplanets) by highlight potential transits in a star's light curve, the time series measurements of the star's brightness, in the web interface. We use the combined assessment of several volunteers reviewing the same 30-day segment of a Kepler star's light curve to identify transits.</p>
+
+        <img src="images/transits_starspots.png"><br>
+
+        <p>Not all planets will transit their host stars. A special orientation of the orbit is required. Because the technique looks for a dimming in the brightness of the star, all of the planets with orbits that don’t pass between the star and our line of sight will be missed. For those planets that due transit, a transit will occur once every orbit.</p>
+
+        <p>The bigger the planet, the more starlight that is blocked out and the bigger the transit dip. Below we’ve taken a Kepler light curve from a star that’s about the same size as the Sun and have simulated what the effects would be if a few different types of planets were to transit. A Jupiter-sized planet produces a large 1% drop in light as it transits across a Sun-like star. Rocky planets generate a much smaller dimming, with the Earth only producing a 0.01% drop in our Sun's light! Larger planets around same-sized stars will be easier to detect than those of terrestrial planets with the transit method.</p>
+
+        <img src="blah.png"><br>
+
+        <p>The size of the star matters too. The same planet transiting a smaller star will have a larger transit depth. Earth-sized planets orbiting cool small M dwarfs, have the similar transit depths to giant planets around Sun-like stars.</p>
+
+        <img src="blah.png"><br>
+
+        <p>Given that our own Solar System has eight planets, it should come as no surprise that we may find other stars with multiple planets around them lurking in the Kepler data. These light curves would look exactly as one might guess, showing multiple patterns of transits.</p>
+
+        <p>We can see that there must be multiple transiting objects because the timing between the transits is not constant due to the overlapping of two different periods. An exoplanet around an eclipsing binary star would also look similar, displaying both the small and large transits of the stars as well as whatever transit the planet causes. If you encounter a light curve that looks like it may be from a multiplanet system, mark the transits as usual. With your markings we’ll be able to identify there is more than one planet present.</p>
+
+        <img src="images/guide/more_examples4.png">
+
+        <h2>Starspots</h2>
+
+        <p>Like our Sun, many stars have cooler and fainter blotches on their surface. These starspots (or sunspots in case of the Sun) rotate with the star and cause relatively slow changes in the brightness of the light curve. Starspots cause most of the smooth and slowly varying brightness seen in stars typically over periods of days. Transiting planets cause produce changes in a star’s brightness over much shorter timescales  Planets will transit the star in  a few to tens of hours, causing quick dips in the star's brightness. Below is a light curve of a star with starspots and a transiting exoplanet. The transits are denoted by red boxes.</p>
+
+        <img src="Insert more_examples4.png"><br>
+
+        <h2>Planet Candidates vs Confirmed Planet</h2>
+
+        <p>I spotted a transit, is it a planet? Maybe. There are several astrophysical scenarios not involving planets that can produce transit-like events in a Kepler light curve. So more checks first need to be done before we can confidently say the event is likely due a transiting planet.</p>
+
+        <p>The first check is to see if the event repeats. Typically 2-3 transits must be spotted before the star is considered to harbor possible planets. A planet that orbits in one year, like the Earth, requires three years of data for detection, while planets that orbit in ten days can be detected with just thirty days of data. If the planet orbits longer than the ~30 day intervals we show on the Planet Hunters classification interface, you might only see one transit. If the event is real than other volunteers will have seen and marked the repeat events in other light curve sections, flagging the star as likely having transits.</p>
+
+        <p>The transit technique measures the radius of the transiting body. If we know the size of the star, from the transit depth we know the size of the object. If there are repeat events and the size of the object is planetary in size, roughly Jupiter-sized (10 Earth radii) or smaller, we then call this a planet candidate.</p>
+
+        <p>The reason for planet candidate and not confirmed planet is because we don't have the mass of the body. Brown dwarfs, low-mass stars that burned deuterium but not hydrogen in their cores, have similar radii to Jupiter but much heavier masses. From the radius alone you can't distinguish the two. Also Kepler has very precise but blurry vision. There are many background stars that contribute to a target star's  light curve, so we're seeing the combined light of all those sources. If background stars are bright enough they can dilute the transit signal making us think the body is smaller such than an eclipsing binary, where two stars transit in front and behind each other, can have measured depths that look like planet transits. A mass estimate will distinguish between an orbiting star and a planet.</p>
+
+        <p>Most stars that Kepler observers are too faint or the planet candidates produce too small to currently measure masses with ground-based radial velocity techniques. So most planet candidates found in the Kepler light curves will remain candidates, but Kepler's aim was to be a statistical mission. Once this is a mass estimate or a statistical analysis that can rule out the astrophysical false positives or a mass is measured, than the planet candidate gets promoted to confirmed planet.</p>
+
+
+
+
+
+
       </div>
 
       <div class="content sub-nav-science-your-task">
