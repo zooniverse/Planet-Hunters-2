@@ -67,7 +67,7 @@
 
         <p>Transits occur when a planet passes in front of its host star as viewed from the Earth. A portion of the star's light is blocked out, and the brightness observed decreases.The Kepler mission measures the brightness of stars with such incredible precision that it is sensitive enough to detect transits of planets approaching the size of the Earth. At Planet Hunters, we need your help in the hunt for extrasolar planets (exoplanets) by highlight potential transits in a star's light curve, the time series measurements of the star's brightness, in the web interface. We use the combined assessment of several volunteers reviewing the same 30-day segment of a Kepler star's light curve to identify transits.</p>
 
-        <img src="images/transits_starspots.png"><br>
+        <img src="images/phtransit.png"><br>
 
         <p>Not all planets will transit their host stars. A special orientation of the orbit is required. Because the technique looks for a dimming in the brightness of the star, all of the planets with orbits that don’t pass between the star and our line of sight will be missed. For those planets that due transit, a transit will occur once every orbit.</p>
 
@@ -83,7 +83,7 @@
 
         <p>We can see that there must be multiple transiting objects because the timing between the transits is not constant due to the overlapping of two different periods. An exoplanet around an eclipsing binary star would also look similar, displaying both the small and large transits of the stars as well as whatever transit the planet causes. If you encounter a light curve that looks like it may be from a multiplanet system, mark the transits as usual. With your markings we’ll be able to identify there is more than one planet present.</p>
 
-        <img src="images/guide/more_examples4.png">
+        <img src="images/multitransits.png">
 
         <h2>Starspots</h2>
 
