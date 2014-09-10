@@ -545,20 +545,47 @@ class Classifier extends BaseController
 
   evaluateMarks: ->
     for mark in @canvasGraph.marks.all
-      # console.log 'mark: ', mark
+      console.log "mark: [#{mark.dataXMinRel}, #{mark.dataXMaxRel}]"
       boundL = mark.dataXMinRel
       boundR = mark.dataXMaxRel
       for transit in @known_transits
         transitL = transit[0]
         transitR = transit[1]
-        @intersectionOverUnion(boundL, boundR, transitL, transitR)
-        # console.log 'transit: ', transit[0], transit[1]
+        console.log "     transit: [#{transit[0]}, #{transit[1]}]"
+        console.log "INTERSECTION OVER UNION: ", @intersectionOverUnion(boundL, boundR, transitL, transitR)
 
   intersectionOverUnion: (aL, aR, bL, bR) ->
-    return
 
-  segmentOverlap: ->
-    return
+    console.log """
+      aL = #{aL} 
+      aR = #{aR}
+      bL = #{bL}
+      bR = #{aR}
+    """
+
+    d = 0.001 # threshold
+    cL = Math.max(aL, bL)
+    cR = Math.min(aR, bR)
+    lengthA = aR-aL
+    lengthB = bR-bL
+
+    if cL > cR - d
+      console.log 'NO OVERLAP'
+      lengthC = 0 # no overlap
+    else
+      lengthC = cR-cL
+
+
+    # console.log """
+    #   OVERLAP = [#{cL},#{cR}]
+    #   lengthA = #{lengthA}
+    #   lengthB = #{lengthB}
+    #   lengthC = #{lengthC}
+    #   """
+    return lengthC/(lengthA+lengthB-lengthC)
+
+  # segmentOverlap: ->
+  #   return
 
 
   displayKnownTransits: ->
