@@ -7,6 +7,7 @@
     <div class="intro content">
       <!-- <p id="greeting"></p> -->
     </div>
+
     <%- require('zooniverse/views/profile')() %>
   </div>
 </div>
