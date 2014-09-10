@@ -356,8 +356,8 @@ class Classifier extends BaseController
 
   loadSubjectData: () ->
     $('#graph-container').addClass 'loading-lightcurve'
-    # jsonFile = 'offline/simulation_feedback_example.json'
-    jsonFile = @subject.selected_light_curve.location
+    jsonFile = 'offline/simulation_feedback_example.json'
+    # jsonFile = @subject.selected_light_curve.location
 
     # handle ui elements
     @el.find('#loading-screen').fadeIn()
@@ -378,7 +378,7 @@ class Classifier extends BaseController
       if data.metadata.known_transits
         console.log '-=|||||||| THIS SUBJECT HAS KNOWN TRANSITS! ||||||||=-'
         @known_transits = data.metadata.known_transits
-        
+
       @canvasGraph?.marks.destroyAll()
       @marksContainer.appendChild(@canvas)
       @canvasGraph = new CanvasGraph(@canvas, data)
@@ -504,8 +504,6 @@ class Classifier extends BaseController
     @finishSubject()
 
   onClickFinishedMarking: ->
-    # console.log 'onClickFinishedMarking()'
-
     @finishSubject() # TODO: remove this line when displaying known lightcurves
 
     # # DISPLAY KNOWN LIGHTCURVES
@@ -541,6 +539,70 @@ class Classifier extends BaseController
     $("#graph-container").removeClass('showing-prev-data')
 
     @finishSubject()
+
+  evaluateMarks: ->
+    for mark in @canvasGraph.marks.all
+      # console.log 'mark: ', mark
+      boundL = mark.dataXMinRel
+      boundR = mark.dataXMaxRel
+      for transit in @known_transits
+        transitL = transit[0]
+        transitR = transit[1]
+        @intersectionOverUnion(boundL, boundR, transitL, transitR)
+        # console.log 'transit: ', transit[0], transit[1]
+
+  intersectionOverUnion: (aL, aR, bL, bR) ->
+    return
+
+
+
+  finishSubject: ->
+    # console.log 'finishSubject()'
+    @finishedFeedbackButton.hide()
+
+    if @known_transits.length > 0
+      score = @evaluateMarks()
+
+      if score > 0.5
+        header = "Awesome job!"
+        body   = "You've correctly marked at least one simulated transit on this lightcurve."
+      else
+        header = "Oops!"
+        body   = "This lightcurve has at least one simulated transit that you didn't mark."
+
+      $('.feedback.header').html header  
+      $('.feedback.body').html body
+
+
+    # re-enable zoom button (after feedback)
+    @el.find('#zoom-button').attr('disabled',false)
+
+    # disable buttons until next lightcurve is loaded
+    @el.find('#no-transits').hide() #prop('disabled',true)
+    @el.find('#finished-marking').hide() #prop('disabled',true)
+    @el.find('#finished-feedback').hide() #prop('disabled',true)
+
+    # Hide tutorials
+    tutorials = ['initialTutorial', 'supplementalTutorial']
+    @["#{ tutorial }"].end() for tutorial in tutorials
+
+    # show summary
+    @el.find('.do-you-see-a-transit').fadeOut()
+    @el.find('.star-id').fadeIn()
+
+    # console.log "tutorial subject at end ", @Subject()
+
+    if Subject.current?.tutorial?
+      @Subject.next()
+    else
+      @classifySummary.fadeIn(150)
+      @nextSubjectButton.show()
+      @planetNum.html @canvasGraph.marks.all.length # number of marks
+      # @noTransitsButton.hide()
+      @finishedMarkingButton.hide()
+
+    # reset zoom parameters
+    @zoomReset()
 
   onClickNextSubject: ->
     # console.log 'onClickNextSubject()'
@@ -642,40 +704,6 @@ class Classifier extends BaseController
     @canvasGraph.marks.destroyAll() #clear old marks
     @recordedClickEvents = []
     @Subject.next()
-
-  finishSubject: ->
-    # console.log 'finishSubject()'
-    @finishedFeedbackButton.hide()
-
-    # re-enable zoom button (after feedback)
-    @el.find('#zoom-button').attr('disabled',false)
-
-    # disable buttons until next lightcurve is loaded
-    @el.find('#no-transits').hide() #prop('disabled',true)
-    @el.find('#finished-marking').hide() #prop('disabled',true)
-    @el.find('#finished-feedback').hide() #prop('disabled',true)
-
-    # Hide tutorials
-    tutorials = ['initialTutorial', 'supplementalTutorial']
-    @["#{ tutorial }"].end() for tutorial in tutorials
-
-    # show summary
-    @el.find('.do-you-see-a-transit').fadeOut()
-    @el.find('.star-id').fadeIn()
-
-    # console.log "tutorial subject at end ", @Subject()
-
-    if Subject.current?.tutorial?
-      @Subject.next()
-    else
-      @classifySummary.fadeIn(150)
-      @nextSubjectButton.show()
-      @planetNum.html @canvasGraph.marks.all.length # number of marks
-      # @noTransitsButton.hide()
-      @finishedMarkingButton.hide()
-
-    # reset zoom parameters
-    @zoomReset()
 
   onClickJoinConvo: ->
     # @joinConvoBtn.hide().siblings().show()
