@@ -37,7 +37,13 @@
 
         <hr class="faq hr">
 
-        <h2 id="faq-data">Where does the data come from?</h2><div class="faq up">^</div>
+        <h2 id="faq-data">Where does the data come from?
+        <!-- <div class="faq up"> -->
+          <img class="faq up-image" src="images/icons/faq-up.png"/>
+        <!-- </div> -->
+
+        </h2>
+
 
         <p>The observations we show on the Planet Hunters come from the NASA Kepler spacecraft. They are brightness measurements of stars in the Kepler field during the main Kepler mission and from fields observed in the K2 phase. You can learn more about the Kepler field and K2 on the science page. NASA is archiving the Kepler data products and resulting catalogs at the <a href="http://archive.stsci.edu/kepler">Mikulski Archive for Space Telescopes (MAST)</a> and the <a href="http://exoplanetarchive.ipac.caltech.edu/docs/KeplerMission.html">NASA Exoplanet Archive</a></p>
 
