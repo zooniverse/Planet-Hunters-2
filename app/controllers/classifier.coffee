@@ -88,6 +88,8 @@ class Classifier extends BaseController
     @whenToDisplayTips = [1, 7] # TODO: don't forget to add 4 after beta version
     @splitDesignation = null
 
+    @known_transits = ''
+
     @guideShowing = false
 
     User.on 'change', @onUserChange
@@ -358,6 +360,7 @@ class Classifier extends BaseController
     $('#graph-container').addClass 'loading-lightcurve'
     jsonFile = 'offline/simulation_feedback_example.json'
     # jsonFile = @subject.selected_light_curve.location
+    console.log 'jsonFile: ', jsonFile
 
     # handle ui elements
     @el.find('#loading-screen').fadeIn()
@@ -553,6 +556,15 @@ class Classifier extends BaseController
 
   intersectionOverUnion: (aL, aR, bL, bR) ->
     return
+
+  segmentOverlap: ->
+    return
+
+
+  displayKnownTransits: ->
+    return unless @known_transits.length > 0
+    for transit in @known_transits
+      @canvasGraph.highlightCurve(transit[0],transit[1])
 
 
 
