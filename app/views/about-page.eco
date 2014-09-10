@@ -38,8 +38,13 @@
             <div class="bio">Tabetha is a postdoctoral fellow in the exoplanets group at Yale. She is interested in exoplanet detection, the precise characterization of exoplanets and their host stars, and the fundamental properties of eclipsing binaries and nearby single stars.</div>
           </div>
           <div class="team-member">
+            <div class="name">Matt Giguere</div>
+            <div class="location">Yale University (USA)</div>
+            <div class="bio">Matt is a graduate student studying astronomy at Yale and is one of the original co-founders of Planet Hunters. Matt also studies stellar activity and searches for planets using the radial velocity technique.</div>
+          </div>
+          <div class="team-member">
             <div class="name">Chris Lintott</div>
-            <div class="location">Oxford University (UK)</div>
+            <div class="location">University of Oxford (UK)</div>
             <div class="bio">Chris runs the Zooniverse collaboration and works on how galaxies form and evolve; particularly interested in the effects of active galactic nuclei and mergers. In his 'spare' time, he hunts for planets, presents the BBC's long-running Sky at Night program and cooks.</div>
           </div>
           <div class="team-member">
@@ -67,7 +72,7 @@
           </div>
           <div class="team-member">
             <div class="name">Joe Constant (constovich)</div>
-            <div class="bio">Joe is an Event Investigator for Duke Energy at Catawba Nuclear Station. He is a moderator for the Planet Hunters Talk Boards.</div>
+            <div class="bio">Joe is a Corrective Action Program Specialist at Catawba Nuclear Station. Science and science fiction have always appealed to him and being a citizen-scientist on PH has allowed him to virtually explore the cosmos.</div>
           </div>
           <div class="team-member">
             <div class="name">Jo Echo Syan (echo-lily-mai)</div>
@@ -78,17 +83,26 @@
 
       <div class="content sub-nav-about-organizations">
         <h1>Organizations</h1>
-        <h2>The Adler Planetarium</h2>
-        <p>The Adler Planetarium - America's First Planetarium - was founded in 1930 by Chicago business leader Max Adler. The Adler is a recognized leader in science education, with a focus on inspiring young people to pursue careers in science, technology, engineering and math. Throughout 80 years, the Adler has inspired the next generation of explorers by sharing the personal stories of space exploration and America’s space heroes.</p>
 
-        <h2>The University of Oxford</h2>
-        <p>The University of Oxford is the oldest in the English-speaking world having been founded in the 11th or 12th centuries. Today, it combines research in the humanities with major effort in the natural sciences and medicine. Citizen science is supported by the Department of Physics, the Division of Mathematics, Physical and Life Sciences, and the Oxford Martin Schools.</p>
+        <div class="organization">
+          <h2>The Adler Planetarium</h2>
+          <p><img src="./images/logos/adler.png" class="logo"><a href="http://www.adlerplanetarium.org">The Adler Planetarium</a> - America's First Planetarium - was founded in 1930 by Chicago business leader Max Adler. The Adler is a recognized leader in science education, with a focus on inspiring young people to pursue careers in science, technology, engineering and math. Throughout 80 years, the Adler has inspired the next generation of explorers by sharing the personal stories of space exploration and America’s space heroes.</p>
+        </div>
 
-        <h2>Yale University</h2>
-        <p>The Exoplanets group at Yale is headed by Professor Debra Fischer. The group's research projects include Doppler planet searches, analysis of the properties of planet-hosting stars, and instrumentation and software development to investigate novel designs needed for achieving better Doppler precision.</p>
+        <div class="organization">
+          <h2>The University of Oxford</h2>
+          <p><img src="./images/logos/oxford.png" class="logo"><a href="http://www.ox.ac.uk/">The University of Oxford</a> is the oldest in the English-speaking world having been founded in the 11th or 12th centuries. Today, it combines research in the humanities with major effort in the natural sciences and medicine. Citizen science is supported by the Department of Physics, the Division of Mathematics, Physical and Life Sciences, and the Oxford Martin Schools.</p>
+        </div>
 
-        <h2>NASA's Exoplanet Exploration Program</h2>
-        <p>Headquartered at the Jet Propulsion Laboratory in California, the Exoplanet Exploration Program is dedicated to the development of technology and programs (including the Kepler mission) to detect and characterize planets that orbit other stars. The public PlanetQuest site is a one-stop shop for NASA exoplanet news, educational articles, and interactive features.</p>
+        <div class="organization">
+          <h2>Yale University</h2>
+          <p><img src="./images/logos/yale.png" class="logo"><a href="http://exoplanets.astro.yale.edu/">The Exoplanets group at Yale</a> is headed by Professor Debra Fischer. The group's research projects include Doppler planet searches, analysis of the properties of planet-hosting stars, and instrumentation and software development to investigate novel designs needed for achieving better Doppler precision.</p>
+        </div>
+
+        <div class="organization">
+          <h2>NASA's Exoplanet Exploration Program</h2>
+          <p><img src="./images/logos/nasa.png" class="logo">Headquartered at the Jet Propulsion Laboratory in California, the <a href="http://exep.jpl.nasa.gov/">Exoplanet Exploration Program</a> is dedicated to the development of technology and programs (including the Kepler mission) to detect and characterize planets that orbit other stars. The public PlanetQuest site is a one-stop shop for NASA exoplanet news, educational articles, and interactive features.</p>
+        </div>
       </div>
     </div>
     <div class="right-column">
