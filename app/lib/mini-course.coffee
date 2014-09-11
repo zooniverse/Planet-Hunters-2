@@ -179,7 +179,7 @@ class MiniCourse extends BaseController
 
   resetCourse: ->
     return unless User.current?
-    # console.log 'initializing mini-course...'
+    console.log 'initializing mini-course...'
     # User.current.setPreference 'course', 'yes'
     User.current.setPreference 'count', 0
     User.current.setPreference 'curr_course_id', 0 

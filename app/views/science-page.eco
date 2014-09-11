@@ -8,8 +8,9 @@
       <button name="faq">FAQ</button>
       <button name="transits">Transits</button>
       <button name="your-task">Your Task</button>
-      <button name="goals">Goals</button>
-      <button name="results">Results</button>
+      <button name="origin">Origin of the light curves</button>
+      <button name="simulations">Simulations</button>
+      <button onclick="window.location='https://www.zooniverse.org/publications?project=planethunters'">Discoveries &amp; Papers</button>
     </nav>
   </div>
   <div class="secondary-content">
@@ -102,38 +103,49 @@
         <p>The reason for planet candidate and not confirmed planet is because we don't have the mass of the body. Brown dwarfs, low-mass stars that burned deuterium but not hydrogen in their cores, have similar radii to Jupiter but much heavier masses. From the radius alone you can't distinguish the two. Also Kepler has very precise but blurry vision. There are many background stars that contribute to a target star's  light curve, so we're seeing the combined light of all those sources. If background stars are bright enough they can dilute the transit signal making us think the body is smaller such than an eclipsing binary, where two stars transit in front and behind each other, can have measured depths that look like planet transits. A mass estimate will distinguish between an orbiting star and a planet.</p>
 
         <p>Most stars that Kepler observers are too faint or the planet candidates produce too small to currently measure masses with ground-based radial velocity techniques. So most planet candidates found in the Kepler light curves will remain candidates, but Kepler's aim was to be a statistical mission. Once this is a mass estimate or a statistical analysis that can rule out the astrophysical false positives or a mass is measured, than the planet candidate gets promoted to confirmed planet.</p>
-
-
-
-
-
-
       </div>
 
       <div class="content sub-nav-science-your-task">
         <h1>Your Task</h1>
-        <p>This will be the your task section</p>
+        <h2>What am I looking for?</h2>
+
+        <p>A small portion of a star's light is blocked out when an exoplanet passes or transits in front of it. The star winks and this dimming of starlight lasts for a few hours or more, repeating once per orbit of the planet. Visitors to the Planet Hunters' website are asked to draw boxes to mark the locations of these dips on the star's light curve (measurements of the the star's brightness over time). The depth of the transit and how often it repeats tells us about the relative size of the planet and its orbital period (how long the planet's year is).</p>
+
+        <h2>Computers vs. Humans: Why do we need your help?</h2>
+
+        <p>The Kepler team and other astronomers have developed automated computer algorithms to search the Kepler light curves, for the repeated signal of exoplanet transits. To date over 3000 confirmed planets and planet candidates have been discovered with Kepler, but the Kepler light curves are complex, many exhibiting short-lived changes in brightnesss that are often difficult to characterize. Despite the impressive success of the computers, they may miss transits dominated by the star’s natural variability. The human brain excels at pattern recognition and easily recognizes transits that sophisticated automated routines may miss, and that is where you come in.</p>
+ 
+        <p>Automated routines have been very successful and many planets and planet candidates have been found, but not all. While we expect computer programs to robustly identify things that they are trained to find, we know there are surprises in the data that the computer algorithms will miss. It is impossible for a single person to review all of the Kepler observations, and  experiments have shown that when many people work together, the collective wisdom of the crowds can be better than an expert. With the Internet we can gather the help of hundreds of thousands of people to help in the hunt for exoplanets. The original Planet Hunters proved that this citizen science approach to exoplanets works with over 30 planet candidates and several confirmed planet discoveries.  </p>
       </div>
 
-      <div class="content sub-nav-science-goals">
-        <h1>Goals</h1>
-        <p>This will be the goals section</p>
+      <div class="content sub-nav-science-origin">
+        <h1>Origin of data</h1>
+
+        <h2>Where do the light curves come from?</h2>
+        <p>The light curves, time series of brightness measurements, we ask you to inspect for planet transits come from the publicly released observations from NASA's Kepler mission. On Planet Hunters, we show data obtained during two different phases of the Kepler mission:  </p>
+
+        <h2>The Kepler Field</h2>
+        <p>Kepler has spent four years staring at a single patch of sky, simultaneously monitoring a collection of stars for the tell tale signatures of transiting exoplanets. From May 2009-May 2013, Kepler observed nearly the same ~170,000 stars in the Kepler field located in the constellations of Cygnus and Lyra. In April 2014 Kepler suffered a mechanical failure that now prevents it from being able to point at the Kepler field, ending this period of it's main mission.</p>
+
+        <p>We have still have much of the four years of Kepler field data to search through. The original Planet Hunters project barely scratched the surface of the Kepler field observations. We think there is still much to be learned from the original Kepler data and likely to be unknown planets lurking in the light curves missed by the computers waiting to discovered.</p>
+
+        <h2>K2</h2>
+        <p>The Kepler spacecraft has been repurposed for the K2 mission. For the next several years, Kepler will be observing a new patch of sky every 75 days in the ecliptic (plane of the Solar System). In each of these fields, Kepler will monitor brand new sets of 10,000-20,000 stars. These stars are different from the sources that Kepler had been monitoring in the past in the Kepler field. K2 observations will be made available to the entire astronomical community and the public shortly after being transmitted to Earth and processed.Your eyes will be one of the first to gaze upon these observations. Most of the K2 target stars will have never before been searched for planets, proving a new opportunity to find distant worlds.</p>
       </div>
 
-      <div class="content sub-nav-science-results">
-        <h1>Results</h1>
-        <p>This will be the results section</p>
+      <div class="content sub-nav-science-simulations">
+        <h1>Simulations</h1>
+        <p>One of the goals of Planet Hunters is to explore the diversity of the terrestrial and giant planet populations and begin to understand the spectrum of solar systems. With just the planet discoveries alone you can't answer these questions because you don't know how complete the sample is. In order to understand how well different kinds of transiting planets can be found with Planet Hunters, we also show light curves with simulated transits, spanning the range of exoplanet radii and orbits.</p>
+
+        <p>It might seem like we're testing you or trying to train you to identify transits, but we're really testing the project. The simulations are critical for determining the statistical completeness for planets as a function of size (depth of the transit event) and orbital period (number of transits). This is a really vital part of the project, with these simulated transits we can answer interesting and fundamental questions about how solar systems and planets form. Some of the simulated planets like large Jupiter-sized planets will be really easy to spot while others will be near impossible to identify especially for the extremely small planets, but don’t be discouraged if you didn’t find the simulated transit. That’s okay, that's part of the experiment.</p>
+        
+        <p>If you encounter a simulation, we will always identify the simulated transit points in red after you’ve classified the star and list the properties of the simulated planet we injected into the light curve. The reason we don’t identify the simulated data first, is that if you knew the lightcurve had simulated events you might look at it differently. To be able to use the data from the simulated transits accurately, we need them to be examined in exactly the same conditions as the real light curves.</p>
       </div>
     </div>
 
     <div class="right-column">
       <div class="content">
-        <h1>Get Involved</h1>
-        <p>Join us in finding the many workds out there. Are you ready?</p>
-        <button class="std-btn big-btn yellow">Start Classifying</button>
-
-        <h1>Connect</h1>
-        <p>Follow the <a href="">Planet Hunters 2</a> Blog and <a href="">@planethunters</a> to keep current with the latest results</p>
+        <%- require('./partials/right-column')(@) %>
       </div>
     </div>
   </div>

@@ -61,8 +61,12 @@ class Profile extends BaseProfile
     setTimeout =>
       @greeting.html("Hello, #{User.current.name}!") if User.current
       @onNavLoad =>
-        $(".profile nav").append("<button style='float:right;width:100px' class='mini-course-trigger'><span>Mini Course</span></button>")
+        $(".profile nav").append("<button style='float:right;width:156px' class='mini-course-trigger'><span>Launch Mini Course</span></button>")
         $(".profile nav .mini-course-trigger ").on "click", @onMiniCourseTrigger
+
+        $(".profile nav").append("<button style='float:right;width:156px' class='mini-course-reset'><span>Reset Mini Course</span></button>")
+        $(".profile nav .mini-course-reset").on "click", @reset
+
     , 1000
 
   onNavLoad:(task)=>
@@ -74,8 +78,11 @@ class Profile extends BaseProfile
       console.log "waiting"
       setTimeout @onNavLoad, 200
 
+  reset: ->
+    classifier.course.resetCourse()
+
   onMiniCourseTrigger:->
-    window.location = 'index.html#/classify'
+    window.location = 'index.html?show_all_courses=true#/classify' # DEBUG CODE
     classifier.course.launch()
 
   onClickItem: (e) ->
