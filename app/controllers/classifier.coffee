@@ -50,8 +50,7 @@ class Classifier extends BaseController
     'click button[id="tutorial"]'             : 'onClickTutorial'
     'click button[name="no-transits-button"]' : 'onClickNoTransits'
     'click button[name="next-subject"]'       : 'onClickNextSubject'
-    'click button[name="finished-marking"]'   : 'onClickFinishedMarking'
-    # 'click button[name="finished-feedback"]'  : 'onClickFinishedFeedback'
+    'click button[name="finished-marking"]'   : 'onClickFinished'
     'slide #ui-slider'                        : 'onChangeScaleSlider'
     'click button[name="join-convo"]'         : 'onClickJoinConvo'
     'click button[name="alt-join-convo"]'     : 'onClickAltJoinConvo'
@@ -366,7 +365,7 @@ class Classifier extends BaseController
     $('#graph-container').addClass 'loading-lightcurve'
     jsonFile = 'offline/simulation_feedback_example.json'
     # jsonFile = @subject.selected_light_curve.location
-    console.log 'jsonFile: ', jsonFile
+    # console.log 'jsonFile: ', jsonFile
 
     # handle ui elements
     @el.find('#loading-screen').fadeIn()
@@ -385,7 +384,6 @@ class Classifier extends BaseController
     $.getJSON jsonFile, (data) =>
       console.log 'data: ', data
       if data.metadata.known_transits
-        console.log '-=|||||||| THIS SUBJECT HAS KNOWN TRANSITS! ||||||||=-'
         @known_transits = data.metadata.known_transits
 
       @canvasGraph?.marks.destroyAll()
@@ -507,189 +505,33 @@ class Classifier extends BaseController
       @finishedMarkingButton.hide()
       @noTransitsButton.show()
 
-  hideMarkingButtons: ->
-    @noTransitsButton.hide()
-    @finishedMarkingButton.hide()
-    @nextSubjectButton.hide()
-    @continueButton.hide()
+  #
+  # BEGIN MARKING TRANSITIONS
+  #
 
   onClickNoTransits: ->
-    # console.log 'onClickNoTransits()'
-    # giveFeedback()
-
     if @simulationsPresent()
-      console.log 'SIMULATIONS PRESENT'
+      @evaluateMarks()
       @displayKnownTransits()
     else
-      console.log 'NO SIMULATIONS PRESENT'
       @showSummaryScreen()
 
-
-  showSummaryScreen: ->
-    @hideMarkingButtons()
-    @nextSubjectButton.show()
-    @classifySummary.fadeIn(150)
-    # @finishSubject()
-
-  onClickFinishedMarking: ->
-    console.log 'onClickFinishedMarking(): '
-
-    @finishSubject() # TODO: remove this line when displaying known lightcurves
-
-    # # DISPLAY KNOWN LIGHTCURVES
-    # @canvasGraph.zoomOut() # first make sure graph is zoomed out
-    # @finishedMarkingButton.hide()
-    # @el.find('#zoom-button').attr('disabled',true)
-    # @giveFeedback()
+  onClickFinished: ->
+    if @simulationsPresent()
+      @evaluateMarks()
+      @displayKnownTransits()
+    else
+      @showSummaryScreen()
 
   onClickContinueButton: ->
-    console.log 'onClickContinueButton(): '
-
     @hideMarkingButtons()
     @showSummaryScreen()
 
-  giveFeedback: ->
-    # console.log 'giveFeedback()'
-
-    @finishedFeedbackButton.show()
-    @canvasGraph.disableMarking()
-    @canvasGraph.showFakePrevMarks()
-    # numMarksGenerated = @canvasGraph.showFakePrevMarks()
-    # console.log 'found ', numMarksGenerated, ' previous marks'
-    # if numMarksGenerated <= 0 # no marks generated
-    #   @notify('Loading summary page...')
-    #   @finishedFeedbackButton.hide()
-    #   @finishSubject()
-    # else
-    #   @notify('Here\'s what others have marked...')
-    #   @el.find(".mark").fadeOut(1000)
-    @notify('<a style="color: rgb(20,100,200)">Here are the locations of known transits and/or simulalations...</a>')
-    @el.find(".mark").fadeOut(1000)
-
-  # onClickFinishedFeedback: ->
-  #   console.log 'onClickFinishedFeedback()'
-  #   # @finishedFeedbackButton.hide()
-
-  #   # keep drawing highlighted points while displaying previous data
-  #   # TODO: fix, kindda cluegy
-  #   $("#graph-container").removeClass('showing-prev-data')
-
-  #   @finishSubject()
-
-  evaluateMarks: ->
-    return unless User.current?
-    for transit in @known_transits
-      best_score = 0 # that's right, assume they got it WRONG!!!
-      transitL = transit[0]
-      transitR = transit[1]
-      for mark in @canvasGraph.marks.all
-        boundL = mark.dataXMinRel
-        boundR = mark.dataXMaxRel
-        score = @intersectionOverUnion(boundL, boundR, transitL, transitR)
-        if score > best_score
-          best_score = score
-          mark.score = score
-        console.log "INTERSECTION OVER UNION: ", score
-      console.log "BEST SCORE: ", best_score
-
-  intersectionOverUnion: (aL, aR, bL, bR) ->
-    d = 0.001 # threshold
-    cL = Math.max(aL, bL)
-    cR = Math.min(aR, bR)
-    lengthA = aR-aL
-    lengthB = bR-bL
-
-    if cL > cR - d
-      console.log 'NO OVERLAP'
-      lengthC = 0 # no overlap
-    else
-      lengthC = cR-cL
-    return lengthC/(lengthA+lengthB-lengthC)
-
-  displayKnownTransits: ->
-    return unless @simulationsPresent()
-    
-    @hideMarkingButtons()
-    @continueButton.show()
-
-    for transit in @known_transits
-      @canvasGraph.highlightCurve(transit[0],transit[1])
-
-    @course.showPrompt()
-    @course.prompt_el.find('#course-yes-container').hide()
-    @course.prompt_el.find('#course-no').hide()
-    @course.prompt_el.find('#course-never').hide()
-    @course.prompt_el.find('#course-message').html "This light curve contains at least one simulated transit, highlighted in red."
- 
-    return
-
-
-  simulationsPresent: ->
-    if @known_transits.length > 0
-      return true
-    else 
-      return false
-
-  finishSubject: ->
-    # console.log 'finishSubject()'
-
-    # disable buttons until next lightcurve is loaded
-    @el.find('#no-transits-button').hide() #prop('disabled',true)
-    @el.find('#finished-marking').hide() #prop('disabled',true)
-    @el.find('#finished-feedback').hide() #prop('disabled',true)
-
-    # Hide tutorials
-    tutorials = ['initialTutorial', 'supplementalTutorial']
-    @["#{ tutorial }"].end() for tutorial in tutorials
-
-    # if @known_transits.length > 0
-    #   console.log 'doin my thang'
-    #   @course.showPrompt()
-    #   @course.prompt_el.find('#course-yes-container').hide()
-    #   @course.prompt_el.find('#course-no').hide()
-    #   @course.prompt_el.find('#course-never').hide()
-
-    #   @course.prompt_el.find('#course-message').html "This light curve contains at least one simulated transit, highlighted in red."
-    #   @displayKnownTransits()
-
-    #   @continueButton.show()
-
-    # else
-    @finishedFeedbackButton.hide()
-
-    # re-enable zoom button (after feedback)
-    @el.find('#zoom-button').attr('disabled',false)
-
-    # show summary
-    @el.find('.do-you-see-a-transit').fadeOut()
-    @el.find('.star-id').fadeIn()
-
-    # console.log "tutorial subject at end ", @Subject()
-
-    if Subject.current?.tutorial?
-      @Subject.next()
-    else
-      @classifySummary.fadeIn(150)
-      @nextSubjectButton.show()
-      @planetNum.html @canvasGraph.marks.all.length # number of marks
-      # @noTransitsButton.hide()
-      @finishedMarkingButton.hide()
-
-    # reset zoom parameters
-    @zoomReset()
-
   onClickNextSubject: ->
     @course.prompt_el.hide()
-    # console.log 'onClickNextSubject()'
-    # @noTransitsButton.show()
     @classifySummary.fadeOut(150)
-    @nextSubjectButton.hide()
-    # @canvasGraph.marks.destroyAll() #clear old marks
-    # @canvas.outerHTML = ""
-    @resetTalkComment @talkComment
-    @resetTalkComment @altTalkComment
-    # show courses
-
+    @hideMarkingButtons()
+    
     # # switch to verify mode
     # if @course.count % @verifyRate is 0
     #   location.hash = "#/verify"
@@ -701,10 +543,31 @@ class Classifier extends BaseController
     if @course.getPref() is "yes" and @course.count % @course.rate is 0 and @course.coursesAvailable() and @course.count isnt 0
       @notify 'Loading mini-course...'
       @course.launch()
-      
-      # @course.displayLatest()
 
-    # display supplemental tutorial
+    # check to display supplemental tutorial
+    @checkSupplementalTutorial()
+    @sendClassification()
+    @canvasGraph.marks.destroyAll() #clear old marks
+    @recordedClickEvents = []
+    @Subject.next()
+
+  #
+  # END MARKING TRANSITIONS
+  #
+
+  hideMarkingButtons: ->
+    @noTransitsButton.hide()
+    @finishedMarkingButton.hide()
+    @nextSubjectButton.hide()
+    @continueButton.hide()
+
+  showSummaryScreen: ->
+    @hideMarkingButtons()
+    @nextSubjectButton.show()
+    @classifySummary.fadeIn(150)
+    # @finishSubject()
+
+  checkSupplementalTutorial: ->   
     for classification_count in @whenToDisplayTips
       if @course.count is classification_count
         # console.log "*** DISPLAY SUPPLEMENTAL TUTOTIAL # #{classification_count} *** "
@@ -737,17 +600,13 @@ class Classifier extends BaseController
           # check box only if mini-course enabled
           $('.mini-course-option').prop 'checked', @courseEnabled
 
-    # SEND CLASSIFICATION
-
+  sendClassification: ->
     if User.current?
       @course.incrementCount()
     else
       @loggedOutClassificationCount += 1
       if @loggedOutClassificationCount%5 == 0
         @course.showPrompt()
-
-
-    # console.log 'YOU\'VE MARKED ', @course.count, ' LIGHT CURVES!'
 
     @classification.annotate
       classification_type: 'light_curve'
@@ -765,25 +624,102 @@ class Classifier extends BaseController
         score: mark.score
       console.log 'MARK SCORE: ', mark.score # DEBUG CODE
 
-    # dump all recorded click events to classification
-    # @classification.set 'recordedClickEvents', [@recordedClickEvents...]
     @classification.annotate
       recordedClickEvents: [@recordedClickEvents...]
 
-    # # DEBUG CODE
-    console.log JSON.stringify( @classification )
-    # console.log '********************************************'
-
+    console.log JSON.stringify( @classification ) # DEBUG CODE
+    
     # send classification (except for tutorial subject)
     unless @classification.subject.id is 'TUTORIAL_SUBJECT'
       @classification.send()
 
-    @canvasGraph.marks.destroyAll() #clear old marks
-    @recordedClickEvents = []
-    @Subject.next()
+  evaluateMarks: ->
+    return unless User.current?
+    for transit in @known_transits
+      best_score = 0 # that's right, assume they got it WRONG!!!
+      transitL = transit[0]
+      transitR = transit[1]
+      for mark in @canvasGraph.marks.all
+        boundL = mark.dataXMinRel
+        boundR = mark.dataXMaxRel
+        score = @intersectionOverUnion(boundL, boundR, transitL, transitR)
+        if score > best_score
+          best_score = score
+          mark.score = score
+      #   console.log "INTERSECTION OVER UNION: ", score # DEBUG CODE
+      # console.log "BEST SCORE: ", best_score
+
+  intersectionOverUnion: (aL, aR, bL, bR) ->
+    d = 0.001 # threshold
+    cL = Math.max(aL, bL)
+    cR = Math.min(aR, bR)
+    lengthA = aR-aL
+    lengthB = bR-bL
+
+    if cL > cR - d
+      lengthC = 0 # no overlap
+    else
+      lengthC = cR-cL
+    return lengthC/(lengthA+lengthB-lengthC)
+
+  displayKnownTransits: ->
+    return unless @simulationsPresent()
+    
+    @hideMarkingButtons()
+    @continueButton.show()
+
+    for transit in @known_transits
+      @canvasGraph.highlightCurve(transit[0],transit[1])
+
+    @course.showPrompt()
+    @course.prompt_el.find('#course-yes-container').hide()
+    @course.prompt_el.find('#course-no').hide()
+    @course.prompt_el.find('#course-never').hide()
+    @course.prompt_el.find('#course-message').html "This light curve contains at least one simulated transit, highlighted in red."
+ 
+    return
+
+  simulationsPresent: ->
+    if @known_transits.length > 0
+      return true
+    else 
+      return false
+
+  finishSubject: ->
+    # disable buttons until next lightcurve is loaded
+    @el.find('#no-transits-button').hide() #prop('disabled',true)
+    @el.find('#finished-marking').hide() #prop('disabled',true)
+    @el.find('#finished-feedback').hide() #prop('disabled',true)
+
+    # Hide tutorials
+    tutorials = ['initialTutorial', 'supplementalTutorial']
+    @["#{ tutorial }"].end() for tutorial in tutorials
+
+    @finishedFeedbackButton.hide()
+
+    # re-enable zoom button (after feedback)
+    @el.find('#zoom-button').attr('disabled',false)
+
+    # show summary
+    @el.find('.do-you-see-a-transit').fadeOut()
+    @el.find('.star-id').fadeIn()
+
+    # console.log "tutorial subject at end ", @Subject()
+
+    if Subject.current?.tutorial?
+      @Subject.next()
+    else
+      @classifySummary.fadeIn(150)
+      @nextSubjectButton.show()
+      @planetNum.html @canvasGraph.marks.all.length # number of marks
+      # @noTransitsButton.hide()
+      @finishedMarkingButton.hide()
+
+    # reset zoom parameters
+    @zoomReset()
 
   onClickJoinConvo: ->
-    # @joinConvoBtn.hide().siblings().show()
+    @joinConvoBtn.hide().siblings().show()
 
   onClickAltJoinConvo: -> @altJoinConvoBtn.hide().siblings().show()
 
@@ -794,8 +730,6 @@ class Classifier extends BaseController
   onClickSubmitTalkAlt: ->
     console.log "SEND THIS TO ANOTHER TALK DISCUSSION", @altTalkComment.val()
     @appendComment(@altTalkComment, @altComments)
-
-  resetTalkComment: (talkComment) -> talkComment.val("").parent().hide().siblings().show()
 
   appendComment: (comment, container) ->
     container.append("""
@@ -881,7 +815,7 @@ class Classifier extends BaseController
       </div>
 
       """
-
+      
     #   comment.timeago = $.timeago comment.updated_at
     #   comment.date = DateWidget.formatDate 'd MM yy', new Date comment.updated_at
     # @render()
