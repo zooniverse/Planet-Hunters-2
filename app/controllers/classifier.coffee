@@ -361,8 +361,8 @@ class Classifier extends BaseController
 
   loadSubjectData: () ->
     $('#graph-container').addClass 'loading-lightcurve'
-    jsonFile = 'offline/simulation_feedback_example.json'
-    # jsonFile = @subject.selected_light_curve.location
+    # jsonFile = 'offline/simulation_feedback_example.json'
+    jsonFile = @subject.selected_light_curve.location
     # console.log 'jsonFile: ', jsonFile
 
     # handle ui elements
@@ -404,10 +404,11 @@ class Classifier extends BaseController
       @el.find(".noUi-handle").hide()
 
     @insertMetadata()
-    @el.find('.do-you-see-a-transit').fadeIn()
-    @el.find('#no-transits-button').fadeIn()
-    @el.find('#finished-marking').fadeIn()
-    @el.find('#finished-feedback').fadeIn()
+    # @el.find('.do-you-see-a-transit').fadeIn()
+    # @el.find('#no-transits-button').fadeIn()
+    
+    # @el.find('#finished-marking').fadeIn()
+    # @el.find('#finished-feedback').fadeIn()
 
   insertMetadata: ->
     # ukirt data
