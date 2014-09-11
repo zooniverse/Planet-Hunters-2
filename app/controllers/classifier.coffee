@@ -507,6 +507,7 @@ class Classifier extends BaseController
     @finishSubject()
 
   onClickFinishedMarking: ->
+
     @finishSubject() # TODO: remove this line when displaying known lightcurves
 
     # # DISPLAY KNOWN LIGHTCURVES
@@ -544,25 +545,22 @@ class Classifier extends BaseController
     @finishSubject()
 
   evaluateMarks: ->
-    for mark in @canvasGraph.marks.all
-      console.log "mark: [#{mark.dataXMinRel}, #{mark.dataXMaxRel}]"
-      boundL = mark.dataXMinRel
-      boundR = mark.dataXMaxRel
-      for transit in @known_transits
-        transitL = transit[0]
-        transitR = transit[1]
-        console.log "     transit: [#{transit[0]}, #{transit[1]}]"
-        console.log "INTERSECTION OVER UNION: ", @intersectionOverUnion(boundL, boundR, transitL, transitR)
+    return unless User.current?
+    for transit in @known_transits
+      best_score = 0 # that's right, assume they got it WRONG!!!
+      transitL = transit[0]
+      transitR = transit[1]
+      for mark in @canvasGraph.marks.all
+        boundL = mark.dataXMinRel
+        boundR = mark.dataXMaxRel
+        score = @intersectionOverUnion(boundL, boundR, transitL, transitR)
+        if score > best_score
+          best_score = score
+          mark.score = score
+        console.log "INTERSECTION OVER UNION: ", score
+      console.log "BEST SCORE: ", best_score
 
   intersectionOverUnion: (aL, aR, bL, bR) ->
-
-    console.log """
-      aL = #{aL} 
-      aR = #{aR}
-      bL = #{bL}
-      bR = #{aR}
-    """
-
     d = 0.001 # threshold
     cL = Math.max(aL, bL)
     cR = Math.min(aR, bR)
@@ -574,43 +572,29 @@ class Classifier extends BaseController
       lengthC = 0 # no overlap
     else
       lengthC = cR-cL
-
-
-    # console.log """
-    #   OVERLAP = [#{cL},#{cR}]
-    #   lengthA = #{lengthA}
-    #   lengthB = #{lengthB}
-    #   lengthC = #{lengthC}
-    #   """
     return lengthC/(lengthA+lengthB-lengthC)
-
-  # segmentOverlap: ->
-  #   return
-
 
   displayKnownTransits: ->
     return unless @known_transits.length > 0
     for transit in @known_transits
       @canvasGraph.highlightCurve(transit[0],transit[1])
 
-
-
   finishSubject: ->
     # console.log 'finishSubject()'
+    if @known_transits.length > 0
+      console.log 'doin my thang'
+      @course.showPrompt()
+      @course.prompt_el.find('#course-yes-container').hide()
+      @course.prompt_el.find('#course-no').hide()
+      @course.prompt_el.find('#course-never').hide()
+
+      @course.prompt_el.find('#course-message').html "This light curve contains at least one simulated transit, highlighted in red."
+      @displayKnownTransits()
+
+    return
+
     @finishedFeedbackButton.hide()
 
-    if @known_transits.length > 0
-      score = @evaluateMarks()
-
-      if score > 0.5
-        header = "Awesome job!"
-        body   = "You've correctly marked at least one simulated transit on this lightcurve."
-      else
-        header = "Oops!"
-        body   = "This lightcurve has at least one simulated transit that you didn't mark."
-
-      $('.feedback.header').html header  
-      $('.feedback.body').html body
 
 
     # re-enable zoom button (after feedback)
@@ -726,6 +710,7 @@ class Classifier extends BaseController
         xMaxRelative: mark.dataXMaxRel
         xMinGlobal: mark.dataXMinGlobal
         xMaxGlobal: mark.dataXMaxGlobal
+        score: mark.score
 
     # dump all recorded click events to classification
     # @classification.set 'recordedClickEvents', [@recordedClickEvents...]
@@ -733,7 +718,7 @@ class Classifier extends BaseController
       recordedClickEvents: [@recordedClickEvents...]
 
     # # DEBUG CODE
-    # console.log JSON.stringify( @classification )
+    console.log JSON.stringify( @classification )
     # console.log '********************************************'
 
     # send classification (except for tutorial subject)
