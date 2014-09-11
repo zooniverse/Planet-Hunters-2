@@ -31,8 +31,9 @@ class Classifier extends BaseController
     '#comments'                         : 'comments'
     '#planet-num'                       : 'planetNum'
     '#alt-comments'                     : 'altComments'
-    'button[name="no-transits"]'        : 'noTransitsButton'
+    'button[name="no-transits-button"]' : 'noTransitsButton'
     'button[name="finished-marking"]'   : 'finishedMarkingButton'
+    'button[name="continue-button"]'    : 'continueButton'
     'button[name="finished-feedback"]'  : 'finishedFeedbackButton'
     'button[name="next-subject"]'       : 'nextSubjectButton'
     'button[name="join-convo"]'         : 'joinConvoBtn'
@@ -47,7 +48,7 @@ class Classifier extends BaseController
     'click button[id="toggle-fav"]'           : 'onToggleFav'
     'click button[id="help"]'                 : 'onClickHelp'
     'click button[id="tutorial"]'             : 'onClickTutorial'
-    'click button[name="no-transits"]'        : 'onClickNoTransits'
+    'click button[name="no-transits-button"]' : 'onClickNoTransits'
     'click button[name="next-subject"]'       : 'onClickNextSubject'
     'click button[name="finished-marking"]'   : 'onClickFinishedMarking'
     'click button[name="finished-feedback"]'  : 'onClickFinishedFeedback'
@@ -60,6 +61,7 @@ class Classifier extends BaseController
     'change #course-interval-sup-tut'         : 'onChangeCourseIntervalViaSupTut'
     'change input[name="mini-course-option"]' : 'onChangeMiniCourseOption'
     'change input[name="course-opt-out"]'     : 'onChangeCourseOptOut'
+    'click button[name="continue-button"]'    : 'onClickFinishedMarking'
 
     'click .arrow.left'  : 'onClickCourseBack'
     'click .arrow.right' : 'onClickCourseForward'
@@ -117,7 +119,7 @@ class Classifier extends BaseController
 
     # @verifyRate = 20
 
-    @el.find('#no-transits').hide() #prop('disabled',true)
+    @el.find('#no-transits-button').hide() #prop('disabled',true)
     @el.find('#finished-marking').hide() #prop('disabled',true)
     @el.find('#finished-feedback').hide() #prop('disabled',true)
 
@@ -133,6 +135,10 @@ class Classifier extends BaseController
       @course.ADMIN_MODE = true
     else
       @course.ADMIN_MODE = false
+
+    # initialize buttons
+    @continueButton.hide()
+
 
   # CODE FOR PROMPT (NOT CURRENTLY IN USE)
   # /////////////////////////////////////////////////
@@ -403,7 +409,7 @@ class Classifier extends BaseController
 
     @insertMetadata()
     @el.find('.do-you-see-a-transit').fadeIn()
-    @el.find('#no-transits').fadeIn()
+    @el.find('#no-transits-button').fadeIn()
     @el.find('#finished-marking').fadeIn()
     @el.find('#finished-feedback').fadeIn()
 
@@ -535,7 +541,7 @@ class Classifier extends BaseController
     @el.find(".mark").fadeOut(1000)
 
   onClickFinishedFeedback: ->
-    # console.log 'onClickFinishedFeedback()'
+    console.log 'onClickFinishedFeedback()'
     # @finishedFeedbackButton.hide()
 
     # keep drawing highlighted points while displaying previous data
@@ -591,41 +597,40 @@ class Classifier extends BaseController
       @course.prompt_el.find('#course-message').html "This light curve contains at least one simulated transit, highlighted in red."
       @displayKnownTransits()
 
-    return
+      @continueButton.show()
 
-    @finishedFeedbackButton.hide()
-
-
-
-    # re-enable zoom button (after feedback)
-    @el.find('#zoom-button').attr('disabled',false)
-
-    # disable buttons until next lightcurve is loaded
-    @el.find('#no-transits').hide() #prop('disabled',true)
-    @el.find('#finished-marking').hide() #prop('disabled',true)
-    @el.find('#finished-feedback').hide() #prop('disabled',true)
-
-    # Hide tutorials
-    tutorials = ['initialTutorial', 'supplementalTutorial']
-    @["#{ tutorial }"].end() for tutorial in tutorials
-
-    # show summary
-    @el.find('.do-you-see-a-transit').fadeOut()
-    @el.find('.star-id').fadeIn()
-
-    # console.log "tutorial subject at end ", @Subject()
-
-    if Subject.current?.tutorial?
-      @Subject.next()
     else
-      @classifySummary.fadeIn(150)
-      @nextSubjectButton.show()
-      @planetNum.html @canvasGraph.marks.all.length # number of marks
-      # @noTransitsButton.hide()
-      @finishedMarkingButton.hide()
+      @finishedFeedbackButton.hide()
 
-    # reset zoom parameters
-    @zoomReset()
+      # re-enable zoom button (after feedback)
+      @el.find('#zoom-button').attr('disabled',false)
+
+      # disable buttons until next lightcurve is loaded
+      @el.find('#no-transits-button').hide() #prop('disabled',true)
+      @el.find('#finished-marking').hide() #prop('disabled',true)
+      @el.find('#finished-feedback').hide() #prop('disabled',true)
+
+      # Hide tutorials
+      tutorials = ['initialTutorial', 'supplementalTutorial']
+      @["#{ tutorial }"].end() for tutorial in tutorials
+
+      # show summary
+      @el.find('.do-you-see-a-transit').fadeOut()
+      @el.find('.star-id').fadeIn()
+
+      # console.log "tutorial subject at end ", @Subject()
+
+      if Subject.current?.tutorial?
+        @Subject.next()
+      else
+        @classifySummary.fadeIn(150)
+        @nextSubjectButton.show()
+        @planetNum.html @canvasGraph.marks.all.length # number of marks
+        # @noTransitsButton.hide()
+        @finishedMarkingButton.hide()
+
+      # reset zoom parameters
+      @zoomReset()
 
   onClickNextSubject: ->
     # console.log 'onClickNextSubject()'
