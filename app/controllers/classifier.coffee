@@ -37,9 +37,7 @@ class Classifier extends BaseController
     'button[name="finished-feedback"]'  : 'finishedFeedbackButton'
     'button[name="next-subject"]'       : 'nextSubjectButton'
     'button[name="join-convo"]'         : 'joinConvoBtn'
-    'button[name="alt-join-convo"]'     : 'altJoinConvoBtn'
     'textarea[name="talk-comment"]'     : 'talkComment'
-    'textarea[name="alt-talk-comment"]' : 'altTalkComment'
     '#spotters-guide'                   : 'spottersGuide'    
     '.examples img'                     : 'exampleImages'
 
@@ -551,6 +549,8 @@ class Classifier extends BaseController
     @recordedClickEvents = []
     @Subject.next()
 
+    @noTransitsButton.show()
+
   #
   # END MARKING TRANSITIONS
   #
@@ -721,15 +721,9 @@ class Classifier extends BaseController
   onClickJoinConvo: ->
     @joinConvoBtn.hide().siblings().show()
 
-  onClickAltJoinConvo: -> @altJoinConvoBtn.hide().siblings().show()
-
   onClickSubmitTalk: ->
     console.log "SEND THIS TO MAIN TALK DISCUSSION", @talkComment.val()
     @appendComment(@talkComment, @comments)
-
-  onClickSubmitTalkAlt: ->
-    console.log "SEND THIS TO ANOTHER TALK DISCUSSION", @altTalkComment.val()
-    @appendComment(@altTalkComment, @altComments)
 
   appendComment: (comment, container) ->
     container.append("""
@@ -815,7 +809,7 @@ class Classifier extends BaseController
       </div>
 
       """
-      
+
     #   comment.timeago = $.timeago comment.updated_at
     #   comment.date = DateWidget.formatDate 'd MM yy', new Date comment.updated_at
     # @render()

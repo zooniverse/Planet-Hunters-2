@@ -161,7 +161,7 @@
         <button class="std-btn marking-btn yellow" name="finished-marking">Finished</button>
         <button class="std-btn marking-btn yellow" name="continue-button">Continue</button>
         <button class="std-btn marking-btn yellow" name="next-subject">Next Subject</button>
-        <button id="no-transits-button" name="no-transits-button" class="std-btn white marking-btn" id="tutorial">No Transits</button>
+        <button class="std-btn white marking-btn"  name="no-transits-button">No Transits</button>
 
         <!--<button class="std-btn yellow" name="finished-feedback">Next</button>-->        
       </div>
