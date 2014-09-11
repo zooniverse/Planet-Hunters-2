@@ -9,6 +9,7 @@ class CanvasGraph
     @showAxes    = true
     @ctx = @canvas.getContext('2d')
     @highlights = []
+    @pointSize = 4
 
     @dataLength = Math.min @data.x.length, @data.y.length
 
@@ -196,17 +197,21 @@ class CanvasGraph
 
   drawHighlights: ->
     sliderOffset = ( (@xMin) / (@xMax - @xMin) ) * ( @canvas.width-@leftPadding )
-
     for highlight in [ @highlights... ]
       for i in [0...@dataLength]
         if @data.x[i] >= highlight.xLeft and @data.x[i] <= highlight.xRight
           x = ((+@data.x[i]+@toDays(@leftPadding)-@xMin)/(@xMax-@xMin)) * (@canvas.width-@leftPadding)
           y = ((+@data.y[i]-@yMin)/(@yMax-@yMin)) * @canvas.height
           y = -y + @canvas.height # flip y-values
-          # @ctx.beginPath()
+          @ctx.beginPath()
           @ctx.fillStyle = "rgba(255, 0, 0, 1.0)" #"#fc4541"
+          @ctx.strokeStyle = "rgba(255, 0, 0, 1.0)" #"#fc4541"
+
           continue if x-sliderOffset < 60 # skip if overlap with y-axis
-          @ctx.fillRect(x - sliderOffset, y, 4, 4)
+          @ctx.arc(x-sliderOffset, y, @pointSize, 0, 2*Math.PI, false)
+          # @ctx.fill()
+          @ctx.stroke()
+          # @ctx.fillRect(x - sliderOffset, y, 4, 4)
 
   plotPoints: (xMin = @smallestX, xMax = @largestX, yMin = @smallestY, yMax = @largestY) ->
     @xMin = xMin
@@ -218,6 +223,8 @@ class CanvasGraph
     # get necessary values from classifier
     @sliderValue = +classifier.el.find('#ui-slider').val()
     
+    @drawHighlights()
+
     # draw points
     for i in [0...@dataLength]
       x = ((+@data.x[i]-xMin)/(xMax-xMin)) * (@canvas.width-@leftPadding)
@@ -225,9 +232,7 @@ class CanvasGraph
       y = ((+@data.y[i]-yMin)/(yMax-yMin)) * @canvas.height
       y = -y + @canvas.height # flip y-values
       @ctx.fillStyle = "#fff" #fc4541"
-      @ctx.fillRect(x+@leftPadding,y,2,2)
-
-    @drawHighlights()
+      @ctx.fillRect( x-@pointSize/2+@leftPadding+1, y-@pointSize/2+1, 2, 2 )
 
     if $('#graph-container').hasClass('showing-prev-data')
       @showPrevMarks()
