@@ -566,6 +566,7 @@ class Classifier extends BaseController
   showSummaryScreen: ->
     @hideMarkingButtons()
     @nextSubjectButton.show()
+    @setGuestObsContent()
     @classifySummary.fadeIn(150)
     # @finishSubject()
 
