@@ -63,6 +63,14 @@
             <!--<p>Looks like you've found <span id="planet-num"></span> potential transits!</p>
             <p>Look to your right and see if anyone is talking about the star, or start a conversation of your own.</p>-->
             <p>Move on to the next subject when you're ready.</p>
+
+            <div class='guest_obs'>
+              <p>While you are classifying keep an eye out for unusual lightcurves and tag them with a hash tag on talk!</p>
+              <h2 class='guest_obs_title'></h2>
+              <img class='guest_obs_img'></img>
+              <p class='guest_obs_desc'></p>
+
+            </div>
           </div>
         </div>
         <div class="three-column">
@@ -176,4 +184,3 @@
   </div>
 </div>
 <div class="bg-overlay"></div>
-

@@ -14,6 +14,7 @@ supplementalTutorialSteps  = require '../lib/supplemental-tutorial-steps'
 {loadImage}                = require '../lib/utils'
 Modal                      = require '../lib/modal'
 Api                        = require 'zooniverse/lib/api'
+GuestObsContent            = require '../lib/guest_obs_content'
 
 $ = window.jQuery
 
@@ -39,7 +40,7 @@ class Classifier extends BaseController
     'button[name="alt-join-convo"]'     : 'altJoinConvoBtn'
     'textarea[name="talk-comment"]'     : 'talkComment'
     'textarea[name="alt-talk-comment"]' : 'altTalkComment'
-    '#spotters-guide'                   : 'spottersGuide'    
+    '#spotters-guide'                   : 'spottersGuide'
     '.examples img'                     : 'exampleImages'
 
   events:
@@ -558,7 +559,7 @@ class Classifier extends BaseController
     if @course.getPref() is "yes" and @course.count % @course.rate is 0 and @course.coursesAvailable() and @course.count isnt 0
       @notify 'Loading mini-course...'
       @course.launch()
-      
+
       # @course.displayLatest()
 
     # display supplemental tutorial
@@ -662,14 +663,25 @@ class Classifier extends BaseController
     if Subject.current?.tutorial?
       @Subject.next()
     else
+      @setGuestObsContent()
       @classifySummary.fadeIn(150)
       @nextSubjectButton.show()
       @planetNum.html @canvasGraph.marks.all.length # number of marks
       # @noTransitsButton.hide()
+
+
       @finishedMarkingButton.hide()
 
     # reset zoom parameters
     @zoomReset()
+
+  setGuestObsContent:=>
+    console.log GuestObsContent
+    i = Math.floor(Math.random()*GuestObsContent.length)
+    cont = GuestObsContent[i]
+    $(".guest_obs .guest_obs_title").html(cont.title)
+    $(".guest_obs .guest_obs_desc").html(cont.description)
+    $(".guest_obs .guest_obs_img").attr("src",cont.example)
 
   onClickJoinConvo: ->
     # @joinConvoBtn.hide().siblings().show()
