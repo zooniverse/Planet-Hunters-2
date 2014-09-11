@@ -507,10 +507,29 @@ class Classifier extends BaseController
       @finishedMarkingButton.hide()
       @noTransitsButton.show()
 
+  hideMarkingButtons: ->
+    @noTransitsButton.hide()
+    @finishedMarkingButton.hide()
+    @nextSubjectButton.hide()
+    @continueButton.hide()
+
   onClickNoTransits: ->
     # console.log 'onClickNoTransits()'
     # giveFeedback()
-    @finishSubject()
+
+    if @simulationsPresent()
+      console.log 'SIMULATIONS PRESENT'
+      @displayKnownTransits()
+    else
+      console.log 'NO SIMULATIONS PRESENT'
+      @showSummaryScreen()
+
+
+  showSummaryScreen: ->
+    @hideMarkingButtons()
+    @nextSubjectButton.show()
+    @classifySummary.fadeIn(150)
+    # @finishSubject()
 
   onClickFinishedMarking: ->
     console.log 'onClickFinishedMarking(): '
@@ -525,7 +544,9 @@ class Classifier extends BaseController
 
   onClickContinueButton: ->
     console.log 'onClickContinueButton(): '
-    @finishSubject()
+
+    @hideMarkingButtons()
+    @showSummaryScreen()
 
   giveFeedback: ->
     # console.log 'giveFeedback()'
@@ -586,9 +607,28 @@ class Classifier extends BaseController
     return lengthC/(lengthA+lengthB-lengthC)
 
   displayKnownTransits: ->
-    return unless @known_transits.length > 0
+    return unless @simulationsPresent()
+    
+    @hideMarkingButtons()
+    @continueButton.show()
+
     for transit in @known_transits
       @canvasGraph.highlightCurve(transit[0],transit[1])
+
+    @course.showPrompt()
+    @course.prompt_el.find('#course-yes-container').hide()
+    @course.prompt_el.find('#course-no').hide()
+    @course.prompt_el.find('#course-never').hide()
+    @course.prompt_el.find('#course-message').html "This light curve contains at least one simulated transit, highlighted in red."
+ 
+    return
+
+
+  simulationsPresent: ->
+    if @known_transits.length > 0
+      return true
+    else 
+      return false
 
   finishSubject: ->
     # console.log 'finishSubject()'
@@ -602,43 +642,44 @@ class Classifier extends BaseController
     tutorials = ['initialTutorial', 'supplementalTutorial']
     @["#{ tutorial }"].end() for tutorial in tutorials
 
-    if @known_transits.length > 0
-      console.log 'doin my thang'
-      @course.showPrompt()
-      @course.prompt_el.find('#course-yes-container').hide()
-      @course.prompt_el.find('#course-no').hide()
-      @course.prompt_el.find('#course-never').hide()
+    # if @known_transits.length > 0
+    #   console.log 'doin my thang'
+    #   @course.showPrompt()
+    #   @course.prompt_el.find('#course-yes-container').hide()
+    #   @course.prompt_el.find('#course-no').hide()
+    #   @course.prompt_el.find('#course-never').hide()
 
-      @course.prompt_el.find('#course-message').html "This light curve contains at least one simulated transit, highlighted in red."
-      @displayKnownTransits()
+    #   @course.prompt_el.find('#course-message').html "This light curve contains at least one simulated transit, highlighted in red."
+    #   @displayKnownTransits()
 
-      @continueButton.show()
+    #   @continueButton.show()
 
+    # else
+    @finishedFeedbackButton.hide()
+
+    # re-enable zoom button (after feedback)
+    @el.find('#zoom-button').attr('disabled',false)
+
+    # show summary
+    @el.find('.do-you-see-a-transit').fadeOut()
+    @el.find('.star-id').fadeIn()
+
+    # console.log "tutorial subject at end ", @Subject()
+
+    if Subject.current?.tutorial?
+      @Subject.next()
     else
-      @finishedFeedbackButton.hide()
+      @classifySummary.fadeIn(150)
+      @nextSubjectButton.show()
+      @planetNum.html @canvasGraph.marks.all.length # number of marks
+      # @noTransitsButton.hide()
+      @finishedMarkingButton.hide()
 
-      # re-enable zoom button (after feedback)
-      @el.find('#zoom-button').attr('disabled',false)
-
-      # show summary
-      @el.find('.do-you-see-a-transit').fadeOut()
-      @el.find('.star-id').fadeIn()
-
-      # console.log "tutorial subject at end ", @Subject()
-
-      if Subject.current?.tutorial?
-        @Subject.next()
-      else
-        @classifySummary.fadeIn(150)
-        @nextSubjectButton.show()
-        @planetNum.html @canvasGraph.marks.all.length # number of marks
-        # @noTransitsButton.hide()
-        @finishedMarkingButton.hide()
-
-      # reset zoom parameters
-      @zoomReset()
+    # reset zoom parameters
+    @zoomReset()
 
   onClickNextSubject: ->
+    @course.prompt_el.hide()
     # console.log 'onClickNextSubject()'
     # @noTransitsButton.show()
     @classifySummary.fadeOut(150)
