@@ -51,7 +51,7 @@ class Classifier extends BaseController
     'click button[name="no-transits-button"]' : 'onClickNoTransits'
     'click button[name="next-subject"]'       : 'onClickNextSubject'
     'click button[name="finished-marking"]'   : 'onClickFinishedMarking'
-    'click button[name="finished-feedback"]'  : 'onClickFinishedFeedback'
+    # 'click button[name="finished-feedback"]'  : 'onClickFinishedFeedback'
     'slide #ui-slider'                        : 'onChangeScaleSlider'
     'click button[name="join-convo"]'         : 'onClickJoinConvo'
     'click button[name="alt-join-convo"]'     : 'onClickAltJoinConvo'
@@ -61,7 +61,7 @@ class Classifier extends BaseController
     'change #course-interval-sup-tut'         : 'onChangeCourseIntervalViaSupTut'
     'change input[name="mini-course-option"]' : 'onChangeMiniCourseOption'
     'change input[name="course-opt-out"]'     : 'onChangeCourseOptOut'
-    'click button[name="continue-button"]'    : 'onClickFinishedMarking'
+    'click button[name="continue-button"]'    : 'onClickContinueButton'
 
     'click .arrow.left'  : 'onClickCourseBack'
     'click .arrow.right' : 'onClickCourseForward'
@@ -513,6 +513,7 @@ class Classifier extends BaseController
     @finishSubject()
 
   onClickFinishedMarking: ->
+    console.log 'onClickFinishedMarking(): '
 
     @finishSubject() # TODO: remove this line when displaying known lightcurves
 
@@ -521,6 +522,10 @@ class Classifier extends BaseController
     # @finishedMarkingButton.hide()
     # @el.find('#zoom-button').attr('disabled',true)
     # @giveFeedback()
+
+  onClickContinueButton: ->
+    console.log 'onClickContinueButton(): '
+    @finishSubject()
 
   giveFeedback: ->
     # console.log 'giveFeedback()'
@@ -540,15 +545,15 @@ class Classifier extends BaseController
     @notify('<a style="color: rgb(20,100,200)">Here are the locations of known transits and/or simulalations...</a>')
     @el.find(".mark").fadeOut(1000)
 
-  onClickFinishedFeedback: ->
-    console.log 'onClickFinishedFeedback()'
-    # @finishedFeedbackButton.hide()
+  # onClickFinishedFeedback: ->
+  #   console.log 'onClickFinishedFeedback()'
+  #   # @finishedFeedbackButton.hide()
 
-    # keep drawing highlighted points while displaying previous data
-    # TODO: fix, kindda cluegy
-    $("#graph-container").removeClass('showing-prev-data')
+  #   # keep drawing highlighted points while displaying previous data
+  #   # TODO: fix, kindda cluegy
+  #   $("#graph-container").removeClass('showing-prev-data')
 
-    @finishSubject()
+  #   @finishSubject()
 
   evaluateMarks: ->
     return unless User.current?
@@ -587,6 +592,16 @@ class Classifier extends BaseController
 
   finishSubject: ->
     # console.log 'finishSubject()'
+
+    # disable buttons until next lightcurve is loaded
+    @el.find('#no-transits-button').hide() #prop('disabled',true)
+    @el.find('#finished-marking').hide() #prop('disabled',true)
+    @el.find('#finished-feedback').hide() #prop('disabled',true)
+
+    # Hide tutorials
+    tutorials = ['initialTutorial', 'supplementalTutorial']
+    @["#{ tutorial }"].end() for tutorial in tutorials
+
     if @known_transits.length > 0
       console.log 'doin my thang'
       @course.showPrompt()
@@ -604,15 +619,6 @@ class Classifier extends BaseController
 
       # re-enable zoom button (after feedback)
       @el.find('#zoom-button').attr('disabled',false)
-
-      # disable buttons until next lightcurve is loaded
-      @el.find('#no-transits-button').hide() #prop('disabled',true)
-      @el.find('#finished-marking').hide() #prop('disabled',true)
-      @el.find('#finished-feedback').hide() #prop('disabled',true)
-
-      # Hide tutorials
-      tutorials = ['initialTutorial', 'supplementalTutorial']
-      @["#{ tutorial }"].end() for tutorial in tutorials
 
       # show summary
       @el.find('.do-you-see-a-transit').fadeOut()
@@ -716,6 +722,7 @@ class Classifier extends BaseController
         xMinGlobal: mark.dataXMinGlobal
         xMaxGlobal: mark.dataXMaxGlobal
         score: mark.score
+      console.log 'MARK SCORE: ', mark.score # DEBUG CODE
 
     # dump all recorded click events to classification
     # @classification.set 'recordedClickEvents', [@recordedClickEvents...]
