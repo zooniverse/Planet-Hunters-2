@@ -32,7 +32,7 @@ class CanvasGraph
   enableMarking: ->
     # console.log 'CANVAS GRAPH: enableMarking()'
     @markingDisabled = false
-    
+
     # TODO: should this be in the constructor?
     @marks = new Marks
     window.marks = @marks
@@ -44,7 +44,7 @@ class CanvasGraph
     # debugger
     # console.log 'onMouseDown()'
     xClick = e.pageX - e.target.getBoundingClientRect().left - window.scrollX
-    return if xClick < 80 # display line instead 
+    return if xClick < 80 # display line instead
     @addMarkToGraph(e)
 
   onMouseMove: (e) =>
@@ -64,12 +64,12 @@ class CanvasGraph
       # draw triangle
       w = 10
       s = 2*w*Math.tan(@leftPadding)
-      
+
       @ctx.beginPath()
       @ctx.moveTo(w,yClick)
       @ctx.lineTo(0,yClick+s)
       @ctx.lineTo(0,yClick-s)
-      @ctx.fillStyle = '#FC4542'      
+      @ctx.fillStyle = '#FC4542'
       @ctx.fill()
 
       @ctx.beginPath()
@@ -85,7 +85,7 @@ class CanvasGraph
       @ctx.font = '10pt Arial'
       @ctx.textAlign = 'left'
       @ctx.fillText( @toDataYCoord((-yClick+@canvas.height)).toFixed(4), 15, yClick+5 ) # don't forget to flip y-axis values
-    
+
   processLightcurve: (removeOutliers=true) ->
 
     @removeOutliers = removeOutliers
@@ -115,7 +115,7 @@ class CanvasGraph
     @largestY = Math.max  @data.y...
 
     @plotPoints()
-    
+
     return
 
   toggleOutliers: ->
@@ -131,16 +131,16 @@ class CanvasGraph
     for y, i in [ data... ]
       y_new[i] = (y-1)/(std)
       y_new[i] = y/(mean)
-     
+
     return y_new
 
-  processOutliers: (data, nsigma) -> 
+  processOutliers: (data, nsigma) ->
     data_new = {}
     data_new.x = []
     data_new.y = []
     mean = @mean(data.y)
     std = @std(data.y)
-    
+
     for y, i in [data.y...]
       continue if (y - mean) > (nsigma * std) # skip outlier
       data_new.x.push data.x[i]
@@ -165,7 +165,7 @@ class CanvasGraph
     # console.log 'showFakePrevMarks()'
     @zoomOut()
     maxMarks = 5
-    minMarks = 1 
+    minMarks = 1
     howMany = Math.floor( Math.random() * (maxMarks-minMarks) + minMarks )
     # console.log 'randomly generating ', howMany, ' (fake) marks' # DEBUG
     @generateFakePrevMarks( howMany )
@@ -217,7 +217,7 @@ class CanvasGraph
 
     # get necessary values from classifier
     @sliderValue = +classifier.el.find('#ui-slider').val()
-    
+
     # draw points
     for i in [0...@dataLength]
       x = ((+@data.x[i]-xMin)/(xMax-xMin)) * (@canvas.width-@leftPadding)
@@ -248,12 +248,12 @@ class CanvasGraph
       @sliderValue = 0
     else
       @sliderValue = +classifier.el.find('#ui-slider').val()
-    
+
     # draw marks
     if @marks
       for mark in @marks.all
-        scaledMin = ((parseFloat(mark.dataXMinRel) + parseFloat(@toDays(@leftPadding)) - parseFloat(xMin) - parseFloat(@sliderValue) ) / (parseFloat(xMax) - parseFloat(xMin)) ) * parseFloat(@canvas.width-@leftPadding)
-        scaledMax = ((parseFloat(mark.dataXMaxRel) + parseFloat(@toDays(@leftPadding)) - parseFloat(xMin) - parseFloat(@sliderValue) ) / (parseFloat(xMax) - parseFloat(xMin)) ) * parseFloat(@canvas.width-@leftPadding)
+        scaledMin = ( mark.dataXMinRel - xMin ) / (xMax - xMin) * (@canvas.width-@leftPadding) + @leftPadding
+        scaledMax = ( mark.dataXMaxRel - xMin ) / (xMax - xMin) * (@canvas.width-@leftPadding) + @leftPadding
         mark.element.style.width = (parseFloat(scaledMax)-parseFloat(scaledMin)) + "px"
         mark.element.style.left = parseFloat(scaledMin) + "px"
         mark.save(scaledMin, scaledMax)
@@ -268,7 +268,7 @@ class CanvasGraph
 
     # update slider position
     classifier.el.find('#ui-slider').val(@graphCenter-@zoomRanges[@zoomLevel]/2)
-    
+
     @plotPoints(@smallestX, @largestX)
 
     [cMin, cMax] = [@xMin, @xMax]
@@ -282,13 +282,13 @@ class CanvasGraph
     # # TODO: broken (a major pain in my ass)
     # step = 1.5
     # zoom = setInterval (=>
-      
+
     #   # gradually expand zooming bounds
     #   cMin -= step
     #   if cMin < @smallestX then cMin = @smallestX
     #   cMax += step
     #   if cMax > @largestX then cMax = @largestX
-      
+
     #   # console.log "[cMin,cMax] = [#{cMin},#{cMax}]"
     #   @plotPoints(cMin,cMax)
 
@@ -296,7 +296,7 @@ class CanvasGraph
     #     clearInterval zoom
     #     classifier.el.find('#graph').removeClass('is-zooming')
     #     @plotPoints(@smallestX, @largestX)
-    #     unless callback is undefined 
+    #     unless callback is undefined
     #       callback.apply()
     #       classifier.el.find("#zoom-button").removeClass("zoomed")
     #       classifier.el.find("#zoom-button").removeClass("allowZoomOut") # for last zoom level
@@ -400,7 +400,7 @@ class CanvasGraph
       continue if i is 0 # skip first value
 
       # draw ticks (bottom)
-      @ctx.beginPath() 
+      @ctx.beginPath()
       @ctx.moveTo( @toPixels(tick)+@leftPadding, @canvas.height )
       if i % majorTickInterval is 0
         @ctx.lineTo( @toPixels(tick)+@leftPadding, @canvas.height - tickMajorLength ) # major tick
@@ -426,7 +426,7 @@ class CanvasGraph
       @ctx.fillText( 'DAYS', textSpacing+10+@leftPadding, @canvas.height - textSpacing )
 
       # draw ticks (top)
-      @ctx.beginPath() 
+      @ctx.beginPath()
       @ctx.moveTo( @toPixels(tick)+@leftPadding, 0 )
       if i % majorTickInterval is 0
         @ctx.lineTo( @toPixels(tick)+@leftPadding, 0 + tickMajorLength ) # major tick
@@ -439,7 +439,7 @@ class CanvasGraph
       # top numbers
       if (i % 4) is 0 # zoomed out
         @ctx.fillText( (tick + @originalMin).toFixed(2), @toPixels(tick)+@leftPadding, 0 + textSpacing+10 )
-      
+
   drawYTickMarks: (yMin, yMax) ->
     # generate intervals
     yTicks = []
@@ -453,7 +453,7 @@ class CanvasGraph
     for stepFactor in [-numStepsDown..numStepsUp]
       tickValue = 1+stepFactor*yStep
       unless tickValue >= yMax or tickValue <=yMin
-        if tickValue is 1.0 
+        if tickValue is 1.0
           if (tickIdx%2 is 0)
             meanTickIndexIsEven = true
         yTicks.push tickValue
@@ -467,7 +467,7 @@ class CanvasGraph
     tickMinorLength = 5
     tickMajorLength = 10
     tickWidth = 1
-    tickColor = '#323232' #'rgba(200,20,20,1)' 
+    tickColor = '#323232' #'rgba(200,20,20,1)'
     textColor = '#323232'
     textSpacing = 15
     majorTickInterval = 2
@@ -488,7 +488,7 @@ class CanvasGraph
       @ctx.font = '10pt Arial'
       @ctx.textAlign = 'left'
       @ctx.fillStyle = textColor
-      @ctx.beginPath() 
+      @ctx.beginPath()
       @ctx.moveTo( 0, tickPos )
 
       # make sure 1.00 (mean) tickmark is labeled
@@ -513,7 +513,7 @@ class CanvasGraph
 
   clearCanvas: -> @ctx.clearRect(0,0,@canvas.width, @canvas.height)
 
-  toPixels: (dataPoint, printValue) -> 
+  toPixels: (dataPoint, printValue) ->
     pixel = ( (parseFloat(dataPoint) - parseFloat(@xMin)) / (parseFloat(@xMax) - parseFloat(@xMin)) ) * \
       ( parseFloat(@canvas.width) - parseFloat(@leftPadding) )
     if printValue
@@ -546,7 +546,7 @@ class CanvasGraph
   shakeGraph: ->
     graph = $('#graph-container')
     return if graph.hasClass('shaking')
-    graph.addClass('shaking') 
+    graph.addClass('shaking')
     graph.effect( "shake", {times:4, distance: 2}, 700, =>
         graph.removeClass('shaking')
       ) # eventually remove jquery ui dependency?
