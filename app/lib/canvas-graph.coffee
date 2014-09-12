@@ -45,7 +45,7 @@ class CanvasGraph
     # debugger
     # console.log 'onMouseDown()'
     xClick = e.pageX - e.target.getBoundingClientRect().left - window.scrollX
-    return if xClick < 80 # display line instead
+    return if xClick < @leftPadding # display line instead
     @addMarkToGraph(e)
 
   onMouseMove: (e) =>
