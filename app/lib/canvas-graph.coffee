@@ -49,7 +49,8 @@ class CanvasGraph
     @addMarkToGraph(e)
 
   onMouseMove: (e) =>
-    return # DEBUG ONLY: KEEP UNTIL THIS IS FIXED
+    # return # DEBUG ONLY: KEEP UNTIL THIS IS FIXED
+    console.log 'HAS CLASS: ', classifier.el.find('#graph').hasClass('is-zooming')
     return if @markingDisabled
     return if classifier.el.find('#graph').hasClass('is-zooming')
     @sliderValue = +classifier.el.find("#ui-slider").val()
@@ -58,7 +59,7 @@ class CanvasGraph
 
     # @plotPoints()
     # @zoomToCenter(@graphCenter)
-    console.log "PLOT POINTS [#{@sliderValue},#{@sliderValue+@zoomRanges[@zoomLevel]}]"
+    # console.log "PLOT POINTS [#{@sliderValue},#{@sliderValue+@zoomRanges[@zoomLevel]}]"
     @plotPoints(@sliderValue, @sliderValue+@zoomRanges[@zoomLevel])
 
     if xClick < @leftPadding
@@ -268,7 +269,7 @@ class CanvasGraph
     return
 
   zoomOut: (callback) ->
-    # classifier.el.find('#graph').addClass('is-zooming')
+    classifier.el.find('#graph').addClass('is-zooming')
 
     @zoomLevel = 0
 
@@ -306,12 +307,15 @@ class CanvasGraph
           callback.apply()
           classifier.el.find("#zoom-button").removeClass("zoomed")
           classifier.el.find("#zoom-button").removeClass("allowZoomOut") # for last zoom level
+          classifier.el.find('#graph').removeClass('is-zooming')
           classifier.el.find('#ui-slider').attr('disabled',true)
           classifier.el.find('.noUi-handle').fadeOut(150)
     ), 30
     return
 
   zoomToCenter: (center) ->
+    classifier.el.find('#graph').addClass('is-zooming')
+
     console.log 'zoomToCenter, CENTER = ', center
     # classifier.el.find('#graph').addClass('is-zooming')
     boundL = center - @zoomRanges[@zoomLevel]/2
