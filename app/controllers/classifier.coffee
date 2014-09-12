@@ -784,28 +784,28 @@ class Classifier extends BaseController
           'min': @canvasGraph.smallestX,
           'max': @canvasGraph.largestX - @canvasGraph.zoomRanges[@canvasGraph.zoomLevel]
       , true
-      1
-      # update attributes/properties
-      @el.find('#ui-slider').removeAttr('disabled')
-      @el.find("#zoom-button").addClass("zoomed")
-      if @canvasGraph.zoomLevel is 2
-        @el.find("#zoom-button").addClass("allowZoomOut")
-      else
-        @el.find("#zoom-button").removeClass("allowZoomOut")
+
+    @updateZoomButton(@canvasGraph.zoomLevel)
 
     console.log 'CENTER POINT (onClickZoom): ', @canvasGraph.graphCenter
     @showZoomMessage(@magnification[@canvasGraph.zoomLevel])
     @recordedClickEvents.push { event: 'clickedZoomLevel'+@canvasGraph.zoomLevel, timestamp: (new Date).toUTCString() }
 
+  updateZoomButton: (zoomLevel) ->
+    if zoomLevel is 2
+      @el.find('#ui-slider').removeAttr('disabled')
+      @el.find("#zoom-button").addClass("zoomed")
+      @el.find("#zoom-button").addClass("allowZoomOut")
+    else if zoomLevel is 1
+      @el.find('#ui-slider').removeAttr('disabled')
+      @el.find("#zoom-button").addClass("zoomed")
+      @el.find("#zoom-button").removeClass("allowZoomOut")
+    else
+      @el.find('#ui-slider').attr('disabled', true)
+      @el.find("#zoom-button").removeClass("zoomed")
+      
   zoomReset: =>
     @canvasGraph.zoomOut()
-
-    # update view
-    @el.find('#ui-slider').attr('disabled',true)
-    @el.find(".noUi-handle").fadeOut(150)
-    @el.find("#zoom-button").removeClass("zoomed")
-    @el.find("#zoom-button").removeClass("allowZoomOut")
-    @el.find("#toggle-fav").removeClass("toggled")
     @isZoomed = false
 
   showZoomMessage: (message) =>
