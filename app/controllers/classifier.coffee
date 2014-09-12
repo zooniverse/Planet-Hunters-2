@@ -806,6 +806,7 @@ class Classifier extends BaseController
   onClickSubmitTalk: ->
     return if @talkComment.val() is "" # reject empty comments
     @appendComment(@talkComment, @commentsContainer)
+    @submitComment()
     @talkComment.val('')
 
   appendComment: (comment, container) ->
@@ -819,14 +820,22 @@ class Classifier extends BaseController
   onCommentsFetch: ({discussion}) =>
     @comments = discussion.comments
 
+    if @comments.length <= 0
+      @commentsContainer.append("""
+        <div class="formatted-comment">
+          <p>See anything interesting? Be the first to discuss this light curve!</p>
+        </div>
+      """)
+
+
     for comment in @comments
       date = new Date comment.created_at
       @commentsContainer.append("""
         <div class="formatted-comment">
           <p>#{comment.body}</p>
-          <p>by <strong>#{comment.user_name}</strong> (#{date.toDateString()})</p>
+          <p class="comment-by">by <b>#{comment.user_name}</b>, #{date.toDateString()}</p>
         </div>
-      """).animate({ scrollTop: container[0].scrollHeight}, 1000)
+      """)#.animate({ scrollTop: container[0].scrollHeight}, 1000)
 
     #   comment.timeago = $.timeago comment.updated_at
     #   comment.date = DateWidget.formatDate 'd MM yy', new Date comment.updated_at
@@ -845,6 +854,36 @@ class Classifier extends BaseController
     @timeout = setTimeout =>
       @fetchComments()
     , @refresh * 1000 if @refresh?
+
+
+  validateComment: (comment)=>
+    is_valid = comment.length > 0 && comment.length <= 140
+    
+  submitComment: =>
+    comment = @talkComment.val()
+    is_valid = @validateComment comment
+    return unless is_valid
+    request = Api.current.post "https://dev.zooniverse.org/projects/planet_hunter/talk/subjects/APH000001x/comments", comment: comment
+    
+    # request = Api.current.post "/projects/#{Api.current.project}/talk/subjects/#{Subject.current?.zooniverse_id}/comments", comment: comment
+
+    # time = new Date
+    
+    # @comments.unshift
+    #   user_name: User.current.name
+    #   user_zooniverse_id: User.current.zooniverse_id
+    #   body: comment
+    #   timeago: $.timeago time
+    #   date: DateWidget.formatDate 'd MM yy', time
+    
+    # @render()
+    
+    # clearTimeout @timeout if @timeout?
+    
+    # @timeout = setTimeout => 
+    #   @fetchComments()
+    # , @refresh * 1000 if @refresh?
+  
 
   #
   # END TALK COMMENT METHODS
