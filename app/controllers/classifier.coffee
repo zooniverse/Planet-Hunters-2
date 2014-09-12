@@ -820,10 +820,11 @@ class Classifier extends BaseController
     @comments = discussion.comments
 
     for comment in @comments
+      date = new Date comment.created_at
       @commentsContainer.append("""
         <div class="formatted-comment">
           <p>#{comment.body}</p>
-          <p>by <strong>#{comment.user_name}</strong> #{comment.created_at}</p>
+          <p>by <strong>#{comment.user_name}</strong> (#{date.toDateString()})</p>
         </div>
       """).animate({ scrollTop: container[0].scrollHeight}, 1000)
 
