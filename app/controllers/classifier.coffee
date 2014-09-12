@@ -29,7 +29,7 @@ class Classifier extends BaseController
     '#tutorial'                         : 'tutorialButton'
     'numbers-container'                 : 'numbersContainer'
     '#classify-summary'                 : 'classifySummary'
-    '#comments'                         : 'comments'
+    '#comments'                         : 'commentsContainer'
     '#planet-num'                       : 'planetNum'
     '#alt-comments'                     : 'altComments'
     'button[name="no-transits-button"]' : 'noTransitsButton'
@@ -732,22 +732,6 @@ class Classifier extends BaseController
     $(".guest_obs .guest_obs_desc").html(cont.description)
     $(".guest_obs .guest_obs_img").attr("src",cont.example)
 
-  onClickJoinConvo: ->
-    @joinConvoBtn.hide().siblings().show()
-
-  onClickSubmitTalk: ->
-    console.log "SEND THIS TO MAIN TALK DISCUSSION", @talkComment.val()
-    @appendComment(@talkComment, @comments)
-
-  appendComment: (comment, container) ->
-    container.append("""
-      <div class="formatted-comment">
-        <p>#{comment.val()}</p>
-        <p>by <strong>#{'currentUser'}</strong> 0 minutes ago</p>
-      </div>
-    """).animate({ scrollTop: container[0].scrollHeight}, 1000)
-    @resetTalkComment comment
-
   onChangeScaleSlider: ->
     @canvasGraph.sliderValue = +@el.find("#ui-slider").val()
     @canvasGraph.plotPoints( @canvasGraph.sliderValue, @canvasGraph.sliderValue + @canvasGraph.zoomRanges[@canvasGraph.zoomLevel] )
@@ -811,18 +795,37 @@ class Classifier extends BaseController
   showZoomMessage: (message) =>
     @el.find('#zoom-notification').html(message).fadeIn(100).delay(1000).fadeOut()
 
+
+  #
+  # BEGIN TALK COMMENT METHODS
+  #
+
+  onClickJoinConvo: ->
+    @joinConvoBtn.hide().siblings().show()
+
+  onClickSubmitTalk: ->
+    return if @talkComment.val() is "" # reject empty comments
+    @appendComment(@talkComment, @commentsContainer)
+    @talkComment.val('')
+
+  appendComment: (comment, container) ->
+    container.append("""
+      <div class="formatted-comment">
+        <p>#{comment.val()}</p>
+        <p>by <strong>You</strong></p>
+      </div>
+    """).animate({ scrollTop: container[0].scrollHeight}, 1000)
+
   onCommentsFetch: ({discussion}) =>
     @comments = discussion.comments
 
-    commentsContainer = @el.find '#comments'
     for comment in @comments
-      commentsContainer.append """
-      <div class="formatted-comment">
-        <p>#{comment.body}</p>
-        <p>by <strong>#{comment.user_name}</strong> #{comment.created_at}</p>
-      </div>
-
-      """
+      @commentsContainer.append("""
+        <div class="formatted-comment">
+          <p>#{comment.body}</p>
+          <p>by <strong>#{comment.user_name}</strong> #{comment.created_at}</p>
+        </div>
+      """).animate({ scrollTop: container[0].scrollHeight}, 1000)
 
     #   comment.timeago = $.timeago comment.updated_at
     #   comment.date = DateWidget.formatDate 'd MM yy', new Date comment.updated_at
@@ -841,5 +844,9 @@ class Classifier extends BaseController
     @timeout = setTimeout =>
       @fetchComments()
     , @refresh * 1000 if @refresh?
+
+  #
+  # END TALK COMMENT METHODS
+  #
 
 module.exports = Classifier
