@@ -22,14 +22,19 @@ class ViewLightcurve extends BaseController
 
     console.log 'star_id: ', star_id
     console.log 'quarter: ', quarter
-    console.log "https://dev.zooniverse.org/projects/planet_hunter/subjects/?star_id=#{star_id}&quarter=#{quarter}"
 
-    $.getJSON "https://dev.zooniverse.org/projects/planet_hunter/subjects/#{star_id}", (foo) =>
-      location = foo.location["#{quarter}"]
-      # console.log 'location: ', location
+    if star_id is "" or quarter is ""
+      @el.find('.content').append '<p style="color: #fc4541; margin: 20px;">You must enter both the STAR_ID and QUARTER</p>'
+      return
 
-      if location is undefined
-        @el.find('.content').append '<p>LIGHT CURVE NOT FOUND</p>'
+    # console.log "https://dev.zooniverse.org/projects/planet_hunter/subjects/?star_id=#{star_id}&quarter=#{quarter}"
+
+    $.getJSON "https://dev.zooniverse.org/projects/planet_hunter/subjects/#{star_id}", (subjectJson) =>
+
+      location = subjectJson.location["#{quarter}"]
+
+      if location is undefined or location is ""
+        @el.find('.content').append '<p style="color: #fc4541; margin: 20px;">LIGHT CURVE NOT FOUND</p>'
         return
 
       $.getJSON location, (data) =>
@@ -37,7 +42,7 @@ class ViewLightcurve extends BaseController
         newCanvas = document.createElement("canvas")
         newCanvas.width = 1050
         newCanvas.height = 158
-        @el.find('.content').append newCanvas
+        # @el.find('.content').append newCanvas
 
         newGraph = new CanvasGraph newCanvas, data
         newGraph.showAxes = false

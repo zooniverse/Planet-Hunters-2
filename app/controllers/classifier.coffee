@@ -381,7 +381,6 @@ class Classifier extends BaseController
 
     # read json data
     $.getJSON jsonFile, (data) =>
-      console.log 'data: ', data
       if data.metadata.known_transits
         @known_transits = data.metadata.known_transits
 
@@ -848,7 +847,6 @@ class Classifier extends BaseController
     commentsContainer = @el.find '#comments'
     commentsContainer.html "" # delete existing comments
     # request = Api.current.get "/projects/#{Api.current.project}/talk/subjects/#{Subject.current?.zooniverse_id}"
-    console.log "requesting comments: /projects/#{Api.current.project}/talk/subjects/#{Subject.current?.zooniverse_id}"
     request = Api.current.get "https://dev.zooniverse.org/projects/planet_hunter/talk/subjects/APH000001x"
     request.done @onCommentsFetch
 

@@ -46,8 +46,7 @@ class CanvasGraph
     @addMarkToGraph(e)
 
   onMouseMove: (e) =>
-    return # DEBUG ONLY: KEEP UNTIL THIS IS FIXED
-    console.log 'HAS CLASS: ', classifier.el.find('#graph').hasClass('is-zooming')
+    # return # DEBUG ONLY: KEEP UNTIL THIS IS FIXED
     return if @markingDisabled
     return if classifier.el.find('#graph').hasClass('is-zooming')
     @sliderValue = +classifier.el.find("#ui-slider").val()
