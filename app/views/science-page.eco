@@ -8,7 +8,7 @@
       <button name="faq">FAQ</button>
       <button name="transits">Transits</button>
       <button name="your-task">Your Task</button>
-      <button name="origin">Origin of the light curves</button>
+      <button name="origin">Light Curves</button>
       <button name="simulations">Simulations</button>
       <button onclick="window.location='https://www.zooniverse.org/publications?project=planethunters'">Discoveries &amp; Papers</button>
     </nav>
