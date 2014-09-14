@@ -375,8 +375,8 @@ class CanvasGraph
     tickMinorLength = 5
     tickMajorLength = 10
     tickWidth = 1
-    tickColor = '#323232'
-    textColor = '#323232'
+    tickColor = '#585858'
+    textColor = '#585858'
     textSpacing = 15
 
     # determine intervals
@@ -478,8 +478,8 @@ class CanvasGraph
     tickMinorLength = 5
     tickMajorLength = 10
     tickWidth = 1
-    tickColor = '#323232' #'rgba(200,20,20,1)'
-    textColor = '#323232'
+    tickColor = '#585858' #'rgba(200,20,20,1)'
+    textColor = '#585858'
     textSpacing = 15
     majorTickInterval = 2
     minorTickInterval = 1
