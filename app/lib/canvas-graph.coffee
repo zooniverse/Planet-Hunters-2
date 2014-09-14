@@ -1,9 +1,6 @@
 Mark = require './mark'
 
 class CanvasGraph
-
-  DEBUG = false
-
   constructor: (@canvas, @data) ->
     @leftPadding = 60
     @showAxes    = true
