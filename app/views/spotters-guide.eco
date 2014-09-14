@@ -5,12 +5,19 @@
 
     <h2 class="divider">Transits</h2>
     
-    <h3 class="uppercase">Single Transit</h3>
+    <h3 class="uppercase">Long Period Planet/Single Transit</h3>
+    <h3>One transit visible in the light curve</h3>
     <div class="examples">
       <img class="example-image" src="images/guide/singletransit1.png" />
     </div>
 
-    <h3 class="uppercase">Multiple Transits</h3>
+    <h3 class="uppercase">Short Period Planet/Many Transits</h3>
+    <h3>Many transits from the same planet visible</h3>
+    <div class="examples">
+      <img class="example-image" src="images/guide/manytransits1.png" />
+      <img class="example-image" src="images/guide/manytransits2.png" />
+    </div>
+    <h3 class="uppercase">Multi-planet System</h3>
     <h3>Transits from more than one planet visible</h3>
     
     <div class="examples">
@@ -18,7 +25,7 @@
       <img class="example-image" src="images/guide/multitransits2.png" />
     </div>
 
-    <h3 class="uppercase">More Example Planet Candidates</h3>
+    <h3 class="uppercase">More Example Planet Transits</h3>
 
     <div class="examples">
       <img class="example-image" src="images/guide/more_examples1.png" />
@@ -45,7 +52,7 @@
       <img class="example-image" src="images/guide/gaps2.png" />
     </div>
 
-    <h3 class="uppercase">Pulsator</h3>
+    <h3 class="uppercase">Pulsating Stars</h3>
 
     <div class="examples">
       <img class="example-image" src="images/guide/pulsator1.png" />
