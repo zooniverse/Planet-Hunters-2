@@ -3,19 +3,26 @@
 </div>
 
 <div class="secondary-white">
+
+  <div class="secondary-content">
+    <nav class="sub-nav-education">
+      <button name="classroom">In the Classroom</button>
+      <button name="resources">Resources</button>
+      </nav>
+  </div>
+
   <div class="secondary-content">
     <div class="left-column">
-      <div class="content">
+      <div class="content sub-nav-education-classroom">
         <h1>In the Classroom</h1>
         <h2>Can I use Planet Hunters 2 in the classroom?</h2>
         <p>Yes! Planet Hunters, like all the Zooniverse projects, offers students a unique opportunity to explore real scientific data while making a contribution to cutting edge research! We would like to stress that as each image is marked by multiple volunteers, it really does not matter if your students don't mark all the features correctly.  The task itself is simple enough that we believe most people can take part and make a worthwhile contribution regardless of age.</p>
       </div>
 
       <!-- BEGIN CONTENT -->
-      <div class="content">
+      <div class="content sub-nav-education-resources">
 
         <h1>Resources</h1>
-        
         <h2>What resources are available for the classroom?</h2>
 
         <p>
