@@ -564,10 +564,13 @@ class Classifier extends BaseController
     @continueButton.hide()
 
   showSummaryScreen: ->
-    @hideMarkingButtons()
-    @nextSubjectButton.show()
-    @setGuestObsContent()
-    @classifySummary.fadeIn(150)
+    if @classification.subject.id is 'TUTORIAL_SUBJECT'
+      @onClickNextSubject()
+    else
+      @hideMarkingButtons()
+      @nextSubjectButton.show()
+      @setGuestObsContent()
+      @classifySummary.fadeIn(150)
     # @finishSubject()
 
   checkSupplementalTutorial: ->   
