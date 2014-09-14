@@ -824,7 +824,7 @@ class Classifier extends BaseController
     @comments = discussion.comments
 
     if @comments.length <= 0
-      @commentsContainer.append("""
+      @commentsContainer.prepend("""
         <div class="formatted-comment">
           <p>See anything interesting? Be the first to discuss this light curve!</p>
         </div>
@@ -833,7 +833,7 @@ class Classifier extends BaseController
 
     for comment in @comments
       date = new Date comment.created_at
-      @commentsContainer.append("""
+      @commentsContainer.prepend("""
         <div class="formatted-comment">
           <p>#{comment.body}</p>
           <p class="comment-by">by <b>#{comment.user_name}</b>, #{date.toDateString()}</p>
