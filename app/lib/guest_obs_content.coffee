@@ -13,9 +13,16 @@ content=[
 
   {
     title: "#pulsating"
-    description: "Sudden brightening of a star, often associated with massive material ejection	"
+    description: "Periodical size change of a star and the resulting brightness change"
     example:"images/guide/starspots1.png"
   }
+  {
+    title: "#transitingplanet"
+    description: "A planet goes in front of a star and blocks a portion of the star light	"
+    example:"images/guide/starspots1.png"
+  }
+
+
   {
     title: "#variable"
     description: "Star brightness changes over time"
