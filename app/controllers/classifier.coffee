@@ -75,6 +75,8 @@ class Classifier extends BaseController
     # if window.matchMedia("(min-device-width: 320px)").matches and window.matchMedia("(max-device-width: 480px)").matches
     #   location.hash = "#/verify"
 
+    Subject.group = "5417014a3ae7400bda000001"
+
     @loggedOutClassificationCount = 0
 
     window.classifier = @
@@ -409,7 +411,7 @@ class Classifier extends BaseController
     @insertMetadata()
     # @el.find('.do-you-see-a-transit').fadeIn()
     # @el.find('#no-transits-button').fadeIn()
-    
+
     # @el.find('#finished-marking').fadeIn()
     # @el.find('#finished-feedback').fadeIn()
 
@@ -533,7 +535,7 @@ class Classifier extends BaseController
     @course.prompt_el.hide()
     @classifySummary.fadeOut(150)
     @hideMarkingButtons()
-    
+
     # # switch to verify mode
     # if @course.count % @verifyRate is 0
     #   location.hash = "#/verify"
@@ -551,7 +553,19 @@ class Classifier extends BaseController
     @sendClassification()
     @canvasGraph.marks.destroyAll() #clear old marks
     @recordedClickEvents = []
-    @Subject.next()
+
+    @sim_count ||= 0
+    @sim_count +=1
+
+    if @sim_count%10 == 0
+      Subject.group = "5417014b3ae7400bda000002"
+      Subject.fetch 1, (subjects) =>
+        console.log "got sim subjects ", subjects
+    else
+      Subject.group = "5417014a3ae7400bda000001"
+      @Subject.next()
+
+
 
     @noTransitsButton.show()
 
@@ -568,7 +582,7 @@ class Classifier extends BaseController
   showSummaryScreen: ->
     # reveal ids
     @el.find('.star-id').fadeIn()
-    
+
     if @classification.subject.id is 'TUTORIAL_SUBJECT'
       @onClickNextSubject()
     else
@@ -578,7 +592,7 @@ class Classifier extends BaseController
       @classifySummary.fadeIn(150)
     # @finishSubject()
 
-  checkSupplementalTutorial: ->   
+  checkSupplementalTutorial: ->
     for classification_count in @whenToDisplayTips
       if @course.count is classification_count
         # console.log "*** DISPLAY SUPPLEMENTAL TUTOTIAL # #{classification_count} *** "
@@ -639,7 +653,7 @@ class Classifier extends BaseController
       recordedClickEvents: [@recordedClickEvents...]
 
     console.log JSON.stringify( @classification ) # DEBUG CODE
-    
+
     # send classification (except for tutorial subject)
     unless @classification.subject.id is 'TUTORIAL_SUBJECT'
       @classification.send()
@@ -675,7 +689,7 @@ class Classifier extends BaseController
 
   displayKnownTransits: ->
     return unless @simulationsPresent()
-    
+
     @hideMarkingButtons()
     @continueButton.show()
 
@@ -687,13 +701,13 @@ class Classifier extends BaseController
     @course.prompt_el.find('#course-no').hide()
     @course.prompt_el.find('#course-never').hide()
     @course.prompt_el.find('#course-message').html "This light curve contains at least one simulated transit, highlighted in red."
- 
+
     return
 
   simulationsPresent: ->
     if @known_transits.length > 0
       return true
-    else 
+    else
       return false
 
   finishSubject: ->
@@ -790,7 +804,7 @@ class Classifier extends BaseController
     else
       @el.find('#ui-slider').attr('disabled', true)
       @el.find("#zoom-button").removeClass("zoomed")
-      
+
   zoomReset: =>
     @canvasGraph.zoomOut()
     @isZoomed = false
@@ -860,32 +874,32 @@ class Classifier extends BaseController
 
   validateComment: (comment)=>
     is_valid = comment.length > 0 && comment.length <= 140
-    
+
   submitComment: =>
     comment = @talkComment.val()
     is_valid = @validateComment comment
     return unless is_valid
     request = Api.current.post "https://dev.zooniverse.org/projects/planet_hunter/talk/subjects/APH000001x/comments", comment: comment
-    
+
     # request = Api.current.post "/projects/#{Api.current.project}/talk/subjects/#{Subject.current?.zooniverse_id}/comments", comment: comment
 
     # time = new Date
-    
+
     # @comments.unshift
     #   user_name: User.current.name
     #   user_zooniverse_id: User.current.zooniverse_id
     #   body: comment
     #   timeago: $.timeago time
     #   date: DateWidget.formatDate 'd MM yy', time
-    
+
     # @render()
-    
+
     # clearTimeout @timeout if @timeout?
-    
-    # @timeout = setTimeout => 
+
+    # @timeout = setTimeout =>
     #   @fetchComments()
     # , @refresh * 1000 if @refresh?
-  
+
 
   #
   # END TALK COMMENT METHODS
