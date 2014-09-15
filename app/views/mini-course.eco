@@ -11,7 +11,9 @@
 
   <div class="course arrow left">&#x3008;</div>
   <div id="course-body">
+
     <div class="course-figure-container horizontal">
+      <div id='course-video'></div>  
       <img id="course-figure" src="">
       <div class="course-figure-credits"></div>
     </div>

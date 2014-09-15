@@ -74,7 +74,6 @@ content = [
       text: """
         One of the most common false-positives we have to deal with are eclipsing binary stars. This is when another star is transiting, rather than a planet. These tend to produce much deeper transits due to stars being much larger than planets, and they also show secondary eclipses, when the smaller star passes behind the larger star (see the diagram below). However, there a few ways in which an eclipsing binary system can mimic a transiting planet. Firstly, if the second star is only partially transiting the disc of the first star then the amount of light blocked is smaller and the depth of the transit may be similar to that caused by a planet. This is called a ‘grazing eclipsing binary’.
         """
-      video: '<video class="nativeEmbedPlayerPid" id="pid_mwe_player_1" src="//upload.wikimedia.org/wikipedia/commons/transcoded/9/96/201008-2a_PlanetOrbits_16x9-_Transit_timing_of_1-planet_vs_2-planet_systems.ogv/201008-2a_PlanetOrbits_16x9-_Transit_timing_of_1-planet_vs_2-planet_systems.ogv.480p.webm" autoplay="autoplay" style="width: 100%; height: 100%; z-index: 1;"></video>'
       figure: "./images/mini-course/slide-6.jpg"
       figure_credits: ""
 
@@ -247,6 +246,8 @@ content = [
       text: """
         In a similar way to pulsar timing, the timing of exoplanet transits can be used to infer the existence of other planets in the same system. If there were just one planet orbiting the star, the time interval between each transit would be exactly the same. However, if there is more than one planet the gravitational pull from other planets will cause regular variations in the time at which the transiting planet actually passes in front of the star. The size of the timing variation is used to measure the mass of the unseen planet.
         """
+      video: '<video class="nativeEmbedPlayerPid" id="pid_mwe_player_1" src="//upload.wikimedia.org/wikipedia/commons/transcoded/9/96/201008-2a_PlanetOrbits_16x9-_Transit_timing_of_1-planet_vs_2-planet_systems.ogv/201008-2a_PlanetOrbits_16x9-_Transit_timing_of_1-planet_vs_2-planet_systems.ogv.480p.ogv" autoplay="autoplay" style="width: 350px; margin-left:155px; z-index: 1; "></video>'
+
       figure: "missing"
       figure_credits: "NASA"
 

@@ -28,7 +28,7 @@ class MiniCourse extends BaseController
 
     # get content
     @content = miniCourseContent # TODO: remove (unnecessary?)
-    
+
     User.on 'change', =>
       if User.current?
         @prompt_el.toggleClass 'signed-in'
@@ -47,8 +47,8 @@ class MiniCourse extends BaseController
     @prompt_el.on "click", "#course-never", (e) => @onClickCourseNever()
     @prompt_el.on "click", "#course-prompt-close", (e) => @hidePrompt()
     @course_el.on "click", ".course-close", (e) => @hideCourse()
-    $(classifier.el).on "click", ".sign-in", (e) => loginDialog.show() 
-    $(classifier.el).on "click", ".sign-up", (e) => signupDialog.show() 
+    $(classifier.el).on "click", ".sign-in", (e) => loginDialog.show()
+    $(classifier.el).on "click", ".sign-up", (e) => signupDialog.show()
 
   onClickCourseYes: ->
     unless User.current is null
@@ -107,13 +107,13 @@ class MiniCourse extends BaseController
 
   display: (index) ->
     prevBtn = $('.arrow.left')
-    nextBtn = $('.arrow.right') 
+    nextBtn = $('.arrow.right')
 
     if index > @idx_last
       console.log "You cannot view this course yet!"
       unless @ADMIN_MODE
         nextBtn.hide()
-        return        
+        return
     else
       @idx_curr = +index
 
@@ -153,11 +153,20 @@ class MiniCourse extends BaseController
       title          = @content[index].material.title
       text           = @content[index].material.text
       figure         = @content[index].material.figure
+      video          = @content[index].material.video
       figure_credits = @content[index].material.figure_credits
 
     @course_el.find("#course-title").html title
     @course_el.find(".course-text").html text
-    @course_el.find("#course-figure").attr 'src', figure
+    if video?
+      @course_el.find("#course-figure").hide()
+      @course_el.find("#course-video").show()
+      @course_el.find("#course-video").html video
+    else
+      @course_el.find("#course-figure").show()
+      @course_el.find("#course-video").hide()
+      @course_el.find("#course-figure").attr 'src', figure
+
     @course_el.find(".course-figure-credits").html figure_credits
 
   hideCourse: ->
@@ -166,7 +175,7 @@ class MiniCourse extends BaseController
     @subject_el.toggleClass("hidden")
     @course_el.toggleClass("visible")
 
-  showPrompt: ->    
+  showPrompt: ->
     @prompt_el.fadeIn(@transitionTime)
 
   hidePrompt: (delay) ->
@@ -182,7 +191,7 @@ class MiniCourse extends BaseController
     console.log 'initializing mini-course...'
     # User.current.setPreference 'course', 'yes'
     User.current.setPreference 'count', 0
-    User.current.setPreference 'curr_course_id', 0 
+    User.current.setPreference 'curr_course_id', 0
     # User.current.setPreference 'supplemental_option', true
     @count = 0
     @idx_last = +0
