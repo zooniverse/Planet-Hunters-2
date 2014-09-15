@@ -74,7 +74,8 @@ content = [
       text: """
         One of the most common false-positives we have to deal with are eclipsing binary stars. This is when another star is transiting, rather than a planet. These tend to produce much deeper transits due to stars being much larger than planets, and they also show secondary eclipses, when the smaller star passes behind the larger star (see the diagram below). However, there a few ways in which an eclipsing binary system can mimic a transiting planet. Firstly, if the second star is only partially transiting the disc of the first star then the amount of light blocked is smaller and the depth of the transit may be similar to that caused by a planet. This is called a ‘grazing eclipsing binary’.
         """
-      figure: "missing"
+      video: '<video class="nativeEmbedPlayerPid" id="pid_mwe_player_1" src="//upload.wikimedia.org/wikipedia/commons/transcoded/9/96/201008-2a_PlanetOrbits_16x9-_Transit_timing_of_1-planet_vs_2-planet_systems.ogv/201008-2a_PlanetOrbits_16x9-_Transit_timing_of_1-planet_vs_2-planet_systems.ogv.480p.webm" autoplay="autoplay" style="width: 100%; height: 100%; z-index: 1;"></video>'
+      figure: "./images/mini-course/slide-6.jpg"
       figure_credits: ""
 
   }
@@ -88,7 +89,7 @@ content = [
         <p>The way that the lightcurves are produced means that sometimes light from other stars (not just the target star) is included. This is called ‘blending’, and it leads to the light of the target being diluted. This means if the target is an eclipsing binary, the dips in light may appear small enough to mimic a planet. </p>
         <p>Also, if one of the background stars is actually an eclipsing binary it may appear like there are smaller transits occurring on the target star, when in fact there is nothing there at all. The right-hand panel of the diagram below shows an example of this scenario.</p>
         """
-      figure: "missing"
+      figure: "./images/mini-course/slide-7.jpg"
       figure_credits: ""
 
   }
@@ -198,7 +199,7 @@ content = [
         <strong>THE RADIAL VELOCITY METHOD</strong>
         <p>As a planet orbits a star its gravitational pull moves the star around. Therefore at some points the star is moving towards us (the observer) and at other points it is moving away from us. We can measure the speed of this movement by looking at the spectrum of light from the star. When moving towards us the star’s light becomes more blue, and when moving away its light becomes more red. The faster the star is moving, the more massive the planet. For example, Jupiter moves the Sun at 12.7 m/s (slightly faster than Usain Bolt can run), whereas the effect from Earth is over 100 times smaller, making it much easier to detect larger planets.</p>
         """
-      figure: "missing"
+      figure: "./images/mini-course/slide-16.jpg"
       figure_credits: "NASA"
 
   }
@@ -234,7 +235,7 @@ content = [
       text: """
         The first ever confirmed exoplanet was not actually discovered orbiting a Sun-like star. It was found around an object known as a pulsar. Pulsars are the extremely dense, rapidly spinning cores of dead stars which have beams of radiation that sweep out like an interstellar lighthouse. The rotation-rate of pulsars is extremely reliable and can be measured to very high accuracy. However, if a planet in in orbit its gravitational pull on the pulsar will manipulate the rotation-rate in a way that allows its existence to be inferred.
         """
-      figure: "missing"
+      figure: "./images/mini-course/slide-19.gif"
       figure_credits: "NASA"
 
   }
@@ -258,7 +259,7 @@ content = [
       text: """
         As described before for the radial velocity method, stars are pulled around by the gravitation force from their orbiting planets (see animation below). Therefore, if the position of a star can be measured accurately, this movement can be observed and the existence of the planet can be confirmed. These movements are extremely small and to-date very few exoplanet candidates have been discovered in this way, however the recently launch Gaia spacecraft plans to utilise this method as part of its mission.
         """
-      figure: "missing"
+      figure: "./images/mini-course/slide-21.gif"
       figure_credits: "NASA"
 
   }
@@ -271,7 +272,7 @@ content = [
         <p>The separation and extreme difference in brightness between exoplanets and their host stars makes it very difficult to image them directly. However, there are a handful of exoplanet candidates  that have been discovered this way. All of them have very large radii and lie in distant orbits.</p>
         <p>Below is an image showing the directly imaged exoplanet candidate orbiting in the debris disk around the star Formalhaut.</p>
         """
-      figure: "./images/mini-course/21-DirectImaging.png"
+      figure: "./images/mini-course/slide-22.jpg"
       figure_credits: "NASA"
 
   }
@@ -283,19 +284,7 @@ content = [
       text: """
         The first planets discovered using the transit method were very strange. They were gas giant planets the same size as Jupiter but so close to their star that they only take a few days to complete one orbit! There is nothing like this in our Solar System, and theories suggest it is impossible for a Jupiter-sized planet to form in the high temperature environment that close to a star.
         """
-      figure: "./images/mini-course/22-HotJupiters.png"
-      figure_credits: "NASA"
-
-  }
-
-  {
-    course_number: 23
-    material:
-      title: "Hot Jupiters - Migration"
-      text: """
-        For the Hot Jupiters to have gotten so close to their host stars they would have to have first formed much farther out where it was colder and then migrated inwards through the system. Multiple theories on how this migration occurs have been proposed, including interactions with other material orbiting the star in the early stages of the system and gravitational scattering involving other large bodies.
-        """
-      figure: "./images/mini-course/23-HotJupiters.png"
+      figure: "./images/mini-course/slide-23.jpg"
       figure_credits: "NASA"
 
   }
@@ -303,12 +292,24 @@ content = [
   {
     course_number: 24
     material:
+      title: "Hot Jupiters - Migration"
+      text: """
+        For the Hot Jupiters to have gotten so close to their host stars they would have to have first formed much farther out where it was colder and then migrated inwards through the system. Multiple theories on how this migration occurs have been proposed, including interactions with other material orbiting the star in the early stages of the system and gravitational scattering involving other large bodies.
+        """
+      figure: "./images/mini-course/slide-24.jpg"
+      figure_credits: "NASA"
+
+  }
+
+  {
+    course_number: 25
+    material:
       title: "Congratulations!"
       text: """
         <p>You have successfully completed the Planet Hunters mini-course on Exoplanetary Astrophysics! We hope you enjoyed it, and that you learned some new and interesting things about this fantastic area of research. Please continue your great work on Planet Hunters, so that together we can continue to discover more about our Universe.</p>
         <p>Remember, if you want to review the slides from the course, you can browse them form your <a href='#/profile'>profile</a> </p>
         """
-      figure: ""
+      figure: "./images/mini-course/slide-24.png"
       figure_credits: ""
 
   }
