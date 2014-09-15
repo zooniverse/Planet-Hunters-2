@@ -367,8 +367,16 @@ class Classifier extends BaseController
     @el.find("#toggle-fav").removeClass("toggled")
 
     $('#graph-container').addClass 'loading-lightcurve'
-    # jsonFile = 'offline/simulation_feedback_example.json'
-    jsonFile = @subject.selected_light_curve.location
+
+
+    if window.location.origin != "http://planethunters.org"
+      jsonFile = @subject.selected_light_curve.location.replace("http://www.planethunters.org/", "https://s3.amazonaws.com/zooniverse-static/planethunters.org/")
+    else
+      jsonFile = @subject.selected_light_curve.location
+      console.log jsonFile
+
+
+    jsonFile = 'offline/simulation_feedback_example.json'
     # console.log 'jsonFile: ', jsonFile
 
     # handle ui elements
@@ -557,7 +565,7 @@ class Classifier extends BaseController
     @sim_count ||= 0
     @sim_count +=1
 
-    if @sim_count%10 == 0
+    if @sim_count%2 == 0
       Subject.group = "5417014b3ae7400bda000002"
       Subject.fetch 1, (subjects) =>
         console.log "got sim subjects ", subjects
