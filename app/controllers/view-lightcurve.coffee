@@ -20,8 +20,8 @@ class ViewLightcurve extends BaseController
     star_id = @getParameterByName "star_id"
     quarter = @getParameterByName "quarter"
 
-    console.log 'star_id: ', star_id
-    console.log 'quarter: ', quarter
+    # console.log 'star_id: ', star_id
+    # console.log 'quarter: ', quarter
 
     if star_id is "" or quarter is ""
       @el.find('.content').append '<p style="color: #fc4541; margin: 20px;">You must enter both the STAR_ID and QUARTER</p>'

@@ -740,7 +740,6 @@ class Classifier extends BaseController
 
     # update center point
     @canvasGraph.graphCenter = (@canvasGraph.zoomRanges[@canvasGraph.zoomLevel]/2)+@canvasGraph.sliderValue
-    console.log 'CENTER POINT: ', @canvasGraph.graphCenter # DEBUG CODE
 
   onClickZoom: ->
     # increment zoom level
@@ -757,23 +756,19 @@ class Classifier extends BaseController
       @zoomReset()
     else
       if offset is 0
-        console.log 'slider hasn\'t moved, CENTER: ', @canvasGraph.zoomRanges[@canvasGraph.zoomLevel]/2
         @canvasGraph.zoomToCenter( @canvasGraph.zoomRanges[@canvasGraph.zoomLevel]/2 )
       else
-        console.log 'slider moved, CENTER: ', @canvasGraph.graphCenter
         @canvasGraph.zoomToCenter(@canvasGraph.graphCenter)
 
       # rebuild slider
       @el.find("#ui-slider").noUiSlider
-        start: 0 #+@el.find("#ui-slider").val()
+        start: 0
         range:
           'min': @canvasGraph.smallestX,
           'max': @canvasGraph.largestX - @canvasGraph.zoomRanges[@canvasGraph.zoomLevel]
       , true
 
     @updateZoomButton(@canvasGraph.zoomLevel)
-
-    console.log 'CENTER POINT (onClickZoom): ', @canvasGraph.graphCenter
     @showZoomMessage(@magnification[@canvasGraph.zoomLevel])
     @recordedClickEvents.push { event: 'clickedZoomLevel'+@canvasGraph.zoomLevel, timestamp: (new Date).toUTCString() }
 
