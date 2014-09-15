@@ -14,7 +14,7 @@ content = [
     course_number: 2
     material:
       title: "How a lightcurve is formed"
-      text: "<p>A lightcurve is formed by taking regular observations of a star’s brightness and plotting them over time. A fraction of planetary systems have an alignment that means, when they are viewed from Earth, the planet will pass in front of its host star as it orbits. When it does so, it blocks some of the light from the star. This is called a transit. Below you can see an example of a transit lightcurve.</p>"
+      text: "<p>A lightcurve is formed by taking regular observations of a star’s brightness and plotting them over time. A fraction of planetary systems have an alignment that means, when they are viewed from Earth, the planet will pass in front of its host star as it orbits. When it does so, it blocks some of the light from the star. This is called a transit. Above you can see an example of a transit lightcurve.</p>"
       figure: "./images/mini-course/ph-transit-070214.gif"
       figure_credits: ""
   }
@@ -34,7 +34,7 @@ content = [
         </p>
       """
       figure: "./images/mini-course/light-curve-period.png"
-      figure_credits: "Image courtesy of NASA"
+      figure_credits: "Image credit: NASA"
   }
   {
     course_number: 4
@@ -59,7 +59,7 @@ content = [
       title: "False-positives - Variable stars"
       text: """
         <p>Not all changes in a star’s brightness are caused by transiting planets. There are a few other things we have to rule out first. These are called false-positives.</p>
-        <p>Some stars intrinsically vary in brightness on a level that is comparable to that of a planetary transit. However, if the star is observed for a long period of time, the pattern of the variation can be easily differentiated from that of a planet transit. These variations normally happen over a much longer time than a planet transit (see example lightcurve below).</p>
+        <p>Some stars intrinsically vary in brightness on a level that is comparable to that of a planetary transit. However, if the star is observed for a long period of time, the pattern of the variation can be easily differentiated from that of a planet transit. These variations normally happen over a much longer time than a planet transit (see example lightcurve above).</p>
         """
       figure: "./images/mini-course/5-FalsePositives.png"
       figure_credits: ""
@@ -72,7 +72,7 @@ content = [
     material:
       title: "False-positives - Eclipsing binary stars"
       text: """
-        One of the most common false-positives we have to deal with are eclipsing binary stars. This is when another star is transiting, rather than a planet. These tend to produce much deeper transits due to stars being much larger than planets, and they also show secondary eclipses, when the smaller star passes behind the larger star (see the diagram below). However, there a few ways in which an eclipsing binary system can mimic a transiting planet. Firstly, if the second star is only partially transiting the disc of the first star then the amount of light blocked is smaller and the depth of the transit may be similar to that caused by a planet. This is called a ‘grazing eclipsing binary’.
+        One of the most common false-positives we have to deal with are eclipsing binary stars. This is when another star is transiting, rather than a planet. These tend to produce much deeper transits due to stars being much larger than planets, and they also show secondary eclipses, when the smaller star passes behind the larger star (see the diagram above). However, there a few ways in which an eclipsing binary system can mimic a transiting planet. Firstly, if the second star is only partially transiting the disc of the first star then the amount of light blocked is smaller and the depth of the transit may be similar to that caused by a planet. This is called a ‘grazing eclipsing binary’.
         """
       figure: "./images/mini-course/slide-6.jpg"
       figure_credits: ""
@@ -86,7 +86,7 @@ content = [
       title: "False-positives - Eclipsing binary stars"
       text: """
         <p>The way that the lightcurves are produced means that sometimes light from other stars (not just the target star) is included. This is called ‘blending’, and it leads to the light of the target being diluted. This means if the target is an eclipsing binary, the dips in light may appear small enough to mimic a planet. </p>
-        <p>Also, if one of the background stars is actually an eclipsing binary it may appear like there are smaller transits occurring on the target star, when in fact there is nothing there at all. The right-hand panel of the diagram below shows an example of this scenario.</p>
+        <p>Also, if one of the background stars is actually an eclipsing binary it may appear like there are smaller transits occurring on the target star, when in fact there is nothing there at all. The right-hand panel of the diagram above shows an example of this scenario.</p>
         """
       figure: "./images/mini-course/slide-7.jpg"
       figure_credits: "Image credit: NASA/Wendy Stenzel"
@@ -98,7 +98,7 @@ content = [
     material:
       title: "Other features in the lightcurves - flares"
       text: """
-        Stellar flares may be spotted in the lightcurves on Planet Hunters. They are characterised by rapid spikes in brightness. These are large explosions from the surface of the star, just like the solar flares that we observe on our star the Sun. Below is an example of a lightcurve with flare features.
+        Stellar flares may be spotted in the lightcurves on Planet Hunters. They are characterised by rapid spikes in brightness. These are large explosions from the surface of the star, just like the solar flares that we observe on our star the Sun. Above is an example of a lightcurve with flare features.
         """
       figure: "./images/mini-course/7-Flares.png"
       figure_credits: ""
@@ -110,10 +110,10 @@ content = [
     material:
       title: "A brief history of Exoplanets"
       text: """
-        The idea of planets orbiting other stars in our galaxy has been around for hundreds of years (in fact 16th century Italian astronomer Giordano Bruno was burnt at the stake at least in part for his beliefs on the matter!). However, it was not until 1992 that the first exoplanet was confirmed. It was found orbiting a pulsar, the rapidly-spinning, dense core of a dead star. The first confirmed planet orbiting a Sun-like star, 51 Pegesi b, was announced in 1995. Since then over one thousand exoplanets have been confirmed and many more candidates identified. The graph below shows the distribution of planet candidates discovered by the Kepler mission as of November 2013.
+        The idea of planets orbiting other stars in our galaxy has been around for hundreds of years (in fact 16th century Italian astronomer Giordano Bruno was burnt at the stake at least in part for his beliefs on the matter!). However, it was not until 1992 that the first exoplanet was confirmed. It was found orbiting a pulsar, the rapidly-spinning, dense core of a dead star. The first confirmed planet orbiting a Sun-like star, 51 Pegesi b, was announced in 1995. Since then over one thousand exoplanets have been confirmed and many more candidates identified. The graph above shows the distribution of planet candidates discovered by the Kepler mission as of November 2013.
         """
       figure: "./images/mini-course/8-size-candidates.jpg"
-      figure_credits: ""
+      figure_credits: "Image credit: NASA"
 
   }
 
@@ -122,7 +122,7 @@ content = [
     material:
       title: "The first Planet Hunters planet"
       text: """
-        The first confirmed planet discovered by volunteers, like you, on Planet Hunters was PH1b (also known as Kepler-64b). It is a Neptune-sized giant planet with a radius 6 times greater than that of the Earth. The really interesting thing about PH1b is that it’s a circumbinary planet, meaning it orbits around two stars! Those two stars are also in orbit around another binary star system, which makes PH1b the first planet ever discovered in a quadruple star system. Below is an artist’s impression of the system.
+        The first confirmed planet discovered by volunteers, like you, on Planet Hunters was PH1b (also known as Kepler-64b). It is a Neptune-sized giant planet with a radius 6 times greater than that of the Earth. The really interesting thing about PH1b is that it’s a circumbinary planet, meaning it orbits around two stars! Those two stars are also in orbit around another binary star system, which makes PH1b the first planet ever discovered in a quadruple star system. Above is an artist’s impression of the system.
         """
       figure: "./images/mini-course/9-FirstPlanet.png"
       figure_credits: "Image Credit: H. Giguere, M. Giguere"
@@ -134,7 +134,7 @@ content = [
     material:
       title: "Planet Hunters 2b"
       text: """
-        PH2b is the second planet discovered by volunteers on Planet Hunters. It is a Jupiter-sized, gas giant planet in orbit around a star very similar to our Sun. It’s orbit is only 17% smaller than that of the Earth, putting it in a region known as the habitable zone, the distance from a star where the conditions may be right for life. You will learn more about the habitable zone later. Below is an artist’s impression of the view from a hypothetical habitable moon in orbit around PH2b.
+        PH2b is the second planet discovered by volunteers on Planet Hunters. It is a Jupiter-sized, gas giant planet in orbit around a star very similar to our Sun. It’s orbit is only 17% smaller than that of the Earth, putting it in a region known as the habitable zone, the distance from a star where the conditions may be right for life. You will learn more about the habitable zone later. Above is an artist’s impression of the view from a hypothetical habitable moon in orbit around PH2b.
         """
       figure: "./images/mini-course/10-2b.png"
       figure_credits: "Image Credit: H. Giguere, M. Giguere"
@@ -146,10 +146,10 @@ content = [
     material:
       title: "Kepler-90"
       text: """
-        The third confirmed exoplanet discovered by volunteers on Planet Hunters is in a system known as Kepler-90 and now has the designation Kepler-90h. This system already had six confirmed exoplanets, but the discovery of the seventh buy Planet Hunters volunteers made it the most populous planetary system known, apart from our own. The red circle in the diagram below shows the orbit of Kepler-90h in the system.
+        The third confirmed exoplanet discovered by volunteers on Planet Hunters is in a system known as Kepler-90 and now has the designation Kepler-90h. This system already had six confirmed exoplanets, but the discovery of the seventh buy Planet Hunters volunteers made it the most populous planetary system known, apart from our own. The red circle in the diagram above shows the orbit of Kepler-90h in the system.
         """
       figure: "./images/mini-course/11-kepler90.png"
-      figure_credits: "NASA"
+      figure_credits: ""
 
   }
 
@@ -161,7 +161,7 @@ content = [
         Stars are mostly made of hydrogen, which is also true for some gas giant planets such as Jupiter. The difference is that stars are massive enough to ignite nuclear fusion of hydrogen into helium in their cores. The smallest stars are roughly 75 times more massive than Jupiter, and the largest planets are about 13 times more massive than Jupiter.
         """
       figure: "./images/mini-course/12-star-v-planet.jpg"
-      figure_credits: ""
+      figure_credits: "Image credit: NASA"
 
   }
 
@@ -173,7 +173,7 @@ content = [
         A star spends the majority of its active life burning the hydrogen in its core. Stars that are in this phase are known as main sequence stars. Main sequence stars are split into 7 main groups named O, B, A, F, G, K and M in order from hottest to coolest. Our Sun is a G-type star but the vast majority of stars in our galaxy are smaller, cooler M-type stars.
         """
       figure: "./images/mini-course/13-spectral-chart.jpg"
-      figure_credits: ""
+      figure_credits: "Image credit: NASA"
 
   }
 
@@ -258,7 +258,7 @@ content = [
     material:
       title: "How else can we discover planets? - Astrometry"
       text: """
-        As described before for the radial velocity method, stars are pulled around by the gravitation force from their orbiting planets (see animation below). Therefore, if the position of a star can be measured accurately, this movement can be observed and the existence of the planet can be confirmed. These movements are extremely small and to-date very few exoplanet candidates have been discovered in this way, however the recently launch Gaia spacecraft plans to utilise this method as part of its mission.
+        As described before for the radial velocity method, stars are pulled around by the gravitation force from their orbiting planets (see animation above). Therefore, if the position of a star can be measured accurately, this movement can be observed and the existence of the planet can be confirmed. These movements are extremely small and to-date very few exoplanet candidates have been discovered in this way, however the recently launch Gaia spacecraft plans to utilise this method as part of its mission.
         """
       figure: "./images/mini-course/slide-21.gif"
       figure_credits: ""
@@ -271,7 +271,7 @@ content = [
       title: "How else can we discover planets? - Direct Imaging"
       text: """
         <p>The separation and extreme difference in brightness between exoplanets and their host stars makes it very difficult to image them directly. However, there are a handful of exoplanet candidates  that have been discovered this way. All of them have very large radii and lie in distant orbits.</p>
-        <p>Below is an image showing the directly imaged exoplanet candidate orbiting in the debris disk around the star Formalhaut.</p>
+        <p>Above is an picture showing the directly imaged exoplanet candidate orbiting in the debris disk around the star Formalhaut.</p>
         """
       figure: "./images/mini-course/slide-22.jpg"
       figure_credits: "Image credit: NASA"
