@@ -27,7 +27,7 @@ content = [
           A lightcurve can tell us a lot about a planetary system. Firstly, it gives us is an estimate of the size of the planet. The larger the planet is in relation to the star, the more light is blocked by the planet and the deeper the transit. So the transit depth, d, is proportional to the radius of the planet, Rp:
         </p>
         <div style=\"text-align: center;\">
-          <img style=\"width: 75px; padding: 20px\" src=\"./images/mini-course/keplers-third-law.png\"/>
+          <img style=\"width: 75px; padding: 10px\" src=\"./images/mini-course/keplers-third-law.png\"/>
         </div>
         <p>
           A planet the size of Jupiter will cause a 1% dip in the brightness of a star the size of our Sun. An Earth-sized planet would only cause a 0.1% dip, making it much harder to detect! However, if the star is much smaller than our Sun, which the majority of the stars in our galaxy are, the dip in light will be larger.
@@ -45,7 +45,7 @@ content = [
           If we observe multiple transits at equally spaced intervals then we know they are caused by a single planet and we have a measurement of its orbital period, as it is just the time interval between each transit. Astronomer Johannes Kepler showed that orbital period,P, is proportional to orbital separation, a:
         </p>
         <div style=\"text-align: center;\">
-          <img style=\"width: 75px; padding: 20px\" src=\"./images/mini-course/transit-depth.png\"/>
+          <img style=\"width: 75px; padding: 10px\" src=\"./images/mini-course/transit-depth.png\"/>
         </div>
         <p>This means that by observing multiple transits of the same planet we can determine how far away it is from its host star.</p>
         """
