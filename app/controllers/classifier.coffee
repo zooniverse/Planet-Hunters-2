@@ -373,10 +373,7 @@ class Classifier extends BaseController
       jsonFile = @subject.selected_light_curve.location.replace("http://www.planethunters.org/", "https://s3.amazonaws.com/zooniverse-static/planethunters.org/")
     else
       jsonFile = @subject.selected_light_curve.location
-      console.log jsonFile
 
-
-    jsonFile = 'offline/simulation_feedback_example.json'
     # console.log 'jsonFile: ', jsonFile
 
     # handle ui elements
