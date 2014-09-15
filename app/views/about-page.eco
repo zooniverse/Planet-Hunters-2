@@ -13,18 +13,22 @@
   <div class="secondary-content">
     <div class="left-column">
       <div class="content sub-nav-about-about">
-        <h1>Our Mission</h1>
-        <p>Welcome to Planet Hunters. With your help, we are looking for planets around other stars.</p>
-        <p>NASA's Kepler spacecraft is one of the most powerful tools in the search for extrasolar planets (exoplanets), planets orbiting stars outside of our own Solar System, and its discoveries continue to revolutionize our understanding of how planetary systems grow and evolve. Approximately every 30 minutes, Kepler monitors the brightness of many thousands of stars simultaneously for the signature of exoplanets via the transit technique. When an exoplanet passes or transits in front of its parent star, the star momentarily dims. This decrease in brightness is detectable by Kepler and lasts for a few hours or more and repeats once per orbit of the planet.</p>
+        <h1>The Story So Far...</h1>
 
-        <p>The time series of brightness measurements for a star is called a light curve. Automated computers are sifting through the Kepler light curves looking for the repeating signal of a planet transit, but we think there will be planets which can only be found via the innate human ability for pattern recognition. At Planet Hunters we are enlisting the public's help to inspect the Kepler light curves and find these planets missed by automated detection algorithms. No training required! All you need is your keen eyes and a web browser to join the hunt.</p>
+        <p>On December 16, 2010, the <a href="http://www.zooniverse.org">Zooniverse</a> launched the original Planet Hunters to enlist the public's help to search data from the NASA's <a href="http://kepler.nasa.gov">Kepler</a> spacecraft for the characteristic drop in light due an orbiting extrasolar planets (exoplanets) crossing in front of their parent stars.</p>
 
-        <p>It's just possible that you might be the first to know that a star somewhere out there in the Milky Way has a companion, just as our Sun does. Fancy giving it a try?</p>
+        <p>Back then we didn't know what we would find. The project was a gamble on the ability of human pattern recognition to beat machines just occasionally and spot the telltale dip from a transiting planet that was missed by automated routines looking for repeating patterns. It may have been the case that no new planets were discovered and that computers had the job down to a fine art.</p>
+
+        <p>The gamble paid off. The original Planet Hunters project discovered a bounty of unknown planet candidates and several confirmed planets, resulting from the efforts of nearly 300,000 volunteers worldwide. You can learn more about the discoveries and scientific results from the first iteration of Planet Hunters with our <a href="https://www.zooniverse.org/publications?project=planethunters">list of published papers</a> and the <a href="http://blog.planethunters.org">project blog</a>.</p>
+
+        <p>Nearly 4 years after the launch of the original Planet Hunters, the current phase (version 2.0) of the Planet Hunters project has been built with the Zooniverse's latest technology. You can learn more about the project on the <a href="#/science">Science page</a>. Like the original site, you'll be shown ~30 days worth of Kepler observations to review in the main classification interface. If you spot a transit-like feature in the light curve, mark its location. Other citizen scientists will be shown the same light curve and we'll combine the assessments to identify possible planet candidates for follow-up. In the Round 2 review phase of the project, you'll help inspect and confirm possible transit candidates identified in the main classification interface for further follow-up and inspection by the Planet Hunters science team.</p>
+
+        <p>Who knows what we'll find? If the original Planet Hunters is any indication, then we're in for a surprise or two!</p>
+
       </div>
 
       <div class="content sub-nav-about-teams">
         <h1>Teams</h1>
-
         <h2>Science Team</h2>
         <div class="team-members">
           <div class="team-member">

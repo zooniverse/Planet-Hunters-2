@@ -5,6 +5,7 @@
 <div class="secondary-white">
   <div class="secondary-content">
     <nav class="sub-nav-science">
+      <button name="mission">Our Mission</button>
       <button name="faq">FAQ</button>
       <button name="transits">Transits</button>
       <button name="your-task">Your Task</button>
@@ -15,6 +16,17 @@
   </div>
   <div class="secondary-content">
     <div class="left-column">
+      <div class="content sub-nav-science-mission">
+        <h1>Our Mission</h1>
+        <p>Welcome to Planet Hunters. With your help, we are looking for planets around other stars.</p>
+        <p>NASA's Kepler spacecraft is one of the most powerful tools in the search for extrasolar planets (exoplanets), planets orbiting stars outside of our own Solar System, and its discoveries continue to revolutionize our understanding of how planetary systems grow and evolve. Approximately every 30 minutes, Kepler monitors the brightness of many thousands of stars simultaneously for the signature of exoplanets via the transit technique. When an exoplanet passes or transits in front of its parent star, the star momentarily dims. This decrease in brightness is detectable by Kepler and lasts for a few hours or more and repeats once per orbit of the planet.</p>
+
+        <p>The time series of brightness measurements for a star is called a light curve. Automated computers are sifting through the Kepler light curves looking for the repeating signal of a planet transit, but we think there will be planets which can only be found via the innate human ability for pattern recognition. At Planet Hunters we are enlisting the public's help to inspect the Kepler light curves and find these planets missed by automated detection algorithms. No training required! All you need is your keen eyes and a web browser to join the hunt.</p>
+
+        <p>It's just possible that you might be the first to know that a star somewhere out there in the Milky Way has a companion, just as our Sun does. Fancy giving it a try?</p>
+      </div>
+
+
       <!-- FAQ -->
       <div class="content sub-nav-science-faq">
         <h1 id="faq-top">Frequently Asked Questions</h1>
