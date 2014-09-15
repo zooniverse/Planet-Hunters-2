@@ -112,7 +112,7 @@ content = [
       text: """
         The idea of planets orbiting other stars in our galaxy has been around for hundreds of years (in fact 16th century Italian astronomer Giordano Bruno was burnt at the stake at least in part for his beliefs on the matter!). However, it was not until 1992 that the first exoplanet was confirmed. It was found orbiting a pulsar, the rapidly-spinning, dense core of a dead star. The first confirmed planet orbiting a Sun-like star, 51 Pegesi b, was announced in 1995. Since then over one thousand exoplanets have been confirmed and many more candidates identified. The graph above shows the distribution of planet candidates discovered by the Kepler mission as of November 2013.
         """
-      figure: "./images/mini-course/8-size-candidates.jpg"
+      figure: "./images/mini-course/slide-9.png"
       figure_credits: "Image credit: NASA"
 
   }
@@ -124,7 +124,7 @@ content = [
       text: """
         The first confirmed planet discovered by volunteers, like you, on Planet Hunters was PH1b (also known as Kepler-64b). It is a Neptune-sized giant planet with a radius 6 times greater than that of the Earth. The really interesting thing about PH1b is that it’s a circumbinary planet, meaning it orbits around two stars! Those two stars are also in orbit around another binary star system, which makes PH1b the first planet ever discovered in a quadruple star system. Above is an artist’s impression of the system.
         """
-      figure: "./images/mini-course/9-FirstPlanet.png"
+      figure: "./images/mini-course/slide-10.png"
       figure_credits: "Image Credit: H. Giguere, M. Giguere"
 
   }
@@ -210,7 +210,7 @@ content = [
       text: """
         The radial velocity method has been used to discover hundreds of exoplanets to date, however it has one major disadvantage; it cannot be used to determine the angle of the planetary system to our line-of-sight, so perhaps we are only seeing a small fraction of the star’s movement? This means that only a minimum measurement of the star’s speed can be calculated, leading to only a minimum possible value for the mass of the exoplanet.
         """
-      figure: "./images/mini-course/16-radial-velocity.jpg"
+      figure: "./images/mini-course/slide-17.png"
       figure_credits: "Image credit: UCAR Center for Science Education"
 
   }
