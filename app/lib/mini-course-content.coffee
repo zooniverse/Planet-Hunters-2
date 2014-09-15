@@ -29,6 +29,9 @@ content = [
         <div style=\"text-align: center;\">
           <img style=\"width: 75px; padding: 20px\" src=\"./images/mini-course/keplers-third-law.png\"/>
         </div>
+        <p>
+          A planet the size of Jupiter will cause a 1% dip in the brightness of a star the size of our Sun. An Earth-sized planet would only cause a 0.1% dip, making it much harder to detect! However, if the star is much smaller than our Sun, which the majority of the stars in our galaxy are, the dip in light will be larger.
+        </p>
       """
       figure: "./images/mini-course/light-curve-period.png"
       figure_credits: "Image courtesy of NASA"
@@ -39,11 +42,12 @@ content = [
       title: "What can we learn from a lightcurve? (Part 2)"
       text: """
         <p>
-          The other most important piece of information a transit lightcurve gives us is an estimate of the size of the planet. The larger the planet is in relation to the star, the more light is blocked by the planet and the deeper the transit. So the transit depth, d, is proportional to the radius of the planet,
+          If we observe multiple transits at equally spaced intervals then we know they are caused by a single planet and we have a measurement of its orbital period, as it is just the time interval between each transit. Astronomer Johannes Kepler showed that orbital period,P, is proportional to orbital separation, a:
         </p>
         <div style=\"text-align: center;\">
           <img style=\"width: 75px; padding: 20px\" src=\"./images/mini-course/transit-depth.png\"/>
         </div>
+        <p>This means that by observing multiple transits of the same planet we can determine how far away it is from its host star.</p>
         """
       figure: "./images/mini-course/lightcurve-transit-depth.png"
       figure_credits: ""
@@ -69,7 +73,6 @@ content = [
       title: "False-positives - Eclipsing binary stars"
       text: """
         One of the most common false-positives we have to deal with are eclipsing binary stars. This is when another star is transiting, rather than a planet. These tend to produce much deeper transits due to stars being much larger than planets, and they also show secondary eclipses, when the smaller star passes behind the larger star (see the diagram below). However, there a few ways in which an eclipsing binary system can mimic a transiting planet. Firstly, if the second star is only partially transiting the disc of the first star then the amount of light blocked is smaller and the depth of the transit may be similar to that caused by a planet. This is called a ‘grazing eclipsing binary’.
-
         """
       figure: "missing"
       figure_credits: ""
@@ -82,7 +85,7 @@ content = [
     material:
       title: "False-positives - Eclipsing binary stars"
       text: """
-        <p>The way that the lightcurves are produced means that sometimes light from other stars (not just the target star) is included. This is called ‘blending’, and it leads to the light of the target being diluted. This means if the target is an eclipsing binary, the dips in light may appear small enough to mimic a planet.</p>
+        <p>The way that the lightcurves are produced means that sometimes light from other stars (not just the target star) is included. This is called ‘blending’, and it leads to the light of the target being diluted. This means if the target is an eclipsing binary, the dips in light may appear small enough to mimic a planet. </p>
         <p>Also, if one of the background stars is actually an eclipsing binary it may appear like there are smaller transits occurring on the target star, when in fact there is nothing there at all. The right-hand panel of the diagram below shows an example of this scenario.</p>
         """
       figure: "missing"
@@ -107,7 +110,7 @@ content = [
     material:
       title: "A brief history of Exoplanets"
       text: """
-        The idea of planets orbiting other stars in our galaxy has been around for hundreds of years (in fact 16th century Italian astronomer Giordano Bruno was burnt at the stake at least in part for his beliefs on the matter!). However, it was not until 1992 that the first exoplanet was confirmed. It was found orbiting a pulsar, the rapidly-spinning, dense core of a dead star. The first confirmed planet orbiting a Sun-like star, 51 Pegesi b, was announced in 1995. Since then over one thousand exoplanets have been confirmed and many more candidates identified. The graph above shows the distribution of planet candidates discovered by the Kepler mission as of November 2013.
+        The idea of planets orbiting other stars in our galaxy has been around for hundreds of years (in fact 16th century Italian astronomer Giordano Bruno was burnt at the stake at least in part for his beliefs on the matter!). However, it was not until 1992 that the first exoplanet was confirmed. It was found orbiting a pulsar, the rapidly-spinning, dense core of a dead star. The first confirmed planet orbiting a Sun-like star, 51 Pegesi b, was announced in 1995. Since then over one thousand exoplanets have been confirmed and many more candidates identified. The graph below shows the distribution of planet candidates discovered by the Kepler mission as of November 2013.
         """
       figure: "./images/mini-course/8-size-candidates.jpg"
       figure_credits: "NASA"
@@ -131,7 +134,7 @@ content = [
     material:
       title: "Planet Hunters 2b"
       text: """
-        PH2b is the second planet discovered by volunteers on Planet Hunters. It is a Jupiter-sized, gas giant planet in orbit around a star very similar to our Sun. It’s orbit is only 17% smaller than that of the Earth, putting it in a region known as the habitable zone, the distance from a star where the conditions may be right for life. You will learn more about the habitable zone later. Below is an artist’s impression of the view from a hypothetical habitable moon in orbit around PH2b
+        PH2b is the second planet discovered by volunteers on Planet Hunters. It is a Jupiter-sized, gas giant planet in orbit around a star very similar to our Sun. It’s orbit is only 17% smaller than that of the Earth, putting it in a region known as the habitable zone, the distance from a star where the conditions may be right for life. You will learn more about the habitable zone later. Below is an artist’s impression of the view from a hypothetical habitable moon in orbit around PH2b.
         """
       figure: "./images/mini-course/10-2b.png"
       figure_credits: "NASA"
