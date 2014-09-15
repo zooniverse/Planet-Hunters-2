@@ -563,6 +563,9 @@ class Classifier extends BaseController
     @continueButton.hide()
 
   showSummaryScreen: ->
+    # reveal ids
+    @el.find('.star-id').fadeIn()
+    
     if @classification.subject.id is 'TUTORIAL_SUBJECT'
       @onClickNextSubject()
     else
