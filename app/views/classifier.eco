@@ -141,7 +141,7 @@
           <span>+Fav</span>
         </button>
         <button class="tool-button" id="help">
-          <span>Spotter's Guide</span>
+          <span>Help</span>
         </button>
         <button class="tool-button" id="tutorial">
           <span>Tutorial</span>
