@@ -32,36 +32,43 @@
         <h2>Science Team</h2>
         <div class="team-members">
           <div class="team-member">
+            <img src="./images/people/debra_fischer.png">
             <div class="name">Debra Fischer</div>
             <div class="location">Yale University (USA)</div>
             <div class="bio">Debra is a Professor of Astronomy at Yale University, with a joint appointment in Geology &amp; Geophysics. She has been on the hunt for extra solar planets since 1997 -- just after the first planet outside our solar system was discovered -- and she searches out answers (and more good questions!) about the mysteries of exoplanets, their location, and their composition night and day.</div>
           </div>
           <div class="team-member">
+            <img src="./images/people/tabetha.png">
             <div class="name">Tabetha Boyajian</div>
             <div class="location">Yale University (USA)</div>
             <div class="bio">Tabetha is a postdoctoral fellow in the exoplanets group at Yale. She is interested in exoplanet detection, the precise characterization of exoplanets and their host stars, and the fundamental properties of eclipsing binaries and nearby single stars.</div>
           </div>
           <div class="team-member">
+            <img src="./images/people/mattgiguere.png">
             <div class="name">Matt Giguere</div>
             <div class="location">Yale University (USA)</div>
             <div class="bio">Matt is a graduate student studying astronomy at Yale and is one of the original co-founders of Planet Hunters. Matt also studies stellar activity and searches for planets using the radial velocity technique.</div>
           </div>
           <div class="team-member">
+            <img src="./images/people/chrislintott.jpg">
             <div class="name">Chris Lintott</div>
             <div class="location">University of Oxford (UK)</div>
             <div class="bio">Chris runs the Zooniverse collaboration and works on how galaxies form and evolve; particularly interested in the effects of active galactic nuclei and mergers. In his 'spare' time, he hunts for planets, presents the BBC's long-running Sky at Night program and cooks.</div>
           </div>
           <div class="team-member">
+            <img src="./images/people/joeyschmitt.png">
             <div class="name">Joey Schmitt</div>
             <div class="location">Yale University (USA)</div>
             <div class="bio">Joey is a third year graduate student at Yale University. He's originally from Iowa and received his B.S. at the University of Iowa. Joey now works on detecting and characterizing exoplanets and their atmospheres.  </div>
           </div>
           <div class="team-member">
+            <img src="./images/people/megschwamb.png">
             <div class="name">Meg Schwamb</div>
             <div class="location">Institute of Astronomy and Astrophysics, Academia Sinica (Taiwan)</div>
             <div class="bio">Meg is a planetary scientist and astronomer interested in how planets and solar systems form and evolve. In addition to working on exoplanets, she explores the small bodies residing in the outer Solar System and dabbles in the study of the Martian climate with the Planet Four project. Meg has a fondness for baking, soccer, and champagne. </div>
           </div>
           <div class="team-member">
+            <img src="./images/people/jiwang_yale.png">
             <div class="name">Ji Wang</div>
             <div class="location">Yale University (USA)</div>
             <div class="bio">Ji is Postdoc at Yale University. He is interested in finding Tatooines, planets in binary stars. He is an ultimate sports fan in his spare time.</div>
@@ -71,15 +78,21 @@
         <h2>Moderators</h2>
         <div class="team-members">
           <div class="team-member">
-            <div class="name">Tony Hoffman (TonyJHoffman)</div>
+            <img src="./images/people/tonyhoffman.png">
+            <div class="name">Tony Hoffman</div>
+            <div class="location">Username: TonyJHoffman</div>
             <div class="bio">Tony is a technology analyst for PCMag.com. A director of the Amateur Astronomers Association of New York, Tony has participated in the SOHO comets program, Spacewatch FMO Project, and several Zooniverse citizen science projects in addition to Planet Hunters.</div>
           </div>
           <div class="team-member">
-            <div class="name">Joe Constant (constovich)</div>
+            <img src="./images/people/joeconstant.png">
+            <div class="name">Joe Constant</div>
+            <div class="location">Username: constovich</div>
             <div class="bio">Joe is a Corrective Action Program Specialist at Catawba Nuclear Station. Science and science fiction have always appealed to him and being a citizen-scientist on PH has allowed him to virtually explore the cosmos.</div>
           </div>
           <div class="team-member">
-            <div class="name">Jo Echo Syan (echo-lily-mai)</div>
+            <img src="./images/people/joechosyan.png">
+            <div class="name">Jo Echo Syan</div>
+            <div class="location">Username: echo-lily-mai</div>
             <div class="bio">Jo has been a member of the Zooniverse since 2009 and is also a Merger Zoo moderator over on the Galaxy Zoo forum. Completing a 1st class degree in fine art is currently exploring how art and science can fuse together with Enjoy Chaos.</div>
           </div>
         </div>
