@@ -88,11 +88,14 @@
 
         <p>The bigger the planet, the more starlight that is blocked out and the bigger the transit dip. Below we’ve taken a Kepler light curve from a star that’s about the same size as the Sun and have simulated what the effects would be if a few different types of planets were to transit. A Jupiter-sized planet produces a large 1% drop in light as it transits across a Sun-like star. Rocky planets generate a much smaller dimming, with the Earth only producing a 0.01% drop in our Sun's light! Larger planets around same-sized stars will be easier to detect than those of terrestrial planets with the transit method.</p>
 
-        <img src="images/enj_example.png"><br>
+        <img src="images/enj_example.png">
+        <p class="image-caption">Credit: M. Giguere (Yale)</p>
 
         <p>The size of the star matters too. The same planet transiting a smaller star will have a larger transit depth. Earth-sized planets orbiting cool small M dwarfs, have the similar transit depths to giant planets around Sun-like stars.</p>
 
-        <img src=""><br>
+        <img src="images/gdwarf_mdwarf.png">
+        <p class="image-caption">Credit: M. Giguere (Yale)</p>
+
 
         <p>Given that our own Solar System has eight planets, it should come as no surprise that we may find other stars with multiple planets around them lurking in the Kepler data. These light curves would look exactly as one might guess, showing multiple patterns of transits.</p>
 
