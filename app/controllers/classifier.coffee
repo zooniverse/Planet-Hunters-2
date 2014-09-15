@@ -361,6 +361,9 @@ class Classifier extends BaseController
     @fetchComments()
 
   loadSubjectData: () ->
+    # reset fav
+    @el.find("#toggle-fav").removeClass("toggled")
+
     $('#graph-container').addClass 'loading-lightcurve'
     # jsonFile = 'offline/simulation_feedback_example.json'
     jsonFile = @subject.selected_light_curve.location
