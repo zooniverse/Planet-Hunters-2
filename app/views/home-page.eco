@@ -8,7 +8,7 @@
     <div class="description">
       <%- translate 'home.header.description' %>
       <%- translate 'a', 'home.header.beginClassifying', href: '#/classify', id: "begin-classifying" %>
-      <%- translate 'a', 'home.header.learnMore', href: '#/about', id: "learn-more" %>
+      <!--<%- translate 'a', 'home.header.learnMore', href: '#/about', id: "learn-more" %>-->
     </div>
 
     <div id='social-media'>

@@ -3,19 +3,24 @@
 </div>
 
 <div class="secondary-white">
+
+  <div class="secondary-content">
+    <nav class="sub-nav-education">
+      <button name="classroom">Classroom</button>
+      <!-- <button name="resources">Resources</button> -->
+      </nav>
+  </div>
+
   <div class="secondary-content">
     <div class="left-column">
-      <div class="content">
+      <div class="content sub-nav-education-classroom">
         <h1>In the Classroom</h1>
         <h2>Can I use Planet Hunters 2 in the classroom?</h2>
-        <p>Yes! Planet Hunters, like all the Zooniverse projects, offers students a unique opportunity to explore real scientific data while making a contribution to cutting edge research! We would like to stress that as each image is marked by multiple volunteers, it really does not matter if your students don't mark all the features correctly.  The task itself is simple enough that we believe most people can take part and make a worthwhile contribution regardless of age.</p>
-      </div>
-
-      <!-- BEGIN CONTENT -->
-      <div class="content">
-
+        <p>Yes! Planet Hunters, like all the Zooniverse projects, offers students a unique opportunity to explore real scientific data while making a contribution to cutting edge research! We would like to stress that it's okay if students don't mark all the features correctly since each light curve is seen by multiple volunteers.  The task itself is simple enough that we believe most people can take part and make a worthwhile contribution regardless of age.</p>
+     
+      <!-- </div>
+      <div class="content sub-nav-education-resources">-->
         <h1>Resources</h1>
-        
         <h2>What resources are available for the classroom?</h2>
 
         <p>
@@ -30,11 +35,10 @@
               <a href="http://planetquest.jpl.nasa.gov">http://planetquest.jpl.nasa.gov</a>
             </li>
             <li>
-              Exoplanet Transit Simulator: 
-              <a href="http://astro.unl.edu/naap/esp/animations/transitSimulator.html">http://astro.unl.edu/naap/esp/animations/transitSimulator.html</a>, produced by The Astronomy Department at University of Nebraska
+              <a href="http://astro.unl.edu/naap/esp/animations/transitSimulator.html">Exoplanet Transit Simulator</a> by The Astronomy Department at University of Nebraska
             </li>
-            <li>National Science Foundation Science Behind The News: Extrasolar Planets, describes the Transit and Doppler methods: 
-              <a href="https://www.youtube.com/watch?v=0WatNUka7OA">https://www.youtube.com/watch?v=0WatNUka7OA</a>
+            <li>
+              National Science Foundation's <a href="https://www.youtube.com/watch?v=0WatNUka7OA">Science Behind The News: Extrasolar Planets</a>, describes the Transit and Doppler methods.
             </li>
             <li>
               NASA has also provided tools you can use in the classroom related to Exoplanets:
@@ -71,12 +75,7 @@
     </div>
     <div class="right-column">
       <div class="content">
-        <h1>Get Involved</h1>
-        <p>Join us in finding the many worlds out there. Are you ready?</p>
-        <button class="std-btn big-btn yellow">Start Classifying</button>
-
-        <h1>Connect</h1>
-        <p>Follow the <a href="http://blog.planethunters.org">Planet Hunters Blog</a> and <a href="http://www.twitter.com/planethunters">@planethunters</a> to keep current with the latest news.</p>
+        <%- require('./partials/right-column')(@) %>
       </div>
     </div>
 

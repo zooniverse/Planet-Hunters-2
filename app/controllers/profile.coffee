@@ -70,12 +70,12 @@ class Profile extends BaseProfile
     , 1000
 
   onNavLoad:(task)=>
-    console.log @, @nav
+    # console.log @, @nav
     if $(".profile nav")
-      console.log "appending"
+      # console.log "appending"
       task()
     else
-      console.log "waiting"
+      # console.log "waiting"
       setTimeout @onNavLoad, 200
 
   reset: ->

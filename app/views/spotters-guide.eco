@@ -1,30 +1,32 @@
 <div id="spotters-guide">
   <div class="content">
 
-    <!-- <h1>Spotter's Guide</h1> -->
+    <h1 style="margin-bottom: 0px;">Spotter's Guide</h1>
+    <p style="font-size: 10px; font-style: italic; margin: 0px;">Click on image examples to enlarge</p>
 
-    <h2>Transits</h2>
+    <h2 class="divider">Transits</h2>
     
-    <h3>Single Transit</h3>
+    <h3 class="uppercase">Long Period Planet/Single Transit</h3>
+    <h3>One transit visible in the light curve</h3>
     <div class="examples">
       <img class="example-image" src="images/guide/singletransit1.png" />
     </div>
 
-    <h3>Multiple Transits</h3>
+    <h3 class="uppercase">Short Period Planet/Many Transits</h3>
+    <h3>Many transits from the same planet visible</h3>
+    <div class="examples">
+      <img class="example-image" src="images/guide/manytransits1.png" />
+      <img class="example-image" src="images/guide/manytransits2.png" />
+    </div>
+    <h3 class="uppercase">Multi-planet System</h3>
+    <h3>Transits from more than one planet visible</h3>
     
     <div class="examples">
       <img class="example-image" src="images/guide/multitransits1.png" />
       <img class="example-image" src="images/guide/multitransits2.png" />
     </div>
 
-    <h3>Eclipsing Binaries</h3>
-   
-    <div class="examples">
-      <img class="example-image" src="images/guide/eb1.png" />
-      <img class="example-image" src="images/guide/eb2.png" />
-    </div>
-
-    <h3>More Examples</h3>
+    <h3 class="uppercase">More Example Planet Transits</h3>
 
     <div class="examples">
       <img class="example-image" src="images/guide/more_examples1.png" />
@@ -33,23 +35,32 @@
       <img class="example-image" src="images/guide/more_examples4.png" />
     </div>
 
-    <h2>Non-Transits</h2>
+    <h3 class="uppercase">Eclipsing Binaries</h3> 
+    <h3>Two stars transiting in front and behind each other</h3>
+   
+    <div class="examples">
+      <img class="example-image" src="images/guide/eb1.png" />
+      <img class="example-image" src="images/guide/eb2.png" />
+    </div>
 
-    <h3>Gaps</h3>
+
+    <h2 class="divider">Non-Transits</h2>
+
+    <h3 class="uppercase">Gaps</h3>
 
     <div class="examples">
       <img class="example-image" src="images/guide/gaps1.png" />
       <img class="example-image" src="images/guide/gaps2.png" />
     </div>
 
-    <h3>Pulsator</h3>
+    <h3 class="uppercase">Pulsating Stars</h3>
 
     <div class="examples">
       <img class="example-image" src="images/guide/pulsator1.png" />
       <img class="example-image" src="images/guide/pulsator2.png" />
     </div>
 
-    <h3>Star Spots</h3>
+    <h3 class="uppercase">Star Spots</h3>
 
     <div class="examples">
       <img class="example-image" src="images/guide/starspots1.png" />

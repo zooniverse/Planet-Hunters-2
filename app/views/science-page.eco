@@ -5,16 +5,28 @@
 <div class="secondary-white">
   <div class="secondary-content">
     <nav class="sub-nav-science">
+      <button name="mission">Our Mission</button>
       <button name="faq">FAQ</button>
       <button name="transits">Transits</button>
       <button name="your-task">Your Task</button>
-      <button name="origin">Origin of the light curves</button>
+      <button name="origin">Light Curves</button>
       <button name="simulations">Simulations</button>
       <button onclick="window.location='https://www.zooniverse.org/publications?project=planethunters'">Discoveries &amp; Papers</button>
     </nav>
   </div>
   <div class="secondary-content">
     <div class="left-column">
+      <div class="content sub-nav-science-mission">
+        <h1>Our Mission</h1>
+        <p>Welcome to Planet Hunters. With your help, we are looking for planets around other stars.</p>
+        <p>NASA's Kepler spacecraft is one of the most powerful tools in the search for extrasolar planets (exoplanets), planets orbiting stars outside of our own Solar System, and its discoveries continue to revolutionize our understanding of how planetary systems grow and evolve. Approximately every 30 minutes, Kepler monitors the brightness of many thousands of stars simultaneously for the signature of exoplanets via the transit technique. When an exoplanet passes or transits in front of its parent star, the star momentarily dims. This decrease in brightness is detectable by Kepler and lasts for a few hours or more and repeats once per orbit of the planet.</p>
+
+        <p>The time series of brightness measurements for a star is called a light curve. Automated computers are sifting through the Kepler light curves looking for the repeating signal of a planet transit, but we think there will be planets which can only be found via the innate human ability for pattern recognition. At Planet Hunters we are enlisting the public's help to inspect the Kepler light curves and find these planets missed by automated detection algorithms. No training required! All you need is your keen eyes and a web browser to join the hunt.</p>
+
+        <p>It's just possible that you might be the first to know that a star somewhere out there in the Milky Way has a companion, just as our Sun does. Fancy giving it a try?</p>
+      </div>
+
+
       <!-- FAQ -->
       <div class="content sub-nav-science-faq">
         <h1 id="faq-top">Frequently Asked Questions</h1>
@@ -72,13 +84,18 @@
 
         <p>Not all planets will transit their host stars. A special orientation of the orbit is required. Because the technique looks for a dimming in the brightness of the star, all of the planets with orbits that don’t pass between the star and our line of sight will be missed. For those planets that due transit, a transit will occur once every orbit.</p>
 
+        <img src="images/transit_edges.png"/>
+
         <p>The bigger the planet, the more starlight that is blocked out and the bigger the transit dip. Below we’ve taken a Kepler light curve from a star that’s about the same size as the Sun and have simulated what the effects would be if a few different types of planets were to transit. A Jupiter-sized planet produces a large 1% drop in light as it transits across a Sun-like star. Rocky planets generate a much smaller dimming, with the Earth only producing a 0.01% drop in our Sun's light! Larger planets around same-sized stars will be easier to detect than those of terrestrial planets with the transit method.</p>
 
-        <img src="blah.png"><br>
+        <img src="images/enj_example.png">
+        <p class="image-caption">Credit: M. Giguere (Yale)</p>
 
         <p>The size of the star matters too. The same planet transiting a smaller star will have a larger transit depth. Earth-sized planets orbiting cool small M dwarfs, have the similar transit depths to giant planets around Sun-like stars.</p>
 
-        <img src="blah.png"><br>
+        <img src="images/gdwarf_mdwarf.png">
+        <p class="image-caption">Credit: M. Giguere (Yale)</p>
+
 
         <p>Given that our own Solar System has eight planets, it should come as no surprise that we may find other stars with multiple planets around them lurking in the Kepler data. These light curves would look exactly as one might guess, showing multiple patterns of transits.</p>
 
@@ -90,7 +107,7 @@
 
         <p>Like our Sun, many stars have cooler and fainter blotches on their surface. These starspots (or sunspots in case of the Sun) rotate with the star and cause relatively slow changes in the brightness of the light curve. Starspots cause most of the smooth and slowly varying brightness seen in stars typically over periods of days. Transiting planets cause produce changes in a star’s brightness over much shorter timescales  Planets will transit the star in  a few to tens of hours, causing quick dips in the star's brightness. Below is a light curve of a star with starspots and a transiting exoplanet. The transits are denoted by red boxes.</p>
 
-        <img src="Insert more_examples4.png"><br>
+        <img src="images/guide/more_examples4.png"><br>
 
         <h2>Planet Candidates vs Confirmed Planet</h2>
 
@@ -129,8 +146,12 @@
 
         <p>We have still have much of the four years of Kepler field data to search through. The original Planet Hunters project barely scratched the surface of the Kepler field observations. We think there is still much to be learned from the original Kepler data and likely to be unknown planets lurking in the light curves missed by the computers waiting to discovered.</p>
 
+        <img src="images/Keplerfield.jpg"/>
+
         <h2>K2</h2>
         <p>The Kepler spacecraft has been repurposed for the K2 mission. For the next several years, Kepler will be observing a new patch of sky every 75 days in the ecliptic (plane of the Solar System). In each of these fields, Kepler will monitor brand new sets of 10,000-20,000 stars. These stars are different from the sources that Kepler had been monitoring in the past in the Kepler field. K2 observations will be made available to the entire astronomical community and the public shortly after being transmitted to Earth and processed.Your eyes will be one of the first to gaze upon these observations. Most of the K2 target stars will have never before been searched for planets, proving a new opportunity to find distant worlds.</p>
+        <img src="images/K2.jpg"/>
+
       </div>
 
       <div class="content sub-nav-science-simulations">

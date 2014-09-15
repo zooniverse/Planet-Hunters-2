@@ -29,7 +29,7 @@ class Classifier extends BaseController
     '#tutorial'                         : 'tutorialButton'
     'numbers-container'                 : 'numbersContainer'
     '#classify-summary'                 : 'classifySummary'
-    '#comments'                         : 'comments'
+    '#comments'                         : 'commentsContainer'
     '#planet-num'                       : 'planetNum'
     '#alt-comments'                     : 'altComments'
     'button[name="no-transits-button"]' : 'noTransitsButton'
@@ -361,6 +361,9 @@ class Classifier extends BaseController
     @fetchComments()
 
   loadSubjectData: () ->
+    # reset fav
+    @el.find("#toggle-fav").removeClass("toggled")
+
     $('#graph-container').addClass 'loading-lightcurve'
     # jsonFile = 'offline/simulation_feedback_example.json'
     jsonFile = @subject.selected_light_curve.location
@@ -381,7 +384,6 @@ class Classifier extends BaseController
 
     # read json data
     $.getJSON jsonFile, (data) =>
-      console.log 'data: ', data
       if data.metadata.known_transits
         @known_transits = data.metadata.known_transits
 
@@ -564,10 +566,16 @@ class Classifier extends BaseController
     @continueButton.hide()
 
   showSummaryScreen: ->
-    @hideMarkingButtons()
-    @nextSubjectButton.show()
-    @setGuestObsContent()
-    @classifySummary.fadeIn(150)
+    # reveal ids
+    @el.find('.star-id').fadeIn()
+    
+    if @classification.subject.id is 'TUTORIAL_SUBJECT'
+      @onClickNextSubject()
+    else
+      @hideMarkingButtons()
+      @nextSubjectButton.show()
+      @setGuestObsContent()
+      @classifySummary.fadeIn(150)
     # @finishSubject()
 
   checkSupplementalTutorial: ->   
@@ -732,29 +740,12 @@ class Classifier extends BaseController
     $(".guest_obs .guest_obs_desc").html(cont.description)
     $(".guest_obs .guest_obs_img").attr("src",cont.example)
 
-  onClickJoinConvo: ->
-    @joinConvoBtn.hide().siblings().show()
-
-  onClickSubmitTalk: ->
-    console.log "SEND THIS TO MAIN TALK DISCUSSION", @talkComment.val()
-    @appendComment(@talkComment, @comments)
-
-  appendComment: (comment, container) ->
-    container.append("""
-      <div class="formatted-comment">
-        <p>#{comment.val()}</p>
-        <p>by <strong>#{'currentUser'}</strong> 0 minutes ago</p>
-      </div>
-    """).animate({ scrollTop: container[0].scrollHeight}, 1000)
-    @resetTalkComment comment
-
   onChangeScaleSlider: ->
     @canvasGraph.sliderValue = +@el.find("#ui-slider").val()
     @canvasGraph.plotPoints( @canvasGraph.sliderValue, @canvasGraph.sliderValue + @canvasGraph.zoomRanges[@canvasGraph.zoomLevel] )
 
     # update center point
     @canvasGraph.graphCenter = (@canvasGraph.zoomRanges[@canvasGraph.zoomLevel]/2)+@canvasGraph.sliderValue
-    console.log 'CENTER POINT: ', @canvasGraph.graphCenter # DEBUG CODE
 
   onClickZoom: ->
     # increment zoom level
@@ -771,58 +762,83 @@ class Classifier extends BaseController
       @zoomReset()
     else
       if offset is 0
-        console.log 'slider hasn\'t moved, CENTER: ', @canvasGraph.zoomRanges[@canvasGraph.zoomLevel]/2
         @canvasGraph.zoomToCenter( @canvasGraph.zoomRanges[@canvasGraph.zoomLevel]/2 )
       else
-        console.log 'slider moved, CENTER: ', @canvasGraph.graphCenter
         @canvasGraph.zoomToCenter(@canvasGraph.graphCenter)
 
       # rebuild slider
       @el.find("#ui-slider").noUiSlider
-        start: 0 #+@el.find("#ui-slider").val()
+        start: 0
         range:
           'min': @canvasGraph.smallestX,
           'max': @canvasGraph.largestX - @canvasGraph.zoomRanges[@canvasGraph.zoomLevel]
       , true
-      1
-      # update attributes/properties
-      @el.find('#ui-slider').removeAttr('disabled')
-      @el.find("#zoom-button").addClass("zoomed")
-      if @canvasGraph.zoomLevel is 2
-        @el.find("#zoom-button").addClass("allowZoomOut")
-      else
-        @el.find("#zoom-button").removeClass("allowZoomOut")
 
-    console.log 'CENTER POINT (onClickZoom): ', @canvasGraph.graphCenter
+    @updateZoomButton(@canvasGraph.zoomLevel)
     @showZoomMessage(@magnification[@canvasGraph.zoomLevel])
     @recordedClickEvents.push { event: 'clickedZoomLevel'+@canvasGraph.zoomLevel, timestamp: (new Date).toUTCString() }
 
+  updateZoomButton: (zoomLevel) ->
+    if zoomLevel is 2
+      @el.find('#ui-slider').removeAttr('disabled')
+      @el.find("#zoom-button").addClass("zoomed")
+      @el.find("#zoom-button").addClass("allowZoomOut")
+    else if zoomLevel is 1
+      @el.find('#ui-slider').removeAttr('disabled')
+      @el.find("#zoom-button").addClass("zoomed")
+      @el.find("#zoom-button").removeClass("allowZoomOut")
+    else
+      @el.find('#ui-slider').attr('disabled', true)
+      @el.find("#zoom-button").removeClass("zoomed")
+      
   zoomReset: =>
     @canvasGraph.zoomOut()
-
-    # update view
-    @el.find('#ui-slider').attr('disabled',true)
-    @el.find(".noUi-handle").fadeOut(150)
-    @el.find("#zoom-button").removeClass("zoomed")
-    @el.find("#zoom-button").removeClass("allowZoomOut")
-    @el.find("#toggle-fav").removeClass("toggled")
     @isZoomed = false
 
   showZoomMessage: (message) =>
     @el.find('#zoom-notification').html(message).fadeIn(100).delay(1000).fadeOut()
 
+
+  #
+  # BEGIN TALK COMMENT METHODS
+  #
+
+  onClickJoinConvo: ->
+    @joinConvoBtn.hide().siblings().show()
+
+  onClickSubmitTalk: ->
+    return if @talkComment.val() is "" # reject empty comments
+    @appendComment(@talkComment, @commentsContainer)
+    @submitComment()
+    @talkComment.val('')
+
+  appendComment: (comment, container) ->
+    container.append("""
+      <div class="formatted-comment">
+        <p>#{comment.val()}</p>
+        <p>by <strong>You</strong></p>
+      </div>
+    """).animate({ scrollTop: container[0].scrollHeight}, 1000)
+
   onCommentsFetch: ({discussion}) =>
     @comments = discussion.comments
 
-    commentsContainer = @el.find '#comments'
-    for comment in @comments
-      commentsContainer.append """
-      <div class="formatted-comment">
-        <p>#{comment.body}</p>
-        <p>by <strong>#{comment.user_name}</strong> #{comment.created_at}</p>
-      </div>
+    if @comments.length <= 0
+      @commentsContainer.prepend("""
+        <div class="formatted-comment">
+          <p>See anything interesting? Be the first to discuss this light curve!</p>
+        </div>
+      """)
 
-      """
+
+    for comment in @comments
+      date = new Date comment.created_at
+      @commentsContainer.prepend("""
+        <div class="formatted-comment">
+          <p>#{comment.body}</p>
+          <p class="comment-by">by <b>#{comment.user_name}</b>, #{date.toDateString()}</p>
+        </div>
+      """)#.animate({ scrollTop: container[0].scrollHeight}, 1000)
 
     #   comment.timeago = $.timeago comment.updated_at
     #   comment.date = DateWidget.formatDate 'd MM yy', new Date comment.updated_at
@@ -832,7 +848,6 @@ class Classifier extends BaseController
     commentsContainer = @el.find '#comments'
     commentsContainer.html "" # delete existing comments
     # request = Api.current.get "/projects/#{Api.current.project}/talk/subjects/#{Subject.current?.zooniverse_id}"
-    console.log "requesting comments: /projects/#{Api.current.project}/talk/subjects/#{Subject.current?.zooniverse_id}"
     request = Api.current.get "https://dev.zooniverse.org/projects/planet_hunter/talk/subjects/APH000001x"
     request.done @onCommentsFetch
 
@@ -841,5 +856,39 @@ class Classifier extends BaseController
     @timeout = setTimeout =>
       @fetchComments()
     , @refresh * 1000 if @refresh?
+
+
+  validateComment: (comment)=>
+    is_valid = comment.length > 0 && comment.length <= 140
+    
+  submitComment: =>
+    comment = @talkComment.val()
+    is_valid = @validateComment comment
+    return unless is_valid
+    request = Api.current.post "https://dev.zooniverse.org/projects/planet_hunter/talk/subjects/APH000001x/comments", comment: comment
+    
+    # request = Api.current.post "/projects/#{Api.current.project}/talk/subjects/#{Subject.current?.zooniverse_id}/comments", comment: comment
+
+    # time = new Date
+    
+    # @comments.unshift
+    #   user_name: User.current.name
+    #   user_zooniverse_id: User.current.zooniverse_id
+    #   body: comment
+    #   timeago: $.timeago time
+    #   date: DateWidget.formatDate 'd MM yy', time
+    
+    # @render()
+    
+    # clearTimeout @timeout if @timeout?
+    
+    # @timeout = setTimeout => 
+    #   @fetchComments()
+    # , @refresh * 1000 if @refresh?
+  
+
+  #
+  # END TALK COMMENT METHODS
+  #
 
 module.exports = Classifier
