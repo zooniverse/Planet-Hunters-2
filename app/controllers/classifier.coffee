@@ -534,10 +534,15 @@ class Classifier extends BaseController
   #
 
   onClickNoTransits: ->
+
     if @simulationsPresent()
       @evaluateMarks()
       @displayKnownTransits()
+      @noTransitsButton.hide()
+      @finishedMarkingButton.hide()
     else
+      @noTransitsButton.hide()
+      @finishedMarkingButton.hide()
       @showSummaryScreen()
 
   onClickFinished: ->
