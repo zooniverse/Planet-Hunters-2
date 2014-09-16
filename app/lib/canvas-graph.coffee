@@ -117,8 +117,10 @@ class CanvasGraph
     @smallestY = Math.min @data.y...
     @largestX = Math.max  @data.x...
     @largestY = Math.max  @data.y...
-
-    @largetsX = Math.max @largestX, 30
+    # add padding
+    if @largestX < 32
+      console.log 'PADDING LIGHT CURVE'
+      @largestX = 32
 
     @plotPoints()
 
