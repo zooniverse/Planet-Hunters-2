@@ -18,6 +18,9 @@ GuestObsContent            = require '../lib/guest_obs_content'
 
 $ = window.jQuery
 
+MAIN_SUBJECT_GROUP = "5417014a3ae7400bda000001"
+SIMULATION_GROUP   = "5417014b3ae7400bda000002"
+
 class Classifier extends BaseController
   className: 'classifier'
   template: require '../views/classifier'
@@ -357,7 +360,7 @@ class Classifier extends BaseController
 
   onSubjectSelect: (e, subject) =>
     # console.log 'onSubjectSelect(): '
-    console.log("selecting subject")
+    console.log "selecting subject #{subject.zooniverse_id}"
     @subject = subject
     @classification = new Classification {subject}
     @loadSubjectData()
@@ -393,8 +396,14 @@ class Classifier extends BaseController
     # read json data
     $.getJSON jsonFile, (data) =>
 
-      if @subject.metadata.synthetic_id?
-        @calcKnownTransits(data)
+      # DEBUG: USE THIS FOR NOW
+      if data.metadata.known_transits
+        @known_transits = data.metadata.known_transits
+      else
+        @known_transits = ''
+
+      # if @subject.metadata.synthetic_id?
+        # @calcKnownTransits(data) 
 
       @canvasGraph?.marks.destroyAll()
       @marksContainer.appendChild(@canvas)
@@ -425,15 +434,15 @@ class Classifier extends BaseController
   calcKnownTransits:(data)=>
     first_event = data.metadata.first_trans_event
     no_points = data.x.length
-    console.log "data range ", data.x[no_points-1]-data.x[0], " planet peroid ", data.metadata.planet_period, "no points " ,  no_points*1.0
+    # console.log "data range ", data.x[no_points-1]-data.x[0], " planet peroid ", data.metadata.planet_period, "no points " ,  no_points*1.0
 
     start = parseInt(first_event.split(":")[0])
     end   = parseInt(first_event.split(":")[1])
     period = data.metadata.planet_period
     startX = data.x[start]
     endX   = data.x[end]
-    console.log "data ", data.x, start, end
-    console.log "startx ", startX, " end x ", endX
+    # console.log "data ", data.x, start, end
+    # console.log "startx ", startX, " end x ", endX
     dur = endX - startX
     mid = (endX + startX)/2.0
 
@@ -449,8 +458,6 @@ class Classifier extends BaseController
     #   else
     #     @known_transits.push([startX + (i * period) - data.x[0] , endX + (i * period) - data.x[0] ])
     #     i+=1
-
-
 
   insertMetadata: ->
     # ukirt data
@@ -477,14 +484,13 @@ class Classifier extends BaseController
 
   onToggleFav: ->
     console.log 'fav toggled!'
-    @classification.favorite = !@classification.favorite
-    favButton = @el.find(".toggle-fav")[0]
-    if @isFaved
-      @isFaved = false
+    isFaved = @classification.favorite
+    if isFaved
+      @classification.favorite = false
       @el.find(".toggle-fav").removeClass("toggled")
       @notify('Removed from Favorites.')
     else
-      @isFaved = true
+      @classification.favorite = true
       @el.find(".toggle-fav").addClass("toggled")
       @notify('Added to Favorites.')
 
@@ -598,18 +604,18 @@ class Classifier extends BaseController
     @sim_count ||= 0
     @sim_count +=1
 
-    if @sim_count%2 == 0
-      Subject.group = "5417014b3ae7400bda000002"
+    @sim_rate = 5
 
-      Subject.fetch 1, (subjects) =>
+    if @sim_count % @sim_rate == 0
+      Subject.group = SIMULATION_GROUP
+      Subject.fetch limit: 1, (subjects) ->
         console.log "got sim subjects ", subjects
-        @onSubjectSelect(null, subjects[0])
-
+        Subject.current?.destroy()
+        subjects[0].select()
+        Subject.group = MAIN_SUBJECT_GROUP
     else
-      Subject.group = "5417014a3ae7400bda000001"
+      Subject.group = MAIN_SUBJECT_GROUP
       @Subject.next()
-
-
 
     @noTransitsButton.show()
 
@@ -627,6 +633,15 @@ class Classifier extends BaseController
     # reveal ids
     @el.find('.star-id').fadeIn()
 
+    @commentsContainer.animate({ scrollTop: @commentsContainer.height()}, 1000)
+
+    if not User.current?
+      @el.find('.talk-pill-nologin').show()
+      @el.find('.talk-pill').hide()
+    else
+      @el.find('.talk-pill-nologin').hide()
+      @el.find('.talk-pill').show()
+
     if @classification.subject.id is 'TUTORIAL_SUBJECT'
       @onClickNextSubject()
     else
@@ -634,7 +649,6 @@ class Classifier extends BaseController
       @nextSubjectButton.show()
       @setGuestObsContent()
       @classifySummary.fadeIn(150)
-    # @finishSubject()
 
   checkSupplementalTutorial: ->
     for classification_count in @whenToDisplayTips
@@ -756,44 +770,8 @@ class Classifier extends BaseController
     else
       return false
 
-  finishSubject: ->
-    # disable buttons until next lightcurve is loaded
-    @el.find('#no-transits-button').hide() #prop('disabled',true)
-    @el.find('#finished-marking').hide() #prop('disabled',true)
-    @el.find('#finished-feedback').hide() #prop('disabled',true)
-
-    # Hide tutorials
-    tutorials = ['initialTutorial', 'supplementalTutorial']
-    @["#{ tutorial }"].end() for tutorial in tutorials
-
-    @finishedFeedbackButton.hide()
-
-    # re-enable zoom button (after feedback)
-    @el.find('#zoom-button').attr('disabled',false)
-
-    # show summary
-    @el.find('.do-you-see-a-transit').fadeOut()
-    @el.find('.star-id').fadeIn()
-
-    # console.log "tutorial subject at end ", @Subject()
-
-    if Subject.current?.tutorial?
-      @Subject.next()
-    else
-      @setGuestObsContent()
-      @classifySummary.fadeIn(150)
-      @nextSubjectButton.show()
-      @planetNum.html @canvasGraph.marks.all.length # number of marks
-      # @noTransitsButton.hide()
-
-
-      @finishedMarkingButton.hide()
-
-    # reset zoom parameters
-    @zoomReset()
-
   setGuestObsContent:=>
-    console.log GuestObsContent
+    # console.log GuestObsContent
     i = Math.floor(Math.random()*GuestObsContent.length)
     cont = GuestObsContent[i]
     $(".guest_obs .guest_obs_title").html(cont.title)

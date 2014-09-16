@@ -52,14 +52,6 @@ class CanvasGraph
     @sliderValue = +classifier.el.find("#ui-slider").val()
     xClick = e.pageX - e.target.getBoundingClientRect().left - window.scrollX
     yClick = e.pageY - e.target.getBoundingClientRect().top - window.scrollY
-
-    console.log """
-                   zoomLevel: #{@zoomLevel}
-                 sliderValue: #{@sliderValue}
-                   zoomRange: #{@zoomRanges[@zoomLevel]}
-                  zooming to: [#{@sliderValue},#{@sliderValue+@zoomRanges[@zoomLevel]}]
-
-    """
     offset = @sliderValue
     if @zoomLevel is 0
       @plotPoints(0, @zoomRanges[@zoomLevel])
