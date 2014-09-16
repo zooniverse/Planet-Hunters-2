@@ -101,6 +101,10 @@
             </div>
             <!--<button class="std-btn transparent" name="join-convo">Join the Conversation</button>-->
 
+            <p class="talk-pill-nologin" style="margin: 10px; color: #fc4541; font-size: 10px; font-style=italic;">
+              Please sign in to discuss.
+            </p>
+
             <div class="talk-pill">
               <textarea placeholder="Make a comment, or mark with a hashtag..." name="talk-comment"></textarea>
               <button name="submit-talk">Submit</button>
