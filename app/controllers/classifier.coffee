@@ -90,7 +90,7 @@ class Classifier extends BaseController
     ifFaved: false
 
     # classification counts at which to display supplementary tutorial
-    @whenToDisplayTips = [1, 7] # TODO: don't forget to add 4 after beta version
+    @whenToDisplayTips = [1, 2, 3] # TODO: don't forget to add 4 after beta version
     @splitDesignation = null
 
     @known_transits = ''
@@ -333,7 +333,7 @@ class Classifier extends BaseController
       @course.setRate 10
       $('#course-interval-setter').remove() # destroy custom course interval setter
 
-    else if @splitDesignation in ['a', 'd']
+    else if @splitDesignation in ['a', 'd', 'g', 'j']
       # console.log 'Setting mini-course interval to 5'
       # console.log 'Allowing custom course interval.'
       @course.setRate 5 # set default
@@ -370,7 +370,6 @@ class Classifier extends BaseController
     # reset fav
     @el.find(".toggle-fav").removeClass("toggled")
 
-    $('#graph-container').addClass 'loading-lightcurve'
 
 
     if window.location.origin != "http://planethunters.org"
@@ -381,6 +380,7 @@ class Classifier extends BaseController
     # console.log 'jsonFile: ', jsonFile
 
     # handle ui elements
+    $('#graph-container').addClass 'loading-lightcurve'
     @el.find('#loading-screen').fadeIn()
     @el.find('.star-id').hide()
     @el.find('#ui-slider').attr('disabled',true)
@@ -634,7 +634,7 @@ class Classifier extends BaseController
         @supplementalTutorial.start()
 
         # prompt user to opt in/out of mini course
-        if @course.count is 7
+        if @course.count is 3
           newElement = document.createElement('div')
           newElement.setAttribute 'class', "supplemental-tutorial-option-container"
           newElement.setAttribute 'style', "padding: 20px;"
@@ -647,11 +647,9 @@ class Classifier extends BaseController
 
           if @allowCustomCourseInterval
             $('#course-opt-in-label').html """
-              <!--<div id="course-interval-setter">-->
-                <div class="course-interval-text">Launch mini-course every </div>
+              <div class="course-interval-text">Launch mini-course every </div>
                 <input type="number" id="course-interval-sup-tut" class="course-interval" name="course-interval-sup-tut" value="5"></input>
-                <div class="course-interval-text"> classifications!</div>
-              <!--</div>-->
+              <div class="course-interval-text"> classifications!</div>
             """
           else
             $('#course-opt-in-label').html "Yes, I want to learn more!"
