@@ -265,29 +265,47 @@
                   span
                     color #fff
 
-      .summary-button
-        width 60px
-        height 60px
-        border-radius 0.3em
-        // transition 0.3s
-        background-color rgb(50,50,50)
-        span
-          top 20px
-          position relative
+        .summary-button
           display inline-block
-          margin-bottom 10px
-        &#summary-fav-button
-          background url("images/icons/favorite-nofill.svg") no-repeat 50% 35%
+          padding 5px
+          margin 5px 0px 5px 0px
+          text-align center
+          font-size 0.75em
+          opacity 0.5
+          border none
+          color white
+          background-color rgb(50,50,50)
+          height 60px
+          width 100%
+          border-radius 0.3em
+          transition 0.3s
+          &:disabled
+            opacity 0.15
           &:hover
-            background #323232 url("images/icons/favorite-nofill.svg") no-repeat 50% 35%
+            background-color #4C4C4C
+            border-radius 0.3em
+            opacity 1.0
+          &.toggled
+            background-color #151A1B
+            transition 0.3s
+          span
+            top 20px
+            position relative
+            display inline-block
+            margin-bottom 10px
           &:active
-            background #151a1b url("images/icons/favorite-filled.svg") no-repeat 50% 35%
-        &#summary-talk-button
-          background url("images/icons/talk-icon.svg") no-repeat 50% 35%
+            transform translateY(1px)
+            box-shadow none
           &:hover
-            background #323232 url("images/icons/talk-icon.svg") no-repeat 50% 35%
-          &:active
-            background #151a1b url("images/icons/talk-icon.svg") no-repeat 50% 35%
+            opacity 1.0
+          &.toggle-fav
+            background url("images/icons/favorite-nofill.svg") no-repeat 50% 35%
+            &.toggled
+              background #151a1b url("images/icons/favorite-filled.svg") no-repeat 50% 35%
+          &.talk-button
+              background url("images/icons/talk-icon.svg") no-repeat 50% 35%
+
+            
 
       #tools
         float right
@@ -337,7 +355,7 @@
               background #151a1b url("images/icons/zoom-out.svg") no-repeat 50% 35%
             &.zoomed
               background-color #151a1b
-          &#toggle-fav
+          &.toggle-fav
             background url("images/icons/favorite-nofill.svg") no-repeat 50% 35%
             &.toggled
               background #151a1b url("images/icons/favorite-filled.svg") no-repeat 50% 35%
