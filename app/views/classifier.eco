@@ -99,7 +99,7 @@
                 <p>by <strong>someAuthor</strong> X minutes ago</p>
               </div> -->
             </div>
-            <button class="std-btn transparent" name="join-convo">Join the Conversation</button>
+            <!--<button class="std-btn transparent" name="join-convo">Join the Conversation</button>-->
 
             <div class="talk-pill">
               <textarea placeholder="Make a comment, or mark with a hashtag..." name="talk-comment"></textarea>
