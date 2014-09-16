@@ -604,7 +604,7 @@ class Classifier extends BaseController
     @sim_count ||= 0
     @sim_count +=1
 
-    @sim_rate = 5
+    @sim_rate = 2
 
     if @sim_count % @sim_rate == 0
       Subject.group = SIMULATION_GROUP
@@ -747,6 +747,8 @@ class Classifier extends BaseController
 
   displayKnownTransits: ->
     return unless @simulationsPresent()
+    console.log 'MARKING DISABLED'
+    @canvasGraph.disableMarking()
     console.log "on display", @known_transitss
     @hideMarkingButtons()
     @continueButton.show()
