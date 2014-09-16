@@ -61,7 +61,7 @@ class Verification extends BaseController
 
     # @dataIndex ||= 0
     # canvas = @el.find('#verify-done')[0]
-    
+
     canvas = @el.find('.verify-canvas:nth-child(3)')[0]
     canvas.width = 300
     canvas.height = 300
@@ -70,8 +70,12 @@ class Verification extends BaseController
     middleStart = @el.find('.verify-canvas:nth-child(2)')[0]
     middleStart.width = 300
     middleStart.height = 300
-    
+
     jsonFile = @subject.location['14-1'] # read actual subject
+
+    if window.location.origin != "http://planethunters.org"
+      jsonFile = jsonFile.replace("http://www.planethunters.org/", "https://s3.amazonaws.com/zooniverse-static/planethunters.org/")
+
     $.getJSON jsonFile, (data) =>
       canvasGraph = new CanvasGraph(canvas, data)
       canvasGraph.disableMarking()
@@ -80,13 +84,17 @@ class Verification extends BaseController
       canvasGraph.plotPoints(1,2)
 
     jsonFile = @subject.location['14-2'] # read actual subject
+
+    if window.location.origin != "http://planethunters.org"
+      jsonFile = jsonFile.replace("http://www.planethunters.org/", "https://s3.amazonaws.com/zooniverse-static/planethunters.org/")
+
     $.getJSON jsonFile, (data) =>
       startCanvas = new CanvasGraph(middleStart, data)
       startCanvas.disableMarking()
       startCanvas.showAxes = false
       startCanvas.leftPadding = 0
       startCanvas.plotPoints(1,2) # comment for now
-    
+
     @message.html "Is this a proper transit?"
     return
 
@@ -114,11 +122,11 @@ class Verification extends BaseController
     @loadSubject()
     @Subject.next()
 
-  onClickNotSureButton: -> 
+  onClickNotSureButton: ->
     # got to classify mode (for debug)
     location.hash = "#/classify"
 
-  showSummary: -> 
+  showSummary: ->
     @message.html "Ready to move on?"
     @summaryMessage.html("") # place a post classify message to users here if desired
     @summary.show()

@@ -29,7 +29,10 @@ class ViewLightcurve extends BaseController
 
     # console.log "https://dev.zooniverse.org/projects/planet_hunter/subjects/?star_id=#{star_id}&quarter=#{quarter}"
 
-    $.getJSON "https://dev.zooniverse.org/projects/planet_hunter/subjects/#{star_id}", (subjectJson) =>
+    
+
+
+    $.getJSON "https://s3.amazonaws.com/zooniverse-static/planethunters.org/subjects/#{star_id}", (subjectJson) =>
 
       location = subjectJson.location["#{quarter}"]
 
@@ -53,7 +56,7 @@ class ViewLightcurve extends BaseController
 
         lightcurveViewer = new LightcurveViewer location
         lightcurveViewer.el.appendTo @el.find('.content')
-        
+
         # temporary code
         @el.find('.lightcurve-viewer-close').hide()
         @el.find('#subject-container').show()
@@ -65,5 +68,5 @@ class ViewLightcurve extends BaseController
     (if not results? then "" else decodeURIComponent(results[1].replace(/\+/g, " ")))
 
 
-    
+
 module.exports = ViewLightcurve
