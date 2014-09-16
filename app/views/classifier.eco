@@ -102,7 +102,7 @@
             <button class="std-btn transparent" name="join-convo">Join the Conversation</button>
 
             <div class="talk-pill">
-              <textarea placeholder="Type something..." name="talk-comment"></textarea>
+              <textarea placeholder="Make a comment, or mark with a hashtag..." name="talk-comment"></textarea>
               <button name="submit-talk">Submit</button>
             </div>
           </div>
