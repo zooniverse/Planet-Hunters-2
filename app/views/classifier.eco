@@ -99,10 +99,14 @@
                 <p>by <strong>someAuthor</strong> X minutes ago</p>
               </div> -->
             </div>
-            <button class="std-btn transparent" name="join-convo">Join the Conversation</button>
+            <!--<button class="std-btn transparent" name="join-convo">Join the Conversation</button>-->
+
+            <p class="talk-pill-nologin" style="margin: 10px; color: #fc4541; font-size: 10px; font-style=italic;">
+              Please sign in to discuss.
+            </p>
 
             <div class="talk-pill">
-              <textarea placeholder="Type something..." name="talk-comment"></textarea>
+              <textarea placeholder="Make a comment, or mark with a hashtag..." name="talk-comment"></textarea>
               <button name="submit-talk">Submit</button>
             </div>
           </div>
