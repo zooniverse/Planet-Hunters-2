@@ -793,7 +793,7 @@ class Classifier extends BaseController
     @zoomReset()
 
   setGuestObsContent:=>
-    console.log GuestObsContent
+    # console.log GuestObsContent
     i = Math.floor(Math.random()*GuestObsContent.length)
     cont = GuestObsContent[i]
     $(".guest_obs .guest_obs_title").html(cont.title)
