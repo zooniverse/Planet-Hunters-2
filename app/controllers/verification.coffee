@@ -57,6 +57,7 @@ class Verification extends BaseController
     @loadSubject()
 
   loadSubject: ->
+    return # KEEP WHILE VERIFICATION NOT IN USE
     # return unless window.app.stack.activePage.target.constructor.name is "Verification"
 
     # @dataIndex ||= 0
