@@ -43,7 +43,7 @@ content = [
       figure_credits: "Image credit: NASA"
   }
   {
-    course_number: 4
+    course_number: 5
     material:
       title: "What can we learn from a lightcurve?"
       text: """
@@ -60,7 +60,7 @@ content = [
   }
   {
 
-    course_number: 5
+    course_number: 6
     material:
       title: "False-positives - Variable stars"
       text: """
@@ -74,7 +74,7 @@ content = [
 
   {
 
-    course_number: 6
+    course_number: 7
     material:
       title: "False-positives - Eclipsing binary stars"
       text: """
@@ -87,7 +87,7 @@ content = [
 
   {
 
-    course_number: 7
+    course_number: 8
     material:
       title: "False-positives - Eclipsing binary stars"
       text: """
@@ -100,7 +100,7 @@ content = [
   }
 
   {
-    course_number: 8
+    course_number: 9
     material:
       title: "Other features in the lightcurves - flares"
       text: """
@@ -112,7 +112,7 @@ content = [
   }
 
   {
-    course_number: 9
+    course_number: 10
     material:
       title: "A brief history of Exoplanets"
       text: """
@@ -124,7 +124,7 @@ content = [
   }
 
   {
-    course_number: 10
+    course_number: 11
     material:
       title: "The first Planet Hunters planet"
       text: """
@@ -136,7 +136,7 @@ content = [
   }
 
   {
-    course_number: 11
+    course_number: 12
     material:
       title: "Planet Hunters 2b"
       text: """
@@ -148,7 +148,7 @@ content = [
   }
 
   {
-    course_number: 12
+    course_number: 13
     material:
       title: "Kepler-90"
       text: """
@@ -160,7 +160,7 @@ content = [
   }
 
   {
-    course_number: 13
+    course_number: 14
     material:
       title: "Star vs Planet"
       text: """
@@ -172,7 +172,7 @@ content = [
   }
 
   {
-    course_number: 14
+    course_number: 15
     material:
       title: "Types of stars - main sequence"
       text: """
@@ -184,7 +184,7 @@ content = [
   }
 
   {
-    course_number: 15
+    course_number: 16
     material:
       title: "The Habitable Zone"
       text: """
@@ -196,7 +196,7 @@ content = [
   }
 
   {
-    course_number: 16
+    course_number: 17
     material:
       title: "How else can we discover planets? - Radial Velocity"
       text: """
@@ -210,7 +210,7 @@ content = [
   }
 
   {
-    course_number: 17
+    course_number: 18
     material:
       title: "How else can we discover planets? - Radial Velocity"
       text: """
@@ -222,7 +222,7 @@ content = [
   }
 
   {
-    course_number: 18
+    course_number: 19
     material:
       title: "How else can we discover planets? - Gravitational Microlensing"
       text: """
@@ -234,7 +234,7 @@ content = [
   }
 
   {
-    course_number: 19
+    course_number: 20
     material:
       title: "How else can we discover planets? - Pulsar Timing"
       text: """
@@ -246,7 +246,7 @@ content = [
   }
 
   {
-    course_number: 20
+    course_number: 21
     material:
       title: "How else can we discover planets? - Transit Timing Variations"
       text: """
@@ -260,7 +260,7 @@ content = [
   }
 
   {
-    course_number: 21
+    course_number: 22
     material:
       title: "How else can we discover planets? - Astrometry"
       text: """
@@ -272,7 +272,7 @@ content = [
   }
 
   {
-    course_number: 22
+    course_number: 23
     material:
       title: "How else can we discover planets? - Direct Imaging"
       text: """
@@ -285,7 +285,7 @@ content = [
   }
 
   {
-    course_number: 23
+    course_number: 24
     material:
       title: "Hot Jupiters"
       text: """
@@ -297,7 +297,7 @@ content = [
   }
 
   {
-    course_number: 24
+    course_number: 25
     material:
       title: "Hot Jupiters - Migration"
       text: """
@@ -309,7 +309,7 @@ content = [
   }
 
   {
-    course_number: 25
+    course_number: 26
     material:
       title: "Congratulations!"
       text: """
