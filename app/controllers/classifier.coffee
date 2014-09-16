@@ -24,7 +24,6 @@ class Classifier extends BaseController
 
   elements:
     '#zoom-button'                      : 'zoomButton'
-    '#toggle-fav'                       : 'favButton'
     '#help'                             : 'helpButton'
     '#tutorial'                         : 'tutorialButton'
     'numbers-container'                 : 'numbersContainer'
@@ -44,7 +43,7 @@ class Classifier extends BaseController
 
   events:
     'click button[id="zoom-button"]'          : 'onClickZoom'
-    'click button[id="toggle-fav"]'           : 'onToggleFav'
+    'click .toggle-fav'                       : 'onToggleFav'
     'click button[id="help"]'                 : 'onClickHelp'
     'click button[id="tutorial"]'             : 'onClickTutorial'
     'click button[name="no-transits-button"]' : 'onClickNoTransits'
@@ -364,7 +363,7 @@ class Classifier extends BaseController
 
   loadSubjectData: () ->
     # reset fav
-    @el.find("#toggle-fav").removeClass("toggled")
+    @el.find(".toggle-fav").removeClass("toggled")
 
     $('#graph-container').addClass 'loading-lightcurve'
 
@@ -444,15 +443,16 @@ class Classifier extends BaseController
       @el.find('#notification').removeClass('notifying') )
 
   onToggleFav: ->
+    console.log 'fav toggled!'
     @classification.favorite = !@classification.favorite
-    favButton = @el.find("#toggle-fav")[0]
+    favButton = @el.find(".toggle-fav")[0]
     if @isFaved
       @isFaved = false
-      @el.find("#toggle-fav").removeClass("toggled")
+      @el.find(".toggle-fav").removeClass("toggled")
       @notify('Removed from Favorites.')
     else
       @isFaved = true
-      @el.find("#toggle-fav").addClass("toggled")
+      @el.find(".toggle-fav").addClass("toggled")
       @notify('Added to Favorites.')
 
   onClickHelp: ->

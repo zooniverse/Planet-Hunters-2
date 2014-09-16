@@ -119,10 +119,10 @@
               </ul>
             </div> -->
             <div id="summary-tools">
-              <button class="summary-button" id="summary-fav-button">
+              <button class="summary-button toggle-fav" id="summary-fav-button">
                 <span>Add to favorites</span>
               </button>
-              <button class="summary-button" id="summary-talk-button">
+              <button class="summary-button talk-button">
                 <span>Talk about this</span>
               </button>
             </div>
@@ -137,7 +137,7 @@
         <button class="tool-button" id="zoom-button">
           <span>Zoom</span>
         </button>
-        <button class="tool-button hide-unless-user" id="toggle-fav">
+        <button class="tool-button hide-unless-user toggle-fav">
           <span>+Fav</span>
         </button>
         <button class="tool-button" id="help">
