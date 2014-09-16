@@ -55,8 +55,8 @@ class CanvasGraph
 
     console.log """
                    zoomLevel: #{@zoomLevel}
-                 sliderValue: #{@sliderValue}   
-                   zoomRange: #{@zoomRanges[@zoomLevel]}    
+                 sliderValue: #{@sliderValue}
+                   zoomRange: #{@zoomRanges[@zoomLevel]}
                   zooming to: [#{@sliderValue},#{@sliderValue+@zoomRanges[@zoomLevel]}]
 
     """
@@ -109,6 +109,8 @@ class CanvasGraph
 
     # this step is necessary or (top) x-axis breaks
     @smallestX = Math.min @data_raw.x...
+    @smallestX = Math.min(@smallestX, @data.metadata.start_time)
+
     @originalMin = @smallestX
     for x, i in [@data.x...]
       @data.x[i] = x - @smallestX
@@ -123,6 +125,8 @@ class CanvasGraph
     @smallestY = Math.min @data.y...
     @largestX = Math.max  @data.x...
     @largestY = Math.max  @data.y...
+
+    @largetsX = Math.max @largestX, 30
 
     @plotPoints()
 
