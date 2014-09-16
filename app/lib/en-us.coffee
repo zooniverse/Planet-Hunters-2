@@ -70,6 +70,10 @@ module.exports =
     zooming:
       header: 'Zoom'
       content: 'You can use the zoom tool to look at the light curve in more detail. When zoomed in, you can use the slider along the bottom of the light curve to scroll through. You can toggle the scale of the zoom by clicking the magnifying glass here.'
+    
+    talk:
+      header: 'Talk'
+      content: 'Sometimes you might see something interesting or have a question.  TALK is tool where you can join Planet Hunters project scientists and volunteers to observe, collect, share, and discuss Planet Hunters data.'
 
     goodLuck:
       header: 'Good luck!'
