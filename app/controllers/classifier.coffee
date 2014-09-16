@@ -579,9 +579,10 @@ class Classifier extends BaseController
     @showSummaryScreen()
 
   onClickNextSubject: ->
+    @nextSubjectButton.disabled()
+    @hideMarkingButtons()
     @course.prompt_el.hide()
     @classifySummary.fadeOut(150)
-    @hideMarkingButtons()
 
     # # switch to verify mode
     # if @course.count % @verifyRate is 0
@@ -633,18 +634,17 @@ class Classifier extends BaseController
     # reveal ids
     @el.find('.star-id').fadeIn()
 
-    @commentsContainer.animate({ scrollTop: @commentsContainer.height()}, 1000)
-
-    if not User.current?
-      @el.find('.talk-pill-nologin').show()
-      @el.find('.talk-pill').hide()
-    else
-      @el.find('.talk-pill-nologin').hide()
-      @el.find('.talk-pill').show()
-
     if @classification.subject.id is 'TUTORIAL_SUBJECT'
+      console.log 'TUTORIAL SUBJECT'
       @onClickNextSubject()
     else
+      @commentsContainer.animate({ scrollTop: @commentsContainer.height()}, 1000)
+      if not User.current?
+        @el.find('.talk-pill-nologin').show()
+        @el.find('.talk-pill').hide()
+      else
+        @el.find('.talk-pill-nologin').hide()
+        @el.find('.talk-pill').show()
       @hideMarkingButtons()
       @nextSubjectButton.show()
       @setGuestObsContent()
