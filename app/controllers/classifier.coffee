@@ -613,13 +613,9 @@ class Classifier extends BaseController
         Subject.current?.destroy()
         subjects[0].select()
         Subject.group = MAIN_SUBJECT_GROUP
-        # @onSubjectSelect(null, subjects[0])
-
     else
       Subject.group = MAIN_SUBJECT_GROUP
       @Subject.next()
-
-
 
     @noTransitsButton.show()
 
