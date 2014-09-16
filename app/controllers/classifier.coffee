@@ -425,15 +425,15 @@ class Classifier extends BaseController
   calcKnownTransits:(data)=>
     first_event = data.metadata.first_trans_event
     no_points = data.x.length
-    console.log "data range ", data.x[no_points-1]-data.x[0], " planet peroid ", data.metadata.planet_period, "no points " ,  no_points*1.0
+    # console.log "data range ", data.x[no_points-1]-data.x[0], " planet peroid ", data.metadata.planet_period, "no points " ,  no_points*1.0
 
     start = parseInt(first_event.split(":")[0])
     end   = parseInt(first_event.split(":")[1])
     period = data.metadata.planet_period
     startX = data.x[start]
     endX   = data.x[end]
-    console.log "data ", data.x, start, end
-    console.log "startx ", startX, " end x ", endX
+    # console.log "data ", data.x, start, end
+    # console.log "startx ", startX, " end x ", endX
     dur = endX - startX
     mid = (endX + startX)/2.0
 
