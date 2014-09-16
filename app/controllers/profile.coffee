@@ -19,7 +19,11 @@ Paginator::addItemToContainer = (item) ->
   location = subjects[0].selected_light_curve?.location
   location ?= subjects[0].location
 
+  if window.location.origin != "http://planethunters.org"
+    location = location.replace("http://www.planethunters.org/", "https://s3.amazonaws.com/zooniverse-static/planethunters.org/")
+
   itemEl.data "location", location
+
 
   $.getJSON location, (data) =>
     newCanvas = $("##{ subjects[0].id }")[0]
@@ -64,8 +68,8 @@ class Profile extends BaseProfile
         $(".profile nav").append("<button style='float:right;width:156px' class='mini-course-trigger'><span>Launch Mini Course</span></button>")
         $(".profile nav .mini-course-trigger ").on "click", @onMiniCourseTrigger
 
-        $(".profile nav").append("<button style='float:right;width:156px' class='mini-course-reset'><span>Reset Mini Course</span></button>")
-        $(".profile nav .mini-course-reset").on "click", @reset
+        # $(".profile nav").append("<button style='float:right;width:156px' class='mini-course-reset'><span>Reset Mini Course</span></button>")
+        # $(".profile nav .mini-course-reset").on "click", @reset
 
     , 1000
 
@@ -82,7 +86,7 @@ class Profile extends BaseProfile
     classifier.course.resetCourse()
 
   onMiniCourseTrigger:->
-    window.location = 'index.html?show_all_courses=true#/classify' # DEBUG CODE
+    window.location = '/#/classify'
     classifier.course.launch()
 
   onClickItem: (e) ->

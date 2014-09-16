@@ -11,15 +11,15 @@ class LightcurveViewer extends BaseController
   events:
     'click button[id="zoom-button"]'          : 'onClickZoom'
     'slide #ui-slider'                        : 'onChangeScaleSlider'
-    
+
   constructor: (jsonFile) ->
-    super    
+    super
     window.viewer = @
     @jsonFile = jsonFile
 
     isZoomed: false
     ifFaved: false
-    
+
     @marksContainer = @el.find('#marks-container')[0]
     @loadSubjectData()
 
@@ -33,13 +33,18 @@ class LightcurveViewer extends BaseController
     @el.find('.star-id').hide()
     @el.find('#ui-slider').attr('disabled',true)
     @el.find(".noUi-handle").fadeOut(150)
-    
+
     # remove any previous canvas; create new one
     @canvas?.remove()
     @canvas = document.createElement('canvas')
     @canvas.id = 'graph'
     @canvas.width = 1024
     @canvas.height = 420
+
+
+    if window.location.origin != "http://planethunters.org"
+      @jsonFile = @jsonFile.replace("http://www.planethunters.org/", "https://s3.amazonaws.com/zooniverse-static/planethunters.org/")
+
 
     # read json data
     $.getJSON @jsonFile, (data) =>
@@ -65,9 +70,9 @@ class LightcurveViewer extends BaseController
     # @ra      = @subject.coords[0]
     # @dec     = @subject.coords[1]
     # ukirtUrl = "http://surveys.roe.ac.uk:8080/wsa/GetImage?ra=" + @ra + "&dec=" + @dec + "&database=wserv4v20101019&frameType=stack&obsType=object&programmeID=10209&mode=show&archive=%20wsa&project=wserv4"
-    
+
     # metadata = @Subject.current.metadata
-    # @el.find('#zooniverse-id').html @Subject.current.zooniverse_id 
+    # @el.find('#zooniverse-id').html @Subject.current.zooniverse_id
     # @el.find('#kepler-id').html     metadata.kepler_id
     # @el.find('#star-type').html     metadata.spec_type
     # @el.find('#magnitude').html     metadata.magnitudes.kepler
@@ -76,17 +81,17 @@ class LightcurveViewer extends BaseController
     # @el.find('#ukirt-url').attr("href", ukirtUrl)
 
   onChangeScaleSlider: ->
-    val = +@el.find("#ui-slider").val()    
+    val = +@el.find("#ui-slider").val()
     @canvasGraph.plotPoints( val, val + @canvasGraph.zoomRanges[@canvasGraph.zoomLevel] )
 
-  onClickZoom: ->    
+  onClickZoom: ->
     val = +@el.find("#ui-slider").val()
     @canvasGraph.zoomLevel = @canvasGraph.zoomLevel + 1
     if @canvasGraph.zoomLevel > 2
       @canvasGraph.zoomLevel = 0
     if @canvasGraph.zoomLevel is 0
       @zoomReset()
-    else 
+    else
       @canvasGraph.zoomInTo(val, val+@canvasGraph.zoomRanges[@canvasGraph.zoomLevel])
       # rebuild slider
       @el.find("#ui-slider").noUiSlider
@@ -95,7 +100,7 @@ class LightcurveViewer extends BaseController
           'min': @canvasGraph.smallestX,
           'max': @canvasGraph.largestX - @canvasGraph.zoomRanges[@canvasGraph.zoomLevel]
       , true
-      
+
       # update attributes/properties
       @el.find('#ui-slider').removeAttr('disabled')
       @el.find("#zoom-button").addClass("zoomed")
@@ -104,7 +109,7 @@ class LightcurveViewer extends BaseController
       else
         @el.find("#zoom-button").removeClass("allowZoomOut")
     @showZoomMessage(@magnification[@canvasGraph.zoomLevel])
-  
+
   zoomReset: =>
     # reset slider value
     @el.find('#ui-slider').val(0)
@@ -124,7 +129,7 @@ class LightcurveViewer extends BaseController
 
   showZoomMessage: (message) =>
     @el.find('#zoom-notification').html(message).fadeIn(100).delay(1000).fadeOut()
-    
+
   notify: (message) =>
     @course.hidePrompt(0) # get the prompt out of the way
     return if @el.find('#notification').hasClass('notifying')
