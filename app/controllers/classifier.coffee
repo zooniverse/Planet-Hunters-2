@@ -636,11 +636,6 @@ class Classifier extends BaseController
       @el.find('.talk-pill-nologin').hide()
       @el.find('.talk-pill').show()
 
-    unless User.current?
-      @el.find('.talk-pill').html """
-        <p style=\"margin: 10px; color: #fc4541; font-size: 10px; font-style=\"italic\";\">Please sign in to discuss.</p>
-      """
-
     if @classification.subject.id is 'TUTORIAL_SUBJECT'
       @onClickNextSubject()
     else
