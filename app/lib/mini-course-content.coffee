@@ -4,7 +4,7 @@ content = [
     material:
       title: "The Kepler Mission"
       text: """
-        <p>The Kepler space telescope was launched by NASA in 2009. It was named after German astronomer Johannes Kepler, who is best known for developing the laws of planetary motion in the 17th century. For 4 years it stared at a patch of sky 100 square degrees in area (500 times that of the full Moon) in the constellations Lyra, Cygnus and Draco, looking for the tell-tale dips in brightness caused when a planet passes in front of its host star. It is these brightness measurements you are looking at on Planet Hunters.</p>
+        <p>The Kepler space telescope was launched by NASA in 2009. It is named after 17th century German astronomer Johannes Kepler, who is best known for developing the laws of planetary motion. For 4 years it stared at a patch of sky 100 square degrees in area (500 times that of the full Moon) in the constellations Lyra, Cygnus and Draco, looking for the tell-tale dips in brightness caused when a planet passes in front of its host star. It is these brightness measurements you are examining on Planet Hunters.</p>
         <p>The 2nd phase of the mission (K2) began in 2014. During this phase the telescope will be looking at new patches of sky every 75 days, providing a fresh set of data for you to search through on Planet Hunters.</p>
       """
       figure: "./images/mini-course/01-KeplerHR_sm.jpg"
@@ -14,7 +14,7 @@ content = [
     course_number: 2
     material:
       title: "How a lightcurve is formed"
-      text: "<p>A lightcurve is formed by taking regular observations of a star’s brightness and plotting them over time. A fraction of planetary systems have an alignment that means, when they are viewed from Earth, the planet will pass in front of its host star as it orbits. When it does so, it blocks some of the light from the star. This is called a transit. Above you can see an example of a transit lightcurve.</p>"
+      text: "<p>A lightcurve is formed by taking regular observations of a star’s brightness and plotting them over time. A fraction of planetary systems have an alignment such that, when viewed from Earth, the planet will pass in front of its host star as it orbits. When it does so, it blocks some of the light from the star. This is called a transit. Above you can see an animation of a transit lightcurve being formed.</p>"
       figure: "./images/mini-course/ph-transit-070214.gif"
       figure_credits: ""
   }
@@ -24,16 +24,22 @@ content = [
       title: "What can we learn from a lightcurve?"
       text: """
         <p>
-          A lightcurve can tell us a lot about a planetary system. Firstly, it gives us is an estimate of the size of the planet. The larger the planet is in relation to the star, the more light is blocked by the planet and the deeper the transit. So the transit depth, d, is proportional to the radius of the planet, Rp:
+          A lightcurve can tell us a lot about a planetary system. Firstly, it gives us is an estimate of the size of the planet. The larger the planet, the more starlight it blocks, resulting in a deeper transit. So the transit depth, d, is proportional to the radius of the planet, Rp:
         </p>
         <div style=\"text-align: center;\">
-          <img style=\"width: 75px; padding: 10px\" src=\"./images/mini-course/keplers-third-law.png\"/>
+          <img style=\"width: 75px; padding: 1px\" src=\"./images/mini-course/transit-depth.png\"/>
         </div>
-        <p>
-          A planet the size of Jupiter will cause a 1% dip in the brightness of a star the size of our Sun. An Earth-sized planet would only cause a 0.1% dip, making it much harder to detect! However, if the star is much smaller than our Sun, which the majority of the stars in our galaxy are, the dip in light will be larger.
-        </p>
       """
-      figure: "./images/mini-course/light-curve-period.png"
+      figure: "./images/mini-course/lightcurve-transit-depth.png.png"
+      figure_credits: ""
+  }
+  {
+    course_number: 4
+    material:
+      title: "What can we learn from a lightcurve?"
+      text: "<p>A planet the size of Jupiter will cause a 1% dip in the brightness of a star the size of our Sun (a G dwarf). An Earth-sized planet would only cause a 0.1% dip, making it much harder to detect! However, if the star is much smaller than our Sun (M dwarfs), which the majority of the stars in our galaxy are, the dip in light will be larger.
+</p>"
+      figure: "./images/mini-course/slide-3.png"
       figure_credits: "Image credit: NASA"
   }
   {
@@ -42,14 +48,14 @@ content = [
       title: "What can we learn from a lightcurve?"
       text: """
         <p>
-          If we observe multiple transits at equally spaced intervals then we know they are caused by a single planet and we have a measurement of its orbital period, as it is just the time interval between each transit. Astronomer Johannes Kepler showed that orbital period,P, is proportional to orbital separation, a:
+          If we observe multiple transits at equally spaced intervals we know they are caused by a single planet and we have a measurement of its orbital period, as it is just the time interval between each transit. Johannes Kepler showed that orbital period,P, is proportional to orbital separation, a:
         </p>
         <div style=\"text-align: center;\">
-          <img style=\"width: 75px; padding: 10px\" src=\"./images/mini-course/transit-depth.png\"/>
+          <img style=\"width: 75px; padding: 1px\" src=\"./images/mini-course/keplers-third-law.png\"/>
         </div>
         <p>This means that by observing multiple transits of the same planet we can determine how far away it is from its host star.</p>
         """
-      figure: "./images/mini-course/lightcurve-transit-depth.png"
+      figure: "./images/mini-course/light-curve-period.png"
       figure_credits: ""
   }
   {
@@ -98,7 +104,7 @@ content = [
     material:
       title: "Other features in the lightcurves - flares"
       text: """
-        Stellar flares may be spotted in the lightcurves on Planet Hunters. They are characterised by rapid spikes in brightness. These are large explosions from the surface of the star, just like the solar flares that we observe on our star the Sun. Above is an example of a lightcurve with flare features.
+        Stellar flares may be spotted in the lightcurves on Planet Hunters. They are characterised by rapid spikes in brightness. These are large explosions from the surface of the star, just like the solar flares that we observe on our star, the Sun. Above is an example of a lightcurve with flare features.
         """
       figure: "./images/mini-course/7-Flares.png"
       figure_credits: ""
@@ -134,7 +140,7 @@ content = [
     material:
       title: "Planet Hunters 2b"
       text: """
-        PH2b is the second planet discovered by volunteers on Planet Hunters. It is a Jupiter-sized, gas giant planet in orbit around a star very similar to our Sun. It’s orbit is only 17% smaller than that of the Earth, putting it in a region known as the habitable zone, the distance from a star where the conditions may be right for life. You will learn more about the habitable zone later. Above is an artist’s impression of the view from a hypothetical habitable moon in orbit around PH2b.
+        PH2b is the second planet discovered by volunteers on Planet Hunters. It is a Jupiter-sized, gas giant planet in orbit around a star very similar to our Sun. Its orbit is only 17% smaller than that of the Earth, putting it in a region known as the 'habitable zone', the distance from a star where the conditions may be right for life. You will learn more about the habitable zone later. Above is an artist’s impression of the view from a hypothetical habitable moon in orbit around PH2b.
         """
       figure: "./images/mini-course/10-2b.png"
       figure_credits: "Image Credit: H. Giguere, M. Giguere"
@@ -146,7 +152,7 @@ content = [
     material:
       title: "Kepler-90"
       text: """
-        The third confirmed exoplanet discovered by volunteers on Planet Hunters is in a system known as Kepler-90 and now has the designation Kepler-90h. This system already had six confirmed exoplanets, but the discovery of the seventh buy Planet Hunters volunteers made it the most populous planetary system known, apart from our own. The red circle in the diagram above shows the orbit of Kepler-90h in the system.
+        The third confirmed exoplanet discovered by volunteers on Planet Hunters is in a system known as Kepler-90 and now has the designation Kepler-90h. This system already had six confirmed exoplanets, but the discovery of the seventh buy Planet Hunters volunteers made it the most populous planetary system known, apart from our own. The red circle in the diagram above shows the orbit of Kepler-90h in relation to the other planets in the system.
         """
       figure: "./images/mini-course/11-kepler90.png"
       figure_credits: ""
@@ -170,7 +176,7 @@ content = [
     material:
       title: "Types of stars - main sequence"
       text: """
-        A star spends the majority of its active life burning the hydrogen in its core. Stars that are in this phase are known as main sequence stars. Main sequence stars are split into 7 main groups named O, B, A, F, G, K and M in order from hottest to coolest. Our Sun is a G-type star but the vast majority of stars in our galaxy are smaller, cooler M-type stars.
+        A star spends the majority of its active life burning the hydrogen in its core. Stars that are in this phase are known as 'main sequence' stars. Main sequence stars are split into 7 main groups named O, B, A, F, G, K and M in order from hottest to coolest. Our Sun is a G-type star, but the vast majority of stars in our galaxy are smaller, cooler M-type stars.
         """
       figure: "./images/mini-course/13-spectral-chart.jpg"
       figure_credits: "Image credit: NASA"
@@ -192,10 +198,10 @@ content = [
   {
     course_number: 16
     material:
-      title: "How else can we discover planets?"
+      title: "How else can we discover planets? - Radial Velocity"
       text: """
         <p>The transit method is a very simple and effective method for discovering planets, but it is not the only one used by astronomers. Let’s have a look at some of the other methods:</p>
-        <strong>THE RADIAL VELOCITY METHOD</strong>
+        
         <p>As a planet orbits a star its gravitational pull moves the star around. Therefore at some points the star is moving towards us and at other points it is moving away from us. We can measure the speed of this movement by examining the light from the star. When moving towards us the star’s light becomes more blue, and when moving away, more red. The faster the star is moving, the more massive the planet. For example, Jupiter moves the Sun at 12.7 m/s (slightly faster than Usain Bolt can run), whereas the effect of the Earth is 100 times smaller, making it much easier to detect larger planets.</p>
         """
       figure: "./images/mini-course/slide-16.jpg"
@@ -220,7 +226,7 @@ content = [
     material:
       title: "How else can we discover planets? - Gravitational Microlensing"
       text: """
-        The gravitational field of a star is strong enough to noticeably bend light. When one star passes directly in front of a more distant star as seen from Earth it can bend and focus the light of the distant star causing it to appear brighter for a short period of time. This is known as gravitational microlensing and the closer star is called the lens. If there is a planet orbiting the lens it will sometimes add a noticeable component to the lens effect allowing us to confirm its existence.
+        The gravitational field of a star is strong enough to noticeably bend light. When one star passes directly in front of a more distant star, as seen from Earth, it can bend and focus the light of the distant star causing it to appear brighter for a short period of time. This is known as gravitational microlensing, and the closer star is called the 'lens'. If there is a planet orbiting the lens it will sometimes add a noticeable component to the lens effect, allowing us to confirm its existence.
         """
       figure: "./images/mini-course/17-micro-lensing.jpg"
       figure_credits: "Image credit: Maggy Wassilieff"
@@ -232,7 +238,7 @@ content = [
     material:
       title: "How else can we discover planets? - Pulsar Timing"
       text: """
-        The first ever confirmed exoplanet was not actually discovered orbiting a Sun-like star. It was found around an object known as a pulsar. Pulsars are the extremely dense, rapidly spinning cores of dead stars which have beams of radiation that sweep out like an interstellar lighthouse. The rotation-rate of pulsars is extremely reliable and can be measured to very high accuracy. However, if a planet in in orbit its gravitational pull on the pulsar will manipulate the rotation-rate in a way that allows its existence to be inferred.
+        The first ever confirmed exoplanet was not actually discovered orbiting a Sun-like star. It was found around an object known as a 'pulsar'. Pulsars are the extremely dense, rapidly spinning cores of dead stars which have beams of radiation that sweep out like an interstellar lighthouse. The rotation-rate of pulsars is extremely reliable and can be measured to very high accuracy. However, if a planet is in orbit, its gravitational pull on the pulsar will manipulate the rotation-rate in a way that allows its existence to be inferred.
         """
       figure: "./images/mini-course/slide-19.gif"
       figure_credits: "Image credit: Cambridge Physics"
@@ -244,7 +250,7 @@ content = [
     material:
       title: "How else can we discover planets? - Transit Timing Variations"
       text: """
-        In a similar way to pulsar timing, the timing of exoplanet transits can be used to infer the existence of other planets in the same system. If there were just one planet orbiting the star, the time interval between each transit would be exactly the same. However, if there is more than one planet the gravitational pull from other planets will cause regular variations in the time at which the transiting planet actually passes in front of the star. The size of the timing variation is used to measure the mass of the unseen planet.
+        In a similar way to pulsar timing, the timing of exoplanet transits can be used to infer the existence of other planets in the same system. If there were just one planet orbiting the star, the time interval between each transit would be exactly the same. However, if there is another planet in the system, its gravitational pull will cause regular variations in the time at which the transiting planet actually passes in front of the star. The size of the timing variation is used to measure the mass of the unseen planet.
         """
       video: '<video class="nativeEmbedPlayerPid" id="pid_mwe_player_1" src="//upload.wikimedia.org/wikipedia/commons/transcoded/9/96/201008-2a_PlanetOrbits_16x9-_Transit_timing_of_1-planet_vs_2-planet_systems.ogv/201008-2a_PlanetOrbits_16x9-_Transit_timing_of_1-planet_vs_2-planet_systems.ogv.480p.ogv" autoplay="autoplay" style="width: 350px; margin-left:155px; z-index: 1; "></video>'
 
@@ -258,7 +264,7 @@ content = [
     material:
       title: "How else can we discover planets? - Astrometry"
       text: """
-        As described before for the radial velocity method, stars are pulled around by the gravitation force from their orbiting planets (see animation above). Therefore, if the position of a star can be measured accurately, this movement can be observed and the existence of the planet can be confirmed. These movements are extremely small and to-date very few exoplanet candidates have been discovered in this way, however the recently launch Gaia spacecraft plans to utilise this method as part of its mission.
+        As described before for the radial velocity method, stars are pulled around by the gravitation force from their orbiting planets (see animation above). Therefore, if the position of a star can be measured accurately, this movement can be observed and the existence of the planet can be confirmed. These movements are extremely small and to-date very few exoplanet candidates have been discovered in this way, however the recently launched Gaia spacecraft plans to utilise this method as part of its mission.
         """
       figure: "./images/mini-course/slide-21.gif"
       figure_credits: ""
@@ -270,7 +276,7 @@ content = [
     material:
       title: "How else can we discover planets? - Direct Imaging"
       text: """
-        <p>The separation and extreme difference in brightness between exoplanets and their host stars makes it very difficult to image them directly. However, there are a handful of exoplanet candidates  that have been discovered this way. All of them have very large radii and lie in distant orbits.</p>
+        <p>The small separation and extreme difference in brightness between exoplanets and their host stars makes it very difficult to image them directly. However, there are a handful of exoplanet candidates  that have been discovered this way. All of them are very large and lie in distant orbits.</p>
         <p>Above is an picture showing the directly imaged exoplanet candidate orbiting in the debris disk around the star Formalhaut.</p>
         """
       figure: "./images/mini-course/slide-22.jpg"
@@ -283,7 +289,7 @@ content = [
     material:
       title: "Hot Jupiters"
       text: """
-        The first planets discovered using the transit method were very strange. They were gas giant planets the same size as Jupiter but so close to their star that they only take a few days to complete one orbit! There is nothing like this in our Solar System, and theories suggest it is impossible for a Jupiter-sized planet to form in the high temperature environment that close to a star.
+        The first planets discovered using the transit method were very strange. They are gas giant planets the same size as Jupiter but so close to their star that they only take a few days to complete one orbit! There is nothing like this in our Solar System, and theories show it is impossible for a Jupiter-sized planet to form in the high temperature environment that close to a star.
         """
       figure: "./images/mini-course/slide-23.jpg"
       figure_credits: "Image credit: ESA"
@@ -295,7 +301,7 @@ content = [
     material:
       title: "Hot Jupiters - Migration"
       text: """
-        For the Hot Jupiters to have gotten so close to their host stars they would have to have first formed much farther out where it was colder and then migrated inwards through the system. Multiple theories on how this migration occurs have been proposed, including interactions with other material orbiting the star in the early stages of the system and gravitational scattering involving other large bodies.
+        For the Hot Jupiters to have gotten so close to their host stars they would have to have first formed much farther out where it was colder and then migrated inwards through the system. Multiple theories on how this migration occurs have been proposed, including interactions with other material orbiting the star in the early stages of the system, and gravitational scattering involving other large bodies.
         """
       figure: "./images/mini-course/slide-24.jpg"
       figure_credits: "Image credit: NASA / JPL-Caltech"
