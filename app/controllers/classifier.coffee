@@ -18,6 +18,9 @@ GuestObsContent            = require '../lib/guest_obs_content'
 
 $ = window.jQuery
 
+MAIN_SUBJECT_GROUP = "5417014a3ae7400bda000001"
+SIMULATION_GROUP   = "5417014b3ae7400bda000002"
+
 class Classifier extends BaseController
   className: 'classifier'
   template: require '../views/classifier'
@@ -357,7 +360,7 @@ class Classifier extends BaseController
 
   onSubjectSelect: (e, subject) =>
     # console.log 'onSubjectSelect(): '
-    console.log("selecting subject")
+    console.log "selecting subject #{subject.zooniverse_id}"
     @subject = subject
     @classification = new Classification {subject}
     @loadSubjectData()
@@ -393,8 +396,14 @@ class Classifier extends BaseController
     # read json data
     $.getJSON jsonFile, (data) =>
 
-      if @subject.metadata.synthetic_id?
-        @calcKnownTransits(data)
+      # DEBUG: USE THIS FOR NOW
+      if data.metadata.known_transits
+        @known_transits = data.metadata.known_transits
+      else
+        @known_transits = ''
+
+      # if @subject.metadata.synthetic_id?
+        # @calcKnownTransits(data) 
 
       @canvasGraph?.marks.destroyAll()
       @marksContainer.appendChild(@canvas)
@@ -450,8 +459,6 @@ class Classifier extends BaseController
     #     @known_transits.push([startX + (i * period) - data.x[0] , endX + (i * period) - data.x[0] ])
     #     i+=1
 
-
-
   insertMetadata: ->
     # ukirt data
     @ra      = @subject.coords[0]
@@ -477,14 +484,13 @@ class Classifier extends BaseController
 
   onToggleFav: ->
     console.log 'fav toggled!'
-    @classification.favorite = !@classification.favorite
-    favButton = @el.find(".toggle-fav")[0]
-    if @isFaved
-      @isFaved = false
+    isFaved = @classification.favorite
+    if isFaved
+      @classification.favorite = false
       @el.find(".toggle-fav").removeClass("toggled")
       @notify('Removed from Favorites.')
     else
-      @isFaved = true
+      @classification.favorite = true
       @el.find(".toggle-fav").addClass("toggled")
       @notify('Added to Favorites.')
 
@@ -598,15 +604,19 @@ class Classifier extends BaseController
     @sim_count ||= 0
     @sim_count +=1
 
-    if @sim_count%2 == 0
-      Subject.group = "5417014b3ae7400bda000002"
+    @sim_rate = 5
 
-      Subject.fetch 1, (subjects) =>
+    if @sim_count % @sim_rate == 0
+      Subject.group = SIMULATION_GROUP
+      Subject.fetch limit: 1, (subjects) ->
         console.log "got sim subjects ", subjects
-        @onSubjectSelect(null, subjects[0])
+        Subject.current?.destroy()
+        subjects[0].select()
+        Subject.group = MAIN_SUBJECT_GROUP
+        # @onSubjectSelect(null, subjects[0])
 
     else
-      Subject.group = "5417014a3ae7400bda000001"
+      Subject.group = MAIN_SUBJECT_GROUP
       @Subject.next()
 
 
