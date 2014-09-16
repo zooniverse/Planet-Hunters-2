@@ -273,8 +273,9 @@ class Classifier extends BaseController
 
   onUserChange: (e, user) =>
 
-    @classifySummary.fadeOut(150)
-    @nextSubjectButton.hide()
+    @resetInterface()
+    # @classifySummary.fadeOut(150)
+    # @nextSubjectButton.hide()
 
     # console.log 'classify: onUserChange()'
     if User.current? # user logged in
@@ -541,9 +542,7 @@ class Classifier extends BaseController
     @showSummaryScreen()
 
   onClickNextSubject: ->
-    @course.prompt_el.hide()
-    @classifySummary.fadeOut(150)
-    @hideMarkingButtons()
+
 
     # # switch to verify mode
     # if @course.count % @verifyRate is 0
@@ -561,7 +560,6 @@ class Classifier extends BaseController
     @checkSupplementalTutorial()
     @sendClassification()
     @canvasGraph.marks.destroyAll() #clear old marks
-    @recordedClickEvents = []
 
     @sim_count ||= 0
     @sim_count +=1
@@ -569,18 +567,26 @@ class Classifier extends BaseController
     if @sim_count%2 == 0
       Subject.group = "5417014b3ae7400bda000002"
       Subject.fetch 1, (subjects) =>
-        console.log "got sim subjects ", subjects
+        #console.log "got sim subjects ", subjects
     else
       Subject.group = "5417014a3ae7400bda000001"
       @Subject.next()
 
+    @resetInterface()
 
-
+  resetInterface: ->
+    @el.find('.star-id').hide()
+    @course.prompt_el.hide()
+    @classifySummary.fadeOut(150)
+    @hideMarkingButtons()
+    @recordedClickEvents = []
     @noTransitsButton.show()
 
   #
   # END MARKING TRANSITIONS
   #
+
+
 
   hideMarkingButtons: ->
     @noTransitsButton.hide()
@@ -592,6 +598,15 @@ class Classifier extends BaseController
     # reveal ids
     @el.find('.star-id').fadeIn()
 
+    @commentsContainer.animate({ scrollTop: @commentsContainer.height()}, 1000)
+
+    if not User.current?
+      @el.find('.talk-pill-nologin').show()
+      @el.find('.talk-pill').hide()
+    else
+      @el.find('.talk-pill-nologin').hide()
+      @el.find('.talk-pill').show()
+
     if @classification.subject.id is 'TUTORIAL_SUBJECT'
       @onClickNextSubject()
     else
@@ -599,7 +614,6 @@ class Classifier extends BaseController
       @nextSubjectButton.show()
       @setGuestObsContent()
       @classifySummary.fadeIn(150)
-    # @finishSubject()
 
   checkSupplementalTutorial: ->
     for classification_count in @whenToDisplayTips
@@ -718,42 +732,6 @@ class Classifier extends BaseController
       return true
     else
       return false
-
-  finishSubject: ->
-    # disable buttons until next lightcurve is loaded
-    @el.find('#no-transits-button').hide() #prop('disabled',true)
-    @el.find('#finished-marking').hide() #prop('disabled',true)
-    @el.find('#finished-feedback').hide() #prop('disabled',true)
-
-    # Hide tutorials
-    tutorials = ['initialTutorial', 'supplementalTutorial']
-    @["#{ tutorial }"].end() for tutorial in tutorials
-
-    @finishedFeedbackButton.hide()
-
-    # re-enable zoom button (after feedback)
-    @el.find('#zoom-button').attr('disabled',false)
-
-    # show summary
-    @el.find('.do-you-see-a-transit').fadeOut()
-    @el.find('.star-id').fadeIn()
-
-    # console.log "tutorial subject at end ", @Subject()
-
-    if Subject.current?.tutorial?
-      @Subject.next()
-    else
-      @setGuestObsContent()
-      @classifySummary.fadeIn(150)
-      @nextSubjectButton.show()
-      @planetNum.html @canvasGraph.marks.all.length # number of marks
-      # @noTransitsButton.hide()
-
-
-      @finishedMarkingButton.hide()
-
-    # reset zoom parameters
-    @zoomReset()
 
   setGuestObsContent:=>
     console.log GuestObsContent
