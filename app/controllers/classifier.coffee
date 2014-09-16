@@ -399,11 +399,12 @@ class Classifier extends BaseController
       # DEBUG: USE THIS FOR NOW
       if data.metadata.known_transits
         @known_transits = data.metadata.known_transits
+        @start_time     = data.x[0]
       else
         @known_transits = ''
 
       # if @subject.metadata.synthetic_id?
-        # @calcKnownTransits(data) 
+        # @calcKnownTransits(data)
 
       @canvasGraph?.marks.destroyAll()
       @marksContainer.appendChild(@canvas)
@@ -430,34 +431,6 @@ class Classifier extends BaseController
 
     # @el.find('#finished-marking').fadeIn()
     # @el.find('#finished-feedback').fadeIn()
-
-  calcKnownTransits:(data)=>
-    first_event = data.metadata.first_trans_event
-    no_points = data.x.length
-    # console.log "data range ", data.x[no_points-1]-data.x[0], " planet peroid ", data.metadata.planet_period, "no points " ,  no_points*1.0
-
-    start = parseInt(first_event.split(":")[0])
-    end   = parseInt(first_event.split(":")[1])
-    period = data.metadata.planet_period
-    startX = data.x[start]
-    endX   = data.x[end]
-    # console.log "data ", data.x, start, end
-    # console.log "startx ", startX, " end x ", endX
-    dur = endX - startX
-    mid = (endX + startX)/2.0
-
-    in_range = true
-    i= 0
-
-
-    @known_transits = []
-
-    # while in_range
-    #   if (startX + (i*period)) > data.x[no_points-1]
-    #     in_range = false
-    #   else
-    #     @known_transits.push([startX + (i * period) - data.x[0] , endX + (i * period) - data.x[0] ])
-    #     i+=1
 
   insertMetadata: ->
     # ukirt data
@@ -755,8 +728,7 @@ class Classifier extends BaseController
     start_time = Subject.current.selected_light_curve.start_time
 
     for transit in @known_transits
-      console.log "hilighting", transit[0] , " to ", transit[1]
-      @canvasGraph.highlightCurve(transit[0], transit[1])
+      @canvasGraph.highlightCurve(transit[0] - @start_time, transit[1]- @start_time)
 
     @course.showPrompt()
     @course.prompt_el.find('#course-yes-container').hide()

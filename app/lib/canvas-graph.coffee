@@ -52,7 +52,6 @@ class CanvasGraph
     @sliderValue = +classifier.el.find("#ui-slider").val()
     xClick = e.pageX - e.target.getBoundingClientRect().left - window.scrollX
     yClick = e.pageY - e.target.getBoundingClientRect().top - window.scrollY
-
     offset = @sliderValue
     if @zoomLevel is 0
       @plotPoints(0, @zoomRanges[@zoomLevel])
@@ -102,6 +101,8 @@ class CanvasGraph
 
     # this step is necessary or (top) x-axis breaks
     @smallestX = Math.min @data_raw.x...
+    @smallestX = Math.min(@smallestX, @data.metadata.start_time)
+
     @originalMin = @smallestX
     for x, i in [@data.x...]
       @data.x[i] = x - @smallestX
@@ -116,12 +117,10 @@ class CanvasGraph
     @smallestY = Math.min @data.y...
     @largestX = Math.max  @data.x...
     @largestY = Math.max  @data.y...
-
     # add padding
     if @largestX < 32
       console.log 'PADDING LIGHT CURVE'
       @largestX = 32
-
 
     @plotPoints()
 
