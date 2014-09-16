@@ -44,6 +44,7 @@ class Classifier extends BaseController
   events:
     'click button[id="zoom-button"]'          : 'onClickZoom'
     'click .toggle-fav'                       : 'onToggleFav'
+    'click .talk-button'                      : 'onClickTalkButton'
     'click button[id="help"]'                 : 'onClickHelp'
     'click button[id="tutorial"]'             : 'onClickTutorial'
     'click button[name="no-transits-button"]' : 'onClickNoTransits'
@@ -454,6 +455,9 @@ class Classifier extends BaseController
       @isFaved = true
       @el.find(".toggle-fav").addClass("toggled")
       @notify('Added to Favorites.')
+
+  onClickTalkButton: ->
+    window.location = "http://talk.planethunters.org"
 
   onClickHelp: ->
     if @guideShowing

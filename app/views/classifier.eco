@@ -122,7 +122,7 @@
               <button class="summary-button toggle-fav" id="summary-fav-button">
                 <span>Add to favorites</span>
               </button>
-              <button class="summary-button talk-button">
+              <button class="summary-button talk-button" formaction="http://talk.planethunters.o">
                 <span>Talk about this</span>
               </button>
             </div>
