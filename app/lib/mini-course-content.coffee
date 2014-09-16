@@ -310,7 +310,7 @@ content = [
         <p>You have successfully completed the Planet Hunters mini-course on Exoplanetary Astrophysics! We hope you enjoyed it, and that you learned some new and interesting things about this fantastic area of research. Please continue your great work on Planet Hunters, so that together we can continue to discover more about our Universe.</p>
         <p>Remember, if you want to review the slides from the course, you can browse them form your <a href='#/profile'>profile</a> </p>
         """
-      figure: "./images/mini-course/slide-24.png"
+      figure: "./images/mini-course/slide-25.png"
       figure_credits: ""
 
   }
