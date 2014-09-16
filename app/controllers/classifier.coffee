@@ -357,6 +357,7 @@ class Classifier extends BaseController
 
   onSubjectSelect: (e, subject) =>
     # console.log 'onSubjectSelect(): '
+    console.log("selecting subject")
     @subject = subject
     @classification = new Classification {subject}
     @loadSubjectData()
@@ -391,8 +392,9 @@ class Classifier extends BaseController
 
     # read json data
     $.getJSON jsonFile, (data) =>
-      if data.metadata.known_transits
-        @known_transits = data.metadata.known_transits
+
+      if @subject.metadata.synthetic_id?
+        @calcKnownTransits(data)
 
       @canvasGraph?.marks.destroyAll()
       @marksContainer.appendChild(@canvas)
@@ -419,6 +421,36 @@ class Classifier extends BaseController
 
     # @el.find('#finished-marking').fadeIn()
     # @el.find('#finished-feedback').fadeIn()
+
+  calcKnownTransits:(data)=>
+    first_event = data.metadata.first_trans_event
+    no_points = data.x.length
+    console.log "data range ", data.x[no_points-1]-data.x[0], " planet peroid ", data.metadata.planet_period, "no points " ,  no_points*1.0
+
+    start = parseInt(first_event.split(":")[0])
+    end   = parseInt(first_event.split(":")[1])
+    period = data.metadata.planet_period
+    startX = data.x[start]
+    endX   = data.x[end]
+    console.log "data ", data.x, start, end
+    console.log "startx ", startX, " end x ", endX
+    dur = endX - startX
+    mid = (endX + startX)/2.0
+
+    in_range = true
+    i= 0
+
+
+    @known_transits = []
+
+    # while in_range
+    #   if (startX + (i*period)) > data.x[no_points-1]
+    #     in_range = false
+    #   else
+    #     @known_transits.push([startX + (i * period) - data.x[0] , endX + (i * period) - data.x[0] ])
+    #     i+=1
+
+
 
   insertMetadata: ->
     # ukirt data
@@ -568,8 +600,11 @@ class Classifier extends BaseController
 
     if @sim_count%2 == 0
       Subject.group = "5417014b3ae7400bda000002"
+
       Subject.fetch 1, (subjects) =>
         console.log "got sim subjects ", subjects
+        @onSubjectSelect(null, subjects[0])
+
     else
       Subject.group = "5417014a3ae7400bda000001"
       @Subject.next()
@@ -698,12 +733,14 @@ class Classifier extends BaseController
 
   displayKnownTransits: ->
     return unless @simulationsPresent()
-
+    console.log "on display", @known_transitss
     @hideMarkingButtons()
     @continueButton.show()
+    start_time = Subject.current.selected_light_curve.start_time
 
     for transit in @known_transits
-      @canvasGraph.highlightCurve(transit[0],transit[1])
+      console.log "hilighting", transit[0] , " to ", transit[1]
+      @canvasGraph.highlightCurve(transit[0], transit[1])
 
     @course.showPrompt()
     @course.prompt_el.find('#course-yes-container').hide()
