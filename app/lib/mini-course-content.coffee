@@ -201,7 +201,7 @@ content = [
       title: "How else can we discover planets? - Radial Velocity"
       text: """
         <p>The transit method is a very simple and effective method for discovering planets, but it is not the only one used by astronomers. Let’s have a look at some of the other methods:</p>
-        
+
         <p>As a planet orbits a star its gravitational pull moves the star around. Therefore at some points the star is moving towards us and at other points it is moving away from us. We can measure the speed of this movement by examining the light from the star. When moving towards us the star’s light becomes more blue, and when moving away, more red. The faster the star is moving, the more massive the planet. For example, Jupiter moves the Sun at 12.7 m/s (slightly faster than Usain Bolt can run), whereas the effect of the Earth is 100 times smaller, making it much easier to detect larger planets.</p>
         """
       figure: "./images/mini-course/slide-16.jpg"
