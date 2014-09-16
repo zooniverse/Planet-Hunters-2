@@ -182,16 +182,18 @@ class Classifier extends BaseController
     @initialTutorial?.attach() if Subject.current?.tutorial?
 
   onChangeMiniCourseOption: ->
-    # console.log 'onChangeMiniCourseOption(): '
+    console.log 'onChangeMiniCourseOption(): '
     return unless User.current?
 
-    @courseEnabled = not @courseEnabled
+    @courseEnabled = !@courseEnabled
 
     if @courseEnabled
       User.current?.setPreference 'course', 'yes'
+      console.log '  > unchecking course-opt-out'
       $("[name='course-opt-out']").prop 'checked', false
     else
       User.current?.setPreference 'course', 'no'
+      console.log '  > checking course-opt-out'
       $("[name='course-opt-out']").prop 'checked', true
 
     clickEvent =
@@ -201,14 +203,16 @@ class Classifier extends BaseController
     @recordedClickEvents.push clickEvent
 
   onChangeCourseOptOut: ->
-    # console.log 'onChangeCourseOptOut(): '
+    console.log 'onChangeCourseOptOut(): '
     return unless User.current?
     opt_out = $("[name='course-opt-out']").prop 'checked'
     if opt_out
       User.current?.setPreference 'course', 'no'
+      console.log '  > setting course pref to NO'
       @courseEnabled = false # TODO: needs work!
     else
       User.current?.setPreference 'course', 'yes'
+      console.log '  > setting course pref to YES'
       @courseEnabled = true
 
     clickEvent =
@@ -345,13 +349,13 @@ class Classifier extends BaseController
       @course.setRate 5 # set default
 
     # SET MINI-COURSE DEFAULT OPT-IN/OUT PREFS
-    if @splitDesignation in ['a', 'b', 'c', 'g', 'h', 'i']
+    if @splitDesignation in ['a', 'b', 'c', 'g', 'h', 'i'] # users must opt in
       @courseEnabled = false
       User.current.setPreference 'course', 'no'
       # initialize checkboxes
       $("[name='course-opt-out']").prop 'checked', true
       $("[name='mini-course-option']").prop 'checked', false
-    else if @splitDesignation in ['d', 'e', 'f', 'j', 'k', 'l']
+    else if @splitDesignation in ['d', 'e', 'f', 'j', 'k', 'l'] # users must opt out
       @courseEnabled = true
       User.current.setPreference 'course', 'yes'
       # initialize checkboxes
@@ -369,8 +373,6 @@ class Classifier extends BaseController
   loadSubjectData: () ->
     # reset fav
     @el.find(".toggle-fav").removeClass("toggled")
-
-
 
     if window.location.origin != "http://planethunters.org"
       jsonFile = @subject.selected_light_curve.location.replace("http://www.planethunters.org/", "https://s3.amazonaws.com/zooniverse-static/planethunters.org/")
@@ -570,9 +572,8 @@ class Classifier extends BaseController
       @course.launch()
 
     if @splitDesignation in ['a', 'b', 'c', 'd', 'e', 'f']
-      console.log 'SKIPPING SUPPLEMENTAL TUTORIAL'
-    else
-      @checkSupplementalTutorial() 
+      @whenToDisplayTips = [3]
+    @checkSupplementalTutorial() 
 
     @sendClassification()
     @canvasGraph.marks.destroyAll() #clear old marks
@@ -612,6 +613,7 @@ class Classifier extends BaseController
 
     if @classification.subject.id is 'TUTORIAL_SUBJECT'
       console.log 'TUTORIAL SUBJECT'
+      @hideMarkingButtons()
       @onClickNextSubject()
     else
       @commentsContainer.animate({ scrollTop: @commentsContainer.height()}, 1000)
@@ -654,8 +656,8 @@ class Classifier extends BaseController
           else
             $('#course-opt-in-label').html "Yes, I want to learn more!"
 
-          # check box only if mini-course enabled
-          $('.mini-course-option').prop 'checked', @courseEnabled
+          # # check box only if mini-course enabled
+          # $('.mini-course-option').prop 'checked', @courseEnabled
 
   sendClassification: ->
     if User.current?
