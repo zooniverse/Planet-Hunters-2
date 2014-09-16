@@ -323,14 +323,14 @@ class Classifier extends BaseController
     console.log 'SPLIT DESIGNATION IS: ', @splitDesignation
 
     # SET MINI-COURSE INTERVAL
-    if @splitDesignation in ['b', 'e']
+    if @splitDesignation in ['b', 'e', 'h', 'k']
       # console.log 'Setting mini-course interval to 10'
-      @course.setRate 10
+      @course.setRate 5
       $('#course-interval-setter').remove() # destroy custom course interval setter
 
-    else if @splitDesignation in ['c', 'f']
+    else if @splitDesignation in ['c', 'f', 'i', 'l']
       # console.log 'Setting mini-course interval to 25'
-      @course.setRate 25
+      @course.setRate 10
       $('#course-interval-setter').remove() # destroy custom course interval setter
 
     else if @splitDesignation in ['a', 'd']
@@ -552,6 +552,7 @@ class Classifier extends BaseController
     @showSummaryScreen()
 
   onClickNextSubject: ->
+    console.log 'COUNT: ', @course.count # DEBUG CODE
     @hideMarkingButtons()
     @course.prompt_el.hide()
     @classifySummary.fadeOut(150)
@@ -568,8 +569,11 @@ class Classifier extends BaseController
       @notify 'Loading mini-course...'
       @course.launch()
 
-    # check to display supplemental tutorial
-    @checkSupplementalTutorial()
+    if @splitDesignation in ['a', 'b', 'c', 'd', 'e', 'f']
+      console.log 'SKIPPING SUPPLEMENTAL TUTORIAL'
+    else
+      @checkSupplementalTutorial() 
+
     @sendClassification()
     @canvasGraph.marks.destroyAll() #clear old marks
     @recordedClickEvents = []
