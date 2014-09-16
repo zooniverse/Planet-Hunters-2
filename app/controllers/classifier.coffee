@@ -457,7 +457,7 @@ class Classifier extends BaseController
       @notify('Added to Favorites.')
 
   onClickTalkButton: ->
-    window.location = "http://talk.planethunters.org"
+    window.open "http://talk.planethunters.org/#/subjects/#{Subject.current?.zooniverse_id}", '_blank'
 
   onClickHelp: ->
     if @guideShowing
@@ -870,8 +870,8 @@ class Classifier extends BaseController
   fetchComments: =>
     commentsContainer = @el.find '#comments'
     commentsContainer.html "" # delete existing comments
-    # request = Api.current.get "/projects/#{Api.current.project}/talk/subjects/#{Subject.current?.zooniverse_id}"
-    request = Api.current.get "https://dev.zooniverse.org/projects/planet_hunter/talk/subjects/APH000001x"
+    request = Api.current.get "/projects/#{Api.current.project}/talk/subjects/#{Subject.current?.zooniverse_id}"
+    # request = Api.current.get "https://dev.zooniverse.org/projects/planet_hunter/talk/subjects/#{@subject.current.zooniverse_id}"
     request.done @onCommentsFetch
 
     clearTimeout @timeout if @timeout?
@@ -888,9 +888,8 @@ class Classifier extends BaseController
     comment = @talkComment.val()
     is_valid = @validateComment comment
     return unless is_valid
-    request = Api.current.post "https://dev.zooniverse.org/projects/planet_hunter/talk/subjects/APH000001x/comments", comment: comment
-
-    # request = Api.current.post "/projects/#{Api.current.project}/talk/subjects/#{Subject.current?.zooniverse_id}/comments", comment: comment
+    # request = Api.current.post "https://dev.zooniverse.org/projects/planet_hunter/talk/subjects/#{@subject.current.zooniverse_id}/comments", comment: comment
+    request = Api.current.post "/projects/#{Api.current.project}/talk/subjects/#{Subject.current?.zooniverse_id}/comments", comment: comment
 
     # time = new Date
 
