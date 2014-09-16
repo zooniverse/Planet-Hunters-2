@@ -692,8 +692,8 @@ class Classifier extends BaseController
     return unless User.current?
     for transit in @known_transits
       best_score = 0 # that's right, assume they got it WRONG!!!
-      transitL = transit[0]
-      transitR = transit[1]
+      transitL = transit[0] - @start_time
+      transitR = transit[1] - @start_time
       for mark in @canvasGraph.marks.all
         boundL = mark.dataXMinRel
         boundR = mark.dataXMaxRel
