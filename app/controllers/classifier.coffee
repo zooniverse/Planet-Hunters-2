@@ -273,9 +273,8 @@ class Classifier extends BaseController
 
   onUserChange: (e, user) =>
 
-    @resetInterface()
-    # @classifySummary.fadeOut(150)
-    # @nextSubjectButton.hide()
+    @classifySummary.fadeOut(150)
+    @nextSubjectButton.hide()
 
     # console.log 'classify: onUserChange()'
     if User.current? # user logged in
@@ -369,11 +368,13 @@ class Classifier extends BaseController
 
     $('#graph-container').addClass 'loading-lightcurve'
 
-
     if window.location.origin != "http://planethunters.org"
       jsonFile = @subject.selected_light_curve.location.replace("http://www.planethunters.org/", "https://s3.amazonaws.com/zooniverse-static/planethunters.org/")
     else
       jsonFile = @subject.selected_light_curve.location
+
+    console.log 'JSON_FILE: ', jsonFile
+
 
     # console.log 'jsonFile: ', jsonFile
 
@@ -431,7 +432,7 @@ class Classifier extends BaseController
     @el.find('#zooniverse-id').html @Subject.current.zooniverse_id
     @el.find('#kepler-id').html     metadata.kepler_id
     @el.find('#quarter').html @Subject.current.selected_light_curve.quarter
-    @el.find('#star-type').html     (metadata.spec_type || "Dwarf")
+    @el.find('#star-type').html     metadata.spec_type
     @el.find('#magnitude').html     metadata.magnitudes.kepler
     @el.find('#temperature').html   metadata.teff.toString().concat("(K)")
     @el.find('#radius').html        metadata.radius.toString().concat("x Sol")
@@ -458,7 +459,7 @@ class Classifier extends BaseController
       @notify('Added to Favorites.')
 
   onClickTalkButton: ->
-    window.open "http://talk.planethunters.org/#/subjects/#{Subject.current?.zooniverse_id}", '_blank'
+    window.location = "http://talk.planethunters.org"
 
   onClickHelp: ->
     if @guideShowing
@@ -542,7 +543,9 @@ class Classifier extends BaseController
     @showSummaryScreen()
 
   onClickNextSubject: ->
-
+    @course.prompt_el.hide()
+    @classifySummary.fadeOut(150)
+    @hideMarkingButtons()
 
     # # switch to verify mode
     # if @course.count % @verifyRate is 0
@@ -560,6 +563,7 @@ class Classifier extends BaseController
     @checkSupplementalTutorial()
     @sendClassification()
     @canvasGraph.marks.destroyAll() #clear old marks
+    @recordedClickEvents = []
 
     @sim_count ||= 0
     @sim_count +=1
@@ -567,26 +571,20 @@ class Classifier extends BaseController
     if @sim_count%2 == 0
       Subject.group = "5417014b3ae7400bda000002"
       Subject.fetch 1, (subjects) =>
-        #console.log "got sim subjects ", subjects
+        console.log "got sim subjects ", subjects
     else
       Subject.group = "5417014a3ae7400bda000001"
+      console.log 'MOVING ON TO NEXT SUBJECT...'
+    
       @Subject.next()
 
-    @resetInterface()
 
-  resetInterface: ->
-    @el.find('.star-id').hide()
-    @course.prompt_el.hide()
-    @classifySummary.fadeOut(150)
-    @hideMarkingButtons()
-    @recordedClickEvents = []
+
     @noTransitsButton.show()
 
   #
   # END MARKING TRANSITIONS
   #
-
-
 
   hideMarkingButtons: ->
     @noTransitsButton.hide()
@@ -606,6 +604,11 @@ class Classifier extends BaseController
     else
       @el.find('.talk-pill-nologin').hide()
       @el.find('.talk-pill').show()
+
+    unless User.current?
+      @el.find('.talk-pill').html """
+        <p style=\"margin: 10px; color: #fc4541; font-size: 10px; font-style=\"italic\";\">Please sign in to discuss.</p>
+      """
 
     if @classification.subject.id is 'TUTORIAL_SUBJECT'
       @onClickNextSubject()
@@ -848,8 +851,8 @@ class Classifier extends BaseController
   fetchComments: =>
     commentsContainer = @el.find '#comments'
     commentsContainer.html "" # delete existing comments
-    request = Api.current.get "/projects/#{Api.current.project}/talk/subjects/#{Subject.current?.zooniverse_id}"
-    # request = Api.current.get "https://dev.zooniverse.org/projects/planet_hunter/talk/subjects/#{@subject.current.zooniverse_id}"
+    # request = Api.current.get "/projects/#{Api.current.project}/talk/subjects/#{Subject.current?.zooniverse_id}"
+    request = Api.current.get "https://dev.zooniverse.org/projects/planet_hunter/talk/subjects/APH000001x"
     request.done @onCommentsFetch
 
     clearTimeout @timeout if @timeout?
@@ -866,8 +869,9 @@ class Classifier extends BaseController
     comment = @talkComment.val()
     is_valid = @validateComment comment
     return unless is_valid
-    # request = Api.current.post "https://dev.zooniverse.org/projects/planet_hunter/talk/subjects/#{@subject.current.zooniverse_id}/comments", comment: comment
-    request = Api.current.post "/projects/#{Api.current.project}/talk/subjects/#{Subject.current?.zooniverse_id}/comments", comment: comment
+    request = Api.current.post "https://dev.zooniverse.org/projects/planet_hunter/talk/subjects/APH000001x/comments", comment: comment
+
+    # request = Api.current.post "/projects/#{Api.current.project}/talk/subjects/#{Subject.current?.zooniverse_id}/comments", comment: comment
 
     # time = new Date
 
