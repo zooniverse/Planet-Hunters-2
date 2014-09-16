@@ -552,7 +552,6 @@ class Classifier extends BaseController
     @showSummaryScreen()
 
   onClickNextSubject: ->
-    @nextSubjectButton.disabled()
     @hideMarkingButtons()
     @course.prompt_el.hide()
     @classifySummary.fadeOut(150)
