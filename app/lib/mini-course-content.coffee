@@ -30,7 +30,7 @@ content = [
           <img style=\"width: 75px; padding: 1px\" src=\"./images/mini-course/transit-depth.png\"/>
         </div>
       """
-      figure: "./images/mini-course/lightcurve-transit-depth.png.png"
+      figure: "./images/mini-course/lightcurve-transit-depth.png"
       figure_credits: ""
   }
   {
