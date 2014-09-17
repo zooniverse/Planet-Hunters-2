@@ -165,6 +165,7 @@ class Classifier extends BaseController
     @initialTutorial?.attach() if Subject.current?.tutorial?
 
   onChangeMiniCourseOption: ->
+    console.log 'onChangeMiniCourseOption()'
     return unless User.current?
     showMiniCourse = $("[name='mini-course-option']").prop 'checked'
 
@@ -180,8 +181,10 @@ class Classifier extends BaseController
       value: @courseEnabled
       timestamp: (new Date).toUTCString()
     @recordedClickEvents.push clickEvent
+    console.log '  course-enabled: ', @courseEnabled
 
   onChangeCourseOptOut: ->
+    console.log 'onChangeCourseOptOut()'
     return unless User.current?
     optOut = $("[name='course-opt-out']").prop 'checked'
 
@@ -197,6 +200,7 @@ class Classifier extends BaseController
       value: optOut
       timestamp: (new Date).toUTCString()
     @recordedClickEvents.push clickEvent
+    console.log '  course-enabled: ', @courseEnabled
 
   onChangeCourseIntervalViaSupTut: ->
     defaultValue = 5
@@ -249,6 +253,7 @@ class Classifier extends BaseController
     @course.idx_last = 0
 
   handleSplitDesignation: ->
+    console.log '*** SETTING UP SPLIT DESIGNATION ***'
     if User.current.project.splits?.mini_course_sup_tutorial?
       @splitDesignation = User.current.project.splits.mini_course_sup_tutorial
     else
@@ -257,27 +262,26 @@ class Classifier extends BaseController
     unless @getParameterByName("split") is ""
       @splitDesignation = @getParameterByName("split")
 
-    console.log 'SPLIT DESIGNATION IS: ', @splitDesignation
+    console.log '    SPLIT DESIGNATION IS: ', @splitDesignation
 
     # SET MINI-COURSE INTERVAL
     if @splitDesignation in ['b', 'e', 'h', 'k']
-      # console.log 'Setting mini-course interval to 10'
+      console.log '    Setting mini-course interval to 5'
       @course.setRate 5
       $('#course-interval-setter').remove() # destroy custom course interval setter
 
     else if @splitDesignation in ['c', 'f', 'i', 'l']
-      # console.log 'Setting mini-course interval to 25'
+      console.log '    Setting mini-course interval to 10'
       @course.setRate 10
       $('#course-interval-setter').remove() # destroy custom course interval setter
 
     else if @splitDesignation in ['a', 'd', 'g', 'j']
-      # console.log 'Setting mini-course interval to 5'
+      console.log '    Setting mini-course interval to 5'
       # console.log 'Allowing custom course interval.'
       @course.setRate 5 # set default
       @allowCustomCourseInterval = true
     else
-      # console.log 'Setting mini-course interval to 5 (default)'
-      # console.log 'Allowing custom course interval.'
+      console.log '    Setting mini-course interval to 5 (default)'
       @allowCustomCourseInterval = false
       @course.setRate 5 # set default
 
@@ -297,7 +301,7 @@ class Classifier extends BaseController
 
   onSubjectSelect: (e, subject) =>
     # console.log 'onSubjectSelect(): '
-    console.log "selecting subject #{subject.zooniverse_id}"
+    # console.log "selecting subject #{subject.zooniverse_id}"
     @subject = subject
     @classification = new Classification {subject}
     @loadSubjectData()
@@ -491,7 +495,7 @@ class Classifier extends BaseController
     @showSummaryScreen()
 
   onClickNextSubject: ->
-    # console.log 'COUNT: ', @course.count # DEBUG CODE
+    console.log 'COUNT: ', @course.count # DEBUG CODE
     @hideMarkingButtons()
     @course.prompt_el.hide()
     @classifySummary.fadeOut(150)
@@ -574,7 +578,7 @@ class Classifier extends BaseController
 
         # prompt user to opt in/out of mini course
         if @course.count is 3
-          @renderSupTutPrompt()
+          @renderSupTutPrompt() # inject HTML into tutorial
           if @allowCustomCourseInterval
             @el.find('.allow-custom-interval').show()
             @el.find('.disallow-custom-interval').hide()
@@ -585,9 +589,12 @@ class Classifier extends BaseController
           if @courseEnabled
             @el.find('[name="mini-course-option"]').prop 'checked', true
             @el.find('[name="course-opt-out"]').prop 'checked', false
+            console.log 'unchecking course-opt-out'
           else
             @el.find('[name="mini-course-option"]').prop 'checked', false
-            @el.find('[name="course-opt-out"]').prop 'checked', true
+            @el.find('[name="course-opt-out"]').prop 'checked', false
+            console.log 'checking course-opt-out'
+
 
   renderSupTutPrompt: ->   
     newElement = document.createElement('div')
