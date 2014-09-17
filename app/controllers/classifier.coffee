@@ -557,8 +557,6 @@ class Classifier extends BaseController
       @hideMarkingButtons()
       @onClickNextSubject()
     else
-      console.log $('#comments')
-      @commentsContainer.animate({ scrollTop: $('#comments')[0].scrollHeight}, 1000)
       if not User.current?
         @el.find('.talk-pill-nologin').show()
         @el.find('.talk-pill').hide()
@@ -820,6 +818,10 @@ class Classifier extends BaseController
           <div>
         </div>
       """)
+
+    setTimeout =>
+      @commentsContainer.animate({ scrollTop: $('#comments')[0].scrollHeight}, 1000)
+    , 1000
 
   fetchComments: =>
     commentsContainer = @el.find '#comments'
