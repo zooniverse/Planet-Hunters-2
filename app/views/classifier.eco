@@ -126,7 +126,7 @@
               <button class="summary-button toggle-fav hide-unless-user" id="summary-fav-button">
                 <span>Add to favorites</span>
               </button>
-              <button class="summary-button talk-button hide-unless-user" formaction="http://talk.planethunters.o">
+              <button class="summary-button talk-button" formaction="http://talk.planethunters.o">
                 <span>Talk about this</span>
               </button>
             </div>
