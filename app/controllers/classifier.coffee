@@ -346,6 +346,8 @@ class Classifier extends BaseController
       # DEBUG: USE THIS FOR NOW
       if data.metadata.known_transits
         @known_transits = data.metadata.known_transits
+        @planet_rad    = data.metadata.planet_rad
+        @planet_period = data.metadata.planet_period
         @start_time     = data.x[0]
       else
         @known_transits = ''
@@ -531,9 +533,12 @@ class Classifier extends BaseController
     @sim_count ||= 0
     @sim_count +=1
 
-    @sim_rate = 2
+    @sim_rate = 0.20
 
-    if @sim_count % @sim_rate == 0
+    sim_roll = Math.random()
+    console.log "sim roll #{sim_roll} rate #{@sim_rate}"
+
+    if Math.random() < @sim_rate
       Subject.group = SIMULATION_GROUP
       Subject.fetch limit: 1, (subjects) ->
         console.log "got sim subjects ", subjects
@@ -571,10 +576,24 @@ class Classifier extends BaseController
       else
         @el.find('.talk-pill-nologin').hide()
         @el.find('.talk-pill').show()
+
+
+      if @simulationsPresent()
+        @showSimDetails()
+      else
+        $(".sim_details").hide()
+
       @hideMarkingButtons()
       @nextSubjectButton.show()
       @setGuestObsContent()
       @classifySummary.fadeIn(150)
+
+  showSimDetails:=>
+
+    $(".sim_details").show()
+    $(".sim_details .planet-rad").html(@planet_rad + " Earth Radi")
+    $(".sim_details .planet-period").html(@planet_period + " days")
+
 
   checkSupplementalTutorial: ->
     for classification_count in @supTutIntervals
@@ -798,9 +817,9 @@ class Classifier extends BaseController
         <div class="comment formatted">
           <p class="comment body">#{comment.val()}</p>
           <div class="comment info">
-            <span class="comment comment-by">by</span> 
-            <span class="comment username">You</span> 
-            <span class="comment comment-by"> just now</span>
+            <span class="comment comment-by">by</span>
+            <span class="comment username">You</span>
+            <span class="comment comment-by">#{date.toDateString()}</span>
           <div>
         </div>
       """).animate({ scrollTop: container[0].scrollHeight}, 1000)
@@ -821,8 +840,8 @@ class Classifier extends BaseController
         <div class="comment formatted">
           <p class="comment body">#{comment.body}</p>
           <div class="comment info">
-            <span class="comment comment-by">by</span> 
-            <span class="comment username">#{comment.user_name}</span> 
+            <span class="comment comment-by">by</span>
+            <span class="comment username">#{comment.user_name}</span>
             <span class="comment comment-by">#{date.toDateString()}</span>
           <div>
         </div>
