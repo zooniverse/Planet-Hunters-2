@@ -90,7 +90,7 @@ class Classifier extends BaseController
     ifFaved: false
 
     # classification counts at which to display supplementary tutorial
-    @whenToDisplayTips = [1, 2, 3] # TODO: don't forget to add 4 after beta version
+    @supTutIntervals = [1, 2, 3] # TODO: don't forget to add 4 after beta version
     @splitDesignation = null
 
     @known_transits = ''
@@ -115,6 +115,7 @@ class Classifier extends BaseController
     @supplementalTutorial = new Tutorial
       parent: window.classifier.el.children()[0]
       steps: supplementalTutorialSteps.steps
+    @injectMiniCourseView()
 
     # mini course
     @course = new MiniCourse
@@ -572,7 +573,7 @@ class Classifier extends BaseController
       @course.launch()
 
     if @splitDesignation in ['a', 'b', 'c', 'd', 'e', 'f']
-      @whenToDisplayTips = [3]
+      @supTutIntervals = [3]
     @checkSupplementalTutorial() 
 
     @sendClassification()
@@ -629,7 +630,7 @@ class Classifier extends BaseController
       @classifySummary.fadeIn(150)
 
   checkSupplementalTutorial: ->
-    for classification_count in @whenToDisplayTips
+    for classification_count in @supTutIntervals
       if @course.count is classification_count
         # console.log "*** DISPLAY SUPPLEMENTAL TUTOTIAL # #{classification_count} *** "
         @supplementalTutorial.first = "displayOn_" + classification_count.toString()
@@ -637,30 +638,32 @@ class Classifier extends BaseController
 
         # prompt user to opt in/out of mini course
         if @course.count is 3
-          @createMiniCoursePrompt()
 
           # check box only if mini-course enabled
           $('.mini-course-option').prop 'checked', @courseEnabled
 
-  createMiniCoursePrompt: ->
+  injectMiniCourseView: ->
     newElement = document.createElement('div')
     newElement.setAttribute 'class', "supplemental-tutorial-option-container"
     newElement.setAttribute 'style', "padding: 20px;"
     newElement.innerHTML = """
-      <input class=\"mini-course-option\" name=\"mini-course-option\" type=\"checkbox\"></input>
-      <div id=\"course-opt-in-label\" style=\"float: left; font-style: italic; font-weight: 500;\"></div>
+      <input class="mini-course-option" name="mini-course-option" type="checkbox"></input>
+      <div id="course-opt-in-label" style="float: left; font-style: italic; font-weight: 500;">
+        
+        <div class="allow-custom-interval">
+          <div class="course-interval-text">Launch mini-course every </div>
+          <input type="number" id="course-interval-sup-tut" class="course-interval" name="course-interval-sup-tut" value="5" />
+          <div class="course-interval-text"> classifications!</div>  
+        </div>
+
+        <div class="disallow-custom-interval">
+          <p>Yes, I want to learn more!</p>
+        </div>
+
+      </div>
     """
     # inject custom element into zootorial
     @supplementalTutorial.container.getElementsByClassName('zootorial-content')[0].appendChild(newElement)
-
-    if @allowCustomCourseInterval
-      $('#course-opt-in-label').html """
-        <div class="course-interval-text">Launch mini-course every </div>
-          <input type="number" id="course-interval-sup-tut" class="course-interval" name="course-interval-sup-tut" value="5"></input>
-        <div class="course-interval-text"> classifications!</div>
-      """
-    else
-      $('#course-opt-in-label').html "Yes, I want to learn more!"
 
   sendClassification: ->
     if User.current?
