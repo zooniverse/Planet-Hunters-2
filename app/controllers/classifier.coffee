@@ -21,6 +21,9 @@ $ = window.jQuery
 MAIN_SUBJECT_GROUP = "5417014a3ae7400bda000001"
 SIMULATION_GROUP   = "5417014b3ae7400bda000002"
 
+USERS_OPT_IN = ['a', 'b', 'c', 'g', 'h', 'i']
+USERS_OPT_OUT = ['d', 'e', 'f', 'j', 'k', 'l']
+
 class Classifier extends BaseController
   className: 'classifier'
   template: require '../views/classifier'
@@ -78,7 +81,7 @@ class Classifier extends BaseController
     # if window.matchMedia("(min-device-width: 320px)").matches and window.matchMedia("(max-device-width: 480px)").matches
     #   location.hash = "#/verify"
 
-    Subject.group = "5417014a3ae7400bda000001"
+    Subject.group = MAIN_SUBJECT_GROUP
 
     @loggedOutClassificationCount = 0
 
@@ -115,7 +118,9 @@ class Classifier extends BaseController
     @supplementalTutorial = new Tutorial
       parent: window.classifier.el.children()[0]
       steps: supplementalTutorialSteps.steps
-    @injectMiniCourseView()
+
+    @supplementalTutorial.createElement "div.foo", @supplementalTutorial.el.children[2]
+    console.log 'FOO ', @supplementalTutorial.el
 
     # mini course
     @course = new MiniCourse
@@ -185,82 +190,53 @@ class Classifier extends BaseController
   onChangeMiniCourseOption: ->
     console.log 'onChangeMiniCourseOption(): '
     return unless User.current?
+    showMiniCourse = $("[name='mini-course-option']").prop 'checked'
+    console.log "onChangeMiniCourseOption(): SHOW MINI COURSE = ", showMiniCourse
 
-    @courseEnabled = !@courseEnabled
-
-    if @courseEnabled
+    if showMiniCourse
+      console.log 'onChangeMiniCourseOption(): YES, MINI COURSE!'
       User.current?.setPreference 'course', 'yes'
-      console.log '  > unchecking course-opt-out'
-      $("[name='course-opt-out']").prop 'checked', false
+      @courseEnabled = true
     else
+      console.log 'onChangeMiniCourseOption(): BOO! No mini course.'
+      # $("[name='course-opt-out']").prop x'checked', true
       User.current?.setPreference 'course', 'no'
-      console.log '  > checking course-opt-out'
-      $("[name='course-opt-out']").prop 'checked', true
+      @courseEnabled = false
 
     clickEvent =
-      event: 'courseEnabled'
+      event: 'course-enabled'
       value: @courseEnabled
       timestamp: (new Date).toUTCString()
     @recordedClickEvents.push clickEvent
 
+    console.log 'COURSE_ENABLED: ', @courseEnabled
+
   onChangeCourseOptOut: ->
     console.log 'onChangeCourseOptOut(): '
     return unless User.current?
-    opt_out = $("[name='course-opt-out']").prop 'checked'
-    if opt_out
+
+    optOut = $("[name='course-opt-out']").prop 'checked'
+    console.log "onChangeCourseOptOut(): SHOW MINI COURSE = ", !optOut
+
+    if optOut
+      console.log 'onChangeCourseOptOut(): BOO! No mini course.'
       User.current?.setPreference 'course', 'no'
-      console.log '  > setting course pref to NO'
-      @courseEnabled = false # TODO: needs work!
+      @courseEnabled = false
     else
+      console.log 'onChangeCourseOptOut(): YES, MINI COURSE!'
       User.current?.setPreference 'course', 'yes'
-      console.log '  > setting course pref to YES'
       @courseEnabled = true
 
     clickEvent =
-      event: 'courseOptedOut'
-      value: opt_out
+      event: 'course-opted-out'
+      value: optOut
       timestamp: (new Date).toUTCString()
     @recordedClickEvents.push clickEvent
 
-  # onChangeMiniCourseOption: ->
-  #   console.log 'onChangeMiniCourseOption(): '
-  #   return unless User.current?
-  #   courseOption = User.current.preferences.planet_hunter.course
-
-  #   # toggle course option
-  #   if courseOption is 'yes'
-  #     courseOption = 'no'
-  #     # $("[name='course-opt-out']").prop 'checked', true
-  #   else
-  #     courseOption = 'yes'
-  #     $("[name='course-opt-out']").prop 'checked', false
-
-  #   clickEvent =
-  #     event: 'miniCourseOptionChanged'
-  #     value: courseOption
-  #     timestamp: (new Date).toUTCString()
-  #   @recordedClickEvents.push clickEvent
-
-  #   User.current?.setPreference 'course', courseOption
-
-  # CODE FOR PROMPT (NOT CURRENTLY BEING USED)
-  # onChangeCourseInterval: ->
-  #   # console.log 'VALUE: ', @el.find('#course-interval').val()
-  #   defaultValue = 5
-  #   value = +@el.find('#course-interval').val()
-
-  #   # console.log 'VALUE IS NUMBER: ', (typeof value)
-
-  #   # validate integer values
-  #   unless (typeof value is 'number') and (value % 1 is 0) and value > 0 and value < 100
-  #     value = defaultValue
-  #     @el.find('#course-interval').val(value)
-  #   else
-  #     # console.log 'SETTING VALUE TO: ', value
-  #     @course.setRate value
+    console.log 'COURSE_ENABLED: ', @courseEnabled
 
   onChangeCourseIntervalViaSupTut: ->
-    # console.log 'onChangeCourseIntervalViaSupTut(): '
+    console.log 'onChangeCourseIntervalViaSupTut(): '
     defaultValue = 5
     value = +@el.find('#course-interval-sup-tut').val()
 
@@ -269,12 +245,12 @@ class Classifier extends BaseController
       value = defaultValue
       @el.find('#course-interval-sup-tut').val(value)
     else
-      # console.log 'SETTING VALUE TO: ', value
+      console.log 'SETTING VALUE TO: ', value
 
     @course.setRate value
 
     clickEvent =
-      event: 'courseIntervalChanged'
+      event: 'course-interval-changed'
       value: value
       timestamp: (new Date).toUTCString()
     @recordedClickEvents.push clickEvent
@@ -350,13 +326,13 @@ class Classifier extends BaseController
       @course.setRate 5 # set default
 
     # SET MINI-COURSE DEFAULT OPT-IN/OUT PREFS
-    if @splitDesignation in ['a', 'b', 'c', 'g', 'h', 'i'] # users must opt in
+    if @splitDesignation in USERS_OPT_IN
       @courseEnabled = false
       User.current.setPreference 'course', 'no'
       # initialize checkboxes
       $("[name='course-opt-out']").prop 'checked', true
       $("[name='mini-course-option']").prop 'checked', false
-    else if @splitDesignation in ['d', 'e', 'f', 'j', 'k', 'l'] # users must opt out
+    else if @splitDesignation in USERS_OPT_OUT
       @courseEnabled = true
       User.current.setPreference 'course', 'yes'
       # initialize checkboxes
@@ -479,12 +455,12 @@ class Classifier extends BaseController
     else
       @spottersGuide.slideDown()
       $("html, body").animate scrollTop: @spottersGuide.offset().top - 20, 500
-      clickEvent = { event: 'guideActivated', timestamp: (new Date).toUTCString() }
+      clickEvent = { event: 'spotters-guide-pressed', timestamp: (new Date).toUTCString() }
       @recordedClickEvents.push clickEvent
     @guideShowing = !@guideShowing
 
   onClickTutorial: ->
-    clickEvent = { event: 'tutorialClicked', timestamp: (new Date).toUTCString() }
+    clickEvent = { event: 'tutorial-clicked', timestamp: (new Date).toUTCString() }
     @recordedClickEvents.push clickEvent
     @canvasGraph.marks.destroyAll() # clear previous marks
     @updateButtons()
@@ -638,11 +614,23 @@ class Classifier extends BaseController
 
         # prompt user to opt in/out of mini course
         if @course.count is 3
+          @renderSupTutPrompt()
+          if @allowCustomCourseInterval
+            @el.find('.allow-custom-interval').show()
+            @el.find('.disallow-custom-interval').hide()
+          else
+            @el.find('.allow-custom-interval').hide()
+            @el.find('.disallow-custom-interval').show()
 
-          # check box only if mini-course enabled
-          $('.mini-course-option').prop 'checked', @courseEnabled
+          if @courseEnabled
+            @el.find('[name="mini-course-option"]').prop 'checked', true
+            @el.find('[name="course-opt-out"]').prop 'checked', false
+          else
+            @el.find('[name="mini-course-option"]').prop 'checked', false
+            @el.find('[name="course-opt-out"]').prop 'checked', true
 
-  injectMiniCourseView: ->
+  renderSupTutPrompt: ->   
+    console.log 'rendering supplemental tutorial prompt...' 
     newElement = document.createElement('div')
     newElement.setAttribute 'class', "supplemental-tutorial-option-container"
     newElement.setAttribute 'style', "padding: 20px;"
@@ -797,7 +785,7 @@ class Classifier extends BaseController
 
     @updateZoomButton(@canvasGraph.zoomLevel)
     @showZoomMessage(@magnification[@canvasGraph.zoomLevel])
-    @recordedClickEvents.push { event: 'clickedZoomLevel'+@canvasGraph.zoomLevel, timestamp: (new Date).toUTCString() }
+    @recordedClickEvents.push { event: 'clicked-zoom-level'+@canvasGraph.zoomLevel, timestamp: (new Date).toUTCString() }
 
   updateZoomButton: (zoomLevel) ->
     if zoomLevel is 2
