@@ -86,20 +86,7 @@
           <div class="content">
             <h2>Discussions about this star</h2>
             <div id="comments">
-              <!-- <div class="formatted-comment">
-                <p>Some content for a comment</p>
-                <p>by <strong>someAuthor</strong> X minutes ago</p>
-              </div>
-              <div class="formatted-comment">
-                <p>Some content for a comment</p>
-                <p>by <strong>someAuthor</strong> X minutes ago</p>
-              </div>
-              <div class="formatted-comment">
-                <p>Some content for a longer comment. Some content for a longer comment. Some content for a longer comment.</p>
-                <p>by <strong>someAuthor</strong> X minutes ago</p>
-              </div> -->
             </div>
-            <!--<button class="std-btn transparent" name="join-convo">Join the Conversation</button>-->
 
             <p class="talk-pill-nologin" style="margin: 10px; color: #fc4541; font-size: 10px; font-style=italic;">
               Please sign in to discuss.

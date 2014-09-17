@@ -218,6 +218,8 @@
               margin-top 10px
               margin-bottom 10px
             .talk-pill
+              position relative
+              bottom -20px
               border 2px solid #fff
               border-radius 6px
               textarea
@@ -251,22 +253,32 @@
               // border 2px solid #fff
               // border-radius 4px
               padding 10px
-              .formatted-comment
+
+            .comment
+              text-align left
+              &.formatted
                 border-bottom 1px solid #848b92
                 margin-bottom 20px
                 word-wrap break-word
-                text-align left
                 &:last-child
                   border-bottom none
-                p
-                  font-size 12px
-                  &.comment-by
-                    font-weight 300
-                    font-size 10px
-                    font-style italic
-                  span
-                    color #fff
+              &.body
+                font-size 14px
+              &.comment-by
+                font-style italic
+                font-weight 300
+                font-size 10px
+                margin-bottom 10px
+                color rgb(230,160,170) //#fc4541
+              &.username
+                font-size 10px
+                font-style italic
+                font-weight bold
+                color white
+              &.info
+                margin-bottom 10px
 
+            
         .summary-button
           display inline-block
           padding 5px
