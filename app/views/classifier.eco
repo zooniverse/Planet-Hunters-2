@@ -64,7 +64,7 @@
             <h1 class="feedback header">Nice Work!</h1>
             <p class="feedback body"></p>
             <!--<p>Looks like you've found <span id="planet-num"></span> potential transits!</p>-->
-            <!--<p>Look to your right and see if anyone is talking about the star, or start a conversation of your own.</p>-->            
+            <!--<p>Look to your right and see if anyone is talking about the star, or start a conversation of your own.</p>-->
             <!-- <p>Move on to the next subject when you're ready.</p> -->
 
             <!-- BEGIN GUEST OBSERVER -->
@@ -106,9 +106,10 @@
             </p>
 
             <div class="talk-pill">
-              <textarea placeholder="Make a comment, or mark with a hashtag..." name="talk-comment"></textarea>
+              <textarea maxlength=140 placeholder="Make a comment, or mark with a hashtag..." name="talk-comment"></textarea>
               <button name="submit-talk">Submit</button>
             </div>
+            <p class='too-long-warning'>140 left</p>
           </div>
         </div>
 
@@ -184,7 +185,7 @@
         <button class="std-btn marking-btn yellow" name="next-subject">Next Subject</button>
         <button class="std-btn white marking-btn"  name="no-transits-button">No Transits</button>
 
-        <!--<button class="std-btn yellow" name="finished-feedback">Next</button>-->        
+        <!--<button class="std-btn yellow" name="finished-feedback">Next</button>-->
       </div>
 
     </div>

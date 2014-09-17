@@ -66,6 +66,7 @@ class Classifier extends BaseController
     'change input[name="mini-course-option"]' : 'onChangeMiniCourseOption'
     'change input[name="course-opt-out"]'     : 'onChangeCourseOptOut'
     'click button[name="continue-button"]'    : 'onClickContinueButton'
+    'keyup textarea[name="talk-comment"]'     : 'onKeyupTalkComment'
 
     'click .arrow.left'  : 'onClickCourseBack'
     'click .arrow.right' : 'onClickCourseForward'
@@ -201,6 +202,13 @@ class Classifier extends BaseController
       timestamp: (new Date).toUTCString()
     @recordedClickEvents.push clickEvent
     console.log '  course-enabled: ', @courseEnabled
+
+
+  onKeyupTalkComment:(e)->
+    characters = @talkComment.val().length
+    $(".too-long-warning").html( "#{ 140 - characters} left" )
+
+
 
   onChangeCourseIntervalViaSupTut: ->
     defaultValue = 5
@@ -514,7 +522,7 @@ class Classifier extends BaseController
 
     if @splitDesignation in ['a', 'b', 'c', 'd', 'e', 'f']
       @supTutIntervals = [3]
-    @checkSupplementalTutorial() 
+    @checkSupplementalTutorial()
 
     @sendClassification()
     @canvasGraph.marks.destroyAll() #clear old marks
@@ -596,18 +604,18 @@ class Classifier extends BaseController
             $('.zootorial-content')[1].getElementsByTagName("span")[0].insertAdjacentHTML('afterend',' Check the box below to opt-in to the mini-course.')
 
 
-  renderSupTutPrompt: ->   
+  renderSupTutPrompt: ->
     newElement = document.createElement('div')
     newElement.setAttribute 'class', "supplemental-tutorial-option-container"
     newElement.setAttribute 'style', "padding: 20px;"
     newElement.innerHTML = """
       <input class="mini-course-option" name="mini-course-option" type="checkbox"></input>
       <div id="course-opt-in-label" style="float: left; font-style: italic; font-weight: 500;">
-        
+
         <div class="allow-custom-interval">
           <div class="course-interval-text">Launch mini-course every </div>
           <input type="number" id="course-interval-sup-tut" class="course-interval" name="course-interval-sup-tut" value="5" />
-          <div class="course-interval-text"> light curves!</div>  
+          <div class="course-interval-text"> light curves!</div>
         </div>
 
         <div class="disallow-custom-interval">
