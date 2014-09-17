@@ -565,7 +565,6 @@ class Classifier extends BaseController
       @hideMarkingButtons()
       @onClickNextSubject()
     else
-      @commentsContainer.animate({ scrollTop: @commentsContainer.height()}, 1000)
       if not User.current?
         @el.find('.talk-pill-nologin').show()
         @el.find('.talk-pill').hide()
@@ -795,11 +794,15 @@ class Classifier extends BaseController
 
   appendComment: (comment, container) ->
     container.append("""
-      <div class="formatted-comment">
-        <p>#{comment.val()}</p>
-        <p>by <strong>You</strong></p>
-      </div>
-    """).animate({ scrollTop: container[0].scrollHeight}, 1000)
+        <div class="comment formatted">
+          <p class="comment body">#{comment.body}</p>
+          <div class="comment info">
+            <span class="comment comment-by">by</span> 
+            <span class="comment username">You</span> 
+            <span class="comment comment-by">#{date.toDateString()}</span>
+          <div>
+        </div>
+      """).animate({ scrollTop: container[0].scrollHeight}, 1000)
 
   onCommentsFetch: ({discussion}) =>
     @comments = discussion.comments
@@ -814,16 +817,25 @@ class Classifier extends BaseController
     for comment in @comments
       date = new Date comment.created_at
       @commentsContainer.prepend("""
-        <div class="formatted-comment">
-          <p>#{comment.body}</p>
-          <p class="comment-by">by <b>#{comment.user_name}</b>, #{date.toDateString()}</p>
+        <div class="comment formatted">
+          <p class="comment body">#{comment.body}</p>
+          <div class="comment info">
+            <span class="comment comment-by">by</span> 
+            <span class="comment username">#{comment.user_name}</span> 
+            <span class="comment comment-by">#{date.toDateString()}</span>
+          <div>
         </div>
       """)
+
+    setTimeout =>
+      @commentsContainer.animate({ scrollTop: $('#comments')[0].scrollHeight}, 1000)
+    , 2000
 
   fetchComments: =>
     commentsContainer = @el.find '#comments'
     commentsContainer.html "" # delete existing comments
-    request = Api.current.get "/projects/#{Api.current.project}/talk/subjects/#{Subject.current?.zooniverse_id}"
+    request = Api.current.get "https://dev.zooniverse.org/projects/planet_hunter/talk/subjects/APH000001x" # DEBUG CODE
+    # request = Api.current.get "/projects/#{Api.current.project}/talk/subjects/#{Subject.current?.zooniverse_id}"
     # request = Api.current.get "https://dev.zooniverse.org/projects/planet_hunter/talk/subjects/#{@subject.current.zooniverse_id}"
     request.done @onCommentsFetch
 

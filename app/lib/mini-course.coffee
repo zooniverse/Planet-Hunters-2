@@ -83,15 +83,13 @@ class MiniCourse extends BaseController
 
   coursesAvailable: ->
     if @idx_last >= @content.length
-      console.log 'WARNING: COURSES NOT AVAILABLE!!!'
       return false
     else
-      console.log 'AWESOME. COURSES AVAILABLE!!!'
       return true
 
   launch: ->
-    console.log "idx_curr: ", @idx_curr
-    console.log "idx_last: ", @idx_last
+    # console.log "idx_curr: ", @idx_curr
+    # console.log "idx_last: ", @idx_last
     return unless User.current?
     return unless @coursesAvailable()
     @idx_curr = @idx_last
@@ -110,7 +108,7 @@ class MiniCourse extends BaseController
     nextBtn = $('.arrow.right')
 
     if index > @idx_last
-      console.log "You cannot view this course yet!"
+      # console.log "You cannot view this course yet!"
       unless @ADMIN_MODE
         nextBtn.hide()
         return
