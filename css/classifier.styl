@@ -218,36 +218,38 @@
               margin-top 10px
               margin-bottom 10px
             .talk-pill
-              // display none
+              border 2px solid #fff
+              border-radius 6px
+              textarea
+                border none
+                height 70px
               button
+                width 70px
+                height 30px
                 vertical-align middle
-                border 2px solid #fff
-                height 68px
-                border-radius 0 5px 5px 0
-                margin-left -10px
-                width 33%
                 background-color #fff
                 color black
-                border-left none
+                border-radius 6px
                 &:active
                   transform translateY(0px)
               textarea
                 outline none
-                padding 2px
-                border-right none
+                padding-top 10px
+                padding-bottom 10px
+                overflow hidden
                 resize none
-                width 66%
+                width 70%
                 vertical-align middle
                 height 60px
                 color #fff
+                font-weight bold
                 background transparent
-                border 2px solid #fff
-                border-radius 5px 0 0 5px
+
             #comments, #alt-comments
               height 240px
-              overflow-y scroll
-              border 2px solid #fff
-              border-radius 4px
+              overflow-y auto
+              // border 2px solid #fff
+              // border-radius 4px
               padding 10px
               .formatted-comment
                 border-bottom 1px solid #848b92
