@@ -811,7 +811,7 @@ class Classifier extends BaseController
     if @comments.length <= 0
       @commentsContainer.prepend("""
         <div class="formatted-comment">
-          <p>See anything interesting? Be the first to discuss this light curve!</p>
+          <p class="comment default-text">See anything interesting? Be the first to discuss this light curve!</p>
         </div>
       """)
 

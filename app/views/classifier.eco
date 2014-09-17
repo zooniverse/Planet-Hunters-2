@@ -62,15 +62,12 @@
         <div class="three-column">
           <div class="content feedback">
             <h1 class="feedback header">Nice Work!</h1>
-            <p class="feedback body"></p>
-            <!--<p>Looks like you've found <span id="planet-num"></span> potential transits!</p>-->
-            <!--<p>Look to your right and see if anyone is talking about the star, or start a conversation of your own.</p>-->
-            <!-- <p>Move on to the next subject when you're ready.</p> -->
+            <!-- <p>Move on to the next subject when you're ready!</p> -->
 
             <!-- BEGIN GUEST OBSERVER -->
             <div class='guest_obs'>
               <p>While you are classifying keep an eye out for unusual lightcurves and tag them with a hash tag on talk!</p>
-              <h2 class='guest_obs_title'></h2>
+              <span>Use the tag:</span><h2 class='guest_obs_title'></h2>
               <div class="examples">
                 <img class='example-image guest_obs_img'>
                   <p class="small-text">Click on image to enlarge</p>
