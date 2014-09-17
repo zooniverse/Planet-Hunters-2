@@ -468,7 +468,7 @@ class Classifier extends BaseController
       @notify('Added to Favorites.')
 
   onClickTalkButton: ->
-    window.open "http://talk.planethunters.org/#/subjects/#{Subject.current?.zooniverse_id}", '_blank'
+    window.open "http://talk.planethunters.org/#/subjects/#{Subject.current?.zooniverse_id}?quarter=#{@Subject.current.selected_light_curve.quarter}", '_blank'
 
   onClickHelp: ->
     if @guideShowing
