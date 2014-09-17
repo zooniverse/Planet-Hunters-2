@@ -589,11 +589,11 @@ class Classifier extends BaseController
           if @courseEnabled
             @el.find('[name="mini-course-option"]').prop 'checked', true
             @el.find('[name="course-opt-out"]').prop 'checked', false
-            console.log 'unchecking course-opt-out'
+            $('.zootorial-content')[1].getElementsByTagName("span")[0].insertAdjacentHTML('afterend',' Uncheck the box below to opt-out of this mini-course.')
           else
             @el.find('[name="mini-course-option"]').prop 'checked', false
             @el.find('[name="course-opt-out"]').prop 'checked', false
-            console.log 'checking course-opt-out'
+            $('.zootorial-content')[1].getElementsByTagName("span")[0].insertAdjacentHTML('afterend',' Check the box below to opt-in to the mini-course.')
 
 
   renderSupTutPrompt: ->   
@@ -607,11 +607,11 @@ class Classifier extends BaseController
         <div class="allow-custom-interval">
           <div class="course-interval-text">Launch mini-course every </div>
           <input type="number" id="course-interval-sup-tut" class="course-interval" name="course-interval-sup-tut" value="5" />
-          <div class="course-interval-text"> classifications!</div>  
+          <div class="course-interval-text"> light curves!</div>  
         </div>
 
         <div class="disallow-custom-interval">
-          <p>Yes, I want to learn more!</p>
+          <p>Yes, I'd like to participate in the Planet Hunters mini-course!</p>
         </div>
 
       </div>
