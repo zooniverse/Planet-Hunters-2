@@ -102,6 +102,7 @@
         <div class="three-column">
           <div class="content">
             <h2>Join the Conversation on Talk</h2>
+            <p class="align-left">There's a lot more to discuss on Talk! Ask the science team a question, get help, or just comment on an interesting subject.</p>
 
             <!-- <div id=".ukirt">
               Additional light curve information: <br>
@@ -119,6 +120,8 @@
                 <span>Talk about this</span>
               </button>
             </div>
+
+            <hr>
 
           </div>
         </div>
