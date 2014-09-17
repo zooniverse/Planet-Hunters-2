@@ -283,19 +283,23 @@
 
             
         .summary-button
-          display inline-block
-          padding 5px
-          margin 5px 0px 5px 0px
+          // display inline-block
+          // padding 5px
+          // margin 5px 0px 5px 0px
           text-align center
           font-size 0.75em
           opacity 0.5
           border none
           color white
-          background-color rgb(50,50,50)
+          background-color rgba(0,0,0,0) //rgb(50,50,50)
           height 40px
           width 190px
           border-radius 0.3em
-          transition 0.3s
+          transition 0.3
+          margin-top 10px
+          margin-bottom 10px
+          &img
+            veritcal-align sub
           &:disabled
             // opacity 0.15
           &:hover
@@ -306,21 +310,23 @@
             background-color #151A1B
             transition 0.3s
           span
-            top 20px
-            position relative
-            display inline-block
-            margin-bottom 10px
+            font-size 14px
+            font-weight bold
+            color #fff
+            margin-left 10px
+            line-height 40px
+
           &:active
             transform translateY(1px)
             box-shadow none
           &:hover
             opacity 1.0
           &.toggle-fav
-            background url("images/icons/favorite-nofill.svg") no-repeat 50% 35%
+            // background url("images/icons/favorite-nofill.svg") no-repeat 50% 35%
             &.toggled
-              background #151a1b url("images/icons/favorite-filled.svg") no-repeat 50% 35%
+              // background #151a1b url("images/icons/favorite-filled.svg") no-repeat 50% 35%
           &.talk-button
-              background url("images/icons/talk-icon.svg") no-repeat 50% 35%
+              // background url("images/icons/talk-icon.svg") no-repeat 50% 35%
 
             
 

@@ -113,12 +113,14 @@
               </ul>
             </div> -->
             <div id="summary-tools">
-              <button class="summary-button toggle-fav hide-unless-user" id="summary-fav-button">
-                <span>Add to favorites</span>
-              </button>
-              <button class="summary-button talk-button" formaction="http://talk.planethunters.o">
-                <span>Talk about this</span>
-              </button>
+              <div class="summary-button talk-button">
+                <img src="images/icons/talk-icon.svg" />
+                <span>Discuss on Talk</span>
+              </div>
+              <div class="summary-button toggle-fav hide-unless-user" id="summary-fav-button">
+                <img src="images/icons/favorite-nofill.svg" />
+                <span>Add to Favorites</span>
+              </div>
             </div>
 
             <hr>
