@@ -115,8 +115,19 @@ initialTutorialSteps =
       arrow:       'right'
       attachment:  [1.1, 0.5, "#zoom-button", 0.5, 0.5]
       actionable:  '[id="zoom-button"]'
-      next:        'goodLuck'
-      # next:        'click [id="zoom-button"]': 'goodLuck'
+      next: ->
+
+        if window.classifier.splitDesignation in ['a', 'b', 'c', 'd', 'e', 'f']
+          return 'talk'
+        else
+          return 'goodLuck'
+          
+    talk:
+      # progress:    9
+      header:      translate 'span', 'initialTutorial.talk.header'
+      content:     translate 'span', 'initialTutorial.talk.content'
+      attachment:  [0.5, 0.5, "#graph-container", 0.5, 0.5]
+      next: 'goodLuck'
 
     goodLuck:
       # progress:    9
