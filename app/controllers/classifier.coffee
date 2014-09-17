@@ -786,8 +786,9 @@ class Classifier extends BaseController
   onClickJoinConvo: ->
     @joinConvoBtn.hide().siblings().show()
 
-  onClickSubmitTalk: ->
+  onClickSubmitTalk: =>
     return if @talkComment.val() is "" # reject empty comments
+
     @appendComment(@talkComment, @commentsContainer)
     @submitComment()
     @talkComment.val('')
@@ -795,11 +796,11 @@ class Classifier extends BaseController
   appendComment: (comment, container) ->
     container.append("""
         <div class="comment formatted">
-          <p class="comment body">#{comment.body}</p>
+          <p class="comment body">#{comment.val()}</p>
           <div class="comment info">
             <span class="comment comment-by">by</span> 
             <span class="comment username">You</span> 
-            <span class="comment comment-by">#{date.toDateString()}</span>
+            <span class="comment comment-by"> just now</span>
           <div>
         </div>
       """).animate({ scrollTop: container[0].scrollHeight}, 1000)
@@ -834,8 +835,8 @@ class Classifier extends BaseController
   fetchComments: =>
     commentsContainer = @el.find '#comments'
     commentsContainer.html "" # delete existing comments
-    request = Api.current.get "https://dev.zooniverse.org/projects/planet_hunter/talk/subjects/APH000001x" # DEBUG CODE
-    # request = Api.current.get "/projects/#{Api.current.project}/talk/subjects/#{Subject.current?.zooniverse_id}"
+    # request = Api.current.get "https://dev.zooniverse.org/projects/planet_hunter/talk/subjects/APH000001x" # DEBUG CODE
+    request = Api.current.get "/projects/#{Api.current.project}/talk/subjects/#{Subject.current?.zooniverse_id}"
     # request = Api.current.get "https://dev.zooniverse.org/projects/planet_hunter/talk/subjects/#{@subject.current.zooniverse_id}"
     request.done @onCommentsFetch
 
@@ -853,8 +854,8 @@ class Classifier extends BaseController
     comment = @talkComment.val()
     is_valid = @validateComment comment
     return unless is_valid
-    # request = Api.current.post "https://dev.zooniverse.org/projects/planet_hunter/talk/subjects/#{@subject.current.zooniverse_id}/comments", comment: comment
-    request = Api.current.post "/projects/#{Api.current.project}/talk/subjects/#{Subject.current?.zooniverse_id}/comments", comment: comment
+    request = Api.current.post "https://dev.zooniverse.org/projects/planet_hunter/talk/subjects/#{@subject.current.zooniverse_id}/comments", comment: comment
+    # request = Api.current.post "/projects/#{Api.current.project}/talk/subjects/#{Subject.current?.zooniverse_id}/comments", comment: comment
 
   #
   # END TALK COMMENT METHODS
