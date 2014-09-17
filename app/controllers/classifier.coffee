@@ -821,7 +821,7 @@ class Classifier extends BaseController
 
     setTimeout =>
       @commentsContainer.animate({ scrollTop: $('#comments')[0].scrollHeight}, 1000)
-    , 1000
+    , 2000
 
   fetchComments: =>
     commentsContainer = @el.find '#comments'

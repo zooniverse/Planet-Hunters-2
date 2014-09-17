@@ -201,11 +201,7 @@
           .content
             padding 20px
             color #fff
-            text-align center
-            p
-              // margin-bottom 10px
-              &.align-left
-                text-align left
+            text-align left
             h1, h2
               text-align left
               // margin-bottom 30px
@@ -283,12 +279,8 @@
 
             
         .summary-button
-          // display inline-block
-          // padding 5px
-          // margin 5px 0px 5px 0px
           text-align center
           font-size 0.75em
-          opacity 0.5
           border none
           color white
           background-color rgba(0,0,0,0) //rgb(50,50,50)
@@ -298,36 +290,47 @@
           transition 0.3
           margin-top 10px
           margin-bottom 10px
-          &img
-            veritcal-align sub
-          &:disabled
-            // opacity 0.15
-          &:hover
-            background-color #4C4C4C
-            border-radius 0.3em
-            // opacity 1.0
-          &.toggled
-            background-color #151A1B
-            transition 0.3s
-          span
-            font-size 14px
-            font-weight bold
-            color #fff
-            margin-left 10px
-            line-height 40px
 
+          .talk-svg
+            fill #fff
+            stroke none
+          .fav-svg
+            fill none
+            stroke #fff
+
+
+          &svg
+            veritcal-align sub
           &:active
             transform translateY(1px)
             box-shadow none
+          .add_to_faves
+            display: inline 
+          .remove_from_faves
+            display: none 
+          &.toggled .add_to_faves
+            display: none 
+          &.toggled .remove_from_faves
+            display: inline 
+          &.toggled svg
+            fill #fff
+            &:hover
+              fill #000
           &:hover
-            opacity 1.0
-          &.toggle-fav
-            // background url("images/icons/favorite-nofill.svg") no-repeat 50% 35%
-            &.toggled
-              // background #151a1b url("images/icons/favorite-filled.svg") no-repeat 50% 35%
-          &.talk-button
-              // background url("images/icons/talk-icon.svg") no-repeat 50% 35%
+            background-color #fff
+            color #000
+            .talk-svg
+              fill #000
+            .fav-svg
+              fill none
+              stroke #000
 
+          
+          span
+            font-size 14px
+            font-weight bold
+            margin-left 10px
+            line-height 40px
             
 
       #tools
