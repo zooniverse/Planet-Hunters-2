@@ -119,9 +119,6 @@ class Classifier extends BaseController
       parent: window.classifier.el.children()[0]
       steps: supplementalTutorialSteps.steps
 
-    @supplementalTutorial.createElement "div.foo", @supplementalTutorial.el.children[2]
-    console.log 'FOO ', @supplementalTutorial.el
-
     # mini course
     @course = new MiniCourse
     @el.find('#course-interval-setter').hide()
@@ -148,26 +145,6 @@ class Classifier extends BaseController
     # initialize buttons
     @continueButton.hide()
 
-
-  # CODE FOR PROMPT (NOT CURRENTLY IN USE)
-  # /////////////////////////////////////////////////
-  # onMouseoverCourseYes: ->
-  #   # console.log '*** ON ***'
-  #   return unless User.current?
-  #   return if @blockCourseIntervalDisplay
-  #   @blockCourseIntervalDisplay = true
-  #   @el.find('#course-interval-setter').show 400, =>
-  #     @blockCourseIntervalHide = false
-
-  # onMouseoutCourseYes: ->
-  #   return unless User.current?
-  #   # console.log '*** OUT ***'
-  #   return if @blockCourseIntervalHide
-  #   @blockCourseIntervalHide = true
-  #   @el.find('#course-interval-setter').hide 400, =>
-  #     @blockCourseIntervalDisplay = false
-  # /////////////////////////////////////////////////
-
   getParameterByName: (name) ->
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]")
     regex = new RegExp("[\\?&]" + name + "=([^&#]*)")
@@ -188,18 +165,13 @@ class Classifier extends BaseController
     @initialTutorial?.attach() if Subject.current?.tutorial?
 
   onChangeMiniCourseOption: ->
-    console.log 'onChangeMiniCourseOption(): '
     return unless User.current?
     showMiniCourse = $("[name='mini-course-option']").prop 'checked'
-    console.log "onChangeMiniCourseOption(): SHOW MINI COURSE = ", showMiniCourse
 
     if showMiniCourse
-      console.log 'onChangeMiniCourseOption(): YES, MINI COURSE!'
       User.current?.setPreference 'course', 'yes'
       @courseEnabled = true
     else
-      console.log 'onChangeMiniCourseOption(): BOO! No mini course.'
-      # $("[name='course-opt-out']").prop x'checked', true
       User.current?.setPreference 'course', 'no'
       @courseEnabled = false
 
@@ -209,21 +181,14 @@ class Classifier extends BaseController
       timestamp: (new Date).toUTCString()
     @recordedClickEvents.push clickEvent
 
-    console.log 'COURSE_ENABLED: ', @courseEnabled
-
   onChangeCourseOptOut: ->
-    console.log 'onChangeCourseOptOut(): '
     return unless User.current?
-
     optOut = $("[name='course-opt-out']").prop 'checked'
-    console.log "onChangeCourseOptOut(): SHOW MINI COURSE = ", !optOut
 
     if optOut
-      console.log 'onChangeCourseOptOut(): BOO! No mini course.'
       User.current?.setPreference 'course', 'no'
       @courseEnabled = false
     else
-      console.log 'onChangeCourseOptOut(): YES, MINI COURSE!'
       User.current?.setPreference 'course', 'yes'
       @courseEnabled = true
 
@@ -233,10 +198,7 @@ class Classifier extends BaseController
       timestamp: (new Date).toUTCString()
     @recordedClickEvents.push clickEvent
 
-    console.log 'COURSE_ENABLED: ', @courseEnabled
-
   onChangeCourseIntervalViaSupTut: ->
-    console.log 'onChangeCourseIntervalViaSupTut(): '
     defaultValue = 5
     value = +@el.find('#course-interval-sup-tut').val()
 
@@ -244,8 +206,8 @@ class Classifier extends BaseController
     unless (typeof value is 'number') and (value % 1 is 0) and value > 0 and value < 100
       value = defaultValue
       @el.find('#course-interval-sup-tut').val(value)
-    else
-      console.log 'SETTING VALUE TO: ', value
+    # else
+    #   console.log 'SETTING VALUE TO: ', value
 
     @course.setRate value
 
@@ -256,7 +218,6 @@ class Classifier extends BaseController
     @recordedClickEvents.push clickEvent
 
   onUserChange: (e, user) =>
-
     @classifySummary.fadeOut(150)
     @nextSubjectButton.hide()
 
@@ -282,7 +243,6 @@ class Classifier extends BaseController
 
   initializeMiniCourse: ->
     return unless User.current?
-    # console.log 'First visit. Initializing preferences...'
     User.current.setPreference 'count', 0
     User.current.setPreference 'curr_course_id', 0
     @course.count = 0
@@ -290,13 +250,9 @@ class Classifier extends BaseController
 
   handleSplitDesignation: ->
     if User.current.project.splits?.mini_course_sup_tutorial?
-      # console.log 'SPLIT DESIGNATION ASSIGNED'
       @splitDesignation = User.current.project.splits.mini_course_sup_tutorial
     else
-      # console.log 'NO SPLIT DESIGNATION ASSIGNED. USING DEFAULT.'
       @splitDesignation = 'a' # default split designation
-
-    # @splitDesignation = 'a' # DEBUG CODE
 
     unless @getParameterByName("split") is ""
       @splitDesignation = @getParameterByName("split")
@@ -435,7 +391,6 @@ class Classifier extends BaseController
       @el.find('#notification').removeClass('notifying') )
 
   onToggleFav: ->
-    console.log 'fav toggled!'
     isFaved = @classification.favorite
     if isFaved
       @classification.favorite = false
@@ -536,7 +491,7 @@ class Classifier extends BaseController
     @showSummaryScreen()
 
   onClickNextSubject: ->
-    console.log 'COUNT: ', @course.count # DEBUG CODE
+    # console.log 'COUNT: ', @course.count # DEBUG CODE
     @hideMarkingButtons()
     @course.prompt_el.hide()
     @classifySummary.fadeOut(150)
@@ -594,7 +549,7 @@ class Classifier extends BaseController
     @el.find('.star-id').fadeIn()
 
     if @classification.subject.id is 'TUTORIAL_SUBJECT'
-      console.log 'TUTORIAL SUBJECT'
+      # console.log 'TUTORIAL SUBJECT'
       @hideMarkingButtons()
       @onClickNextSubject()
     else
@@ -635,7 +590,6 @@ class Classifier extends BaseController
             @el.find('[name="course-opt-out"]').prop 'checked', true
 
   renderSupTutPrompt: ->   
-    console.log 'rendering supplemental tutorial prompt...' 
     newElement = document.createElement('div')
     newElement.setAttribute 'class', "supplemental-tutorial-option-container"
     newElement.setAttribute 'style', "padding: 20px;"
@@ -722,9 +676,7 @@ class Classifier extends BaseController
 
   displayKnownTransits: ->
     return unless @simulationsPresent()
-    console.log 'MARKING DISABLED'
     @canvasGraph.disableMarking()
-    console.log "on display", @known_transitss
     @hideMarkingButtons()
     @continueButton.show()
     start_time = Subject.current.selected_light_curve.start_time
@@ -844,7 +796,6 @@ class Classifier extends BaseController
         </div>
       """)
 
-
     for comment in @comments
       date = new Date comment.created_at
       @commentsContainer.prepend("""
@@ -852,11 +803,7 @@ class Classifier extends BaseController
           <p>#{comment.body}</p>
           <p class="comment-by">by <b>#{comment.user_name}</b>, #{date.toDateString()}</p>
         </div>
-      """)#.animate({ scrollTop: container[0].scrollHeight}, 1000)
-
-    #   comment.timeago = $.timeago comment.updated_at
-    #   comment.date = DateWidget.formatDate 'd MM yy', new Date comment.updated_at
-    # @render()
+      """)
 
   fetchComments: =>
     commentsContainer = @el.find '#comments'
@@ -881,24 +828,6 @@ class Classifier extends BaseController
     return unless is_valid
     # request = Api.current.post "https://dev.zooniverse.org/projects/planet_hunter/talk/subjects/#{@subject.current.zooniverse_id}/comments", comment: comment
     request = Api.current.post "/projects/#{Api.current.project}/talk/subjects/#{Subject.current?.zooniverse_id}/comments", comment: comment
-
-    # time = new Date
-
-    # @comments.unshift
-    #   user_name: User.current.name
-    #   user_zooniverse_id: User.current.zooniverse_id
-    #   body: comment
-    #   timeago: $.timeago time
-    #   date: DateWidget.formatDate 'd MM yy', time
-
-    # @render()
-
-    # clearTimeout @timeout if @timeout?
-
-    # @timeout = setTimeout =>
-    #   @fetchComments()
-    # , @refresh * 1000 if @refresh?
-
 
   #
   # END TALK COMMENT METHODS
