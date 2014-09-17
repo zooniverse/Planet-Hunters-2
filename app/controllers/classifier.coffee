@@ -637,27 +637,30 @@ class Classifier extends BaseController
 
         # prompt user to opt in/out of mini course
         if @course.count is 3
-          newElement = document.createElement('div')
-          newElement.setAttribute 'class', "supplemental-tutorial-option-container"
-          newElement.setAttribute 'style', "padding: 20px;"
-          newElement.innerHTML = """
-            <input class=\"mini-course-option\" name=\"mini-course-option\" type=\"checkbox\"></input>
-            <div id=\"course-opt-in-label\" style=\"float: left; font-style: italic; font-weight: 500;\"></div>
-          """
-          # inject custom element into zootorial
-          @supplementalTutorial.container.getElementsByClassName('zootorial-content')[0].appendChild(newElement)
+          @createMiniCoursePrompt()
 
-          if @allowCustomCourseInterval
-            $('#course-opt-in-label').html """
-              <div class="course-interval-text">Launch mini-course every </div>
-                <input type="number" id="course-interval-sup-tut" class="course-interval" name="course-interval-sup-tut" value="5"></input>
-              <div class="course-interval-text"> classifications!</div>
-            """
-          else
-            $('#course-opt-in-label').html "Yes, I want to learn more!"
+          # check box only if mini-course enabled
+          $('.mini-course-option').prop 'checked', @courseEnabled
 
-          # # check box only if mini-course enabled
-          # $('.mini-course-option').prop 'checked', @courseEnabled
+  createMiniCoursePrompt: ->
+    newElement = document.createElement('div')
+    newElement.setAttribute 'class', "supplemental-tutorial-option-container"
+    newElement.setAttribute 'style', "padding: 20px;"
+    newElement.innerHTML = """
+      <input class=\"mini-course-option\" name=\"mini-course-option\" type=\"checkbox\"></input>
+      <div id=\"course-opt-in-label\" style=\"float: left; font-style: italic; font-weight: 500;\"></div>
+    """
+    # inject custom element into zootorial
+    @supplementalTutorial.container.getElementsByClassName('zootorial-content')[0].appendChild(newElement)
+
+    if @allowCustomCourseInterval
+      $('#course-opt-in-label').html """
+        <div class="course-interval-text">Launch mini-course every </div>
+          <input type="number" id="course-interval-sup-tut" class="course-interval" name="course-interval-sup-tut" value="5"></input>
+        <div class="course-interval-text"> classifications!</div>
+      """
+    else
+      $('#course-opt-in-label').html "Yes, I want to learn more!"
 
   sendClassification: ->
     if User.current?
