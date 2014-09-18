@@ -583,17 +583,25 @@ class Classifier extends BaseController
       else
         $(".sim_details").hide()
 
+      if @knownPlanetPresent()
+        @showPlanetDetails()
+      else
+        $(".planet_details").hide()
+
       @hideMarkingButtons()
       @nextSubjectButton.show()
       @setGuestObsContent()
       @classifySummary.fadeIn(150)
 
   showSimDetails:=>
-
     $(".sim_details").show()
     $(".sim_details .planet-rad").html(@planet_rad + " Earth Radi")
     $(".sim_details .planet-period").html(@planet_period + " days")
 
+  showPlanetDetails:=>
+    $(".planet_details").show()
+    $(".planet_details .planet-rad").html(@simulation.metadata.planet_rad + " Earth Radi")
+    $(".planet_details .planet-period").html(@simulation.metadata.planet_period + " days")
 
   checkSupplementalTutorial: ->
     for classification_count in @supTutIntervals
@@ -730,6 +738,9 @@ class Classifier extends BaseController
       return true
     else
       return false
+
+  knownPlanetPresent:->
+    @subject.metadata.known_planet?
 
   setGuestObsContent:=>
     # console.log GuestObsContent
