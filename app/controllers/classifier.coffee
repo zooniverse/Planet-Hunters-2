@@ -856,7 +856,8 @@ class Classifier extends BaseController
   onClickPopulateHashtag: ->
     hashtag = @el.find('.guest_obs_title').html()
     quarter = @subject.selected_light_curve.quarter
-    @talkComment.val( 'Q' + quarter + ' ' + hashtag )
+    # @talkComment.val( 'Q' + quarter + ' ' + hashtag )
+    @talkComment.val( @talkComment.val() + ' ' + hashtag )
 
   appendComment: (comment, container) ->
     container.append("""
@@ -915,10 +916,11 @@ class Classifier extends BaseController
     is_valid = comment.length > 0 && comment.length <= 140
 
   submitComment: =>
-    comment = @talkComment.val()
+    quarter = @subject.selected_light_curve.quarter
+    comment = 'Q'+quarter + ' ' + @talkComment.val()
     is_valid = @validateComment comment
     return unless is_valid
-    # request = Api.current.post "/projects/#{Api.current.project}/talk/subjects/#{Subject.current?.zooniverse_id}/comments", comment: comment
+    request = Api.current.post "/projects/#{Api.current.project}/talk/subjects/#{Subject.current?.zooniverse_id}/comments", comment: comment
 
   #
   # END TALK COMMENT METHODS
