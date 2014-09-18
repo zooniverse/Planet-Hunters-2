@@ -31,15 +31,19 @@ class MiniCourse extends BaseController
 
     User.on 'change', =>
       if User.current?
-        @prompt_el.toggleClass 'signed-in'
-        @prompt_el.find('.course-button').show()
-        @prompt_el.find('#course-yes-container').show()
-        @prompt_el.find('#course-message').html 'Mini-course available! Learn more about planet hunting. Interested?'
-      else
-        @prompt_el.toggleClass 'signed-in'
-        @prompt_el.find('.course-button').hide()
-        @prompt_el.find('#course-yes-container').hide()
-        @prompt_el.find('#course-message').html 'Please <button style="text-decoration: underline" class="sign-in">sign in</button> or <button style="text-decoration: underline" class="sign-up">sign up</button> to receive credit for your discoveries and to participate in the Planet Hunters mini-course.'
+        if @prompt_el.hasClass 'show-login-prompt'
+          @hidePrompt()
+    #   if User.current?
+    #     @prompt_el.addClass 'signed-in'
+    #     @prompt_el.find('.course-button').show()
+    #     @prompt_el.find('#course-yes-container').show()
+    #     @prompt_el.find('#course-message').html 'Mini-course available! Learn more about planet hunting. Interested?'
+    #   else
+    #     console.log 'PLEASE LOGIN!'
+    #     @prompt_el.removeClass 'signed-in'
+    #     @prompt_el.find('.course-button').hide()
+    #     @prompt_el.find('#course-yes-container').hide()
+    #     @prompt_el.find('#course-message').html 'Please <button style="text-decoration: underline" class="sign-in">sign in</button> or <button style="text-decoration: underline" class="sign-up">sign up</button> to receive credit for your discoveries and to participate in the Planet Hunters mini-course.'
 
     # event callbacks
     @prompt_el.on "click", "#course-yes", (e) => @onClickCourseYes()

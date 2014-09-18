@@ -440,7 +440,7 @@ class Classifier extends BaseController
       @notify 'Please wait until current lightcurve is loaded.'
       return
     # load training subject
-    @notify('Loading tutorial...')
+    # @notify('Loading tutorial...')
     tutorialSubject = @createTutorialSubject()
     tutorialSubject.select()
     # do stuff after tutorial complete/aborted
@@ -508,6 +508,7 @@ class Classifier extends BaseController
 
   onClickNextSubject: ->
     console.log 'COUNT: ', @course.count # DEBUG CODE
+    console.log 'SIM COUNT: ', @sim_count
     @hideMarkingButtons()
     @course.prompt_el.hide()
     @classifySummary.fadeOut(150)
@@ -550,6 +551,15 @@ class Classifier extends BaseController
     else
       Subject.group = MAIN_SUBJECT_GROUP
       @Subject.next()
+
+
+    # unless User.current? and @sim_count % 5 isnt 0
+    #   console.log 'PLEASE SIGN IN!'
+    #   promptElement = @el.find('#course-prompt')
+    #   @course.prompt.toggleClass 'signed-in'
+    #   @promptElement.find('#course-yes-container').hide()
+    #   @promptElement.find('#course-message').html 'Please <button style="text-decoration: underline" class="sign-in">sign in</button> or <button style="text-decoration: underline" class="sign-up">sign up</button> to receive credit for your discoveries and to participate in the Planet Hunters mini-course.'
+
 
     @noTransitsButton.show()
 
@@ -658,10 +668,18 @@ class Classifier extends BaseController
   sendClassification: ->
     if User.current?
       @course.incrementCount()
+      @course.hidePrompt()
     else
-      @loggedOutClassificationCount += 1
-      if @loggedOutClassificationCount%5 == 0
+      # prompt users to sign
+      if +@loggedOutClassificationCount % 5 is 0
+        promptElement = @el.find('#course-prompt')
+        promptElement.removeClass 'signed-in'
+        promptElement.addClass 'show-login-prompt'
+        promptElement.find('.course-button').hide()
+        promptElement.find('#course-yes-container').hide()
+        promptElement.find('#course-message').html 'Please <button style="text-decoration: underline" class="sign-in">sign in</button> or <button style="text-decoration: underline" class="sign-up">sign up</button> to receive credit for your discoveries and to participate in the Planet Hunters mini-course.'
         @course.showPrompt()
+      @loggedOutClassificationCount += 1
 
     @classification.annotate
       classification_type: 'light_curve'
