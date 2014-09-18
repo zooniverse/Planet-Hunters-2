@@ -558,15 +558,6 @@ class Classifier extends BaseController
       Subject.group = MAIN_SUBJECT_GROUP
       @Subject.next()
 
-
-    # unless User.current? and @sim_count % 5 isnt 0
-    #   console.log 'PLEASE SIGN IN!'
-    #   promptElement = @el.find('#course-prompt')
-    #   @course.prompt.toggleClass 'signed-in'
-    #   @promptElement.find('#course-yes-container').hide()
-    #   @promptElement.find('#course-message').html 'Please <button style="text-decoration: underline" class="sign-in">sign in</button> or <button style="text-decoration: underline" class="sign-up">sign up</button> to receive credit for your discoveries and to participate in the Planet Hunters mini-course.'
-
-
     @noTransitsButton.show()
 
   #
@@ -580,10 +571,8 @@ class Classifier extends BaseController
     @continueButton.hide()
 
   showSummaryScreen: ->
-    # reveal ids
-    @el.find('.star-id').fadeIn()
-
-
+    @el.find('.too-long-warning').html("140 left") # reset char count
+    @el.find('.star-id').fadeIn() # reveal ids
 
     if @classification.subject.id is 'TUTORIAL_SUBJECT'
       # console.log 'TUTORIAL SUBJECT'
@@ -596,7 +585,6 @@ class Classifier extends BaseController
       else
         @el.find('.talk-pill-nologin').hide()
         @el.find('.talk-pill').show()
-
 
       if @simulationsPresent()
         @showSimDetails()
