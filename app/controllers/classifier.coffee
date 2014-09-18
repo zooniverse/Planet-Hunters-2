@@ -534,6 +534,8 @@ class Classifier extends BaseController
     @sendClassification()
     @canvasGraph.marks.destroyAll() #clear old marks
     @recordedClickEvents = []
+    @talkComment.val('')
+
 
     @sim_count ||= 0
     @sim_count +=1
