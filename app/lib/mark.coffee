@@ -49,11 +49,11 @@ class Mark
     # no overlapping of marks
     markLeftX = Math.max markLeftX,
                         (@closestXBelow + @handleWidth()/2 || markLeftX),
-                        (@canvasGraph.toPixels(@canvasGraph.smallestX))
+                        (@canvasGraph.toPixels(@canvasGraph.smallestX)),@canvasGraph.leftPadding
 
     markRightX = Math.min markRightX,
                          (@closestXAbove - @handleWidth()/2 || markRightX),
-                         (@canvasGraph.toPixels(@canvasGraph.largestX))
+                         (@canvasGraph.toPixels(@canvasGraph.largestX)) + @canvasGraph.leftPadding
 
     # max and min width on creating / resizing marks
     width = Math.min (Math.max (Math.abs parseFloat(markRightX) - parseFloat(markLeftX)), parseFloat(@minWidth())), parseFloat(@maxWidth())
@@ -66,11 +66,11 @@ class Mark
 
   move: (e) ->
     markWidth = parseFloat @element.style.width
-    
     # no overlapping of marks or moving out of canvas bounds
     leftXPos = Math.max (@toCanvasXPoint(e) - @moveOffset),
                         (@closestXBelow || -@handleWidth()/2) + @handleWidth()/2,
                         @canvasGraph.leftPadding
+
     leftXPos = Math.min leftXPos,
                         ((@closestXAbove || @canvas.width + @handleWidth()/2) - markWidth) - @handleWidth()/2
 
@@ -83,7 +83,7 @@ class Mark
     #data coords
     @dataXMinRel = @canvasGraph.toDays(@canvasXMin-@canvasGraph.leftPadding)
     @dataXMaxRel = @canvasGraph.toDays(@canvasXMax-@canvasGraph.leftPadding)
-    @dataXMinGlobal = @dataXMinRel + @originalMin    
+    @dataXMinGlobal = @dataXMinRel + @originalMin
     @dataXMaxGlobal = @dataXMaxRel + @originalMin
 
   onMouseDown: (e) =>
@@ -120,7 +120,7 @@ class Mark
     window.removeEventListener 'mouseup', @onMouseUp
     window.removeEventListener 'touchmove', @onMouseMove
     window.removeEventListener 'touchend', @onTouchEnd
-    
+
     @canvasGraph.marks.add(@) unless (@ in @canvasGraph.marks.all)
     @canvasGraph.marks.remove(@) if e.target.className is "top-bar" or e.target.className is "close-icon"
     for mark in @canvasGraph.marks.all
