@@ -67,6 +67,8 @@ class Classifier extends BaseController
     'change input[name="course-opt-out"]'     : 'onChangeCourseOptOut'
     'click button[name="continue-button"]'    : 'onClickContinueButton'
     'keyup textarea[name="talk-comment"]'     : 'onKeyupTalkComment'
+    'focus textarea[name="talk-comment"]'     : 'onFocusTalkComment'
+    
 
     'click .arrow.left'  : 'onClickCourseBack'
     'click .arrow.right' : 'onClickCourseForward'
@@ -581,9 +583,7 @@ class Classifier extends BaseController
     # reveal ids
     @el.find('.star-id').fadeIn()
 
-    quarter = @subject.selected_light_curve.quarter
-    @talkComment.val('Q'+quarter+' ')
-    @onKeyupTalkComment()
+
 
     if @classification.subject.id is 'TUTORIAL_SUBJECT'
       # console.log 'TUTORIAL SUBJECT'
@@ -859,10 +859,18 @@ class Classifier extends BaseController
     @submitComment()
     @talkComment.val('')
 
+  onFocusTalkComment: ->
+    return unless @talkComment.val() is ""
+    quarter = @subject.selected_light_curve.quarter
+    @talkComment.val('Q'+quarter+' ')
+    @onKeyupTalkComment()
+
   onClickPopulateHashtag: ->
     hashtag = @el.find('.guest_obs_title').html()
-    quarter = @subject.selected_light_curve.quarter
-    # @talkComment.val( 'Q' + quarter + ' ' + hashtag )
+    unless @talkComment.val().length + hashtag.length <= 140
+      @notify("You've exceeded the 140 character limit.")
+      return
+    hashtag = @el.find('.guest_obs_title').html()
     @talkComment.val( @talkComment.val() + ' ' + hashtag )
 
   appendComment: (comment, container) ->
@@ -917,14 +925,15 @@ class Classifier extends BaseController
       @fetchComments()
     , @refresh * 1000 if @refresh?
 
-
   validateComment: (comment)=>
     is_valid = comment.length > 0 && comment.length <= 140
 
   submitComment: =>
     comment = @talkComment.val()
     is_valid = @validateComment comment
-    return unless is_valid
+    unless is_valid
+      @notify("You've exceeded the 140 character limit.")
+      return      
     request = Api.current.post "/projects/#{Api.current.project}/talk/subjects/#{Subject.current?.zooniverse_id}/comments", comment: comment
 
   #
