@@ -75,7 +75,7 @@
 
       <div class="content sub-nav-science-transits">
         <h1>Transits</h1>
-        
+
         <h2>The Transit Technique for Hunting Planets</h2>
 
         <p>Transits occur when a planet passes in front of its host star as viewed from the Earth. A portion of the star's light is blocked out, and the brightness observed decreases.The Kepler mission measures the brightness of stars with such incredible precision that it is sensitive enough to detect transits of planets approaching the size of the Earth. At Planet Hunters, we need your help in the hunt for extrasolar planets (exoplanets) by highlight potential transits in a star's light curve, the time series measurements of the star's brightness, in the web interface. We use the combined assessment of several volunteers reviewing the same 30-day segment of a Kepler star's light curve to identify transits.</p>
@@ -93,8 +93,7 @@
 
         <p>The size of the star matters too. The same planet transiting a smaller star will have a larger transit depth. Earth-sized planets orbiting cool small M dwarfs, have the similar transit depths to giant planets around Sun-like stars.</p>
 
-        <img src="images/gdwarf_mdwarf.png">
-        <p class="image-caption">Credit: M. Giguere (Yale)</p>
+        <img src="images/learn-lightcurve.png ">
 
 
         <p>Given that our own Solar System has eight planets, it should come as no surprise that we may find other stars with multiple planets around them lurking in the Kepler data. These light curves would look exactly as one might guess, showing multiple patterns of transits.</p>
@@ -131,7 +130,7 @@
         <h2>Computers vs. Humans: Why do we need your help?</h2>
 
         <p>The Kepler team and other astronomers have developed automated computer algorithms to search the Kepler light curves, for the repeated signal of exoplanet transits. To date over 3000 confirmed planets and planet candidates have been discovered with Kepler, but the Kepler light curves are complex, many exhibiting short-lived changes in brightnesss that are often difficult to characterize. Despite the impressive success of the computers, they may miss transits dominated by the star’s natural variability. The human brain excels at pattern recognition and easily recognizes transits that sophisticated automated routines may miss, and that is where you come in.</p>
- 
+
         <p>Automated routines have been very successful and many planets and planet candidates have been found, but not all. While we expect computer programs to robustly identify things that they are trained to find, we know there are surprises in the data that the computer algorithms will miss. It is impossible for a single person to review all of the Kepler observations, and  experiments have shown that when many people work together, the collective wisdom of the crowds can be better than an expert. With the Internet we can gather the help of hundreds of thousands of people to help in the hunt for exoplanets. The original Planet Hunters proved that this citizen science approach to exoplanets works with over 30 planet candidates and several confirmed planet discoveries.  </p>
       </div>
 
@@ -159,7 +158,7 @@
         <p>One of the goals of Planet Hunters is to explore the diversity of the terrestrial and giant planet populations and begin to understand the spectrum of solar systems. With just the planet discoveries alone you can't answer these questions because you don't know how complete the sample is. In order to understand how well different kinds of transiting planets can be found with Planet Hunters, we also show light curves with simulated transits, spanning the range of exoplanet radii and orbits.</p>
 
         <p>It might seem like we're testing you or trying to train you to identify transits, but we're really testing the project. The simulations are critical for determining the statistical completeness for planets as a function of size (depth of the transit event) and orbital period (number of transits). This is a really vital part of the project, with these simulated transits we can answer interesting and fundamental questions about how solar systems and planets form. Some of the simulated planets like large Jupiter-sized planets will be really easy to spot while others will be near impossible to identify especially for the extremely small planets, but don’t be discouraged if you didn’t find the simulated transit. That’s okay, that's part of the experiment.</p>
-        
+
         <p>If you encounter a simulation, we will always identify the simulated transit points in red after you’ve classified the star and list the properties of the simulated planet we injected into the light curve. The reason we don’t identify the simulated data first, is that if you knew the lightcurve had simulated events you might look at it differently. To be able to use the data from the simulated transits accurately, we need them to be examined in exactly the same conditions as the real light curves.</p>
       </div>
     </div>
