@@ -497,6 +497,8 @@ class Classifier extends BaseController
     if @simulationsPresent()
       @evaluateMarks()
       @displayKnownTransits()
+    else if @knownPlanetPresent()
+      @displayKnownTransits()
     else
       @showSummaryScreen()
 
@@ -716,10 +718,15 @@ class Classifier extends BaseController
     return lengthC/(lengthA+lengthB-lengthC)
 
   displayKnownTransits: ->
-    return unless @simulationsPresent()
+    return unless @simulationsPresent() or @knownPlanetPresent()
     @canvasGraph.disableMarking()
     @hideMarkingButtons()
     @continueButton.show()
+
+    if @knownPlanetPresent()
+      @known_transits = @subject.metadata.known_transits
+
+
     start_time = Subject.current.selected_light_curve.start_time
 
     for transit in @known_transits
@@ -729,7 +736,10 @@ class Classifier extends BaseController
     @course.prompt_el.find('#course-yes-container').hide()
     @course.prompt_el.find('#course-no').hide()
     @course.prompt_el.find('#course-never').hide()
-    @course.prompt_el.find('#course-message').html "This light curve contains at least one simulated transit, highlighted in red."
+    if @knownPlanetPresent()
+      @course.prompt_el.find('#course-message').html "This light curve contains a known kepler planet. Transits in this quarter (if any) are highlighted in red."
+    else
+      @course.prompt_el.find('#course-message').html "This light curve contains at least one simulated transit, highlighted in red."
 
     return
 
