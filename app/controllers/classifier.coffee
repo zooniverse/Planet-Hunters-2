@@ -925,7 +925,7 @@ class Classifier extends BaseController
     comment = @talkComment.val()
     is_valid = @validateComment comment
     return unless is_valid
-    # request = Api.current.post "/projects/#{Api.current.project}/talk/subjects/#{Subject.current?.zooniverse_id}/comments", comment: comment
+    request = Api.current.post "/projects/#{Api.current.project}/talk/subjects/#{Subject.current?.zooniverse_id}/comments", comment: comment
 
   #
   # END TALK COMMENT METHODS
