@@ -15,7 +15,7 @@
       <div class="content sub-nav-about-about">
         <h1>The Story So Far...</h1>
 
-        <p>On December 16, 2010, the <a href="http://www.zooniverse.org">Zooniverse</a> launched the original Planet Hunters to enlist the public's help to search data from the NASA's <a href="http://kepler.nasa.gov">Kepler</a> spacecraft for the characteristic drop in light due an orbiting extrasolar planets (exoplanets) crossing in front of their parent stars.</p>
+        <p>On December 16, 2010, the <a href="http://www.zooniverse.org">Zooniverse</a> launched the original Planet Hunters to enlist the public's help to search data from the NASA's <a href="http://kepler.nasa.gov">Kepler</a> spacecraft for the characteristic drop in light due to an orbiting extrasolar planets (exoplanets) crossing in front of their parent stars.</p>
 
         <p>Back then we didn't know what we would find. The project was a gamble on the ability of human pattern recognition to beat machines just occasionally and spot the telltale dip from a transiting planet that was missed by automated routines looking for repeating patterns. It may have been the case that no new planets were discovered and that computers had the job down to a fine art.</p>
 
@@ -103,7 +103,7 @@
 
         <div class="organization">
           <h2>The Adler Planetarium</h2>
-          <p><img src="./images/logos/adler.png" class="logo"><a href="http://www.adlerplanetarium.org">The Adler Planetarium</a> - America's First Planetarium - was founded in 1930 by Chicago business leader Max Adler. The Adler is a recognized leader in science education, with a focus on inspiring young people to pursue careers in science, technology, engineering and math. Throughout 80 years, the Adler has inspired the next generation of explorers by sharing the personal stories of space exploration and America’s space heroes.</p>
+          <p><img style="padding-bottom: 70px;" src="./images/logos/adler.png" class="logo"><a href="http://www.adlerplanetarium.org">The Adler Planetarium</a> - America's First Planetarium - was founded in 1930 by Chicago business leader Max Adler. The Adler is a recognized leader in science education, with a focus on inspiring young people to pursue careers in science, technology, engineering and math. Throughout 80 years, the Adler has inspired the next generation of explorers by sharing the personal stories of space exploration and America’s space heroes.</p>
         </div>
 
         <div class="organization">

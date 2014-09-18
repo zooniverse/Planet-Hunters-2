@@ -6,11 +6,11 @@
   <div class="secondary-content">
     <nav class="sub-nav-science">
       <button name="mission">Our Mission</button>
-      <button name="faq">FAQ</button>
-      <button name="transits">Transits</button>
       <button name="your-task">Your Task</button>
+      <button name="transits">Transits</button>
       <button name="origin">Light Curves</button>
       <button name="simulations">Simulations</button>
+      <button name="faq">FAQ</button>
       <button onclick="window.location='https://www.zooniverse.org/publications?project=planethunters'">Discoveries &amp; Papers</button>
     </nav>
   </div>
@@ -45,11 +45,11 @@
         <h2 class="faq link" target="faq-news">How do I keep up to date on the latest Planet Hunters news?</h2>
         <hr class="faq hr">
         <h2 id="faq-data">Where does the data come from?<img class="faq up-image link" target="faq-top" src="images/icons/faq-up.png"/></h2>
-        <p>The observations we show on the Planet Hunters come from the NASA Kepler spacecraft. They are brightness measurements of stars in the Kepler field during the main Kepler mission and from fields observed in the K2 phase. You can learn more about the Kepler field and K2 on the science page. NASA is archiving the Kepler data products and resulting catalogs at the <a href="http://archive.stsci.edu/kepler">Mikulski Archive for Space Telescopes (MAST)</a> and the <a href="http://exoplanetarchive.ipac.caltech.edu/docs/KeplerMission.html">NASA Exoplanet Archive</a></p>
+        <p>The observations we show on Planet Hunters come from the NASA Kepler spacecraft. They are brightness measurements of stars in the Kepler field during the main Kepler mission and from fields observed in the K2 phase. You can learn more about the Kepler field and K2 on the science page. NASA is archiving the Kepler data products and resulting catalogs at the <a href="http://archive.stsci.edu/kepler">Mikulski Archive for Space Telescopes (MAST)</a> and the <a href="http://exoplanetarchive.ipac.caltech.edu/docs/KeplerMission.html">NASA Exoplanet Archive</a></p>
         <h2 id="faq-talk">I have a question or I found something interesting, who should I talk to?<img class="faq up-image link" target="faq-top" src="images/icons/faq-up.png"/></h2>
         <p>You can go to the star's Planet Hunters Talk page and make a 140 character comment, label the star with a hashtag, start a side discussion, or post a new thread in Talk's message board forum. On Talk you can discuss and further analyze the available data for the star as well as interact with the rest the Planet Hunters community including members of the science team. You can directly access Talk after classifying a star's light curve or at <a href="http://talk.planethunters.org">http://talk.planethunters.org</a></p>
         <h2 id="faq-classification">What happens to my classification after I submit it?<img class="faq up-image link" target="faq-top" src="images/icons/faq-up.png"/></h2>
-        <p>It is stored in the Zooniverse's database with everyone else’s classifications from Planet Hunters. The Planet Hunters science team then will combine and analyze the results to identify planet candidates and estimate the occurrence of different types and kinds of planets and solar systems. Keep an eye on the blog for updates.</p>
+        <p>It is stored in the Zooniverse's database with everyone else’s classifications from Planet Hunters. The Planet Hunters science team then will combine and analyze the results to identify planet candidates and estimate the occurrence of different types and kinds of planets and solar systems. Keep an eye on the <a href="http://blog.planethunters.org">Planet Hunters blog</a> for updates.</p>
         <h2 id="faq-mistake">I made a mistake, can I got back and edit my classification?<img class="faq up-image link" target="faq-top" src="images/icons/faq-up.png"/></h2>
         <p>Once you've finished reviewing a specific light curve and your classification has been submitted to our database, you can’t go back and change it. Don't worry too much. Just try to do your best when reviewing the light curves. We combine the assessments from multiple volunteers to identify transits, so chances are if one person missed a transit by mistake the other classifiers will likely have marked it.</p>
         <h2 id="faq-correct">How do I know if I'm doing this right?<img class="faq up-image link" target="faq-top" src="images/icons/faq-up.png"/></h2>
@@ -59,7 +59,7 @@
         <h2 id="faq-login">Do I have to log in to get credit for my discoveries?<img class="faq up-image link" target="faq-top" src="images/icons/faq-up.png"/></h2>
         <p>Yes, you do need to register and log in when classifying to get credit for your discoveries. It's the only way we know for sure that you were the one that marked the transit and will be able to contact you about the discovery.</p>
         <h2 id="faq-name">Do I get to name the exoplanet I found?<img class="faq up-image link" target="faq-top" src="images/icons/faq-up.png"/></h2>
-        <p>Not yet, but maybe one day in the future you will be able help name your discovery. The International Astronomical Union (IAU) has enacted a plan for the public naming extrasolar planets (exoplanets). The first set of exoplanets will be officially bestowed names in August 2015. You can find out more about the IAU's naming process at the <a href="http://nameexoworlds.org">Name ExoWorlds</a> website.</p>
+        <p>Not yet, but maybe one day in the future you will be able help name your discovery. The International Astronomical Union (IAU) has enacted a plan for the public naming of extrasolar planets (exoplanets). The first set of exoplanets will be officially bestowed names in August 2015. You can find out more about the IAU's naming process at the <a href="http://nameexoworlds.org">Name ExoWorlds</a> website.</p>
         <h2 id="faq-candidate">Why can't you say the transits I spotted are a bonafied planet? What is a planet candidate?<img class="faq up-image link" target="faq-top" src="images/icons/faq-up.png"/></h2>
         <p>With the Kepler light curve alone, we can't be 100% certain that a transit-like feature is produced by an orbiting planet. There are many astrophysical false positives that can mimic a transit signature. Therefore we call discoveries planet candidates. A lot of effort and follow-up is required to confirm a planet candidate. To validate a planet candidate as a true planet, an estimate of the mass of the transiting body is needed. The transit method only gives an estimate of the size of the body, not its mass. Through statistical means or if a mass measurement is obtained and confirmed to be planetary, then the planet candidate gets promoted to a confirmed planet. To measure the mass typically radial velocity observations are used, where you measure the wobble of the star due to the slight gravitational tug due of the orbiting body. Most of the stars Kepler observes are either too faint or the planet orbiting is too small to have a radial velocity signal detectable by today's best ground-based telescopes and instruments. The majority of planet candidates found in the Kepler data will remain candidates.</p>
         <h2 id="faq-known">Why do some light curves already have known planet candidates?<img class="faq up-image link" target="faq-top" src="images/icons/faq-up.png"/></h2>
@@ -69,7 +69,7 @@
         <h2 id="faq-simulations">Why are there simulated transits?<img class="faq up-image link" target="faq-top" src="images/icons/faq-up.png"/></h2>
         <p>The simulated transits will enable the science team to understand exactly what kinds of planets the project can find and which ones are difficult for humans to spot by eye in the light curves. We will use this information to estimate the abundance of planets in our Galaxy. You can learn more about the simulations on the Science Page.</p>
         <h2 id="faq-news">How do I keep up to date on the latest Planet Hunters news?<img class="faq up-image link" target="faq-top" src="images/icons/faq-up.png"/></h2>
-        <p>Keep an eye on the <a href="http://blog.planethunters.org">Planet Hunters blog</a>. We frequently post science results and site news there as well have posts discussing the science behind the project. You can also receive updates on Planet Hunters through the project's Twitter, and Google+ accounts.</p>
+        <p>Keep an eye on the <a href="http://blog.planethunters.org">Planet Hunters blog</a>. We frequently post science results and site news there as well have posts discussing the science behind the project. You can also receive updates on Planet Hunters through the project's <a href="https://plus.google.com/109754226869605076230/posts">Twitter</a>, and <a href="https://plus.google.com/109754226869605076230/posts">Google+</a> accounts.</p>
         <p><strong>Didn't find an answer to your question? Visit <a href="http://talk.planethunters.org">Planet Hunters Talk</a> and ask the Planet Hunters community.</strong></p>
       </div>
 
@@ -98,13 +98,13 @@
 
         <p>Given that our own Solar System has eight planets, it should come as no surprise that we may find other stars with multiple planets around them lurking in the Kepler data. These light curves would look exactly as one might guess, showing multiple patterns of transits.</p>
 
-        <p>We can see that there must be multiple transiting objects because the timing between the transits is not constant due to the overlapping of two different periods. An exoplanet around an eclipsing binary star would also look similar, displaying both the small and large transits of the stars as well as whatever transit the planet causes. If you encounter a light curve that looks like it may be from a multiplanet system, mark the transits as usual. With your markings we’ll be able to identify there is more than one planet present.</p>
+        <p>We can see that there must be multiple transiting objects because the timing between the transits is not constant due to the overlapping of two different periods. If you encounter a light curve that looks like it may be from a multiplanet system, mark the transits as usual. With your markings we’ll be able to identify there is more than one planet present.</p>
 
         <img src="images/multitransits.png">
 
         <h2>Starspots</h2>
 
-        <p>Like our Sun, many stars have cooler and fainter blotches on their surface. These starspots (or sunspots in case of the Sun) rotate with the star and cause relatively slow changes in the brightness of the light curve. Starspots cause most of the smooth and slowly varying brightness seen in stars typically over periods of days. Transiting planets cause produce changes in a star’s brightness over much shorter timescales  Planets will transit the star in  a few to tens of hours, causing quick dips in the star's brightness. Below is a light curve of a star with starspots and a transiting exoplanet. The transits are denoted by red boxes.</p>
+        <p>Like our Sun, many stars have cooler and fainter blotches on their surface. These starspots (or sunspots in case of the Sun) rotate with the star and cause relatively slow changes in the brightness of the light curve. Starspots cause most of the smooth and slowly varying brightness seen in stars typically over periods of days. Transiting planets cause produce changes in a star’s brightness over much shorter timescales.  Planets will transit the star in  a few to tens of hours, causing quick dips in the star's brightness. Below is a light curve of a star with starspots and a transiting exoplanet. The transits are denoted by red boxes.</p>
 
         <img src="images/guide/more_examples4.png"><br>
 
@@ -112,13 +112,13 @@
 
         <p>I spotted a transit, is it a planet? Maybe. There are several astrophysical scenarios not involving planets that can produce transit-like events in a Kepler light curve. So more checks first need to be done before we can confidently say the event is likely due a transiting planet.</p>
 
-        <p>The first check is to see if the event repeats. Typically 2-3 transits must be spotted before the star is considered to harbor possible planets. A planet that orbits in one year, like the Earth, requires three years of data for detection, while planets that orbit in ten days can be detected with just thirty days of data. If the planet orbits longer than the ~30 day intervals we show on the Planet Hunters classification interface, you might only see one transit. If the event is real than other volunteers will have seen and marked the repeat events in other light curve sections, flagging the star as likely having transits.</p>
+        <p>The first check is to see if the event repeats. Typically 2-3 transits must be spotted before the star is considered to harbor possible planets. A planet that orbits in one year, like the Earth, requires three years of data for detection, while planets that orbit in ten days can be detected with just thirty days of data. If the planet orbits longer than the ~30 day intervals we show on the Planet Hunters classification interface, you might only see one transit. If the event is real then other volunteers will have seen and marked the repeat events in other light curve sections, flagging the star as likely having transits.</p>
 
         <p>The transit technique measures the radius of the transiting body. If we know the size of the star, from the transit depth we know the size of the object. If there are repeat events and the size of the object is planetary in size, roughly Jupiter-sized (10 Earth radii) or smaller, we then call this a planet candidate.</p>
 
         <p>The reason for planet candidate and not confirmed planet is because we don't have the mass of the body. Brown dwarfs, low-mass stars that burned deuterium but not hydrogen in their cores, have similar radii to Jupiter but much heavier masses. From the radius alone you can't distinguish the two. Also Kepler has very precise but blurry vision. There are many background stars that contribute to a target star's  light curve, so we're seeing the combined light of all those sources. If background stars are bright enough they can dilute the transit signal making us think the body is smaller such than an eclipsing binary, where two stars transit in front and behind each other, can have measured depths that look like planet transits. A mass estimate will distinguish between an orbiting star and a planet.</p>
 
-        <p>Most stars that Kepler observers are too faint or the planet candidates produce too small to currently measure masses with ground-based radial velocity techniques. So most planet candidates found in the Kepler light curves will remain candidates, but Kepler's aim was to be a statistical mission. Once this is a mass estimate or a statistical analysis that can rule out the astrophysical false positives or a mass is measured, than the planet candidate gets promoted to confirmed planet.</p>
+        <p>If a statistical analysis can rule out possible astrophysical false positives for the transit-like signal or a mass is measured, than the planet candidate gets promoted to confirmed planet. Most stars that Kepler observes are too faint or the planet candidates are too small to currently measure masses with ground-based radial velocity techniques. Therefore most planet candidates found in the Kepler light curves will remain candidates, but Kepler's aim was to be a statistical mission.</p>
       </div>
 
       <div class="content sub-nav-science-your-task">
@@ -131,25 +131,26 @@
 
         <p>The Kepler team and other astronomers have developed automated computer algorithms to search the Kepler light curves, for the repeated signal of exoplanet transits. To date over 3000 confirmed planets and planet candidates have been discovered with Kepler, but the Kepler light curves are complex, many exhibiting short-lived changes in brightnesss that are often difficult to characterize. Despite the impressive success of the computers, they may miss transits dominated by the star’s natural variability. The human brain excels at pattern recognition and easily recognizes transits that sophisticated automated routines may miss, and that is where you come in.</p>
 
-        <p>Automated routines have been very successful and many planets and planet candidates have been found, but not all. While we expect computer programs to robustly identify things that they are trained to find, we know there are surprises in the data that the computer algorithms will miss. It is impossible for a single person to review all of the Kepler observations, and  experiments have shown that when many people work together, the collective wisdom of the crowds can be better than an expert. With the Internet we can gather the help of hundreds of thousands of people to help in the hunt for exoplanets. The original Planet Hunters proved that this citizen science approach to exoplanets works with over 30 planet candidates and several confirmed planet discoveries.  </p>
+        <p>Automated routines have been very successful and many planets and planet candidates have been found, but not all. While we expect computer programs to robustly identify things that they are trained to find, we know there are surprises in the data that the computer algorithms will miss. It is impossible for a single person to review all of the Kepler observations, and  experiments have shown that when many people work together, the collective wisdom of the crowds can be better than an expert. With the Internet we can gather the help of hundreds of thousands of people to hunt for exoplanets. The original Planet Hunters proved that this citizen science approach to exoplanets works with over 30 planet candidates and several confirmed planet discoveries.  </p>
       </div>
 
       <div class="content sub-nav-science-origin">
-        <h1>Origin of data</h1>
+        <h1>Where do light curves come from?</h1>
 
-        <h2>Where do the light curves come from?</h2>
-        <p>The light curves, time series of brightness measurements, we ask you to inspect for planet transits come from the publicly released observations from NASA's Kepler mission. On Planet Hunters, we show data obtained during two different phases of the Kepler mission:  </p>
+        <p>The light curves, time series of brightness measurements, we ask you to inspect for planet transits come from the publicly released observations from NASA's <a href="http://kepler.nasa.gov/">Kepler mission</a>. On Planet Hunters, we show data obtained during two different phases of the Kepler mission:  </p>
 
         <h2>The Kepler Field</h2>
-        <p>Kepler has spent four years staring at a single patch of sky, simultaneously monitoring a collection of stars for the tell tale signatures of transiting exoplanets. From May 2009-May 2013, Kepler observed nearly the same ~170,000 stars in the Kepler field located in the constellations of Cygnus and Lyra. In April 2014 Kepler suffered a mechanical failure that now prevents it from being able to point at the Kepler field, ending this period of it's main mission.</p>
+        <p>Kepler has spent four years staring at a single patch of sky, simultaneously monitoring a collection of stars for the tell tale signatures of transiting exoplanets. From May 2009-May 2013, Kepler observed nearly the same ~170,000 stars in the Kepler field located in the constellations of Cygnus and Lyra. Kepler suffered a mechanical failure that now prevents it from being able to point at the Kepler field, ending this period of its main mission.</p>
 
         <p>We have still have much of the four years of Kepler field data to search through. The original Planet Hunters project barely scratched the surface of the Kepler field observations. We think there is still much to be learned from the original Kepler data and likely to be unknown planets lurking in the light curves missed by the computers waiting to discovered.</p>
 
         <img src="images/Keplerfield.jpg"/>
+        <p class="image-caption">Image Credit: Carter Roberts/NASA Kepler Mission</p>
 
         <h2>K2</h2>
-        <p>The Kepler spacecraft has been repurposed for the K2 mission. For the next several years, Kepler will be observing a new patch of sky every 75 days in the ecliptic (plane of the Solar System). In each of these fields, Kepler will monitor brand new sets of 10,000-20,000 stars. These stars are different from the sources that Kepler had been monitoring in the past in the Kepler field. K2 observations will be made available to the entire astronomical community and the public shortly after being transmitted to Earth and processed.Your eyes will be one of the first to gaze upon these observations. Most of the K2 target stars will have never before been searched for planets, proving a new opportunity to find distant worlds.</p>
+        <p>The Kepler spacecraft has been repurposed for the <a href="http://keplerscience.arc.nasa.gov/K2/">K2 mission</a>. For the next several years, Kepler will be observing a new patch of sky every 75 days in the ecliptic plane. In each of these fields, Kepler will monitor brand new sets of 10,000-20,000 stars. These stars are different from the sources that Kepler had been monitoring in the past in the Kepler field. K2 observations will be made available to the entire astronomical community and the public shortly after being transmitted to Earth and processed.Your eyes will be one of the first to gaze upon these observations. Most of the K2 target stars will have never before been searched for planets, providing a new opportunity to find distant worlds.</p>
         <img src="images/K2.jpg"/>
+        <p class="image-caption">Image Credit: ESO/S. Brunier/NASA Kepler Mission/Wendy Stenzel</p>
 
       </div>
 
@@ -159,7 +160,7 @@
 
         <p>It might seem like we're testing you or trying to train you to identify transits, but we're really testing the project. The simulations are critical for determining the statistical completeness for planets as a function of size (depth of the transit event) and orbital period (number of transits). This is a really vital part of the project, with these simulated transits we can answer interesting and fundamental questions about how solar systems and planets form. Some of the simulated planets like large Jupiter-sized planets will be really easy to spot while others will be near impossible to identify especially for the extremely small planets, but don’t be discouraged if you didn’t find the simulated transit. That’s okay, that's part of the experiment.</p>
 
-        <p>If you encounter a simulation, we will always identify the simulated transit points in red after you’ve classified the star and list the properties of the simulated planet we injected into the light curve. The reason we don’t identify the simulated data first, is that if you knew the lightcurve had simulated events you might look at it differently. To be able to use the data from the simulated transits accurately, we need them to be examined in exactly the same conditions as the real light curves.</p>
+        <p>If you encounter a simulation, we will always identify the simulated transit points in red after you’ve classified the star and list the properties of the simulated planet we injected into the light curve. The reason we don’t identify the simulated data first, is that if you knew the light curve had simulated events you might look at it differently. To be able to use the data from the simulated transits accurately, we need them to be examined in exactly the same conditions as the real light curves.</p>
       </div>
     </div>
 
