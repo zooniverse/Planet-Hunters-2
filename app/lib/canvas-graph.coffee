@@ -47,6 +47,7 @@ class CanvasGraph
 
   onMouseMove: (e) =>
     # return # DEBUG ONLY: KEEP UNTIL THIS IS FIXED
+
     return if @markingDisabled
     return if classifier.el.find('#graph').hasClass('is-zooming')
     @sliderValue = +classifier.el.find("#ui-slider").val()
@@ -584,7 +585,7 @@ class Marks
 
   closestXBelow: (xCoord) -> (@sortedXCoords().filter (i) -> i < xCoord).pop()
   closestXAbove: (xCoord) -> (@sortedXCoords().filter (i) -> i > xCoord).shift()
-  toCanvasXPoint: (e) -> e.pageX - e.target.getBoundingClientRect().left - window.scrollX
+  toCanvasXPoint: (e) -> e.pageX - e.target.getBoundingClientRect().left - window.scrollX 
 
   markTooCloseToAnother: (e, scale) ->
     mouseLocation = @toCanvasXPoint(e)
