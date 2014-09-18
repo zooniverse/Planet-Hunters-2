@@ -840,7 +840,7 @@ class Classifier extends BaseController
           <div class="comment info">
             <span class="comment comment-by">by</span>
             <span class="comment username">You</span>
-            <span class="comment comment-by">#{date.toDateString()}</span>
+            <span class="comment comment-by">#{new Date().toDateString()}</span>
           <div>
         </div>
       """).animate({ scrollTop: container[0].scrollHeight}, 1000)
