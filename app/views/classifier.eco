@@ -93,7 +93,7 @@
               <textarea maxlength=140 placeholder="Make a comment, or mark with a hashtag..." name="talk-comment"></textarea>
               <button name="submit-talk">Submit</button>
             </div>
-            <p class='too-long-warning'>140 left</p>
+            <p class='too-long-warning hide-unless-user'>140 left</p>
           </div>
         </div>
 
