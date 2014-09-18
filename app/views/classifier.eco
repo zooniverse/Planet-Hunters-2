@@ -137,6 +137,12 @@
                 <p class='align-left'>Planet Radius: <span class='planet-rad'></span></p>
                 <p class='align-left'>Planet Period: <span class='planet-period'></span></p>
               </div>
+
+              <div class='planet_details'>
+                <h2>Planet details</h2>
+                <p class='align-left'>Planet Radius: <span class='planet-rad'></span></p>
+                <p class='align-left'>Planet Period: <span class='planet-period'></span></p>
+              </div>
             </div>
 
           </div>
