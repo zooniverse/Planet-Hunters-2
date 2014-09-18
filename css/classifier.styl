@@ -186,6 +186,10 @@
         #ukirt-url
           text-decoration underline
 
+
+
+
+
         .three-column
           margin 0
           padding 0
@@ -204,7 +208,6 @@
             text-align left
             h1, h2
               text-align left
-              // margin-bottom 30px
             h1
               font-weight 300
               font-size 24px
@@ -212,10 +215,6 @@
               text-transform uppercase
               font-size 14px
               line-height 36px
-            // button
-            //   width 100%
-            //   margin-top 10px
-            //   margin-bottom 10px
 
             .too-long-warning
               color red
@@ -250,15 +249,42 @@
                 font-weight bold
                 background transparent
 
+            .guest_obs
+              p
+                margin-top 10px
+                margin-bottom 15px
+              p.small-text
+                margin-top 0px
+                font-size 10px
+                font-style italic
+                text-align center
+              .guest_obs_img
+                cursor pointer
+                width 100%
+              .guest_obs_title
+                display inline
+                padding-top 5px
+                padding-bottom 5px
+                padding-left 10px
+                padding-right 10px
+                margin-left 10px
+                border-radius 10px
+                text-align center
+                background-color rgb(183,43,51)
+
+
             #comments, #alt-comments
               height 240px
               overflow-y auto
-              // border 2px solid #fff
-              // border-radius 4px
               padding 10px
 
             .comment
               text-align left
+              &.default-text
+                font-size 12px
+                font-weight 100
+                font-style italic
+                margin-bottom 20px
               &.formatted
                 border-bottom 1px solid #848b92
                 margin-bottom 20px
@@ -625,15 +651,6 @@
 .zooniverse-dialog
   z-index 1000
 
-.guest_obs
-  // margin-top: 50px
-  p.small-text
-    font-size 10px
-    font-style italic
-
-.guest_obs_img
-  cursor pointer
-  width 100%
 
 .block-images
   clearfix()
