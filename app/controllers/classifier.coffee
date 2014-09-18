@@ -263,7 +263,7 @@ class Classifier extends BaseController
     @course.idx_last = 0
 
   handleSplitDesignation: ->
-    console.log '*** SETTING UP SPLIT DESIGNATION ***'
+    # console.log '*** SETTING UP SPLIT DESIGNATION ***'
     if User.current.project.splits?.mini_course_sup_tutorial?
       @splitDesignation = User.current.project.splits.mini_course_sup_tutorial
     else
@@ -272,26 +272,26 @@ class Classifier extends BaseController
     unless @getParameterByName("split") is ""
       @splitDesignation = @getParameterByName("split")
 
-    console.log '    SPLIT DESIGNATION IS: ', @splitDesignation
+    # console.log '    SPLIT DESIGNATION IS: ', @splitDesignation
 
     # SET MINI-COURSE INTERVAL
     if @splitDesignation in ['b', 'e', 'h', 'k']
-      console.log '    Setting mini-course interval to 5'
+      # console.log '    Setting mini-course interval to 5'
       @course.setRate 5
       $('#course-interval-setter').remove() # destroy custom course interval setter
 
     else if @splitDesignation in ['c', 'f', 'i', 'l']
-      console.log '    Setting mini-course interval to 10'
+      # console.log '    Setting mini-course interval to 10'
       @course.setRate 10
       $('#course-interval-setter').remove() # destroy custom course interval setter
 
     else if @splitDesignation in ['a', 'd', 'g', 'j']
-      console.log '    Setting mini-course interval to 5'
+      # console.log '    Setting mini-course interval to 5'
       # console.log 'Allowing custom course interval.'
       @course.setRate 5 # set default
       @allowCustomCourseInterval = true
     else
-      console.log '    Setting mini-course interval to 5 (default)'
+      # console.log '    Setting mini-course interval to 5 (default)'
       @allowCustomCourseInterval = false
       @course.setRate 5 # set default
 
@@ -509,8 +509,8 @@ class Classifier extends BaseController
     @showSummaryScreen()
 
   onClickNextSubject: ->
-    console.log 'COUNT: ', @course.count # DEBUG CODE
-    console.log 'SIM COUNT: ', @sim_count
+    # console.log 'COUNT: ', @course.count # DEBUG CODE
+    # console.log 'SIM COUNT: ', @sim_count
     @hideMarkingButtons()
     @course.prompt_el.hide()
     @classifySummary.fadeOut(150)
@@ -543,12 +543,12 @@ class Classifier extends BaseController
     @sim_rate = 0.20
 
     sim_roll = Math.random()
-    console.log "sim roll #{sim_roll} rate #{@sim_rate}"
+    # console.log "sim roll #{sim_roll} rate #{@sim_rate}"
 
     if Math.random() < @sim_rate
       Subject.group = SIMULATION_GROUP
       Subject.fetch limit: 1, (subjects) ->
-        console.log "got sim subjects ", subjects
+        # console.log "got sim subjects ", subjects
         Subject.current?.destroy()
         subjects[0].select()
         Subject.group = MAIN_SUBJECT_GROUP
@@ -704,7 +704,7 @@ class Classifier extends BaseController
     @classification.annotate
       recordedClickEvents: [@recordedClickEvents...]
 
-    console.log JSON.stringify( @classification ) # DEBUG CODE
+    # console.log JSON.stringify( @classification ) # DEBUG CODE
 
     # send classification (except for tutorial subject)
     unless @classification.subject.id is 'TUTORIAL_SUBJECT'
