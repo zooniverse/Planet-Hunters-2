@@ -581,6 +581,10 @@ class Classifier extends BaseController
     # reveal ids
     @el.find('.star-id').fadeIn()
 
+    quarter = @subject.selected_light_curve.quarter
+    @talkComment.val('Q'+quarter+' ')
+    @onKeyupTalkComment()
+
     if @classification.subject.id is 'TUTORIAL_SUBJECT'
       # console.log 'TUTORIAL SUBJECT'
       @hideMarkingButtons()
@@ -918,11 +922,10 @@ class Classifier extends BaseController
     is_valid = comment.length > 0 && comment.length <= 140
 
   submitComment: =>
-    quarter = @subject.selected_light_curve.quarter
-    comment = 'Q'+quarter + ' ' + @talkComment.val()
+    comment = @talkComment.val()
     is_valid = @validateComment comment
     return unless is_valid
-    request = Api.current.post "/projects/#{Api.current.project}/talk/subjects/#{Subject.current?.zooniverse_id}/comments", comment: comment
+    # request = Api.current.post "/projects/#{Api.current.project}/talk/subjects/#{Subject.current?.zooniverse_id}/comments", comment: comment
 
   #
   # END TALK COMMENT METHODS
