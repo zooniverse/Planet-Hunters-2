@@ -535,7 +535,7 @@ class Classifier extends BaseController
     @sim_count ||= 0
     @sim_count +=1
 
-    @sim_rate = 0.20
+    @sim_rate = 0.125
 
     sim_roll = Math.random()
     console.log "sim roll #{sim_roll} rate #{@sim_rate}"
