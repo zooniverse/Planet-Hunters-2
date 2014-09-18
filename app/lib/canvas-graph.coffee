@@ -117,10 +117,10 @@ class CanvasGraph
     @smallestY = Math.min @data.y...
     @largestX = Math.max  @data.x...
     @largestY = Math.max  @data.y...
-    
+
     # add padding
-    if @largestX < 32
-      @largestX = 32
+    if @largestX < 29
+      @largestX = 29
 
     @plotPoints()
 
