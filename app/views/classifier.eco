@@ -67,7 +67,7 @@
             <!-- BEGIN GUEST OBSERVER -->
             <div class='guest_obs'>
               <p>While you are classifying keep an eye out for unusual lightcurves and tag them with a hash tag on talk!</p>
-              <span>Use the tag:</span><h2 class='guest_obs_title'></h2>
+              <span>Use the tag:</span><button name="populate-hashtag"><h2 class='guest_obs_title'></h2></button>
               <div class="examples">
                 <img class='example-image guest_obs_img'>
                   <p class="small-text">Click on image to enlarge</p>

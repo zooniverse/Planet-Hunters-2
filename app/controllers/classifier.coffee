@@ -71,6 +71,8 @@ class Classifier extends BaseController
     'click .arrow.left'  : 'onClickCourseBack'
     'click .arrow.right' : 'onClickCourseForward'
 
+    'click button[name="populate-hashtag"]'   : 'onClickPopulateHashtag'
+
     # CODE FOR PROMPT (NOT CURRENTLY IN USE)
     # 'mouseenter #course-yes-container'        : 'onMouseoverCourseYes'
     # 'mouseleave  #course-yes-container'       : 'onMouseoutCourseYes'
@@ -851,6 +853,11 @@ class Classifier extends BaseController
     @submitComment()
     @talkComment.val('')
 
+  onClickPopulateHashtag: ->
+    hashtag = @el.find('.guest_obs_title').html()
+    quarter = @subject.selected_light_curve.quarter
+    @talkComment.val( 'Q' + quarter + ' ' + hashtag )
+
   appendComment: (comment, container) ->
     container.append("""
         <div class="comment formatted">
@@ -895,7 +902,6 @@ class Classifier extends BaseController
     commentsContainer.html "" # delete existing comments
     # request = Api.current.get "https://dev.zooniverse.org/projects/planet_hunter/talk/subjects/APH000001x" # DEBUG CODE
     request = Api.current.get "/projects/#{Api.current.project}/talk/subjects/#{Subject.current?.zooniverse_id}"
-    # request = Api.current.get "https://dev.zooniverse.org/projects/planet_hunter/talk/subjects/#{@subject.current.zooniverse_id}"
     request.done @onCommentsFetch
 
     clearTimeout @timeout if @timeout?
@@ -912,8 +918,7 @@ class Classifier extends BaseController
     comment = @talkComment.val()
     is_valid = @validateComment comment
     return unless is_valid
-    # request = Api.current.post "https://dev.zooniverse.org/projects/planet_hunter/talk/subjects/#{@subject.current.zooniverse_id}/comments", comment: comment
-    request = Api.current.post "/projects/#{Api.current.project}/talk/subjects/#{Subject.current?.zooniverse_id}/comments", comment: comment
+    # request = Api.current.post "/projects/#{Api.current.project}/talk/subjects/#{Subject.current?.zooniverse_id}/comments", comment: comment
 
   #
   # END TALK COMMENT METHODS
