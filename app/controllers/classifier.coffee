@@ -661,7 +661,7 @@ class Classifier extends BaseController
         </div>
 
         <div class="disallow-custom-interval">
-          <p>Yes, I'd like to participate in the Planet Hunters mini-course!</p>
+          <p>Yes, I'd like to participate in the mini-course!</p>
         </div>
 
       </div>
