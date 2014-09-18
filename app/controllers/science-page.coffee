@@ -18,7 +18,7 @@ class SciencePage extends BaseController
   scrollToLink: (e) ->
     console.log "##{e.target.getAttribute "target"}"
     console.log e.target
-    $('body').animate({
+    $('body,html').animate({
         scrollTop: $("##{e.target.getAttribute "target"}").offset().top
     }, 1000, 'easeInOutExpo');
 
