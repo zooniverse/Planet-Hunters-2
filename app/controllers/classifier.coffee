@@ -603,6 +603,8 @@ class Classifier extends BaseController
       # else
       #   $(".planet_details").hide()
 
+      $(".planet_details").hide()
+
       @hideMarkingButtons()
       @nextSubjectButton.show()
       @setGuestObsContent()
