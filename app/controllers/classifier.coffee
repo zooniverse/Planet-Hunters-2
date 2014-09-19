@@ -597,10 +597,11 @@ class Classifier extends BaseController
       else
         $(".sim_details").hide()
 
-      if @knownPlanetPresent()
-        @showPlanetDetails()
-      else
-        $(".planet_details").hide()
+      # TODO: FIX! THIS BREAKS THE SITE 
+      # if @knownPlanetPresent()
+      #   @showPlanetDetails()
+      # else
+      #   $(".planet_details").hide()
 
       @hideMarkingButtons()
       @nextSubjectButton.show()
