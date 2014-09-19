@@ -105,12 +105,24 @@ class Classifier extends BaseController
 
     @guideShowing = false
 
+    @hideMarkingButtons()
+
+
     User.on 'change', @onUserChange
     Subject.on 'fetch', @onSubjectFetch
     Subject.on 'select', @onSubjectSelect
     @Subject = Subject
 
-    $(document).on 'mark-change', => @updateButtons()
+    $(document).on 'mark-change', =>
+      if @canvasGraph.marks?.all.length > 0
+        @noTransitsButton.hide()
+        @finishedMarkingButton.show()
+      else
+        @finishedMarkingButton.hide()
+
+
+        @noTransitsButton.show()
+
     @marksContainer = @el.find('#marks-container')[0]
 
     @initialTutorial = new Tutorial
@@ -328,8 +340,6 @@ class Classifier extends BaseController
     else
       jsonFile = @subject.selected_light_curve.location
 
-    # console.log 'jsonFile: ', jsonFile
-
     # handle ui elements
     $('#graph-container').addClass 'loading-lightcurve'
     @el.find('#loading-screen').fadeIn()
@@ -347,7 +357,6 @@ class Classifier extends BaseController
     # read json data
     $.getJSON jsonFile, (data) =>
 
-      # DEBUG: USE THIS FOR NOW
       if data.metadata.known_transits
         @known_transits = data.metadata.known_transits
         @planet_rad    = data.metadata.planet_rad
@@ -356,34 +365,29 @@ class Classifier extends BaseController
       else
         @known_transits = ''
 
-      # if @subject.metadata.synthetic_id?
-        # @calcKnownTransits(data)
-
       @canvasGraph?.marks.destroyAll()
       @marksContainer.appendChild(@canvas)
       @canvasGraph = new CanvasGraph(@canvas, data)
       @zoomReset()
       @canvasGraph.plotPoints()
       @el.find('#loading-screen').fadeOut()
-      $('#graph-container').removeClass 'loading-lightcurve'
       @canvasGraph.enableMarking()
-      # @zoomRanges = [@canvasGraph.largestX, 10, 2]
       @magnification = [ '1x (all days)', '10 days', '2 days' ]
-      # update ui elements
       @showZoomMessage(@magnification[@canvasGraph.zoomLevel])
+
+      $('#graph-container').removeClass 'loading-lightcurve'
+      @noTransitsButton.fadeIn(150)
+
       @el.find("#ui-slider").noUiSlider
         start: 0
         range:
           min: @canvasGraph.smallestX
           max: @canvasGraph.largestX #- @zoomRange
+
       @el.find(".noUi-handle").hide()
 
-    @insertMetadata()
-    # @el.find('.do-you-see-a-transit').fadeIn()
-    # @el.find('#no-transits-button').fadeIn()
 
-    # @el.find('#finished-marking').fadeIn()
-    # @el.find('#finished-feedback').fadeIn()
+    @insertMetadata()
 
   insertMetadata: ->
     # ukirt data
@@ -436,10 +440,18 @@ class Classifier extends BaseController
     clickEvent = { event: 'tutorial-clicked', timestamp: (new Date).toUTCString() }
     @recordedClickEvents.push clickEvent
     @canvasGraph.marks.destroyAll() # clear previous marks
-    @updateButtons()
+
+    @finishedMarkingButton.hide()
+    # @noTransitsButton.show()
+
+
+
+
     @launchTutorial()
 
   launchTutorial: ->
+    @noTransitsButton.hide()
+
     if $('#graph-container').hasClass 'loading-lightcurve'
       @notify 'Please wait until current lightcurve is loaded.'
       return
@@ -471,15 +483,6 @@ class Classifier extends BaseController
       selected_light_curve:
         location: 'https://s3.amazonaws.com/demo.zooniverse.org/planet_hunter/subjects/09631995_16-3.json'
     tutorialSubject
-
-  updateButtons: ->
-    # console.log 'updateButtons()'
-    if @canvasGraph.marks?.all.length > 0
-      @noTransitsButton.hide()
-      @finishedMarkingButton.show()
-    else
-      @finishedMarkingButton.hide()
-      @noTransitsButton.show()
 
   #
   # BEGIN MARKING TRANSITIONS
@@ -559,7 +562,7 @@ class Classifier extends BaseController
       Subject.group = MAIN_SUBJECT_GROUP
       @Subject.next()
 
-    @noTransitsButton.show()
+    # @noTransitsButton.show()
 
   #
   # END MARKING TRANSITIONS
