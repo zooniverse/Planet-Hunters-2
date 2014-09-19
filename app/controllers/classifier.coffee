@@ -105,7 +105,8 @@ class Classifier extends BaseController
 
     @guideShowing = false
 
-    @hideMarkingButtons()
+    # @hideMarkingButtons()
+    @noTransitsButton.attr 'disabled', true
 
 
     User.on 'change', @onUserChange
@@ -376,7 +377,8 @@ class Classifier extends BaseController
       @showZoomMessage(@magnification[@canvasGraph.zoomLevel])
 
       $('#graph-container').removeClass 'loading-lightcurve'
-      @noTransitsButton.fadeIn(150)
+      # @noTransitsButton.fadeIn(150)
+      @noTransitsButton.attr 'disabled', false
 
       @el.find("#ui-slider").noUiSlider
         start: 0
@@ -517,6 +519,8 @@ class Classifier extends BaseController
     # console.log 'COUNT: ', @course.count # DEBUG CODE
     # console.log 'SIM COUNT: ', @sim_count
     @hideMarkingButtons()
+    @noTransitsButton.show()
+    @noTransitsButton.attr 'disabled', true
     @course.prompt_el.hide()
     @classifySummary.fadeOut(150)
 
