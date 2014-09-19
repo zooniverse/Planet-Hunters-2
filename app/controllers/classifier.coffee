@@ -446,13 +446,11 @@ class Classifier extends BaseController
     @finishedMarkingButton.hide()
     # @noTransitsButton.show()
 
-
-
-
     @launchTutorial()
 
   launchTutorial: ->
-    @noTransitsButton.hide()
+    # @noTransitsButton.hide()
+    @noTransitsButton.attr 'disabled', true
 
     if $('#graph-container').hasClass 'loading-lightcurve'
       @notify 'Please wait until current lightcurve is loaded.'
