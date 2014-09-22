@@ -282,6 +282,7 @@ class Classifier extends BaseController
     if User.current.project.splits?.mini_course_sup_tutorial?
       @splitDesignation = User.current.project.splits.mini_course_sup_tutorial
     else
+      console.log 'WARNING: No split designation detected! Using default.'
       @splitDesignation = 'a' # default split designation
 
     unless @getParameterByName("split") is ""
@@ -349,7 +350,7 @@ class Classifier extends BaseController
     @el.find(".noUi-handle").fadeOut(150)
 
     # remove any previous canvas; create new one
-    @canvas?.remove()
+    @canvas?.parentNode.removeChild(@canvas)
     @canvas = document.createElement('canvas')
     @canvas.id = 'graph'
     @canvas.width = 1024
@@ -543,12 +544,11 @@ class Classifier extends BaseController
     @recordedClickEvents = []
     @talkComment.val('')
 
-
     @sim_count ||= 0
     @sim_count +=1
 
     # @sim_rate = 0.20
-    @sim_rate = 0.05
+    @sim_rate = 0.125
 
     sim_roll = Math.random()
     # console.log "sim roll #{sim_roll} rate #{@sim_rate}"
