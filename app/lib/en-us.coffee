@@ -73,7 +73,7 @@ module.exports =
     
     talk:
       header: 'Talk'
-      content: 'Sometimes you might see something interesting or have a question.  TALK is tool where you can join Planet Hunters project scientists and volunteers to observe, collect, share, and discuss Planet Hunters data.'
+      content: 'Sometimes you might see something interesting or have a question. TALK is a tool where you can join Planet Hunters project scientists and volunteers to observe, collect, share, and discuss Planet Hunters data.'
 
     goodLuck:
       header: 'Good luck!'
