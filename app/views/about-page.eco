@@ -185,6 +185,9 @@
           <h2>NASA's Exoplanet Exploration Program</h2>
           <p><img src="./images/logos/nasa.png" class="logo">Headquartered at the Jet Propulsion Laboratory in California, the <a href="http://exep.jpl.nasa.gov/">Exoplanet Exploration Program</a> is dedicated to the development of technology and programs (including the Kepler mission) to detect and characterize planets that orbit other stars. The public PlanetQuest site is a one-stop shop for NASA exoplanet news, educational articles, and interactive features.</p>
         </div>
+
+        <h2>Zooniverse</h2>
+        <p><img src="./images/logos/zooniverse.png" class="logo">The Zooniverse is home to the internet’s largest, most popular and most successful citizen science projects. The Zooniverse and the suite of projects it contains is produced, maintained and developed by the Citizen Science Alliance. The member institutions of the CSA work with many academic and other partners around the world to produce projects that use the efforts and ability of volunteers to help scientists and researchers.</p>
       </div>
     </div>
     <div class="right-column">
