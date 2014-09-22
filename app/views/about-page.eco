@@ -96,6 +96,58 @@
             <div class="bio">Jo has been a member of the Zooniverse since 2009 and is also a Merger Zoo moderator over on the Galaxy Zoo forum. Completing a 1st class degree in fine art is currently exploring how art and science can fuse together with Enjoy Chaos.</div>
           </div>
         </div>
+      
+        <h2>Development Team</h2>
+        <div class="team-members">
+          <div class="team-member">
+            <img src="./images/people/debra_fischer.png">
+            <div class="name">Sascha T. Ishikawa</div>
+            <div class="location">Adler Planetarium (USA)</div>
+            <div class="location">Frontend Developer</div>
+          </div>
+          <div class="team-member">
+            <img src="./images/people/debra_fischer.png">
+            <div class="name">Stuart Lynn</div>
+            <div class="location">Adler Planetarium (USA)</div>
+            <div class="location">Technical Lead</div>
+          </div>
+          <div class="team-member">
+            <img src="./images/people/debra_fischer.png">
+            <div class="name">Michael Parrish</div>
+            <div class="location">Adler Planetarium (USA)</div>
+            <div class="location">Backend Developer</div>
+          </div>
+          <div class="team-member">
+            <img src="./images/people/debra_fischer.png">
+            <div class="name">Alex Weiksnar</div>
+            <div class="location">Adler Planetarium (USA)</div>
+            <div class="location">Frontend Developer</div>
+          </div>
+          <div class="team-member">
+            <img src="./images/people/debra_fischer.png">
+            <div class="name">Heath Van Singel</div>
+            <div class="location">Adler Planetarium (USA)</div>
+            <div class="location">Designer</div>
+          </div>
+          <div class="team-member">
+            <img src="./images/people/debra_fischer.png">
+            <div class="name">Kelly Borden</div>
+            <div class="location">Adler Planetarium (USA)</div>
+            <div class="location">Education Lead</div>
+          </div>
+          <div class="team-member">
+            <img src="./images/people/debra_fischer.png">
+            <div class="name">Julie Feldt</div>
+            <div class="location">Adler Planetarium (USA)</div>
+            <div class="location">Educator</div>
+          </div>
+          <div class="team-member">
+            <img src="./images/people/debra_fischer.png">
+            <div class="name">Grant Miller</div>
+            <div class="location">Oxford University (UK)</div>
+            <div class="location">Community Manager</div>
+          </div>
+        </div>
       </div>
 
       <div class="content sub-nav-about-organizations">
