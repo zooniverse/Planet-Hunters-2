@@ -600,13 +600,10 @@ class Classifier extends BaseController
     $(".sim_details .planet-period").html(@planet_period + " days")
 
   showPlanetDetails:=>
-    console.log "showPlanetDetails() "
     $(".sim_details").hide()
     $(".planet_details").show()
     $(".planet_details .planet-rad").html( @subject.metadata.planet_rad + " Earth Radii" )
     $(".planet_details .planet-period").html( @subject.metadata.planet_period + " days" )
-    console.log 'RADIUS: ', +@subject.metadata.planet_rad
-    console.log 'PERIOD: ', +@subject.metadata.planet_period
 
   checkSupplementalTutorial: ->
     for classification_count in @supTutIntervals
