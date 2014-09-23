@@ -536,21 +536,21 @@ class Classifier extends BaseController
     sim_roll = Math.random()
     # console.log "sim roll #{sim_roll} rate #{@sim_rate}"
 
-    # if Math.random() < @sim_rate
-    #   Subject.group = SIMULATION_GROUP
-    #   Subject.fetch limit: 1, (subjects) ->
-    #     # console.log "got sim subjects ", subjects
-    #     Subject.current?.destroy()
-    #     subjects[0].select()
-    #     Subject.group = MAIN_SUBJECT_GROUP
-    # else
-    #   Subject.group = MAIN_SUBJECT_GROUP
-    #   @Subject.next()
+    if Math.random() < @sim_rate
+      Subject.group = SIMULATION_GROUP
+      Subject.fetch limit: 1, (subjects) ->
+        # console.log "got sim subjects ", subjects
+        Subject.current?.destroy()
+        subjects[0].select()
+        Subject.group = MAIN_SUBJECT_GROUP
+    else
+      Subject.group = MAIN_SUBJECT_GROUP
+      @Subject.next()
 
-    # DEBUG CODE
-    @Subject.current?.destroy()
-    test_subject = createKnownPlanetSubject()
-    test_subject.select()
+    # # DEBUG CODE
+    # @Subject.current?.destroy()
+    # test_subject = createKnownPlanetSubject()
+    # test_subject.select()
 
     # @noTransitsButton.show()
 

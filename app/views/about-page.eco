@@ -51,7 +51,7 @@
           </div>
           <div class="team-member">
             <img src="./images/people/chrislint.jpg">
-            <div class="name">Chris Lintott</div>
+            <div class="name">Chris Lintott<p><a href="http://www.twitter.com/chrislintott">@chrislintott</a></p></div>
             <div class="location">University of Oxford (UK)</div>
             <div class="bio">Chris runs the Zooniverse collaboration and works on how galaxies form and evolve; particularly interested in the effects of active galactic nuclei and mergers. In his 'spare' time, he hunts for planets, presents the BBC's long-running Sky at Night program and cooks.</div>
           </div>
@@ -63,7 +63,7 @@
           </div>
           <div class="team-member">
             <img src="./images/people/meg.jpg">
-            <div class="name">Meg Schwamb</div>
+            <div class="name">Meg Schwamb <p><a href="http://www.twitter.com/megschwamb">@megschwamb</a></p></div>
             <div class="location">Institute of Astronomy and Astrophysics, Academia Sinica (Taiwan)</div>
             <div class="bio">Meg is a planetary scientist and astronomer interested in how planets and solar systems form and evolve. In addition to working on exoplanets, she explores the small bodies residing in the outer Solar System and dabbles in the study of the Martian climate with the Planet Four project. Meg has a fondness for baking, soccer, and champagne. </div>
           </div>
