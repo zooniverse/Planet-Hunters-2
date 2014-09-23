@@ -16,6 +16,9 @@ Modal                      = require '../lib/modal'
 Api                        = require 'zooniverse/lib/api'
 GuestObsContent            = require '../lib/guest_obs_content'
 
+{createTutorialSubject}    = require '../lib/create-tutorial-subject'
+{createKnownPlanetSubject} = require '../lib/create-known-planet-subject'
+
 $ = window.jQuery
 
 MAIN_SUBJECT_GROUP = "5417014a3ae7400bda000001"
@@ -67,9 +70,13 @@ class Classifier extends BaseController
     'change input[name="course-opt-out"]'     : 'onChangeCourseOptOut'
     'click button[name="continue-button"]'    : 'onClickContinueButton'
     'keyup textarea[name="talk-comment"]'     : 'onKeyupTalkComment'
+    'focus textarea[name="talk-comment"]'     : 'onFocusTalkComment'
+
 
     'click .arrow.left'  : 'onClickCourseBack'
     'click .arrow.right' : 'onClickCourseForward'
+
+    'click button[name="populate-hashtag"]'   : 'onClickPopulateHashtag'
 
     # CODE FOR PROMPT (NOT CURRENTLY IN USE)
     # 'mouseenter #course-yes-container'        : 'onMouseoverCourseYes'
@@ -101,12 +108,25 @@ class Classifier extends BaseController
 
     @guideShowing = false
 
+    # @hideMarkingButtons()
+    @noTransitsButton.attr 'disabled', true
+
+
     User.on 'change', @onUserChange
     Subject.on 'fetch', @onSubjectFetch
     Subject.on 'select', @onSubjectSelect
     @Subject = Subject
 
-    $(document).on 'mark-change', => @updateButtons()
+    $(document).on 'mark-change', =>
+      if @canvasGraph.marks?.all.length > 0
+        @noTransitsButton.hide()
+        @finishedMarkingButton.show()
+      else
+        @finishedMarkingButton.hide()
+
+
+        @noTransitsButton.show()
+
     @marksContainer = @el.find('#marks-container')[0]
 
     @initialTutorial = new Tutorial
@@ -261,35 +281,36 @@ class Classifier extends BaseController
     @course.idx_last = 0
 
   handleSplitDesignation: ->
-    console.log '*** SETTING UP SPLIT DESIGNATION ***'
+    # console.log '*** SETTING UP SPLIT DESIGNATION ***'
     if User.current.project.splits?.mini_course_sup_tutorial?
       @splitDesignation = User.current.project.splits.mini_course_sup_tutorial
     else
+      console.log 'WARNING: No split designation detected! Using default.'
       @splitDesignation = 'a' # default split designation
 
     unless @getParameterByName("split") is ""
       @splitDesignation = @getParameterByName("split")
 
-    console.log '    SPLIT DESIGNATION IS: ', @splitDesignation
+    # console.log '    SPLIT DESIGNATION IS: ', @splitDesignation
 
     # SET MINI-COURSE INTERVAL
     if @splitDesignation in ['b', 'e', 'h', 'k']
-      console.log '    Setting mini-course interval to 5'
+      # console.log '    Setting mini-course interval to 5'
       @course.setRate 5
       $('#course-interval-setter').remove() # destroy custom course interval setter
 
     else if @splitDesignation in ['c', 'f', 'i', 'l']
-      console.log '    Setting mini-course interval to 10'
+      # console.log '    Setting mini-course interval to 10'
       @course.setRate 10
       $('#course-interval-setter').remove() # destroy custom course interval setter
 
     else if @splitDesignation in ['a', 'd', 'g', 'j']
-      console.log '    Setting mini-course interval to 5'
+      # console.log '    Setting mini-course interval to 5'
       # console.log 'Allowing custom course interval.'
       @course.setRate 5 # set default
       @allowCustomCourseInterval = true
     else
-      console.log '    Setting mini-course interval to 5 (default)'
+      # console.log '    Setting mini-course interval to 5 (default)'
       @allowCustomCourseInterval = false
       @course.setRate 5 # set default
 
@@ -324,8 +345,6 @@ class Classifier extends BaseController
     else
       jsonFile = @subject.selected_light_curve.location
 
-    # console.log 'jsonFile: ', jsonFile
-
     # handle ui elements
     $('#graph-container').addClass 'loading-lightcurve'
     @el.find('#loading-screen').fadeIn()
@@ -334,7 +353,7 @@ class Classifier extends BaseController
     @el.find(".noUi-handle").fadeOut(150)
 
     # remove any previous canvas; create new one
-    @canvas?.remove()
+    @canvas?.parentNode.removeChild(@canvas)
     @canvas = document.createElement('canvas')
     @canvas.id = 'graph'
     @canvas.width = 1024
@@ -343,7 +362,6 @@ class Classifier extends BaseController
     # read json data
     $.getJSON jsonFile, (data) =>
 
-      # DEBUG: USE THIS FOR NOW
       if data.metadata.known_transits
         @known_transits = data.metadata.known_transits
         @planet_rad    = data.metadata.planet_rad
@@ -352,34 +370,30 @@ class Classifier extends BaseController
       else
         @known_transits = ''
 
-      # if @subject.metadata.synthetic_id?
-        # @calcKnownTransits(data)
-
       @canvasGraph?.marks.destroyAll()
       @marksContainer.appendChild(@canvas)
       @canvasGraph = new CanvasGraph(@canvas, data)
       @zoomReset()
       @canvasGraph.plotPoints()
       @el.find('#loading-screen').fadeOut()
-      $('#graph-container').removeClass 'loading-lightcurve'
       @canvasGraph.enableMarking()
-      # @zoomRanges = [@canvasGraph.largestX, 10, 2]
       @magnification = [ '1x (all days)', '10 days', '2 days' ]
-      # update ui elements
       @showZoomMessage(@magnification[@canvasGraph.zoomLevel])
+
+      $('#graph-container').removeClass 'loading-lightcurve'
+      # @noTransitsButton.fadeIn(150)
+      @noTransitsButton.attr 'disabled', false
+
       @el.find("#ui-slider").noUiSlider
         start: 0
         range:
           min: @canvasGraph.smallestX
           max: @canvasGraph.largestX #- @zoomRange
+
       @el.find(".noUi-handle").hide()
 
-    @insertMetadata()
-    # @el.find('.do-you-see-a-transit').fadeIn()
-    # @el.find('#no-transits-button').fadeIn()
 
-    # @el.find('#finished-marking').fadeIn()
-    # @el.find('#finished-feedback').fadeIn()
+    @insertMetadata()
 
   insertMetadata: ->
     # ukirt data
@@ -432,16 +446,22 @@ class Classifier extends BaseController
     clickEvent = { event: 'tutorial-clicked', timestamp: (new Date).toUTCString() }
     @recordedClickEvents.push clickEvent
     @canvasGraph.marks.destroyAll() # clear previous marks
-    @updateButtons()
+
+    @finishedMarkingButton.hide()
+    # @noTransitsButton.show()
+
     @launchTutorial()
 
   launchTutorial: ->
+    # @noTransitsButton.hide()
+    @noTransitsButton.attr 'disabled', true
+
     if $('#graph-container').hasClass 'loading-lightcurve'
       @notify 'Please wait until current lightcurve is loaded.'
       return
     # load training subject
-    @notify('Loading tutorial...')
-    tutorialSubject = @createTutorialSubject()
+    # @notify('Loading tutorial...')
+    tutorialSubject = createTutorialSubject()
     tutorialSubject.select()
     # do stuff after tutorial complete/aborted
     addEventListener "zootorial-end", =>
@@ -450,40 +470,13 @@ class Classifier extends BaseController
       $('.mark').fadeIn()
     @initialTutorial.start()
 
-  createTutorialSubject: ->
-    # create tutorial subject
-    tutorialSubject = new Subject
-      id: 'TUTORIAL_SUBJECT'
-      zooniverse_id: 'APH0000039'
-      tutorial: true
-      metadata:
-        kepler_id: "9631995"
-        logg: "4.493"
-        magnitudes:
-          kepler: "13.435"
-        mass: ""
-        radius: "0.966"
-        teff: "6076"
-      selected_light_curve:
-        location: 'https://s3.amazonaws.com/demo.zooniverse.org/planet_hunter/subjects/09631995_16-3.json'
-    tutorialSubject
-
-  updateButtons: ->
-    # console.log 'updateButtons()'
-    if @canvasGraph.marks?.all.length > 0
-      @noTransitsButton.hide()
-      @finishedMarkingButton.show()
-    else
-      @finishedMarkingButton.hide()
-      @noTransitsButton.show()
-
   #
   # BEGIN MARKING TRANSITIONS
   #
 
   onClickNoTransits: ->
 
-    if @simulationsPresent()
+    if @simulationsPresent() or @knownPlanetPresent()
       @evaluateMarks()
       @displayKnownTransits()
       @noTransitsButton.hide()
@@ -494,10 +487,8 @@ class Classifier extends BaseController
       @showSummaryScreen()
 
   onClickFinished: ->
-    if @simulationsPresent()
+    if @simulationsPresent() or @knownPlanetPresent()
       @evaluateMarks()
-      @displayKnownTransits()
-    else if @knownPlanetPresent()
       @displayKnownTransits()
     else
       @showSummaryScreen()
@@ -507,8 +498,11 @@ class Classifier extends BaseController
     @showSummaryScreen()
 
   onClickNextSubject: ->
-    console.log 'COUNT: ', @course.count # DEBUG CODE
+    # console.log 'COUNT: ', @course.count # DEBUG CODE
+    # console.log 'SIM COUNT: ', @sim_count
     @hideMarkingButtons()
+    @noTransitsButton.show()
+    @noTransitsButton.attr 'disabled', true
     @course.prompt_el.hide()
     @classifySummary.fadeOut(150)
 
@@ -531,19 +525,21 @@ class Classifier extends BaseController
     @sendClassification()
     @canvasGraph.marks.destroyAll() #clear old marks
     @recordedClickEvents = []
+    @talkComment.val('')
 
     @sim_count ||= 0
     @sim_count +=1
 
+
     @sim_rate = 0.125
 
     sim_roll = Math.random()
-    console.log "sim roll #{sim_roll} rate #{@sim_rate}"
+    # console.log "sim roll #{sim_roll} rate #{@sim_rate}"
 
     if Math.random() < @sim_rate
       Subject.group = SIMULATION_GROUP
       Subject.fetch limit: 1, (subjects) ->
-        console.log "got sim subjects ", subjects
+        # console.log "got sim subjects ", subjects
         Subject.current?.destroy()
         subjects[0].select()
         Subject.group = MAIN_SUBJECT_GROUP
@@ -551,7 +547,12 @@ class Classifier extends BaseController
       Subject.group = MAIN_SUBJECT_GROUP
       @Subject.next()
 
-    @noTransitsButton.show()
+    # # DEBUG CODE
+    # @Subject.current?.destroy()
+    # test_subject = createKnownPlanetSubject()
+    # test_subject.select()
+
+    # @noTransitsButton.show()
 
   #
   # END MARKING TRANSITIONS
@@ -564,8 +565,8 @@ class Classifier extends BaseController
     @continueButton.hide()
 
   showSummaryScreen: ->
-    # reveal ids
-    @el.find('.star-id').fadeIn()
+    @el.find('.too-long-warning').html("140 left") # reset char count
+    @el.find('.star-id').fadeIn() # reveal ids
 
     if @classification.subject.id is 'TUTORIAL_SUBJECT'
       # console.log 'TUTORIAL SUBJECT'
@@ -579,16 +580,13 @@ class Classifier extends BaseController
         @el.find('.talk-pill-nologin').hide()
         @el.find('.talk-pill').show()
 
-
-      if @simulationsPresent()
-        @showSimDetails()
-      else
-        $(".sim_details").hide()
-
       if @knownPlanetPresent()
         @showPlanetDetails()
+      else if @simulationsPresent()
+        @showSimDetails()
       else
         $(".planet_details").hide()
+        $(".sim_details").hide()
 
       @hideMarkingButtons()
       @nextSubjectButton.show()
@@ -596,14 +594,16 @@ class Classifier extends BaseController
       @classifySummary.fadeIn(150)
 
   showSimDetails:=>
+    $(".planet_details").hide()
     $(".sim_details").show()
-    $(".sim_details .planet-rad").html(@planet_rad + " Earth Radi")
+    $(".sim_details .planet-rad").html(@planet_rad + " Earth Radii")
     $(".sim_details .planet-period").html(@planet_period + " days")
 
   showPlanetDetails:=>
+    $(".sim_details").hide()
     $(".planet_details").show()
-    $(".planet_details .planet-rad").html(@simulation.metadata.planet_rad + " Earth Radi")
-    $(".planet_details .planet-period").html(@simulation.metadata.planet_period + " days")
+    $(".planet_details .planet-rad").html( @subject.metadata.planet_rad + " Earth Radii" )
+    $(".planet_details .planet-period").html( @subject.metadata.planet_period + " days" )
 
   checkSupplementalTutorial: ->
     for classification_count in @supTutIntervals
@@ -647,7 +647,7 @@ class Classifier extends BaseController
         </div>
 
         <div class="disallow-custom-interval">
-          <p>Yes, I'd like to participate in the Planet Hunters mini-course!</p>
+          <p>Yes, I'd like to participate in the mini-course!</p>
         </div>
 
       </div>
@@ -658,10 +658,18 @@ class Classifier extends BaseController
   sendClassification: ->
     if User.current?
       @course.incrementCount()
+      @course.hidePrompt()
     else
-      @loggedOutClassificationCount += 1
-      if @loggedOutClassificationCount%5 == 0
+      # prompt users to sign
+      if +@loggedOutClassificationCount % 5 is 0
+        promptElement = @el.find('#course-prompt')
+        promptElement.removeClass 'signed-in'
+        promptElement.addClass 'show-login-prompt'
+        promptElement.find('.course-button').hide()
+        promptElement.find('#course-yes-container').hide()
+        promptElement.find('#course-message').html 'Please <button style="text-decoration: underline" class="sign-in">sign in</button> or <button style="text-decoration: underline" class="sign-up">sign up</button> to receive credit for your discoveries and to participate in the Planet Hunters mini-course.'
         @course.showPrompt()
+      @loggedOutClassificationCount += 1
 
     @classification.annotate
       classification_type: 'light_curve'
@@ -682,7 +690,7 @@ class Classifier extends BaseController
     @classification.annotate
       recordedClickEvents: [@recordedClickEvents...]
 
-    console.log JSON.stringify( @classification ) # DEBUG CODE
+    # console.log JSON.stringify( @classification ) # DEBUG CODE
 
     # send classification (except for tutorial subject)
     unless @classification.subject.id is 'TUTORIAL_SUBJECT'
@@ -718,19 +726,20 @@ class Classifier extends BaseController
     return lengthC/(lengthA+lengthB-lengthC)
 
   displayKnownTransits: ->
+    # console.log 'displayKnownTransits() '
     return unless @simulationsPresent() or @knownPlanetPresent()
+    # console.log 'found transits'
     @canvasGraph.disableMarking()
     @hideMarkingButtons()
     @continueButton.show()
 
     if @knownPlanetPresent()
-      @known_transits = @subject.metadata.known_transits
+      @known_transits = @Subject.current.metadata.known_transits
 
+    start_time = @Subject.current.selected_light_curve.start_time
 
-    start_time = Subject.current.selected_light_curve.start_time
-
-    for transit in @known_transits
-      @canvasGraph.highlightCurve(transit[0] - @start_time, transit[1]- @start_time)
+    for transit, i in @known_transits
+      @canvasGraph.highlightCurve(transit[0] - start_time, transit[1]- start_time)
 
     @course.showPrompt()
     @course.prompt_el.find('#course-yes-container').hide()
@@ -833,6 +842,20 @@ class Classifier extends BaseController
     @submitComment()
     @talkComment.val('')
 
+  onFocusTalkComment: ->
+    return unless @talkComment.val() is ""
+    quarter = @subject.selected_light_curve.quarter
+    @talkComment.val('Q'+quarter+' ')
+    @onKeyupTalkComment()
+
+  onClickPopulateHashtag: ->
+    hashtag = @el.find('.guest_obs_title').html()
+    unless @talkComment.val().length + hashtag.length <= 140
+      @notify("You've exceeded the 140 character limit.")
+      return
+    hashtag = @el.find('.guest_obs_title').html()
+    @talkComment.val( @talkComment.val() + ' ' + hashtag )
+
   appendComment: (comment, container) ->
     container.append("""
         <div class="comment formatted">
@@ -877,7 +900,6 @@ class Classifier extends BaseController
     commentsContainer.html "" # delete existing comments
     # request = Api.current.get "https://dev.zooniverse.org/projects/planet_hunter/talk/subjects/APH000001x" # DEBUG CODE
     request = Api.current.get "/projects/#{Api.current.project}/talk/subjects/#{Subject.current?.zooniverse_id}"
-    # request = Api.current.get "https://dev.zooniverse.org/projects/planet_hunter/talk/subjects/#{@subject.current.zooniverse_id}"
     request.done @onCommentsFetch
 
     clearTimeout @timeout if @timeout?
@@ -886,15 +908,15 @@ class Classifier extends BaseController
       @fetchComments()
     , @refresh * 1000 if @refresh?
 
-
   validateComment: (comment)=>
     is_valid = comment.length > 0 && comment.length <= 140
 
   submitComment: =>
     comment = @talkComment.val()
     is_valid = @validateComment comment
-    return unless is_valid
-    # request = Api.current.post "https://dev.zooniverse.org/projects/planet_hunter/talk/subjects/#{@subject.current.zooniverse_id}/comments", comment: comment
+    unless is_valid
+      @notify("You've exceeded the 140 character limit.")
+      return
     request = Api.current.post "/projects/#{Api.current.project}/talk/subjects/#{Subject.current?.zooniverse_id}/comments", comment: comment
 
   #

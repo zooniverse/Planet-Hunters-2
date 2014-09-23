@@ -15,7 +15,7 @@
       <div class="content sub-nav-about-about">
         <h1>The Story So Far...</h1>
 
-        <p>On December 16, 2010, the <a href="http://www.zooniverse.org">Zooniverse</a> launched the original Planet Hunters to enlist the public's help to search data from the NASA's <a href="http://kepler.nasa.gov">Kepler</a> spacecraft for the characteristic drop in light due an orbiting extrasolar planets (exoplanets) crossing in front of their parent stars.</p>
+        <p>On December 16, 2010, the <a href="http://www.zooniverse.org">Zooniverse</a> launched the original Planet Hunters to enlist the public's help to search data from the NASA's <a href="http://kepler.nasa.gov">Kepler</a> spacecraft for the characteristic drop in light due to an orbiting extrasolar planets (exoplanets) crossing in front of their parent stars.</p>
 
         <p>Back then we didn't know what we would find. The project was a gamble on the ability of human pattern recognition to beat machines just occasionally and spot the telltale dip from a transiting planet that was missed by automated routines looking for repeating patterns. It may have been the case that no new planets were discovered and that computers had the job down to a fine art.</p>
 
@@ -32,43 +32,43 @@
         <h2>Science Team</h2>
         <div class="team-members">
           <div class="team-member">
-            <img src="./images/people/debra_fischer.png">
+            <img src="./images/people/debraf.jpg">
             <div class="name">Debra Fischer</div>
             <div class="location">Yale University (USA)</div>
-            <div class="bio">Debra is a Professor of Astronomy at Yale University, with a joint appointment in Geology &amp; Geophysics. She has been on the hunt for extra solar planets since 1997 -- just after the first planet outside our solar system was discovered -- and she searches out answers (and more good questions!) about the mysteries of exoplanets, their location, and their composition night and day.</div>
+            <div class="bio">Debra is a Professor of Astronomy at Yale University, with a joint appointment in Geology &amp; Geophysics. She has been on the hunt for extra solar planets since 1997 - just after the first planet outside our solar system was discovered - and she searches out answers (and more good questions!) about the mysteries of exoplanets, their location, and their composition night and day.</div>
           </div>
           <div class="team-member">
-            <img src="./images/people/tabetha.png">
+            <img src="./images/people/tabetha.jpg">
             <div class="name">Tabetha Boyajian</div>
             <div class="location">Yale University (USA)</div>
             <div class="bio">Tabetha is a postdoctoral fellow in the exoplanets group at Yale. She is interested in exoplanet detection, the precise characterization of exoplanets and their host stars, and the fundamental properties of eclipsing binaries and nearby single stars.</div>
           </div>
           <div class="team-member">
-            <img src="./images/people/mattgiguere.png">
+            <img src="./images/people/mattg.jpg">
             <div class="name">Matt Giguere</div>
             <div class="location">Yale University (USA)</div>
             <div class="bio">Matt is a graduate student studying astronomy at Yale and is one of the original co-founders of Planet Hunters. Matt also studies stellar activity and searches for planets using the radial velocity technique.</div>
           </div>
           <div class="team-member">
-            <img src="./images/people/chrislintott.jpg">
-            <div class="name">Chris Lintott</div>
+            <img src="./images/people/chrislint.jpg">
+            <div class="name">Chris Lintott<p><a href="http://www.twitter.com/chrislintott">@chrislintott</a></p></div>
             <div class="location">University of Oxford (UK)</div>
             <div class="bio">Chris runs the Zooniverse collaboration and works on how galaxies form and evolve; particularly interested in the effects of active galactic nuclei and mergers. In his 'spare' time, he hunts for planets, presents the BBC's long-running Sky at Night program and cooks.</div>
           </div>
           <div class="team-member">
-            <img src="./images/people/joeyschmitt.png">
+            <img src="./images/people/joeys.jpg">
             <div class="name">Joey Schmitt</div>
             <div class="location">Yale University (USA)</div>
             <div class="bio">Joey is a third year graduate student at Yale University. He's originally from Iowa and received his B.S. at the University of Iowa. Joey now works on detecting and characterizing exoplanets and their atmospheres.  </div>
           </div>
           <div class="team-member">
-            <img src="./images/people/megschwamb.png">
-            <div class="name">Meg Schwamb</div>
+            <img src="./images/people/meg.jpg">
+            <div class="name">Meg Schwamb <p><a href="http://www.twitter.com/megschwamb">@megschwamb</a></p></div>
             <div class="location">Institute of Astronomy and Astrophysics, Academia Sinica (Taiwan)</div>
             <div class="bio">Meg is a planetary scientist and astronomer interested in how planets and solar systems form and evolve. In addition to working on exoplanets, she explores the small bodies residing in the outer Solar System and dabbles in the study of the Martian climate with the Planet Four project. Meg has a fondness for baking, soccer, and champagne. </div>
           </div>
           <div class="team-member">
-            <img src="./images/people/jiwang_yale.png">
+            <img src="./images/people/jiwang.jpg">
             <div class="name">Ji Wang</div>
             <div class="location">Yale University (USA)</div>
             <div class="bio">Ji is Postdoc at Yale University. He is interested in finding Tatooines, planets in binary stars. He is an ultimate sports fan in his spare time.</div>
@@ -78,23 +78,88 @@
         <h2>Moderators</h2>
         <div class="team-members">
           <div class="team-member">
-            <img src="./images/people/tonyhoffman.png">
+            <img src="./images/people/tonyhoffman.jpg">
             <div class="name">Tony Hoffman</div>
             <div class="location">Username: TonyJHoffman</div>
             <div class="bio">Tony is a technology analyst for PCMag.com. A director of the Amateur Astronomers Association of New York, Tony has participated in the SOHO comets program, Spacewatch FMO Project, and several Zooniverse citizen science projects in addition to Planet Hunters.</div>
           </div>
           <div class="team-member">
-            <img src="./images/people/joeconstant.png">
+            <img src="./images/people/joec.jpg">
             <div class="name">Joe Constant</div>
             <div class="location">Username: constovich</div>
             <div class="bio">Joe is a Corrective Action Program Specialist at Catawba Nuclear Station. Science and science fiction have always appealed to him and being a citizen-scientist on PH has allowed him to virtually explore the cosmos.</div>
           </div>
           <div class="team-member">
-            <img src="./images/people/joechosyan.png">
+            <img src="./images/people/joec.jpg">
             <div class="name">Jo Echo Syan</div>
             <div class="location">Username: echo-lily-mai</div>
             <div class="bio">Jo has been a member of the Zooniverse since 2009 and is also a Merger Zoo moderator over on the Galaxy Zoo forum. Completing a 1st class degree in fine art is currently exploring how art and science can fuse together with Enjoy Chaos.</div>
           </div>
+        </div>
+      
+        <h2>Development Team</h2>
+        <div class="team-members">
+         <div class="team-member">
+            <img src="./images/people/kelly.jpg">
+            <div class="name">Kelly Borden</div>
+            <div class="location">Adler Planetarium (USA)</div>
+            <div class="position">Education Lead</div>
+          </div>
+          <div class="team-member">
+            <img src="./images/people/julie.jpg">
+            <div class="name">Julie Feldt</div>
+            <div class="location">Adler Planetarium (USA)</div>
+            <div class="position">Educator</div>
+          </div>
+          <div class="team-member">
+            <img src="./images/people/sascha.jpg">
+            <div class="name">Sascha T. Ishikawa</div>
+            <div class="location">Adler Planetarium (USA)</div>
+            <div class="position">Frontend Developer</div>
+          </div>
+          <div class="team-member">
+            <img src="./images/people/stuart.jpg">
+            <div class="name">Stuart Lynn</div>
+            <div class="location">Adler Planetarium (USA)</div>
+            <div class="position">Technical Lead</div>
+          </div>
+           <div class="team-member">
+            <img src="./images/people/grant.jpg">
+            <div class="name">Grant Miller</div>
+            <div class="location">Oxford University (UK)</div>
+            <div class="position">Community Manager</div>
+          </div>
+          <div class="team-member">
+            <img src="./images/people/michael.jpg">
+            <div class="name">Michael Parrish</div>
+            <div class="location">Adler Planetarium (USA)</div>
+            <div class="position">Backend Developer</div>
+          </div>
+          <div class="team-member">
+            <img src="./images/people/heath.jpg">
+            <div class="name">Heath Van Singel</div>
+            <div class="location">Adler Planetarium (USA)</div>
+            <div class="position">Designer</div>
+          </div>
+          <div class="team-member">
+            <img src="./images/people/chriss.jpg">
+            <div class="name">Chris Snyder</div>
+            <div class="location">Adler Planetarium (USA)</div>
+            <div class="position">Project Manager</div>
+          </div>
+          <div class="team-member">
+            <img src="./images/people/alex.jpg">
+            <div class="name">Alex Weiksnar</div>
+            <div class="location">Adler Planetarium (USA)</div>
+            <div class="position">Frontend Developer</div>
+          </div>
+          <div class="team-member">
+            <img src="./images/people/laura.jpg">
+            <div class="name">Laura Whyte</div>
+            <div class="location">Adler Planetarium (USA)</div>
+            <div class="position">Director of Citizen Science</div>
+          </div>
+
         </div>
       </div>
 
@@ -103,7 +168,7 @@
 
         <div class="organization">
           <h2>The Adler Planetarium</h2>
-          <p><img src="./images/logos/adler.png" class="logo"><a href="http://www.adlerplanetarium.org">The Adler Planetarium</a> - America's First Planetarium - was founded in 1930 by Chicago business leader Max Adler. The Adler is a recognized leader in science education, with a focus on inspiring young people to pursue careers in science, technology, engineering and math. Throughout 80 years, the Adler has inspired the next generation of explorers by sharing the personal stories of space exploration and America’s space heroes.</p>
+          <p><img style="padding-bottom: 70px;" src="./images/logos/adler.png" class="logo"><a href="http://www.adlerplanetarium.org">The Adler Planetarium</a> - America's First Planetarium - was founded in 1930 by Chicago business leader Max Adler. The Adler is a recognized leader in science education, with a focus on inspiring young people to pursue careers in science, technology, engineering and math. Throughout 80 years, the Adler has inspired the next generation of explorers by sharing the personal stories of space exploration and America’s space heroes.</p>
         </div>
 
         <div class="organization">
@@ -120,6 +185,9 @@
           <h2>NASA's Exoplanet Exploration Program</h2>
           <p><img src="./images/logos/nasa.png" class="logo">Headquartered at the Jet Propulsion Laboratory in California, the <a href="http://exep.jpl.nasa.gov/">Exoplanet Exploration Program</a> is dedicated to the development of technology and programs (including the Kepler mission) to detect and characterize planets that orbit other stars. The public PlanetQuest site is a one-stop shop for NASA exoplanet news, educational articles, and interactive features.</p>
         </div>
+
+        <h2>Zooniverse</h2>
+        <p><img src="./images/logos/zooniverse.png" class="logo">The Zooniverse is home to the internet’s largest, most popular and most successful citizen science projects. The Zooniverse and the suite of projects it contains is produced, maintained and developed by the Citizen Science Alliance. The member institutions of the CSA work with many academic and other partners around the world to produce projects that use the efforts and ability of volunteers to help scientists and researchers.</p>
       </div>
     </div>
     <div class="right-column">

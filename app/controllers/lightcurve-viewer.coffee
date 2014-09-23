@@ -35,7 +35,9 @@ class LightcurveViewer extends BaseController
     @el.find(".noUi-handle").fadeOut(150)
 
     # remove any previous canvas; create new one
-    @canvas?.remove()
+    # @canvas?.remove()
+    @canvas.parentElement.removeChild(@canvas)
+    @canvas.parentNode()
     @canvas = document.createElement('canvas')
     @canvas.id = 'graph'
     @canvas.width = 1024

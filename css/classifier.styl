@@ -217,16 +217,15 @@
               line-height 36px
 
             .too-long-warning
-              color red
+              font-size 12px
+              color #808080
+              padding-left 10px
             .talk-pill
               position relative
               bottom -20px
               border 2px solid #fff
               border-radius 6px
 
-              textarea
-                border none
-                height 70px
               button
                 width 70px
                 height 30px
@@ -237,9 +236,11 @@
                 &:active
                   transform translateY(0px)
               textarea
+                border none
                 outline none
                 padding-top 10px
                 padding-bottom 10px
+                padding-left 10px
                 overflow hidden
                 resize none
                 width 70%
@@ -271,6 +272,8 @@
                 border-radius 10px
                 text-align center
                 background-color rgb(183,43,51)
+                &:hover
+                  background-color rgb(203,63,71)
 
 
             #comments, #alt-comments
@@ -515,6 +518,7 @@
         transform translateY(-50%)
         text-sp
         button
+          width 160px
           &[name="no-transits"]
             opacity 0.5
             font-weight bold
@@ -674,5 +678,5 @@
     margin: 15px
 
 
-.sim_details span
+.sim_details span, .planet_details span
   color: #e6a0aa

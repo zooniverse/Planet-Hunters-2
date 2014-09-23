@@ -11,7 +11,7 @@ content=[
   }
   {
     title: "#glitch"
-    description: "Occational malfunction of data reduction pipeline."
+    description: "Occasional malfunction of data reduction pipeline."
     example:"images/guest/glitch.png"
   }
   {
