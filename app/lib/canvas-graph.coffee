@@ -200,6 +200,7 @@ class CanvasGraph
       @highlightCurve(entry.xL,entry.xR)
 
   highlightCurve: (xLeft,xRight) ->
+    return unless xLeft >= @xMin and xRight <= @xMax
     @highlights.push {'xLeft': xLeft, 'xRight': xRight}
     @plotPoints()
 

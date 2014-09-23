@@ -1,8 +1,6 @@
 Subject = require 'zooniverse/models/subject'
-
-module.exports = 
+module.exports =  
   createTutorialSubject: ->
-    # create tutorial subject
     tutorialSubject = new Subject
       id: 'TUTORIAL_SUBJECT'
       zooniverse_id: 'APH0000039'

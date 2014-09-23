@@ -17,6 +17,7 @@ Api                        = require 'zooniverse/lib/api'
 GuestObsContent            = require '../lib/guest_obs_content'
 
 {createTutorialSubject}    = require '../lib/create-tutorial-subject'
+{createKnownPlanetSubject} = require '../lib/create-known-planet-subject'
 
 $ = window.jQuery
 
@@ -475,7 +476,7 @@ class Classifier extends BaseController
 
   onClickNoTransits: ->
 
-    if @simulationsPresent()
+    if @simulationsPresent() or @knownPlanetPresent()
       @evaluateMarks()
       @displayKnownTransits()
       @noTransitsButton.hide()
@@ -486,10 +487,8 @@ class Classifier extends BaseController
       @showSummaryScreen()
 
   onClickFinished: ->
-    if @simulationsPresent()
+    if @simulationsPresent() or @knownPlanetPresent()
       @evaluateMarks()
-      @displayKnownTransits()
-    else if @knownPlanetPresent()
       @displayKnownTransits()
     else
       @showSummaryScreen()
@@ -537,16 +536,19 @@ class Classifier extends BaseController
     sim_roll = Math.random()
     # console.log "sim roll #{sim_roll} rate #{@sim_rate}"
 
-    if Math.random() < @sim_rate
-      Subject.group = SIMULATION_GROUP
-      Subject.fetch limit: 1, (subjects) ->
-        # console.log "got sim subjects ", subjects
-        Subject.current?.destroy()
-        subjects[0].select()
-        Subject.group = MAIN_SUBJECT_GROUP
-    else
-      Subject.group = MAIN_SUBJECT_GROUP
-      @Subject.next()
+    # if Math.random() < @sim_rate
+    #   Subject.group = SIMULATION_GROUP
+    #   Subject.fetch limit: 1, (subjects) ->
+    #     # console.log "got sim subjects ", subjects
+    #     Subject.current?.destroy()
+    #     subjects[0].select()
+    #     Subject.group = MAIN_SUBJECT_GROUP
+    # else
+    #   Subject.group = MAIN_SUBJECT_GROUP
+    #   @Subject.next()
+
+    @Subject.current?.destroy()
+    createKnownPlanetSubject().select()
 
     # @noTransitsButton.show()
 
@@ -582,10 +584,10 @@ class Classifier extends BaseController
         $(".sim_details").hide()
 
       # TODO: FIX! THIS BREAKS THE SITE 
-      # if @knownPlanetPresent()
-      #   @showPlanetDetails()
-      # else
-      #   $(".planet_details").hide()
+      if @knownPlanetPresent()
+        @showPlanetDetails()
+      else
+        $(".planet_details").hide()
 
       $(".planet_details").hide()
 
@@ -601,8 +603,8 @@ class Classifier extends BaseController
 
   showPlanetDetails:=>
     $(".planet_details").show()
-    $(".planet_details .planet-rad").html(@simulation.metadata.planet_rad + " Earth Radi")
-    $(".planet_details .planet-period").html(@simulation.metadata.planet_period + " days")
+    $(".planet_details .planet-rad").html(@Subject.current.metadata.planet_rad + " Earth Radi")
+    $(".planet_details .planet-period").html(@Subject.current.metadata.planet_period + " days")
 
   checkSupplementalTutorial: ->
     for classification_count in @supTutIntervals
@@ -725,19 +727,20 @@ class Classifier extends BaseController
     return lengthC/(lengthA+lengthB-lengthC)
 
   displayKnownTransits: ->
+    # console.log 'displayKnownTransits() '
     return unless @simulationsPresent() or @knownPlanetPresent()
+    # console.log 'found transits'
     @canvasGraph.disableMarking()
     @hideMarkingButtons()
     @continueButton.show()
 
     if @knownPlanetPresent()
-      @known_transits = @subject.metadata.known_transits
+      @known_transits = @Subject.current.metadata.known_transits
 
+    start_time = @Subject.current.selected_light_curve.start_time
 
-    start_time = Subject.current.selected_light_curve.start_time
-
-    for transit in @known_transits
-      @canvasGraph.highlightCurve(transit[0] - @start_time, transit[1]- @start_time)
+    for transit, i in @known_transits
+      @canvasGraph.highlightCurve(transit[0] - start_time, transit[1]- start_time)
 
     @course.showPrompt()
     @course.prompt_el.find('#course-yes-container').hide()
