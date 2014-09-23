@@ -16,6 +16,8 @@ Modal                      = require '../lib/modal'
 Api                        = require 'zooniverse/lib/api'
 GuestObsContent            = require '../lib/guest_obs_content'
 
+{createTutorialSubject}    = require '../lib/create-tutorial-subject'
+
 $ = window.jQuery
 
 MAIN_SUBJECT_GROUP = "5417014a3ae7400bda000001"
@@ -458,7 +460,7 @@ class Classifier extends BaseController
       return
     # load training subject
     # @notify('Loading tutorial...')
-    tutorialSubject = @createTutorialSubject()
+    tutorialSubject = createTutorialSubject()
     tutorialSubject.select()
     # do stuff after tutorial complete/aborted
     addEventListener "zootorial-end", =>
@@ -466,24 +468,6 @@ class Classifier extends BaseController
       $('.tutorial-annotations.y-axis').removeClass('visible')
       $('.mark').fadeIn()
     @initialTutorial.start()
-
-  createTutorialSubject: ->
-    # create tutorial subject
-    tutorialSubject = new Subject
-      id: 'TUTORIAL_SUBJECT'
-      zooniverse_id: 'APH0000039'
-      tutorial: true
-      metadata:
-        kepler_id: "9631995"
-        logg: "4.493"
-        magnitudes:
-          kepler: "13.435"
-        mass: ""
-        radius: "0.966"
-        teff: "6076"
-      selected_light_curve:
-        location: 'https://s3.amazonaws.com/demo.zooniverse.org/planet_hunter/subjects/09631995_16-3.json'
-    tutorialSubject
 
   #
   # BEGIN MARKING TRANSITIONS
