@@ -547,8 +547,10 @@ class Classifier extends BaseController
     #   Subject.group = MAIN_SUBJECT_GROUP
     #   @Subject.next()
 
+    # DEBUG CODE
     @Subject.current?.destroy()
-    createKnownPlanetSubject().select()
+    test_subject = createKnownPlanetSubject()
+    test_subject.select()
 
     # @noTransitsButton.show()
 
@@ -578,18 +580,13 @@ class Classifier extends BaseController
         @el.find('.talk-pill-nologin').hide()
         @el.find('.talk-pill').show()
 
-      if @simulationsPresent()
-        @showSimDetails()
-      else
-        $(".sim_details").hide()
-
-      # TODO: FIX! THIS BREAKS THE SITE 
       if @knownPlanetPresent()
         @showPlanetDetails()
+      else if @simulationsPresent()
+        @showSimDetails()
       else
         $(".planet_details").hide()
-
-      $(".planet_details").hide()
+        $(".sim_details").hide()
 
       @hideMarkingButtons()
       @nextSubjectButton.show()
@@ -597,14 +594,19 @@ class Classifier extends BaseController
       @classifySummary.fadeIn(150)
 
   showSimDetails:=>
+    $(".planet_details").hide()
     $(".sim_details").show()
-    $(".sim_details .planet-rad").html(@planet_rad + " Earth Radi")
+    $(".sim_details .planet-rad").html(@planet_rad + " Earth Radii")
     $(".sim_details .planet-period").html(@planet_period + " days")
 
   showPlanetDetails:=>
+    console.log "showPlanetDetails() "
+    $(".sim_details").hide()
     $(".planet_details").show()
-    $(".planet_details .planet-rad").html(@Subject.current.metadata.planet_rad + " Earth Radi")
-    $(".planet_details .planet-period").html(@Subject.current.metadata.planet_period + " days")
+    $(".planet_details .planet-rad").html( @subject.metadata.planet_rad + " Earth Radii" )
+    $(".planet_details .planet-period").html( @subject.metadata.planet_period + " days" )
+    console.log 'RADIUS: ', +@subject.metadata.planet_rad
+    console.log 'PERIOD: ', +@subject.metadata.planet_period
 
   checkSupplementalTutorial: ->
     for classification_count in @supTutIntervals

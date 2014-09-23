@@ -2,880 +2,570 @@ Subject = require 'zooniverse/models/subject'
 module.exports =  
   createKnownPlanetSubject: ->
     subject = new Subject {
-      "id": "54171b378841e106190027d1",
+      "_id": {"$oid": "54171d378841e1061900cd7d"},
       "classification_count": 9,
       "coords": [
-        19.448,
-        37.5289
+        19.792,
+        41.08058
       ],
-      "created_at": "2014-09-15T17:00:39Z",
+      "created_at": "2014-09-15 17:09:11 UTC",
       "group": {
-        "_id": "5417014a3ae7400bda000001",
+        "_id": {"$oid": "5417014a3ae7400bda000001"},
         "zooniverse_id": "GPH0000001",
         "name": "k1"
       },
-      "selected_light_curve":{
-        "_id": "54171b388841e10619002800",
-        "classification_count": 0,
-        "location": "http://www.planethunters.org/subjects/2161536_16-2.json",
-        "quarter": "16-2",
-        "start_time": 1500.743750405214,
-        "state": "active"
-          },
-      "group_id": "5417014a3ae7400bda000001",
+      "group_id": {"$oid": "5417014a3ae7400bda000001"},
       "location": {
-        "1-1": "http://www.planethunters.org/subjects/2161536_1-1.json",
-        "1-2": "http://www.planethunters.org/subjects/2161536_1-2.json",
-        "1-3": "http://www.planethunters.org/subjects/2161536_1-3.json",
-        "10-1": "http://www.planethunters.org/subjects/2161536_10-1.json",
-        "10-2": "http://www.planethunters.org/subjects/2161536_10-2.json",
-        "10-3": "http://www.planethunters.org/subjects/2161536_10-3.json",
-        "11-1": "http://www.planethunters.org/subjects/2161536_11-1.json",
-        "11-2": "http://www.planethunters.org/subjects/2161536_11-2.json",
-        "11-3": "http://www.planethunters.org/subjects/2161536_11-3.json",
-        "12-1": "http://www.planethunters.org/subjects/2161536_12-1.json",
-        "12-2": "http://www.planethunters.org/subjects/2161536_12-2.json",
-        "12-3": "http://www.planethunters.org/subjects/2161536_12-3.json",
-        "13-1": "http://www.planethunters.org/subjects/2161536_13-1.json",
-        "13-2": "http://www.planethunters.org/subjects/2161536_13-2.json",
-        "13-3": "http://www.planethunters.org/subjects/2161536_13-3.json",
-        "14-1": "http://www.planethunters.org/subjects/2161536_14-1.json",
-        "14-2": "http://www.planethunters.org/subjects/2161536_14-2.json",
-        "14-3": "http://www.planethunters.org/subjects/2161536_14-3.json",
-        "15-1": "http://www.planethunters.org/subjects/2161536_15-1.json",
-        "15-2": "http://www.planethunters.org/subjects/2161536_15-2.json",
-        "15-3": "http://www.planethunters.org/subjects/2161536_15-3.json",
-        "16-1": "http://www.planethunters.org/subjects/2161536_16-1.json",
-        "16-2": "http://www.planethunters.org/subjects/2161536_16-2.json",
-        "16-3": "http://www.planethunters.org/subjects/2161536_16-3.json",
-        "17-1": "http://www.planethunters.org/subjects/2161536_17-1.json",
-        "17-2": "http://www.planethunters.org/subjects/2161536_17-2.json",
-        "17-3": "http://www.planethunters.org/subjects/2161536_17-3.json",
-        "2-1": "http://www.planethunters.org/subjects/2161536_2-1.json",
-        "2-2": "http://www.planethunters.org/subjects/2161536_2-2.json",
-        "2-3": "http://www.planethunters.org/subjects/2161536_2-3.json",
-        "3-1": "http://www.planethunters.org/subjects/2161536_3-1.json",
-        "3-2": "http://www.planethunters.org/subjects/2161536_3-2.json",
-        "3-3": "http://www.planethunters.org/subjects/2161536_3-3.json",
-        "4-1": "http://www.planethunters.org/subjects/2161536_4-1.json",
-        "4-2": "http://www.planethunters.org/subjects/2161536_4-2.json",
-        "4-3": "http://www.planethunters.org/subjects/2161536_4-3.json",
-        "5-1": "http://www.planethunters.org/subjects/2161536_5-1.json",
-        "5-2": "http://www.planethunters.org/subjects/2161536_5-2.json",
-        "5-3": "http://www.planethunters.org/subjects/2161536_5-3.json",
-        "6-1": "http://www.planethunters.org/subjects/2161536_6-1.json",
-        "6-2": "http://www.planethunters.org/subjects/2161536_6-2.json",
-        "6-3": "http://www.planethunters.org/subjects/2161536_6-3.json",
-        "7-1": "http://www.planethunters.org/subjects/2161536_7-1.json",
-        "7-2": "http://www.planethunters.org/subjects/2161536_7-2.json",
-        "7-3": "http://www.planethunters.org/subjects/2161536_7-3.json",
-        "8-1": "http://www.planethunters.org/subjects/2161536_8-1.json",
-        "8-2": "http://www.planethunters.org/subjects/2161536_8-2.json",
-        "8-3": "http://www.planethunters.org/subjects/2161536_8-3.json",
-        "9-1": "http://www.planethunters.org/subjects/2161536_9-1.json",
-        "9-2": "http://www.planethunters.org/subjects/2161536_9-2.json",
-        "9-3": "http://www.planethunters.org/subjects/2161536_9-3.json"
+        "1-1": "http://www.planethunters.org/subjects/5809954_1-1.json",
+        "1-2": "http://www.planethunters.org/subjects/5809954_1-2.json",
+        "1-3": "http://www.planethunters.org/subjects/5809954_1-3.json",
+        "10-1": "http://www.planethunters.org/subjects/5809954_10-1.json",
+        "10-2": "http://www.planethunters.org/subjects/5809954_10-2.json",
+        "10-3": "http://www.planethunters.org/subjects/5809954_10-3.json",
+        "11-1": "http://www.planethunters.org/subjects/5809954_11-1.json",
+        "11-2": "http://www.planethunters.org/subjects/5809954_11-2.json",
+        "11-3": "http://www.planethunters.org/subjects/5809954_11-3.json",
+        "12-1": "http://www.planethunters.org/subjects/5809954_12-1.json",
+        "12-2": "http://www.planethunters.org/subjects/5809954_12-2.json",
+        "12-3": "http://www.planethunters.org/subjects/5809954_12-3.json",
+        "13-1": "http://www.planethunters.org/subjects/5809954_13-1.json",
+        "13-2": "http://www.planethunters.org/subjects/5809954_13-2.json",
+        "13-3": "http://www.planethunters.org/subjects/5809954_13-3.json",
+        "14-1": "http://www.planethunters.org/subjects/5809954_14-1.json",
+        "14-2": "http://www.planethunters.org/subjects/5809954_14-2.json",
+        "14-3": "http://www.planethunters.org/subjects/5809954_14-3.json",
+        "15-1": "http://www.planethunters.org/subjects/5809954_15-1.json",
+        "15-2": "http://www.planethunters.org/subjects/5809954_15-2.json",
+        "15-3": "http://www.planethunters.org/subjects/5809954_15-3.json",
+        "16-1": "http://www.planethunters.org/subjects/5809954_16-1.json",
+        "16-2": "http://www.planethunters.org/subjects/5809954_16-2.json",
+        "16-3": "http://www.planethunters.org/subjects/5809954_16-3.json",
+        "17-1": "http://www.planethunters.org/subjects/5809954_17-1.json",
+        "17-2": "http://www.planethunters.org/subjects/5809954_17-2.json",
+        "17-3": "http://www.planethunters.org/subjects/5809954_17-3.json",
+        "2-1": "http://www.planethunters.org/subjects/5809954_2-1.json",
+        "2-2": "http://www.planethunters.org/subjects/5809954_2-2.json",
+        "2-3": "http://www.planethunters.org/subjects/5809954_2-3.json",
+        "3-1": "http://www.planethunters.org/subjects/5809954_3-1.json",
+        "3-2": "http://www.planethunters.org/subjects/5809954_3-2.json",
+        "3-3": "http://www.planethunters.org/subjects/5809954_3-3.json",
+        "4-1": "http://www.planethunters.org/subjects/5809954_4-1.json",
+        "4-2": "http://www.planethunters.org/subjects/5809954_4-2.json",
+        "4-3": "http://www.planethunters.org/subjects/5809954_4-3.json",
+        "5-1": "http://www.planethunters.org/subjects/5809954_5-1.json",
+        "5-2": "http://www.planethunters.org/subjects/5809954_5-2.json",
+        "5-3": "http://www.planethunters.org/subjects/5809954_5-3.json",
+        "6-1": "http://www.planethunters.org/subjects/5809954_6-1.json",
+        "6-2": "http://www.planethunters.org/subjects/5809954_6-2.json",
+        "6-3": "http://www.planethunters.org/subjects/5809954_6-3.json",
+        "7-1": "http://www.planethunters.org/subjects/5809954_7-1.json",
+        "7-2": "http://www.planethunters.org/subjects/5809954_7-2.json",
+        "7-3": "http://www.planethunters.org/subjects/5809954_7-3.json",
+        "8-1": "http://www.planethunters.org/subjects/5809954_8-1.json",
+        "8-2": "http://www.planethunters.org/subjects/5809954_8-2.json",
+        "8-3": "http://www.planethunters.org/subjects/5809954_8-3.json",
+        "9-1": "http://www.planethunters.org/subjects/5809954_9-1.json",
+        "9-2": "http://www.planethunters.org/subjects/5809954_9-2.json",
+        "9-3": "http://www.planethunters.org/subjects/5809954_9-3.json"
       },
       "metadata": {
-        "feh": "-0.100",
-        "kepler_id": "2161536",
+        "feh": "-0.300",
+        "kepler_id": "5809954",
         "light_curves": {
-          "54171b378841e106190027d2": {
-            "_id": "54171b378841e106190027d2",
+          "54171d378841e1061900cd7e": {
+            "_id": {"$oid": "54171d378841e1061900cd7e"},
             "classification_count": 0,
-            "location": "http://www.planethunters.org/subjects/2161536_1-1.json",
+            "location": "http://www.planethunters.org/subjects/5809954_1-1.json",
             "quarter": "1-1",
-            "start_time": 131.5126239261299,
+            "start_time": 131.51210041131708,
             "state": "active"
           },
-          "54171b378841e106190027d3": {
-            "_id": "54171b378841e106190027d3",
+          "54171d378841e1061900cd7f": {
+            "_id": {"$oid": "54171d378841e1061900cd7f"},
             "classification_count": 0,
-            "location": "http://www.planethunters.org/subjects/2161536_1-2.json",
+            "location": "http://www.planethunters.org/subjects/5809954_1-2.json",
             "quarter": "1-2",
-            "start_time": 142.6698952275765,
+            "start_time": 142.6693638597353,
             "state": "active"
           },
-          "54171b378841e106190027d4": {
-            "_id": "54171b378841e106190027d4",
+          "54171d378841e1061900cd80": {
+            "_id": {"$oid": "54171d378841e1061900cd80"},
             "classification_count": 0,
-            "location": "http://www.planethunters.org/subjects/2161536_1-3.json",
+            "location": "http://www.planethunters.org/subjects/5809954_1-3.json",
             "quarter": "1-3",
-            "start_time": 153.82711933508108,
+            "start_time": 153.8265980163269,
             "state": "active"
           },
-          "54171b378841e106190027d5": {
-            "_id": "54171b378841e106190027d5",
+          "54171d378841e1061900cd81": {
+            "_id": {"$oid": "54171d378841e1061900cd81"},
             "classification_count": 0,
-            "location": "http://www.planethunters.org/subjects/2161536_2-1.json",
+            "location": "http://www.planethunters.org/subjects/5809954_2-1.json",
             "quarter": "2-1",
-            "start_time": 169.76591263519367,
+            "start_time": 169.76541407982586,
             "state": "active"
           },
-          "54171b378841e106190027d6": {
-            "_id": "54171b378841e106190027d6",
+          "54171d378841e1061900cd82": {
+            "_id": {"$oid": "54171d378841e1061900cd82"},
             "classification_count": 0,
-            "location": "http://www.planethunters.org/subjects/2161536_2-2.json",
+            "location": "http://www.planethunters.org/subjects/5809954_2-2.json",
             "quarter": "2-2",
-            "start_time": 199.33393783041538,
+            "start_time": 199.3336037105255,
             "state": "active"
           },
-          "54171b378841e106190027d7": {
-            "_id": "54171b378841e106190027d7",
-            "classification_count": 1,
-            "location": "http://www.planethunters.org/subjects/2161536_2-3.json",
+          "54171d378841e1061900cd83": {
+            "_id": {"$oid": "54171d378841e1061900cd83"},
+            "classification_count": 0,
+            "location": "http://www.planethunters.org/subjects/5809954_2-3.json",
             "quarter": "2-3",
-            "start_time": 228.90126124032395,
+            "start_time": 228.9011654465794,
             "state": "active"
           },
-          "54171b378841e106190027d8": {
-            "_id": "54171b378841e106190027d8",
+          "54171d378841e1061900cd84": {
+            "_id": {"$oid": "54171d378841e1061900cd84"},
             "classification_count": 0,
-            "location": "http://www.planethunters.org/subjects/2161536_3-1.json",
+            "location": "http://www.planethunters.org/subjects/5809954_3-1.json",
             "quarter": "3-1",
-            "start_time": 260.2455466607353,
+            "start_time": 260.24571727227885,
             "state": "active"
           },
-          "54171b378841e106190027d9": {
-            "_id": "54171b378841e106190027d9",
+          "54171d378841e1061900cd85": {
+            "_id": {"$oid": "54171d378841e1061900cd85"},
             "classification_count": 0,
-            "location": "http://www.planethunters.org/subjects/2161536_3-2.json",
+            "location": "http://www.planethunters.org/subjects/5809954_3-2.json",
             "quarter": "3-2",
-            "start_time": 289.99549885418674,
+            "start_time": 289.9958829787647,
             "state": "active"
           },
-          "54171b378841e106190027da": {
-            "_id": "54171b378841e106190027da",
+          "54171d378841e1061900cd86": {
+            "_id": {"$oid": "54171d378841e1061900cd86"},
             "classification_count": 0,
-            "location": "http://www.planethunters.org/subjects/2161536_3-3.json",
+            "location": "http://www.planethunters.org/subjects/5809954_3-3.json",
             "quarter": "3-3",
-            "start_time": 319.765682426696,
+            "start_time": 319.74574349435716,
             "state": "active"
           },
-          "54171b378841e106190027db": {
-            "_id": "54171b378841e106190027db",
+          "54171d378841e1061900cd87": {
+            "_id": {"$oid": "54171d378841e1061900cd87"},
             "classification_count": 0,
-            "location": "http://www.planethunters.org/subjects/2161536_4-1.json",
+            "location": "http://www.planethunters.org/subjects/5809954_4-1.json",
             "quarter": "4-1",
-            "start_time": 352.37622754367476,
+            "start_time": 352.37670457373315,
             "state": "active"
           },
-          "54171b388841e106190027dc": {
-            "_id": "54171b388841e106190027dc",
+          "54171d378841e1061900cd88": {
+            "_id": {"$oid": "54171d378841e1061900cd88"},
             "classification_count": 0,
-            "location": "http://www.planethunters.org/subjects/2161536_4-2.json",
+            "location": "http://www.planethunters.org/subjects/5809954_4-2.json",
             "quarter": "4-2",
-            "start_time": 382.3311874798237,
+            "start_time": 382.33149128551304,
             "state": "active"
           },
-          "54171b388841e106190027dd": {
-            "_id": "54171b388841e106190027dd",
-            "classification_count": 0,
-            "location": "http://www.planethunters.org/subjects/2161536_4-3.json",
+          "54171d378841e1061900cd89": {
+            "_id": {"$oid": "54171d378841e1061900cd89"},
+            "classification_count": 1,
+            "location": "http://www.planethunters.org/subjects/5809954_4-3.json",
             "quarter": "4-3",
-            "start_time": 412.2665282753587,
+            "start_time": 412.26657658748445,
             "state": "active"
           },
-          "54171b388841e106190027de": {
-            "_id": "54171b388841e106190027de",
-            "classification_count": 1,
-            "location": "http://www.planethunters.org/subjects/2161536_5-1.json",
+          "54171d378841e1061900cd8a": {
+            "_id": {"$oid": "54171d378841e1061900cd8a"},
+            "classification_count": 0,
+            "location": "http://www.planethunters.org/subjects/5809954_5-1.json",
             "quarter": "5-1",
-            "start_time": 443.51041548149806,
+            "start_time": 443.5101931285826,
             "state": "active"
           },
-          "54171b388841e106190027df": {
-            "_id": "54171b388841e106190027df",
-            "classification_count": 0,
-            "location": "http://www.planethunters.org/subjects/2161536_5-2.json",
+          "54171d378841e1061900cd8b": {
+            "_id": {"$oid": "54171d378841e1061900cd8b"},
+            "classification_count": 2,
+            "location": "http://www.planethunters.org/subjects/5809954_5-2.json",
             "quarter": "5-2",
-            "start_time": 476.28743036981905,
+            "start_time": 476.2869868827329,
             "state": "active"
           },
-          "54171b388841e106190027e0": {
-            "_id": "54171b388841e106190027e0",
-            "classification_count": 1,
-            "location": "http://www.planethunters.org/subjects/2161536_5-3.json",
+          "54171d378841e1061900cd8c": {
+            "_id": {"$oid": "54171d378841e1061900cd8c"},
+            "classification_count": 0,
+            "location": "http://www.planethunters.org/subjects/5809954_5-3.json",
             "quarter": "5-3",
-            "start_time": 506.61241562701616,
+            "start_time": 506.61188313576713,
             "state": "active"
           },
-          "54171b388841e106190027e1": {
-            "_id": "54171b388841e106190027e1",
-            "classification_count": 0,
-            "location": "http://www.planethunters.org/subjects/2161536_6-1.json",
+          "54171d378841e1061900cd8d": {
+            "_id": {"$oid": "54171d378841e1061900cd8d"},
+            "classification_count": 1,
+            "location": "http://www.planethunters.org/subjects/5809954_6-1.json",
             "quarter": "6-1",
-            "start_time": 539.4709839971547,
+            "start_time": 539.4704791567565,
             "state": "active"
           },
-          "54171b388841e106190027e2": {
-            "_id": "54171b388841e106190027e2",
+          "54171d378841e1061900cd8e": {
+            "_id": {"$oid": "54171d378841e1061900cd8e"},
             "classification_count": 0,
-            "location": "http://www.planethunters.org/subjects/2161536_6-2.json",
+            "location": "http://www.planethunters.org/subjects/5809954_6-2.json",
             "quarter": "6-2",
-            "start_time": 569.4272803157146,
+            "start_time": 569.4269393082286,
             "state": "active"
           },
-          "54171b388841e106190027e3": {
-            "_id": "54171b388841e106190027e3",
-            "classification_count": 1,
-            "location": "http://www.planethunters.org/subjects/2161536_6-3.json",
+          "54171d378841e1061900cd8f": {
+            "_id": {"$oid": "54171d378841e1061900cd8f"},
+            "classification_count": 0,
+            "location": "http://www.planethunters.org/subjects/5809954_6-3.json",
             "quarter": "6-3",
-            "start_time": 599.3624095820633,
+            "start_time": 599.362308335425,
             "state": "active"
           },
-          "54171b388841e106190027e4": {
-            "_id": "54171b388841e106190027e4",
+          "54171d378841e1061900cd90": {
+            "_id": {"$oid": "54171d378841e1061900cd90"},
             "classification_count": 0,
-            "location": "http://www.planethunters.org/subjects/2161536_7-1.json",
+            "location": "http://www.planethunters.org/subjects/5809954_7-1.json",
             "quarter": "7-1",
-            "start_time": 630.1958990908533,
+            "start_time": 630.1960595581986,
             "state": "active"
           },
-          "54171b388841e106190027e5": {
-            "_id": "54171b388841e106190027e5",
+          "54171d378841e1061900cd91": {
+            "_id": {"$oid": "54171d378841e1061900cd91"},
             "classification_count": 0,
-            "location": "http://www.planethunters.org/subjects/2161536_7-2.json",
+            "location": "http://www.planethunters.org/subjects/5809954_7-2.json",
             "quarter": "7-2",
-            "start_time": 659.9867467064396,
+            "start_time": 659.9871235484243,
             "state": "active"
           },
-          "54171b388841e106190027e6": {
-            "_id": "54171b388841e106190027e6",
+          "54171d378841e1061900cd92": {
+            "_id": {"$oid": "54171d378841e1061900cd92"},
             "classification_count": 0,
-            "location": "http://www.planethunters.org/subjects/2161536_7-3.json",
+            "location": "http://www.planethunters.org/subjects/5809954_7-3.json",
             "quarter": "7-3",
-            "start_time": 689.7773768192783,
+            "start_time": 689.777868686273,
             "state": "active"
           },
-          "54171b388841e106190027e7": {
-            "_id": "54171b388841e106190027e7",
+          "54171d378841e1061900cd93": {
+            "_id": {"$oid": "54171d378841e1061900cd93"},
             "classification_count": 0,
-            "location": "http://www.planethunters.org/subjects/2161536_8-1.json",
+            "location": "http://www.planethunters.org/subjects/5809954_8-1.json",
             "quarter": "8-1",
-            "start_time": 735.3832540679869,
+            "start_time": 735.3836785585299,
             "state": "active"
           },
-          "54171b388841e106190027e8": {
-            "_id": "54171b388841e106190027e8",
+          "54171d378841e1061900cd94": {
+            "_id": {"$oid": "54171d378841e1061900cd94"},
             "classification_count": 0,
-            "location": "http://www.planethunters.org/subjects/2161536_8-2.json",
+            "location": "http://www.planethunters.org/subjects/5809954_8-2.json",
             "quarter": "8-2",
-            "start_time": 757.7168125798198,
+            "start_time": 757.71708718843,
             "state": "active"
           },
-          "54171b388841e106190027e9": {
-            "_id": "54171b388841e106190027e9",
-            "classification_count": 0,
-            "location": "http://www.planethunters.org/subjects/2161536_8-3.json",
+          "54171d378841e1061900cd95": {
+            "_id": {"$oid": "54171d378841e1061900cd95"},
+            "classification_count": 1,
+            "location": "http://www.planethunters.org/subjects/5809954_8-3.json",
             "quarter": "8-3",
-            "start_time": 780.0303793667408,
+            "start_time": 780.0304627156875,
             "state": "active"
           },
-          "54171b388841e106190027ea": {
-            "_id": "54171b388841e106190027ea",
-            "classification_count": 1,
-            "location": "http://www.planethunters.org/subjects/2161536_9-1.json",
+          "54171d378841e1061900cd96": {
+            "_id": {"$oid": "54171d378841e1061900cd96"},
+            "classification_count": 0,
+            "location": "http://www.planethunters.org/subjects/5809954_9-1.json",
             "quarter": "9-1",
-            "start_time": 808.5155319258993,
+            "start_time": 808.5153653369707,
             "state": "active"
           },
-          "54171b388841e106190027eb": {
-            "_id": "54171b388841e106190027eb",
+          "54171d378841e1061900cd97": {
+            "_id": {"$oid": "54171d378841e1061900cd97"},
             "classification_count": 0,
-            "location": "http://www.planethunters.org/subjects/2161536_9-2.json",
+            "location": "http://www.planethunters.org/subjects/5809954_9-2.json",
             "quarter": "9-2",
-            "start_time": 841.0063905554052,
+            "start_time": 841.0059838690577,
             "state": "active"
           },
-          "54171b388841e106190027ec": {
-            "_id": "54171b388841e106190027ec",
+          "54171d378841e1061900cd98": {
+            "_id": {"$oid": "54171d378841e1061900cd98"},
             "classification_count": 0,
-            "location": "http://www.planethunters.org/subjects/2161536_9-3.json",
+            "location": "http://www.planethunters.org/subjects/5809954_9-3.json",
             "quarter": "9-3",
-            "start_time": 873.4565902937975,
+            "start_time": 873.4764967495066,
             "state": "active"
           },
-          "54171b388841e106190027ed": {
-            "_id": "54171b388841e106190027ed",
-            "classification_count": 0,
-            "location": "http://www.planethunters.org/subjects/2161536_10-1.json",
+          "54171d378841e1061900cd99": {
+            "_id": {"$oid": "54171d378841e1061900cd99"},
+            "classification_count": 1,
+            "location": "http://www.planethunters.org/subjects/5809954_10-1.json",
             "quarter": "10-1",
-            "start_time": 906.8669480505632,
+            "start_time": 906.8664262817474,
             "state": "active"
           },
-          "54171b388841e106190027ee": {
-            "_id": "54171b388841e106190027ee",
-            "classification_count": 1,
-            "location": "http://www.planethunters.org/subjects/2161536_10-2.json",
+          "54171d378841e1061900cd9a": {
+            "_id": {"$oid": "54171d378841e1061900cd9a"},
+            "classification_count": 0,
+            "location": "http://www.planethunters.org/subjects/5809954_10-2.json",
             "quarter": "10-2",
-            "start_time": 938.0085073744121,
+            "start_time": 938.0081420836214,
             "state": "active"
           },
-          "54171b388841e106190027ef": {
-            "_id": "54171b388841e106190027ef",
+          "54171d378841e1061900cd9b": {
+            "_id": {"$oid": "54171d378841e1061900cd9b"},
             "classification_count": 0,
-            "location": "http://www.planethunters.org/subjects/2161536_10-3.json",
+            "location": "http://www.planethunters.org/subjects/5809954_10-3.json",
             "quarter": "10-3",
-            "start_time": 969.1493099408035,
+            "start_time": 969.1491886094955,
             "state": "active"
           },
-          "54171b388841e106190027f0": {
-            "_id": "54171b388841e106190027f0",
+          "54171d378841e1061900cd9c": {
+            "_id": {"$oid": "54171d378841e1061900cd9c"},
             "classification_count": 0,
-            "location": "http://www.planethunters.org/subjects/2161536_11-1.json",
+            "location": "http://www.planethunters.org/subjects/5809954_11-1.json",
             "quarter": "11-1",
-            "start_time": 1001.2292252190236,
+            "start_time": 1001.2293766401999,
             "state": "active"
           },
-          "54171b388841e106190027f1": {
-            "_id": "54171b388841e106190027f1",
-            "classification_count": 1,
-            "location": "http://www.planethunters.org/subjects/2161536_11-2.json",
+          "54171d378841e1061900cd9d": {
+            "_id": {"$oid": "54171d378841e1061900cd9d"},
+            "classification_count": 0,
+            "location": "http://www.planethunters.org/subjects/5809954_11-2.json",
             "quarter": "11-2",
-            "start_time": 1033.594590445471,
+            "start_time": 1033.5949756463087,
             "state": "active"
           },
-          "54171b388841e106190027f2": {
-            "_id": "54171b388841e106190027f2",
-            "classification_count": 1,
-            "location": "http://www.planethunters.org/subjects/2161536_11-3.json",
+          "54171d378841e1061900cd9e": {
+            "_id": {"$oid": "54171d378841e1061900cd9e"},
+            "classification_count": 0,
+            "location": "http://www.planethunters.org/subjects/5809954_11-3.json",
             "quarter": "11-3",
-            "start_time": 1065.9801569248375,
+            "start_time": 1065.9602213362814,
             "state": "active"
           },
-          "54171b388841e106190027f3": {
-            "_id": "54171b388841e106190027f3",
+          "54171d378841e1061900cd9f": {
+            "_id": {"$oid": "54171d378841e1061900cd9f"},
             "classification_count": 0,
-            "location": "http://www.planethunters.org/subjects/2161536_12-1.json",
+            "location": "http://www.planethunters.org/subjects/5809954_12-1.json",
             "quarter": "12-1",
-            "start_time": 1099.42847670443,
+            "start_time": 1099.4289398838591,
             "state": "active"
           },
-          "54171b388841e106190027f4": {
-            "_id": "54171b388841e106190027f4",
+          "54171d378841e1061900cda0": {
+            "_id": {"$oid": "54171d378841e1061900cda0"},
             "classification_count": 0,
-            "location": "http://www.planethunters.org/subjects/2161536_12-2.json",
+            "location": "http://www.planethunters.org/subjects/5809954_12-2.json",
             "quarter": "12-2",
-            "start_time": 1126.9723873849289,
+            "start_time": 1126.9726839403884,
             "state": "active"
           },
-          "54171b388841e106190027f5": {
-            "_id": "54171b388841e106190027f5",
+          "54171d378841e1061900cda1": {
+            "_id": {"$oid": "54171d378841e1061900cda1"},
             "classification_count": 0,
-            "location": "http://www.planethunters.org/subjects/2161536_12-3.json",
+            "location": "http://www.planethunters.org/subjects/5809954_12-3.json",
             "quarter": "12-3",
-            "start_time": 1154.9256652456825,
+            "start_time": 1154.9257233420503,
             "state": "active"
           },
-          "54171b388841e106190027f6": {
-            "_id": "54171b388841e106190027f6",
-            "classification_count": 0,
-            "location": "http://www.planethunters.org/subjects/2161536_13-1.json",
-            "quarter": "13-1",
-            "start_time": 1182.7569587414182,
-            "state": "active"
-          },
-          "54171b388841e106190027f7": {
-            "_id": "54171b388841e106190027f7",
-            "classification_count": 0,
-            "location": "http://www.planethunters.org/subjects/2161536_13-2.json",
-            "quarter": "13-2",
-            "start_time": 1212.8774284745014,
-            "state": "active"
-          },
-          "54171b388841e106190027f8": {
-            "_id": "54171b388841e106190027f8",
-            "classification_count": 0,
-            "location": "http://www.planethunters.org/subjects/2161536_13-3.json",
-            "quarter": "13-3",
-            "start_time": 1242.9572138946896,
-            "state": "active"
-          },
-          "54171b388841e106190027f9": {
-            "_id": "54171b388841e106190027f9",
+          "54171d378841e1061900cda2": {
+            "_id": {"$oid": "54171d378841e1061900cda2"},
             "classification_count": 1,
-            "location": "http://www.planethunters.org/subjects/2161536_14-1.json",
+            "location": "http://www.planethunters.org/subjects/5809954_13-1.json",
+            "quarter": "13-1",
+            "start_time": 1182.7567740199884,
+            "state": "active"
+          },
+          "54171d378841e1061900cda3": {
+            "_id": {"$oid": "54171d378841e1061900cda3"},
+            "classification_count": 0,
+            "location": "http://www.planethunters.org/subjects/5809954_13-2.json",
+            "quarter": "13-2",
+            "start_time": 1212.8770231684612,
+            "state": "active"
+          },
+          "54171d378841e1061900cda4": {
+            "_id": {"$oid": "54171d378841e1061900cda4"},
+            "classification_count": 0,
+            "location": "http://www.planethunters.org/subjects/5809954_13-3.json",
+            "quarter": "13-3",
+            "start_time": 1242.9771244604417,
+            "state": "active"
+          },
+          "54171d378841e1061900cda5": {
+            "_id": {"$oid": "54171d378841e1061900cda5"},
+            "classification_count": 0,
+            "location": "http://www.planethunters.org/subjects/5809954_14-1.json",
             "quarter": "14-1",
-            "start_time": 1274.1607017840724,
+            "start_time": 1274.1601655378472,
             "state": "active"
           },
-          "54171b388841e106190027fa": {
-            "_id": "54171b388841e106190027fa",
-            "classification_count": 0,
-            "location": "http://www.planethunters.org/subjects/2161536_14-2.json",
+          "54171d378841e1061900cda6": {
+            "_id": {"$oid": "54171d378841e1061900cda6"},
+            "classification_count": 1,
+            "location": "http://www.planethunters.org/subjects/5809954_14-2.json",
             "quarter": "14-2",
-            "start_time": 1306.5488378295704,
+            "start_time": 1306.5484478377766,
             "state": "active"
           },
-          "54171b388841e106190027fb": {
-            "_id": "54171b388841e106190027fb",
+          "54171d378841e1061900cda7": {
+            "_id": {"$oid": "54171d378841e1061900cda7"},
             "classification_count": 0,
-            "location": "http://www.planethunters.org/subjects/2161536_14-3.json",
+            "location": "http://www.planethunters.org/subjects/5809954_14-3.json",
             "quarter": "14-3",
-            "start_time": 1338.9361725573617,
+            "start_time": 1338.9360295003935,
             "state": "active"
           },
-          "54171b388841e106190027fc": {
-            "_id": "54171b388841e106190027fc",
+          "54171d378841e1061900cda8": {
+            "_id": {"$oid": "54171d378841e1061900cda8"},
             "classification_count": 0,
-            "location": "http://www.planethunters.org/subjects/2161536_15-1.json",
+            "location": "http://www.planethunters.org/subjects/5809954_15-1.json",
             "quarter": "15-1",
-            "start_time": 1373.5089577167237,
+            "start_time": 1373.5091088892368,
             "state": "active"
           },
-          "54171b388841e106190027fd": {
-            "_id": "54171b388841e106190027fd",
+          "54171d378841e1061900cda9": {
+            "_id": {"$oid": "54171d378841e1061900cda9"},
             "classification_count": 0,
-            "location": "http://www.planethunters.org/subjects/2161536_15-2.json",
+            "location": "http://www.planethunters.org/subjects/5809954_15-2.json",
             "quarter": "15-2",
-            "start_time": 1406.0582159598707,
+            "start_time": 1406.05860204302,
             "state": "active"
           },
-          "54171b388841e106190027fe": {
-            "_id": "54171b388841e106190027fe",
+          "54171d378841e1061900cdaa": {
+            "_id": {"$oid": "54171d378841e1061900cdaa"},
             "classification_count": 0,
-            "location": "http://www.planethunters.org/subjects/2161536_15-3.json",
+            "location": "http://www.planethunters.org/subjects/5809954_15-3.json",
             "quarter": "15-3",
-            "start_time": 1438.607228635301,
+            "start_time": 1438.6077260486636,
             "state": "active"
           },
-          "54171b388841e106190027ff": {
-            "_id": "54171b388841e106190027ff",
+          "54171d378841e1061900cdab": {
+            "_id": {"$oid": "54171d378841e1061900cdab"},
             "classification_count": 0,
-            "location": "http://www.planethunters.org/subjects/2161536_16-1.json",
+            "location": "http://www.planethunters.org/subjects/5809954_16-1.json",
             "quarter": "16-1",
-            "start_time": 1472.1168647377708,
+            "start_time": 1472.1173265893667,
             "state": "active"
           },
-          "54171b388841e10619002800": {
-            "_id": "54171b388841e10619002800",
-            "classification_count": 0,
-            "location": "http://www.planethunters.org/subjects/2161536_16-2.json",
+          "54171d378841e1061900cdac": {
+            "_id": {"$oid": "54171d378841e1061900cdac"},
+            "classification_count": 1,
+            "location": "http://www.planethunters.org/subjects/5809954_16-2.json",
             "quarter": "16-2",
-            "start_time": 1500.743750405214,
+            "start_time": 1500.7440362616398,
             "state": "active"
           },
-          "54171b388841e10619002801": {
-            "_id": "54171b388841e10619002801",
+          "54171d378841e1061900cdad": {
+            "_id": {"$oid": "54171d378841e1061900cdad"},
             "classification_count": 0,
-            "location": "http://www.planethunters.org/subjects/2161536_16-3.json",
+            "location": "http://www.planethunters.org/subjects/5809954_16-3.json",
             "quarter": "16-3",
-            "start_time": 1529.3509506250048,
+            "start_time": 1529.3509900532445,
             "state": "active"
           },
-          "54171b388841e10619002802": {
-            "_id": "54171b388841e10619002802",
+          "54171d378841e1061900cdae": {
+            "_id": {"$oid": "54171d378841e1061900cdae"},
             "classification_count": 0,
-            "location": "http://www.planethunters.org/subjects/2161536_17-1.json",
+            "location": "http://www.planethunters.org/subjects/5809954_17-1.json",
             "quarter": "17-1",
-            "start_time": 1559.2461663950162,
+            "start_time": 1559.245947313022,
             "state": "active"
           },
-          "54171b388841e10619002803": {
-            "_id": "54171b388841e10619002803",
+          "54171d378841e1061900cdaf": {
+            "_id": {"$oid": "54171d378841e1061900cdaf"},
             "classification_count": 0,
-            "location": "http://www.planethunters.org/subjects/2161536_17-2.json",
+            "location": "http://www.planethunters.org/subjects/5809954_17-2.json",
             "quarter": "17-2",
-            "start_time": 1569.8516555552342,
+            "start_time": 1569.8513531362842,
             "state": "active"
           },
-          "54171b388841e10619002804": {
-            "_id": "54171b388841e10619002804",
+          "54171d378841e1061900cdb0": {
+            "_id": {"$oid": "54171d378841e1061900cdb0"},
             "classification_count": 0,
-            "location": "http://www.planethunters.org/subjects/2161536_17-3.json",
+            "location": "http://www.planethunters.org/subjects/5809954_17-3.json",
             "quarter": "17-3",
-            "start_time": 1580.4367566192668,
+            "start_time": 1580.436380969346,
             "state": "active"
           }
         },
-        "logg": "4.689",
+        "logg": "4.785",
         "magnitudes": {
-          "kepler": "15.661"
+          "kepler": "14.645"
         },
-        "mass": "0.57",
+        "mass": "0.46",
         "old_zooniverse_ids": {
-          "54171b378841e106190027d5": "APH21126219",
-          "54171b378841e106190027d6": "APH22126219",
-          "54171b378841e106190027d7": "APH23126219",
-          "54171b378841e106190027d8": "APH31126219",
-          "54171b378841e106190027d9": "APH32126219",
-          "54171b378841e106190027da": "APH33126219",
-          "54171b378841e106190027db": "APH41126219",
-          "54171b388841e106190027dc": "APH42126219",
-          "54171b388841e106190027dd": "APH43126219",
-          "54171b388841e106190027de": "APH51126219",
-          "54171b388841e106190027df": "APH52126219",
-          "54171b388841e106190027e0": "APH53126219",
-          "54171b388841e106190027e4": "APH71126219",
-          "54171b388841e106190027e5": "APH72126219",
-          "54171b388841e106190027e6": "APH73126219",
-          "54171b388841e106190027ff": "APHF1126219",
-          "54171b388841e10619002800": "APHF2126219",
-          "54171b388841e10619002801": "APHF3126219"
+          "54171d378841e1061900cd8a": "APH51837834",
+          "54171d378841e1061900cd8b": "APH52837834",
+          "54171d378841e1061900cd8c": "APH53837834",
+          "54171d378841e1061900cd90": "APH71837834",
+          "54171d378841e1061900cd91": "APH72837834",
+          "54171d378841e1061900cd92": "APH73837834",
+          "54171d378841e1061900cda5": "APHE100028o",
+          "54171d378841e1061900cda6": "APHE200028o",
+          "54171d378841e1061900cda7": "APHE300028o",
+          "54171d378841e1061900cdab": "APHF1837834",
+          "54171d378841e1061900cdac": "APHF2837834",
+          "54171d378841e1061900cdad": "APHF3837834"
         },
-        "radius": "0.565",
-        "teff": "3972",
+        "radius": "0.457",
+        "teff": "3763",
         "known_planet": true,
-        "planet_rad": 1.66,
-        "planet_period": 16.85481,
+        "planet_rad": 21.0,
+        "planet_period": 137.86475,
         "known_transits": [
           [
-            138.23525833333352,
-            138.3371416666665
+            172.75409583333348,
+            172.8653041666665
           ],
           [
-            155.0900683333335,
-            155.19195166666648
+            310.61884583333347,
+            310.7300541666665
           ],
           [
-            171.94487833333352,
-            172.0467616666665
+            448.4835958333335,
+            448.5948041666665
           ],
           [
-            188.7996883333335,
-            188.90157166666648
+            586.3483458333335,
+            586.4595541666665
           ],
           [
-            205.65449833333352,
-            205.7563816666665
+            724.2130958333335,
+            724.3243041666665
           ],
           [
-            222.5093083333335,
-            222.61119166666649
+            862.0778458333335,
+            862.1890541666666
           ],
           [
-            239.36411833333352,
-            239.4660016666665
+            999.9425958333335,
+            1000.0538041666665
           ],
           [
-            256.2189283333335,
-            256.32081166666654
+            1137.8073458333336,
+            1137.9185541666664
           ],
           [
-            273.0737383333335,
-            273.17562166666653
+            1275.6720958333335,
+            1275.7833041666663
           ],
           [
-            289.9285483333335,
-            290.0304316666665
+            1413.5368458333337,
+            1413.6480541666665
           ],
           [
-            306.78335833333347,
-            306.8852416666665
-          ],
-          [
-            323.6381683333335,
-            323.74005166666655
-          ],
-          [
-            340.4929783333335,
-            340.59486166666653
-          ],
-          [
-            357.3477883333335,
-            357.4496716666665
-          ],
-          [
-            374.20259833333347,
-            374.3044816666665
-          ],
-          [
-            391.05740833333346,
-            391.1592916666665
-          ],
-          [
-            407.9122183333335,
-            408.01410166666653
-          ],
-          [
-            424.7670283333335,
-            424.8689116666665
-          ],
-          [
-            441.62183833333347,
-            441.7237216666665
-          ],
-          [
-            458.47664833333346,
-            458.5785316666665
-          ],
-          [
-            475.3314583333335,
-            475.43334166666654
-          ],
-          [
-            492.1862683333335,
-            492.2881516666665
-          ],
-          [
-            509.0410783333335,
-            509.1429616666665
-          ],
-          [
-            525.8958883333335,
-            525.9977716666665
-          ],
-          [
-            542.7506983333335,
-            542.8525816666665
-          ],
-          [
-            559.6055083333334,
-            559.7073916666665
-          ],
-          [
-            576.4603183333335,
-            576.5622016666665
-          ],
-          [
-            593.3151283333335,
-            593.4170116666666
-          ],
-          [
-            610.1699383333334,
-            610.2718216666665
-          ],
-          [
-            627.0247483333335,
-            627.1266316666665
-          ],
-          [
-            643.8795583333335,
-            643.9814416666666
-          ],
-          [
-            660.7343683333335,
-            660.8362516666665
-          ],
-          [
-            677.5891783333335,
-            677.6910616666665
-          ],
-          [
-            694.4439883333334,
-            694.5458716666665
-          ],
-          [
-            711.2987983333335,
-            711.4006816666665
-          ],
-          [
-            728.1536083333335,
-            728.2554916666666
-          ],
-          [
-            745.0084183333335,
-            745.1103016666665
-          ],
-          [
-            761.8632283333335,
-            761.9651116666665
-          ],
-          [
-            778.7180383333335,
-            778.8199216666666
-          ],
-          [
-            795.5728483333335,
-            795.6747316666665
-          ],
-          [
-            812.4276583333335,
-            812.5295416666665
-          ],
-          [
-            829.2824683333334,
-            829.3843516666665
-          ],
-          [
-            846.1372783333335,
-            846.2391616666665
-          ],
-          [
-            862.9920883333335,
-            863.0939716666666
-          ],
-          [
-            879.8468983333335,
-            879.9487816666665
-          ],
-          [
-            896.7017083333335,
-            896.8035916666665
-          ],
-          [
-            913.5565183333334,
-            913.6584016666665
-          ],
-          [
-            930.4113283333335,
-            930.5132116666665
-          ],
-          [
-            947.2661383333335,
-            947.3680216666666
-          ],
-          [
-            964.1209483333334,
-            964.2228316666665
-          ],
-          [
-            980.9757583333335,
-            981.0776416666665
-          ],
-          [
-            997.8305683333335,
-            997.9324516666666
-          ],
-          [
-            1014.6853783333335,
-            1014.7872616666665
-          ],
-          [
-            1031.5401883333336,
-            1031.6420716666664
-          ],
-          [
-            1048.3949983333337,
-            1048.4968816666665
-          ],
-          [
-            1065.2498083333337,
-            1065.3516916666665
-          ],
-          [
-            1082.1046183333335,
-            1082.2065016666663
-          ],
-          [
-            1098.9594283333336,
-            1099.0613116666664
-          ],
-          [
-            1115.8142383333336,
-            1115.9161216666664
-          ],
-          [
-            1132.6690483333336,
-            1132.7709316666665
-          ],
-          [
-            1149.5238583333337,
-            1149.6257416666665
-          ],
-          [
-            1166.3786683333335,
-            1166.4805516666663
-          ],
-          [
-            1183.2334783333336,
-            1183.3353616666664
-          ],
-          [
-            1200.0882883333336,
-            1200.1901716666664
-          ],
-          [
-            1216.9430983333336,
-            1217.0449816666664
-          ],
-          [
-            1233.7979083333337,
-            1233.8997916666665
-          ],
-          [
-            1250.6527183333335,
-            1250.7546016666663
-          ],
-          [
-            1267.5075283333335,
-            1267.6094116666663
-          ],
-          [
-            1284.3623383333336,
-            1284.4642216666664
-          ],
-          [
-            1301.2171483333336,
-            1301.3190316666664
-          ],
-          [
-            1318.0719583333337,
-            1318.1738416666665
-          ],
-          [
-            1334.9267683333335,
-            1335.0286516666663
-          ],
-          [
-            1351.7815783333335,
-            1351.8834616666663
-          ],
-          [
-            1368.6363883333336,
-            1368.7382716666664
-          ],
-          [
-            1385.4911983333336,
-            1385.5930816666664
-          ],
-          [
-            1402.3460083333337,
-            1402.4478916666665
-          ],
-          [
-            1419.2008183333337,
-            1419.3027016666665
-          ],
-          [
-            1436.0556283333335,
-            1436.1575116666663
-          ],
-          [
-            1452.9104383333336,
-            1453.0123216666664
-          ],
-          [
-            1469.7652483333336,
-            1469.8671316666664
-          ],
-          [
-            1486.6200583333336,
-            1486.7219416666665
-          ],
-          [
-            1503.4748683333337,
-            1503.5767516666665
-          ],
-          [
-            1520.3296783333335,
-            1520.4315616666663
-          ],
-          [
-            1537.1844883333335,
-            1537.2863716666664
-          ],
-          [
-            1554.0392983333336,
-            1554.1411816666664
-          ],
-          [
-            1570.8941083333336,
-            1570.9959916666664
-          ],
-          [
-            1587.7489183333337,
-            1587.8508016666665
+            1551.4015958333337,
+            1551.5128041666665
           ]
         ]
       },
-      "project_id": "5333063b3ae740228a000001",
-      "random": 0.5392052337190841,
+      "project_id": {"$oid": "5333063b3ae740228a000001"},
+      "random": 0.587366843157417,
       "state": "active",
-      "updated_at": "2014-09-22T00:13:56Z",
+      "updated_at": "2014-09-18 02:52:25 UTC",
       "workflow_ids": [
-        "5333063b3ae740228a000001"
+        {"$oid": "5333063b3ae740228a000001"}
       ],
-      "zooniverse_id": "APH00002z3"
+      "zooniverse_id": "APH00003td",
+      "selected_light_curve": {
+        "_id": {"$oid": "54171d378841e1061900cdad"},
+        "classification_count": 0,
+        "location": "http://www.planethunters.org/subjects/5809954_16-3.json",
+        "quarter": "16-3",
+        "start_time": 1529.3509900532445,
+        "state": "active"
+      }
     }
