@@ -152,7 +152,7 @@ content = [
     material:
       title: "Kepler-90"
       text: """
-        The third confirmed exoplanet discovered by volunteers on Planet Hunters is in a system known as Kepler-90 and now has the designation Kepler-90h. This system already had six confirmed exoplanets, but the discovery of the seventh buy Planet Hunters volunteers made it the most populous planetary system known, apart from our own. The red circle in the diagram above shows the orbit of Kepler-90h in relation to the other planets in the system.
+        The third confirmed exoplanet discovered by volunteers on Planet Hunters is in a system known as Kepler-90 and now has the designation Kepler-90h. This system already had six confirmed exoplanets, but the discovery of the seventh by Planet Hunters volunteers made it the most populous planetary system known, apart from our own. The red circle in the diagram above shows the orbit of Kepler-90h in relation to the other planets in the system.
         """
       figure: "./images/mini-course/11-kepler90.png"
       figure_credits: ""
