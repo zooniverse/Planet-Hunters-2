@@ -48,6 +48,10 @@ topBar.el.appendTo document.body
 browserDialog = require 'zooniverse/controllers/browser-dialog'
 browserDialog.check msie: 9
 
+GoogleAnalytics = require 'zooniverse/lib/google-analytics'
+new GoogleAnalytics
+  account: 'UA-1224199-25'
+
 # get user
 User = require 'zooniverse/models/user'
 User.on 'change', (e, user) ->
