@@ -40,8 +40,9 @@ class CanvasGraph
 
   onMouseDown: (e) =>
     # debugger
-    # console.log 'onMouseDown()'
-    xClick = e.pageX - e.target.getBoundingClientRect().left - window.scrollX
+    xClick = e.pageX - e.target.getBoundingClientRect().left - window.pageXOffset
+    # console.log "onMouseDown(), xClick = #{xClick}"
+
     return if xClick < @leftPadding # display line instead
     @addMarkToGraph(e)
 
@@ -51,8 +52,8 @@ class CanvasGraph
     return if @markingDisabled
     return if classifier.el.find('#graph').hasClass('is-zooming')
     @sliderValue = +classifier.el.find("#ui-slider").val()
-    xClick = e.pageX - e.target.getBoundingClientRect().left - window.scrollX
-    yClick = e.pageY - e.target.getBoundingClientRect().top - window.scrollY
+    xClick = e.pageX - e.target.getBoundingClientRect().left - window.pageXOffset
+    yClick = e.pageY - e.target.getBoundingClientRect().top - window.pageYOffset
     offset = @sliderValue
     if @zoomLevel is 0
       @plotPoints(0, @zoomRanges[@zoomLevel])
@@ -586,7 +587,7 @@ class Marks
 
   closestXBelow: (xCoord) -> (@sortedXCoords().filter (i) -> i < xCoord).pop()
   closestXAbove: (xCoord) -> (@sortedXCoords().filter (i) -> i > xCoord).shift()
-  toCanvasXPoint: (e) -> e.pageX - e.target.getBoundingClientRect().left - window.scrollX 
+  toCanvasXPoint: (e) -> e.pageX - e.target.getBoundingClientRect().left - window.pageXOffset
 
   markTooCloseToAnother: (e, scale) ->
     mouseLocation = @toCanvasXPoint(e)

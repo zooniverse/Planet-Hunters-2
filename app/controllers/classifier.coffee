@@ -685,7 +685,7 @@ class Classifier extends BaseController
         xMinGlobal: mark.dataXMinGlobal
         xMaxGlobal: mark.dataXMaxGlobal
         score: mark.score
-      console.log 'MARK SCORE: ', mark.score # DEBUG CODE
+      # console.log 'MARK SCORE: ', mark.score # DEBUG CODE
 
     @classification.annotate
       recordedClickEvents: [@recordedClickEvents...]
@@ -799,7 +799,7 @@ class Classifier extends BaseController
       @el.find("#ui-slider").noUiSlider
         start: 0
         range:
-          'min': @canvasGraph.smallestX,
+          'min': @canvasGraph.smalle
           'max': @canvasGraph.largestX - @canvasGraph.zoomRanges[@canvasGraph.zoomLevel]
       , true
 
