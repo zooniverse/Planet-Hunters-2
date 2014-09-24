@@ -118,6 +118,12 @@
             <div class="position">Frontend Developer</div>
           </div>
           <div class="team-member">
+            <img src="./images/people/chrislintott-grayscale.png">
+            <div class="name">Chris Lintott</div>
+            <div class="location">Oxford University (UK)</div>
+            <div class="position">PI of Zooniverse</div>
+          </div>
+          <div class="team-member">
             <img src="./images/people/stuart.jpg">
             <div class="name">Stuart Lynn</div>
             <div class="location">Adler Planetarium (USA)</div>
@@ -187,7 +193,7 @@
         </div>
 
         <h2>Zooniverse</h2>
-        <p><img src="./images/logos/zooniverse.png" class="logo">The Zooniverse is home to the internet’s largest, most popular and most successful citizen science projects. The Zooniverse and the suite of projects it contains is produced, maintained and developed by the Citizen Science Alliance. The member institutions of the CSA work with many academic and other partners around the world to produce projects that use the efforts and ability of volunteers to help scientists and researchers.</p>
+        <p><img src="./images/logos/zooniverse.png" class="logo"><a href="http://www.zooniverse.org/">The Zooniverse</a> is home to the internet’s largest, most popular and most successful citizen science projects. The Zooniverse and the suite of projects it contains is produced, maintained and developed by the Citizen Science Alliance. The member institutions of the CSA work with many academic and other partners around the world to produce projects that use the efforts and ability of volunteers to help scientists and researchers.</p>
       </div>
     </div>
     <div class="right-column">
