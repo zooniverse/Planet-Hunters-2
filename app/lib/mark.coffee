@@ -143,6 +143,6 @@ class Mark
     return false
 
   toCanvasXPoint: (e) ->
-    e.pageX - @canvas.getBoundingClientRect().left - window.scrollX
+    e.pageX - @canvas.getBoundingClientRect().left - window.pageXOffset
 
 module.exports = Mark
