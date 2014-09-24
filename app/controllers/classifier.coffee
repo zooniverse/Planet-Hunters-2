@@ -799,7 +799,7 @@ class Classifier extends BaseController
       @el.find("#ui-slider").noUiSlider
         start: 0
         range:
-          'min': @canvasGraph.smalle
+          'min': @canvasGraph.smallestX
           'max': @canvasGraph.largestX - @canvasGraph.zoomRanges[@canvasGraph.zoomLevel]
       , true
 
