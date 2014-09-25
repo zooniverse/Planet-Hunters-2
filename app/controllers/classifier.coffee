@@ -349,8 +349,8 @@ class Classifier extends BaseController
     $('#graph-container').addClass 'loading-lightcurve'
     @el.find('#loading-screen').fadeIn()
     @el.find('.star-id').hide()
-    @el.find('#ui-slider').attr('disabled',true)
-    @el.find(".noUi-handle").fadeOut(150)
+    # @el.find('#ui-slider').attr('disabled',true)
+    # @el.find(".noUi-handle").fadeOut(150)
 
     # remove any previous canvas; create new one
     @canvas?.parentNode.removeChild(@canvas)
@@ -384,13 +384,17 @@ class Classifier extends BaseController
       # @noTransitsButton.fadeIn(150)
       @noTransitsButton.attr 'disabled', false
 
-      @el.find("#ui-slider").noUiSlider
+      $("#ui-slider").noUiSlider
         start: 0
         range:
           min: @canvasGraph.smallestX
-          max: @canvasGraph.largestX #- @zoomRange
+          max: @canvasGraph.largestX
+      , true
 
-      @el.find(".noUi-handle").hide()
+
+      # @el.find(".noUi-handle").hide()
+      @canvasGraph.zoomOut()
+      return
 
 
     @insertMetadata()
@@ -796,11 +800,11 @@ class Classifier extends BaseController
         @canvasGraph.zoomToCenter(@canvasGraph.graphCenter)
 
       # rebuild slider
-      @el.find("#ui-slider").noUiSlider
+      $("#ui-slider").noUiSlider
         start: 0
         range:
-          'min': @canvasGraph.smallestX
-          'max': @canvasGraph.largestX - @canvasGraph.zoomRanges[@canvasGraph.zoomLevel]
+          min: @canvasGraph.smallestX
+          max: @canvasGraph.largestX - @canvasGraph.zoomRanges[@canvasGraph.zoomLevel]
       , true
 
     @updateZoomButton(@canvasGraph.zoomLevel)
