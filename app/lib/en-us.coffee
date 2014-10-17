@@ -7,7 +7,7 @@ module.exports =
     about:       'About'
     profile:     'Profile'
     education:   'Education'
-    talk:        'Discuss'
+    talk:        'Talk'
     blog:        'Blog'
 
   home:
