@@ -541,14 +541,24 @@ class Classifier extends BaseController
     # console.log "sim roll #{sim_roll} rate #{@sim_rate}"
 
     if Math.random() < @sim_rate
+      # console.log "fetching sim subject..."
+      
       Subject.group = SIMULATION_GROUP
       Subject.fetch limit: 1, (subjects) ->
-        # console.log "got sim subjects ", subjects
         Subject.current?.destroy()
-        subjects[0].select()
-        Subject.group = MAIN_SUBJECT_GROUP
+        
+        # select sim subject
+        unless subjects.length is 0
+          subjects[0].select()
+        else
+          # console.log 'no more sims; selecting next subject instead...'
+          # if no sims, revert to regular subjects
+          Subject.group = MAIN_SUBJECT_GROUP
+          @Subject.next() 
+
+        Subject.group = MAIN_SUBJECT_GROUP # reset to regular subjects
+
     else
-      Subject.group = MAIN_SUBJECT_GROUP
       @Subject.next()
 
     # # DEBUG CODE
