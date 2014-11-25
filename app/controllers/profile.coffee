@@ -10,6 +10,7 @@ customItemTemplate         = require '../views/custom-profile-item'
 Paginator                  = require 'zooniverse/controllers/paginator'
 {CanvasGraph, Marks, Mark} = require '../lib/canvas-graph'
 LightcurveViewer           = require '../controllers/lightcurve-viewer'
+translate                  = require 't7e'
 
 Paginator::addItemToContainer = (item) ->
   itemEl = @getItemEl item
@@ -65,7 +66,7 @@ class Profile extends BaseProfile
     setTimeout =>
       @greeting.html("Hello, #{User.current.name}!") if User.current
       @onNavLoad =>
-        $(".profile nav").append("<button style='float:right;width:156px' class='mini-course-trigger'><span>Launch Mini Course</span></button>")
+        $(".profile nav").append("<button style='float:right;width:156px' class='mini-course-trigger'><span>#{translate 'profile.launchMiniCourse'}</span></button>")
         $(".profile nav .mini-course-trigger ").on "click", @onMiniCourseTrigger
 
         # $(".profile nav").append("<button style='float:right;width:156px' class='mini-course-reset'><span>Reset Mini Course</span></button>")

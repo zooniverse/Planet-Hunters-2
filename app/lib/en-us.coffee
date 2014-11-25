@@ -73,6 +73,10 @@ module.exports =
         radius         : 'Planet Radius: '
         period         : 'Planet Period: '
 
+  profile:
+    header             : 'Your Profile'
+    launchMiniCourse   : 'Launch Mini Course'
+
   course:
     prompt:
       login_message    : 'Mini-course available! Learn more about planet hunting. Interested?'
@@ -80,6 +84,8 @@ module.exports =
       yes              : 'Yes'
       no               : 'No'
       never            : 'Never'
+      doNotShow        : 'Do not show mini-course in the future.'
+    closeButton        : 'Close'
 
 
   initialTutorial:
