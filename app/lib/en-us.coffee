@@ -479,6 +479,76 @@ module.exports =
             <p><img src="./images/logos/zooniverse.png" class="logo"><a href="http://www.zooniverse.org/">The Zooniverse</a> is home to the internet’s largest, most popular and most successful citizen science projects. The Zooniverse and the suite of projects it contains is produced, maintained and developed by the Citizen Science Alliance. The member institutions of the CSA work with many academic and other partners around the world to produce projects that use the efforts and ability of volunteers to help scientists and researchers.</p>
             '''
 
+  educationPage:
+    mainHeader         : 'Education'
+    tabs:
+      classroom        : 'Classroom'
+
+    section:
+      classroom:
+        header         : '<h1>In the Classroom</h1>'
+        content        : 
+          '''
+          <h2>Can I use Planet Hunters 2 in the classroom?</h2>
+            <p>Yes! Planet Hunters, like all the Zooniverse projects, offers students a unique opportunity to explore real scientific data while making a contribution to cutting edge research! We would like to stress that it's okay if students don't mark all the features correctly since each light curve is seen by multiple volunteers.  The task itself is simple enough that we believe most people can take part and make a worthwhile contribution regardless of age.</p>
+         
+          <!-- </div>
+          <div class="content sub-nav-education-resources">-->
+            <h1>Resources</h1>
+
+            <h2>How can you help scientists discover distant planets?</h2>
+            <p>Watch our step-by-step tour of Planet Hunters with this instructional video:</p>
+            <iframe src="//player.vimeo.com/video/110148951" width="640" height="480" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+
+            <h2>What resources are available for the classroom?</h2>
+
+            <p>
+              Here are some resources that can be great tools for introducing students to Planet Hunters. Here are a couple of our favorites:
+              <ul>
+                <li>
+                  NASA Kepler Missions website: 
+                  <a href="http://kepler.nasa.gov">http://kepler.nasa.gov</a>
+                </li>
+                <li>
+                  NASA Planet Quest website: 
+                  <a href="http://planetquest.jpl.nasa.gov">http://planetquest.jpl.nasa.gov</a>
+                </li>
+                <li>
+                  <a href="http://astro.unl.edu/naap/esp/animations/transitSimulator.html">Exoplanet Transit Simulator</a> by The Astronomy Department at University of Nebraska
+                </li>
+                <li>
+                  National Science Foundation's <a href="https://www.youtube.com/watch?v=0WatNUka7OA">Science Behind The News: Extrasolar Planets</a>, describes the Transit and Doppler methods.
+                </li>
+                <li>
+                  NASA has also provided tools you can use in the classroom related to Exoplanets:
+                  <a href="http://planetquest.jpl.nasa.gov/interactives">https://www.youtube.com/watch?v=0WatNUka7OA</a>
+                </li>
+              </ul>
+            </p>
+
+            <p>
+              Educators Guides, here are lessons that are focused on exoplanets:
+              <ul>
+                <li>
+                  Coming Fall 2014, Planet Hunters Educators Guide! Zooniverse educators have developed lessons to show you how you can best utilize Planet Hunters in your classroom.
+                </li>
+                <li>
+                  Educator Resource Guide provided by NASA: 
+                  <a href="http://astrobiology.nasa.gov/media/medialibrary/2013/10/Astrobiology-Educator-Guide-2007.pdf">Astrobiology in Your Classroom, Life on Earth …and elsewhere?</a>
+                </li>
+                <li>
+                  <a href="http://www.lpi.usra.edu/education/explore/our_place">Our Place in Space</a> 
+                  activities produced by the Lunar and Planetary Institute
+                </li>
+              </ul>
+            </p>
+
+            <p>The Zooniverse has launched <a href="http://www.zooteach.org">ZooTeach</a> where educators can find and share educational resources relating to Planet Hunters and the other Zooniverse citizen science projects. Check out resources created for Planet Hunters at <a href="http://www.zooteach.org/zoo/planet_hunters">http://www.zooteach.org/zoo/planet_hunters</a>. Have any ideas for how to use the project in the classroom? Please share your lesson ideas or resources on ZooTeach!</p>
+
+            <h2>How can I keep up to date with education and Planet Hunters?</h2>
+            <p>The Planet Hunters blog is a great place to keep up to date with the latests science result.  FInd the latest education resources and news on the <a href="http://education.zooniverse.org">Zooniverse Education Blog</a> as well as the <a href="https://twitter.com/ZooTeach">@ZooTeach</a> Twitter feed.</p>
+          '''
+
   # INITIAL TUTORIAL
   initialTutorial:
     first:
