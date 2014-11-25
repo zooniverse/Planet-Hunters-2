@@ -10,6 +10,7 @@ module.exports =
     talk:        'Talk'
     blog:        'Blog'
 
+  # Home Page
   home:
     header:
       title            : ''
@@ -18,10 +19,59 @@ module.exports =
       callToAction     : 'Ready to discover new worlds?'
       description      : 'Join the search for exoplanets with Planet Hunters'
       beginClassifying : 'Start Classifying'
-      learnMore        : 'Learn More'
     whatDo:
       title            : ''
       content          : ''
+
+  classify:
+    instructionHeader  : 'Do you see a transit?'
+    instruction        : 'If so, highlight it on the light curve below!'
+    loadingMessage     : 'Loading...'
+    buttons:
+      finished         : 'Finished'
+      continue         : 'Continue'
+      nextSubject      : 'Next Subject'
+      noTransits       : 'No Transits'
+    tools:
+      header           : 'TOOLS'
+      zoom             : 'Zoom'
+      favorite         : '+Fav'
+      help             : 'Help'
+      tutorial         : 'Tutorial'
+    starInformation:
+      header           : 'Star Information'
+      zooniverseId     : 'Zooniverse Id'
+      keplerId         : 'Kepler Id'
+      quarter          : 'Quarter'
+      type             : 'Type'
+      magnitude        : 'Magnitude'
+      temperature      : 'Temp'
+      radius           : 'Radius'
+      notAvailable     : 'N/A'
+    summaryScreen:
+      feedback         : 'Nice Work!'
+      guestObserver:
+        instructions   : 'While you are classifying keep an eye out for unusual lightcurves and tag them with a hash tag on talk!'
+        hashtag        : 'Use the tag:'
+        enlargeImage   : 'Click on image to enlarge'
+      discussion: 
+        header         : 'Discussions about this star'
+        commentBox     : 'Make a comment, or mark with a hashtag...'
+        submitComment  : 'Submit'
+      talk:
+        header         : 'Join the conversation on Talk'
+        instruction    : 'There\'s a lot more to discuss on Talk! Ask the science team a question, get help, or just comment on an interesting subject.'
+        talkButton     : 'Discuss on Talk'
+        addFavButton   : 'Add to Favorites'
+        remFavButton   : 'Remove Favorite'
+      simulation:
+        header         : 'Simulation details'
+        radius         : 'Planet Radius: '
+        period         : 'Planet Period: '
+      knownPlanet:
+        header         : 'Planet details'
+        radius         : 'Planet Radius: '
+        period         : 'Planet Period: '
 
   course:
     prompt:
@@ -44,12 +94,13 @@ module.exports =
     xAxis:
       header: 'The Data'
       content: 'The x-axis represents the time spent observing the star. Usually each graph shows about 30 days of observations.'
-
-    # removed: This part of the light curve shows the time spent observing the star.
+      caption: 'This part of the light curve shows the time spent observing the star.'
 
     yAxis:
       header: 'The Data'
       content: 'The y-axis of the light curve shows the star\'s observed brightness.'
+
+
 
     transits:
       header: 'Transits'

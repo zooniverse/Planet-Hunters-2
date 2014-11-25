@@ -7,8 +7,8 @@
   <div id="subject-container">
     <div class="subject-header">
       <div class="do-you-see-a-transit">
-        <h3>Do you see a transit?</h3>
-        <p>If so, highlight it on the light curve below!</p>
+        <h3><%- translate 'classify.instructionHeader' %></h3>
+        <p><%- translate 'classify.instruction' %></p>
       </div>
       <div id="notification">
         <div id="notification-message"></div>
@@ -21,17 +21,6 @@
             <%- translate 'course.prompt.login_message' %>
           </div>
 
-          <!-- <div id="course-yes-container">
-            <div id="course-yes">Yes</div>
-            <div id="course-interval-setter" class="course-interval-setter">
-              <div class="course-interval-text">, remind me every </div>
-              <input type="number" id="course-interval" class="course-interval" name="course-interval" value="5"></input>
-              <div class="course-interval-text"> classifications!</div>
-            </div>
-          </div>
-
-          <button id="course-no" name="course-no" class="course-button">No</button>
-          <button id="course-never" name="course-never" class="course-button">Never</button> -->
           <svg id="course-prompt-close" class="course-prompt-close" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="7px" height="7px">
             <defs></defs>
             <path fill-rule="evenodd" fill="rgb(255,255,255)" d=" M8.01144 1.38207 C8.01144 1.38207 6.63064 0.00572705 6.63064 0.00572705 C6.63064 0.00572705 4.00746 2.62077 4.00746 2.62077 C4.00746 2.62077 1.38411 0.00572705 1.38411 0.00572705 C1.38411 0.00572705 0.00340843 1.38207 0.00340843 1.38207 C0.00340843 1.38207 2.62685 3.99735 2.62685 3.99735 C2.62685 3.99735 0.00340843 6.61246 0.00340843 6.61246 C0.00340843 6.61246 1.38411 7.9888 1.38411 7.9888 C1.38411 7.9888 4.00746 5.37378 4.00746 5.37378 C4.00746 5.37378 6.63064 7.9888 6.63064 7.9888 C6.63064 7.9888 8.01144 6.61246 8.01144 6.61246 C8.01144 6.61246 5.38809 3.99735 5.38809 3.99735 C5.38809 3.99735 8.01144 1.38207 8.01144 1.38207 Z"/>
@@ -41,16 +30,14 @@
 
     </div>
     <div id="graph-container">
-      <!-- additional tutorial stuff -->
       <div class="tutorial-annotations x-axis">
-        <p>This part of the light curve shows the time spent observing the star.</p>
+        <p><%- translate 'initialTutorial.xAxis.caption' %></p>
       </div>
       <div class="tutorial-annotations y-axis">
-        <!-- <p>This part of the light curve shows the star's observed brightness.</p> -->
       </div>
 
       <div id='loading-screen'>
-        <h3>Loading...</h3>
+        <h3><%- translate 'classify.loadingMessage' %></h3>
         <div class="spinner"></div>
       </div>
       <div id="marks-container">
@@ -61,16 +48,24 @@
       <div id="classify-summary">
         <div class="three-column">
           <div class="content feedback">
-            <h1 class="feedback header">Nice Work!</h1>
-            <!-- <p>Move on to the next subject when you're ready!</p> -->
+            <h1 class="feedback header"><%- translate 'classify.summaryScreen.feedback' %></h1>
 
             <!-- BEGIN GUEST OBSERVER -->
             <div class='guest_obs'>
-              <p>While you are classifying keep an eye out for unusual lightcurves and tag them with a hash tag on talk!</p>
-              <span>Use the tag:</span><button name="populate-hashtag"><h2 class='guest_obs_title'></h2></button>
+              <p>
+                <%- translate 'classify.summaryScreen.guestObserver.instructions' %>
+              </p>
+              <span>
+                <%- translate 'classify.summaryScreen.guestObserver.hashtag' %>
+              </span>
+              <button name="populate-hashtag">
+                <h2 class='guest_obs_title'></h2>
+              </button>
               <div class="examples">
                 <img class='example-image guest_obs_img'>
-                  <p class="small-text">Click on image to enlarge</p>
+                  <p class="small-text">
+                    <%- translate 'classify.summaryScreen.guestObserver.enlargeImage' %>
+                  </p>
                 </img>
               </div>
               <p class='guest_obs_desc'></p>
@@ -81,17 +76,25 @@
         </div>
         <div class="three-column">
           <div class="content">
-            <h2>Discussions about this star</h2>
+            <h2>
+              <%- translate 'classify.summaryScreen.discussion.header' %>
+            </h2>
             <div id="comments">
             </div>
 
             <p class="talk-pill-nologin" style="margin: 10px; color: #fc4541; font-size: 14px; font-style=italic;">
-              Please <button style="text-decoration: underline" class="sign-in">sign in</button> to discuss.
+              Please 
+              <button style="text-decoration: underline" class="sign-in">
+              sign in
+              </button> 
+              to discuss.
             </p>
 
             <div class="talk-pill">
-              <textarea maxlength=140 placeholder="Make a comment, or mark with a hashtag..." name="talk-comment"></textarea>
-              <button name="submit-talk">Submit</button>
+              <textarea maxlength=140 placeholder="<%- translate 'classify.summaryScreen.discussion.commentBox' %>" name="talk-comment"></textarea>
+              <button name="submit-talk">
+                <%- translate 'classify.summaryScreen.discussion.submitComment' %>
+              </button>
             </div>
             <p class='too-long-warning hide-unless-user'>140 left</p>
           </div>
@@ -99,8 +102,12 @@
 
         <div class="three-column">
           <div class="content">
-            <h2>Join the Conversation on Talk</h2>
-            <p class="align-left">There's a lot more to discuss on Talk! Ask the science team a question, get help, or just comment on an interesting subject.</p>
+            <h2>
+              <%- translate 'classify.summaryScreen.talk.header' %>
+            </h2>
+            <p class="align-left">
+              <%- translate 'classify.summaryScreen.talk.instruction' %>
+            </p>
 
             <!-- <div id=".ukirt">
               Additional light curve information: <br>
@@ -115,14 +122,20 @@
                 <svg class="talk-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"width="16px" height="13px">
                   <path fill-rule="evenodd" d=" M12 9.99999 C12 9.99999 12 13 12 13 C12 13 7.00003 9.99999 7.00003 9.99999 C7.00003 9.99999 3.09903e-005 9.99999 3.09903e-005 9.99999 C3.09903e-005 9.99999 3.09903e-005 -7.1616e-006 3.09903e-005 -7.1616e-006 C3.09903e-005 -7.1616e-006 16 -7.1616e-006 16 -7.1616e-006 C16 -7.1616e-006 16 9.99999 16 9.99999 C16 9.99999 12 9.99999 12 9.99999 Z M4 5.00001 C3.44771 5.00001 2.99999 5.44771 2.99999 6.00002 C2.99999 6.55229 3.44771 7 4 7 C4.55229 7 5.00001 6.55229 5.00001 6.00002 C5.00001 5.44771 4.55229 5.00001 4 5.00001 Z M8.00004 5.00001 C7.44775 5.00001 7.00003 5.44771 7.00003 6.00002 C7.00003 6.55229 7.44775 7 8.00004 7 C8.55233 7 8.99998 6.55229 8.99998 6.00002 C8.99998 5.44771 8.55233 5.00001 8.00004 5.00001 Z M12 5.00001 C11.4477 5.00001 11 5.44771 11 6.00002 C11 6.55229 11.4477 7 12 7 C12.5523 7 13 6.55229 13 6.00002 C13 5.44771 12.5523 5.00001 12 5.00001 Z"/>
                   </svg>
-                <span>Discuss on Talk</span>
+                <span>
+                  <%- translate 'classify.summaryScreen.talk.talkButton' %>
+                </span>
               </div>
               <div class="summary-button toggle-fav hide-unless-user" id="summary-fav-button">
                 <svg class="fav-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="17px">
                   <path fill-rule="evenodd" stroke-width="2" d=" M9.75819 0.406235 C9.75819 0.406235 11.919 4.97138 11.919 4.97138 C12.0098 5.1625 12.1925 5.29448 12.4034 5.32099 C12.4034 5.32099 17.4407 5.95242 17.4407 5.95242 C17.9622 6.01771 18.1713 6.65723 17.7881 7.01475 C17.7881 7.01475 14.0864 10.4677 14.0864 10.4677 C13.9314 10.6123 13.8615 10.8257 13.9015 11.0333 C13.9015 11.0333 14.8536 15.9887 14.8536 15.9887 C14.9522 16.5018 14.4048 16.897 13.944 16.6452 C13.944 16.6452 9.49544 14.2142 9.49544 14.2142 C9.30899 14.1124 9.08322 14.1124 8.89679 14.2142 C8.89679 14.2142 4.44809 16.6452 4.44809 16.6452 C3.98734 16.897 3.43998 16.5018 3.53861 15.9887 C3.53861 15.9887 4.49072 11.0333 4.49072 11.0333 C4.5307 10.8257 4.46085 10.6123 4.30573 10.4677 C4.30573 10.4677 0.604149 7.01475 0.604149 7.01475 C0.220811 6.65723 0.429923 6.01771 0.951422 5.95242 C0.951422 5.95242 5.98865 5.32099 5.98865 5.32099 C6.19967 5.29448 6.38254 5.1625 6.4729 4.97138 C6.4729 4.97138 8.63395 0.406235 8.63395 0.406235 C8.85771 -0.0664075 9.5344 -0.0664075 9.75819 0.406235 Z"/>
                 </svg>
-                <span class= 'add_to_faves'>Add to Favorites</span>
-                <span class= 'remove_from_faves'>Remove Favorite</span>
+                <span class= 'add_to_faves'>
+                  <%- translate 'classify.summaryScreen.talk.addFavButton' %>
+                </span>
+                <span class= 'remove_from_faves'>
+                  <%- translate 'classify.summaryScreen.talk.remFavButton' %>
+                </span>
               </div>
             </div>
 
@@ -130,15 +143,31 @@
 
             <div class='known_details'>
               <div class='sim_details'>
-                <h2>Simulation details</h2>
-                <p class='align-left'>Planet Radius: <span class='planet-rad'></span></p>
-                <p class='align-left'>Planet Period: <span class='planet-period'></span></p>
+                <h2>
+                  <%- translate 'classify.summaryScreen.simulation.header' %>
+                </h2>
+                <p class='align-left'>
+                  <%- translate 'classify.summaryScreen.simulation.radius' %>
+                  <span class='planet-rad'></span>
+                </p>
+                <p class='align-left'>
+                  <%- translate 'classify.summaryScreen.simulation.period' %>
+                  <span class='planet-period'></span>
+                </p>
               </div>
 
               <div class='planet_details'>
-                <h2>Planet details</h2>
-                <p class='align-left'>Planet Radius: <span class='planet-rad'></span></p>
-                <p class='align-left'>Planet Period: <span class='planet-period'></span></p>
+                <h2>
+                  <%- translate 'classify.summaryScreen.knownPlanet.header' %>
+                </h2>
+                <p class='align-left'>
+                  <%- translate 'classify.summaryScreen.knownPlanet.header' %>
+                  <span class='planet-rad'></span>
+                </p>
+                <p class='align-left'>
+                  <%- translate 'classify.summaryScreen.knownPlanet.period' %>
+                  <span class='planet-period'></span>
+                </p>
               </div>
             </div>
 
@@ -148,18 +177,28 @@
       <!-- END CLASSIFY SUMMARY -->
 
       <div id="tools">
-        <h3>TOOLS</h3>
+        <h3>
+          <%- translate 'classify.tools.header' %>
+        </h3>
         <button class="tool-button" id="zoom-button">
-          <span>Zoom</span>
+          <span>
+            <%- translate 'classify.tools.zoom' %>
+          </span>
         </button>
         <button class="tool-button hide-unless-user toggle-fav">
-          <span>+Fav</span>
+          <span>
+            <%- translate 'classify.tools.favorite' %>
+          </span>
         </button>
         <button class="tool-button" id="help">
-          <span>Help</span>
+          <span>
+            <%- translate 'classify.tools.help' %>
+          </span>
         </button>
         <button class="tool-button" id="tutorial">
-          <span>Tutorial</span>
+          <span>
+            <%- translate 'classify.tools.tutorial' %>
+          </span>
         </button>
       </div>
 
@@ -170,32 +209,70 @@
     </div>
 
     <div id="subject-metadata">
-      <h4>Star Information</h4>
+      <h4>
+        <%- translate 'classify.starInformation.header' %>
+      </h4>
+      <div class="meta-field meta star-id">
+        <%- translate 'classify.starInformation.zooniverseId' %>
+      </div>
+      <div id="zooniverse-id" class="meta-value meta star-id">
+        <%- translate 'classify.starInformation.notAvailable' %>
+      </div>
 
-      <div class="meta-field meta star-id">Zooniverse Id</div>
-      <div id="zooniverse-id" class="meta-value meta star-id">N/A</div>
+      <div class="meta-field meta star-id">
+        <%- translate 'classify.starInformation.keplerId' %>
+      </div>
+      <div id="kepler-id" class="meta-value meta star-id">
+        <%- translate 'classify.starInformation.notAvailable' %>
+      </div>
 
-      <div class="meta-field meta star-id">Kepler Id</div>
-      <div id="kepler-id" class="meta-value meta star-id">N/A</div>
+      <div class="meta-field meta star-id">
+        <%- translate 'classify.starInformation.quarter' %>
+      </div>
+      <div id="quarter" class="meta-value meta star-id">
+        <%- translate 'classify.starInformation.notAvailable' %>
+      </div>
 
-      <div class="meta-field meta star-id">Quarter</div>
-      <div id="quarter" class="meta-value meta star-id">N/A</div>
-      <!-- <div id="zooniverse-id" class="meta"></div> -->
-      <div class='meta-field meta'>Type</div>       <div id="star-type"     class="meta-value meta">N/A</div>
-      <div class='meta-field meta'>Magnitude</div>  <div id="magnitude"     class="meta-value meta">N/A</div>
+      <div class='meta-field meta'>
+        <%- translate 'classify.starInformation.type' %>
+      </div>       
+      <div id="star-type" class="meta-value meta">
+        <%- translate 'classify.starInformation.notAvailable' %>
+      </div>
+      <div class='meta-field meta'>
+        <%- translate 'classify.starInformation.magnitude' %>
+      </div>  
+      <div id="magnitude" class="meta-value meta">
+        <%- translate 'classify.starInformation.notAvailable' %>      
+      </div>
 
-      <div class="meta-field meta">Temp</div>
-      <div id="temperature" class="meta-value meta">N/A</div>
+      <div class="meta-field meta">
+        <%- translate 'classify.starInformation.temperature' %>
+      </div>
+      <div id="temperature" class="meta-value meta">
+        <%- translate 'classify.starInformation.notAvailable' %>
+      </div>
 
-      <div class='meta-field meta'>Radius</div>     <div id="radius"        class="meta-value meta">N/A</div>
+      <div class='meta-field meta'>
+        <%- translate 'classify.starInformation.radius' %>
+      </div>     
+      <div id="radius" class="meta-value meta">
+        <%- translate 'classify.starInformation.notAvailable' %>
+      </div>
 
       <div id="button-container">
-        <button class="std-btn marking-btn yellow" name="finished-marking">Finished</button>
-        <button class="std-btn marking-btn yellow" name="continue-button">Continue</button>
-        <button class="std-btn marking-btn yellow" name="next-subject">Next Subject</button>
-        <button class="std-btn white marking-btn"  name="no-transits-button">No Transits</button>
-
-        <!--<button class="std-btn yellow" name="finished-feedback">Next</button>-->
+        <button class="std-btn marking-btn yellow" name="finished-marking">
+          <%- translate 'classify.buttons.finished' %>        
+        </button>
+        <button class="std-btn marking-btn yellow" name="continue-button">
+          <%- translate 'classify.buttons.continue' %>
+        </button>
+        <button class="std-btn marking-btn yellow" name="next-subject">
+          <%- translate 'classify.buttons.nextSubject' %>
+        </button>
+        <button class="std-btn white marking-btn"  name="no-transits-button">
+          <%- translate 'classify.buttons.noTransits' %>
+        </button>
       </div>
 
     </div>
