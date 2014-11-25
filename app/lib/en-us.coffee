@@ -77,6 +77,25 @@ module.exports =
     header             : 'Your Profile'
     launchMiniCourse   : 'Launch Mini Course'
 
+  spottersGuide:
+    header             : 'Spotter\'s Guide'
+    clickToEnlarge     : 'Click on image examples to enlarge'
+    transits:
+      header           : 'Transits'
+      longPeriodTitle  : 'Long Period Planet/Single Transit'
+      longPeriodInfo   : 'One transit visible in the light curve'
+      shortPeriodTitle : 'Short Period Planet/Many Transits'
+      shortPeriodInfo  : 'Many transist from the same planet visible'
+      multiPlanetTitle : 'Multi-planet Systems'
+      multiTitleInfo   : 'Transits from more than one planet'
+      moreExamples     : 'More Example Planet Transits'
+      eclipsingTitle   : 'Eclipsing Binaries'
+      eclipsingInfo    : 'Two stars transiting in front and behind each other'
+      nonTransitsTitle : 'Non-Transits'
+      gaps             : 'Gaps'
+      pulsatingStars   : 'Pulsating Stars'
+      starspots        : 'Starspots'
+
   course:
     prompt:
       login_message    : 'Mini-course available! Learn more about planet hunting. Interested?'

@@ -1,3 +1,4 @@
+<% translate = require 't7e' %>
 <div id="spotters-guide">
   <div class="content">
 
