@@ -73,6 +73,12 @@
             <div class="location">Yale University (USA)</div>
             <div class="bio">Ji is Postdoc at Yale University. He is interested in finding Tatooines, planets in binary stars. He is an ultimate sports fan in his spare time.</div>
           </div>
+          <div class="team-member">
+            <img src="./images/people/andrew.jpg">
+            <div class="name">Andrew Vanderburg</div>
+            <div class="location">Harvard University (USA)</div>
+            <div class="bio">Andrew is a graduate student at Harvard University who is interested in exoplanet detection and characterization, especially using Kepler and K2 data. He has developed novel data reduction and analysis strategies for K2 data that correct for noise introduced by the spacecraft's motion and restore the quality of K2 data close to that of Kepler.</div>
+          </div>
         </div>
 
         <h2>Moderators</h2>
@@ -96,7 +102,7 @@
             <div class="bio">Jo has been a member of the Zooniverse since 2009 and is also a Merger Zoo moderator over on the Galaxy Zoo forum. Completing a 1st class degree in fine art is currently exploring how art and science can fuse together with Enjoy Chaos.</div>
           </div>
         </div>
-      
+
         <h2>Development Team</h2>
         <div class="team-members">
          <div class="team-member">
