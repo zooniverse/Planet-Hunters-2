@@ -1,31 +1,31 @@
 <% translate = require 't7e' %>
 <div class="secondary-header">
-  <h1>About Planet Hunters</h1>
+  <%- translate 'h1', 'aboutPage.mainHeader' %>
 </div>
 
 <div class="secondary-white">
   <div class="secondary-content">
     <nav class="sub-nav-about">
-      <button name="about">About</button>
-      <button name="teams">Teams</button>
-      <button name="organizations">Organizations</button>
+      <%- translate 'button', 'aboutPage.tabs.about', name: 'about' %>
+      <%- translate 'button', 'aboutPage.tabs.teams', name: 'teams' %>      
+      <%- translate 'button', 'aboutPage.tabs.organizations', name: 'organizations' %>
     </nav>
   </div>
   <div class="secondary-content">
     <div class="left-column">
       <div class="content sub-nav-about-about">
-        <%- translate 'aboutPage.section.about.header' %>
-        <%- translate 'aboutPage.section.about.content' %>
+        <%- translate 'h1', 'aboutPage.section.about.header' %>
+        <%- translate 'span', 'aboutPage.section.about.content' %>
       </div>
 
       <div class="content sub-nav-about-teams">
-        <%- translate 'aboutPage.section.teams.header' %>
-        <%- translate 'aboutPage.section.teams.content' %>
+        <%- translate 'h1', 'aboutPage.section.teams.header' %>
+        <%- translate 'span', 'aboutPage.section.teams.content' %>
       </div>
 
       <div class="content sub-nav-about-organizations">
-        <%- translate 'aboutPage.section.organizations.header' %>
-        <%- translate 'aboutPage.section.organizations.content' %>
+        <%- translate 'h1', 'aboutPage.section.organizations.header' %>
+        <%- translate 'span', 'aboutPage.section.organizations.content' %>
       </div>
     </div>
     <div class="right-column">

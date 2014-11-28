@@ -293,7 +293,7 @@ module.exports =
         organizations    : 'Organizations'
       section:
         about:
-          header         : '<h1>The Story So Far...</h1>'
+          header         : 'The Story So Far...'
           content        : 
             '''
             <p>On December 16, 2010, the <a href="http://www.zooniverse.org">Zooniverse</a> launched the original Planet Hunters to enlist the public's help to search data from the NASA's <a href="http://kepler.nasa.gov">Kepler</a> spacecraft for the characteristic drop in light due to an orbiting extrasolar planets (exoplanets) crossing in front of their parent stars.</p>
@@ -308,7 +308,7 @@ module.exports =
             '''
 
         teams:
-          header         : '<h1>Teams</h1>'
+          header         : 'Teams'
           content        : 
             '''
             <h2>Science Team</h2>
@@ -452,7 +452,7 @@ module.exports =
             '''
 
         organizations:
-          header         : '<h1>Organization</h1>'
+          header         : 'Organizations'
           content        : 
             '''
             <div class="organization">
