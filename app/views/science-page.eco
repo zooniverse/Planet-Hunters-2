@@ -6,6 +6,7 @@
   <div class="secondary-content">
     <nav class="sub-nav-science">
       <button name="mission">Our Mission</button>
+      <button name="K2">K2</button>
       <button name="your-task">Your Task</button>
       <button name="transits">Transits</button>
       <button name="origin">Light Curves</button>
@@ -24,6 +25,15 @@
         <p>The time series of brightness measurements for a star is called a light curve. Automated computers are sifting through the Kepler light curves looking for the repeating signal of a planet transit, but we think there will be planets which can only be found via the innate human ability for pattern recognition. At Planet Hunters we are enlisting the public's help to inspect the Kepler light curves and find these planets missed by automated detection algorithms. No training required! All you need is your keen eyes and a web browser to join the hunt.</p>
 
         <p>It's just possible that you might be the first to know that a star somewhere out there in the Milky Way has a companion, just as our Sun does. Fancy giving it a try?</p>
+      </div>
+
+      <div class="content sub-nav-science-K2">
+        <h1>Kepler 2</h1>
+        <p>In May of 2013, the Kepler spacecraft suffered its second reaction wheel failure. This malfunction left only two working reaction wheels to keep Kepler's gaze steady toward its target field; unfortunately, three wheels are needed to stabilize a spacecraft in three dimensions. For a time, this malfunction seemed to spell the end for Kepler’s mission. Luckily, scientists and engineers devised an ingenious method to allow Kepler to continue its search for exoplanets, and they dubbed their proposal the “K2” mission.</p>
+        <img src="images/K2_explanation.jpg" />
+        <p>The key to Kepler revitalization lies in its shape. By facing one of Kepler’s six hexagonal edges towards the Sun, the pressure exerted by the sunlight will push on the spacecraft’s body. If Kepler starts to roll slightly in one direction, the light pressure will be become unbalanced, and the spacecraft will be pushed back toward a balanced position. In other words, the sunlight can act as a replacement for Kepler's third reaction wheel!</p>
+        <p>The K2 mission has been approved and is now underway. Over the next two to three years, Kepler will observe target stars in a number of fields, spread across the plane of the Earth’s orbit. To keep the craft stable and to avoid looking too close to the Sun, each field can only be observed for about 75 days before the spacecraft must turn to the next field. Tens of thousands of stars will be observed in each field.</p>
+        <p>Data from each field will be released to the astronomical community and the public soon after they are processed. Planet Hunters now allows you to search for transits in this brand new data set, in addition to the classic Kepler-field data. You will be among the first to look closely at these light curves. Happy hunting!</p>
       </div>
 
 
