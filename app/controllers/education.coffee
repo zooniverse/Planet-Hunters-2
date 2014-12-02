@@ -4,7 +4,6 @@ $ = window.jQuery
 
 SubNav = require "../lib/sub-nav"
 
-
 class Education extends BaseController
   className: 'education'
   template: require '../views/education'
@@ -13,7 +12,6 @@ class Education extends BaseController
     'click button[name="calculate-star"]'         : 'onClickCalculateStar'
     'click button[name="calculate-planet"]'       : 'onClickCalculatePlanet'
     'click button[name="calculate-planet-reset"]' : 'onClickCalculatePlanetReset'
-
 
   constructor: ->
     super
