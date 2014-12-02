@@ -32,7 +32,6 @@ stack = new StackOfPages
   '#/science'   : require './controllers/science-page'
   '#/profile'   : require './controllers/profile'
   '#/education' : require './controllers/education'
-  '#/discuss'   : require './controllers/discuss'
   "#/verify"    : require './controllers/verification'
   "#/viewer"    : require './controllers/view-lightcurve'
   NOT_FOUND: '<div class="content-block"><div class="content-container"><h1>Page not found!</h1></div></div>'
