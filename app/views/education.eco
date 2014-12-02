@@ -81,14 +81,17 @@
                   <th>Distance from Earth</th>
                 </tr>
                 <tr>  
-                  <td><INPUT NAME="mag" VALUE="0" MAXLENGTH="12" SIZE=4></td>
-                  <td><INPUT NAME="temp" VALUE="0" MAXLENGTH="12" SIZE=4>K</td>
-                  <td><INPUT NAME="radS" VALUE="0" MAXLENGTH="15" SIZE=4>R<sub>&odot;</sub></td>
+                  <td><input name="mag"  value="0" maxlength="12" size="4"></td>
+                  <td><input name="temp" value="0" maxlength="12" size="4">K</td>
+                  <td><input name="radS" value="0" maxlength="15" size="4">R<sub>&odot;</sub></td>
                   <td><span id="massS"> </span></td>
                   <td><span id="distS"> </span></td>  
                 </tr>          
                 </tr>
-                  <td class="button_row" colspan="5"><INPUT TYPE="button" NAME="masscalck" Value="Calculate" onClick="calulateStar(this.form)" class="button"></td>  
+                  <td class="button_row" colspan="5">
+                    <button name="calculate-star" class="button">
+                      Calculate
+                    </button>  
                 </tr>  
               </table>
           </div>
@@ -139,8 +142,14 @@
               <td><span id="tempP"></span></td>
             </tr>
             <tr>
-              <td class="button_row" colspan="4"><INPUT NAME="calc" VALUE="Calculate" TYPE=BUTTON onClick="calculatePlanetCharacteristics(this.form)"  class="button"> 
-              <INPUT TYPE="reset" name="resetfields" value="Reset" onclick="return ResetOK();"  class="button"></td>
+              <td class="button_row" colspan="4">
+                <button name="calculate-planet" class="button">
+                  Calculate
+                </button>
+                <button name="calculate-planet-reset" class="button">
+                  Reset
+                </button>
+              </td>
             </tr>
           </table>    
 
