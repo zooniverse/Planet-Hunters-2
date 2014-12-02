@@ -549,12 +549,12 @@ module.exports =
             <h2>How can I keep up to date with education and Planet Hunters?</h2>
             <p>The Planet Hunters blog is a great place to keep up to date with the latests science result.  FInd the latest education resources and news on the <a href="http://education.zooniverse.org">Zooniverse Education Blog</a> as well as the <a href="https://twitter.com/ZooTeach">@ZooTeach</a> Twitter feed.</p>
           '''
-      # calculator:
-      #   header         : 'The Calculator'
-      #   content        : 
-      #     '''
-      #     <h1> This is the Planet Hunters Calculator.</h1>
-      #     '''
+      calculator:
+        header         : 'The Calculator'
+        content        : 
+          '''
+          <h1> This is the Planet Hunters Calculator.</h1>
+          '''
 
   # INITIAL TUTORIAL
   initialTutorial:

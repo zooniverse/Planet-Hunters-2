@@ -8,6 +8,7 @@
   <div class="secondary-content">
     <nav class="sub-nav-education">
       <%- translate 'button', 'educationPage.tabs.classroom', name: 'classroom' %>
+      <%- translate 'button', 'educationPage.tabs.calculator', name: 'calculator' %>
     </nav>
   </div>
 
@@ -16,6 +17,11 @@
       <div class="content sub-nav-education-classroom">
         <%- translate 'h1', 'educationPage.section.classroom.header' %>
         <%- translate 'span', 'educationPage.section.classroom.content' %>        
+      </div>
+
+      <div class="content sub-nav-education-calculator">
+        <%- translate 'h1', 'educationPage.section.calculator.header' %>
+        <%- translate 'span', 'educationPage.section.calculator.content' %>        
       </div>
       <!-- END CONTENT -->
 
