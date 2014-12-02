@@ -99,7 +99,7 @@ module.exports =
   # GET INVOLVED: located in right panel
   getInvolved:
     header             : 'Get Involved'
-    callToAction       : 'Join us in finsing the many worlds out there. Are you ready?'
+    callToAction       : 'Join us in finding the many worlds out there. Are you ready?'
     getStarted         : 'Get Started'
     connect            : 'Connect'
     socialMediaLinks   : 'Follow the <a href="http://blog.planethunters.org">Planet Hunters Blog</a>, <a href="https://twitter.com/planethunters">@planethunters</a>, and the <a href="http://www.facebook.com/planethunters">Facebook Page</a> to keep current with the latest findings. Share and discuss your work with others with <a href="http://talk.planethunters.org">Planet Hunters Talk</a>.'
