@@ -18,34 +18,34 @@
   <div class="secondary-content">
     <div class="left-column">
       <div class="content sub-nav-science-mission">
-        <%- translate 'span', 'sciencePage.section.mission.header' %>
+        <%- translate 'h1', 'sciencePage.section.mission.header' %>
         <%- translate 'span', 'sciencePage.section.mission.content' %>
       </div>
 
 
       <!-- FAQ -->
       <div class="content sub-nav-science-faq">
-        <%- translate 'span', 'sciencePage.section.faq.header' %>
+        <%- translate 'h1', 'sciencePage.section.faq.header' %>
         <%- translate 'span', 'sciencePage.section.faq.content' %>
       </div>
 
       <div class="content sub-nav-science-transits">
-        <%- translate 'span', 'sciencePage.section.transits.header' %>
+        <%- translate 'h1', 'sciencePage.section.transits.header' %>
         <%- translate 'span', 'sciencePage.section.transits.content' %>
       </div>
 
       <div class="content sub-nav-science-your-task">
-        <%- translate 'span','sciencePage.section.task.header' %>
+        <%- translate 'h1','sciencePage.section.task.header' %>
         <%- translate 'span', 'sciencePage.section.task.content' %>
       </div>
 
       <div class="content sub-nav-science-origin">
-        <%- translate 'span', 'sciencePage.section.lightCurves.header' %>
+        <%- translate 'h1', 'sciencePage.section.lightCurves.header' %>
         <%- translate 'span', 'sciencePage.section.lightCurves.content' %>
       </div>
 
       <div class="content sub-nav-science-simulations">
-        <%- translate 'span', 'sciencePage.section.simulations.header' %>
+        <%- translate 'h1', 'sciencePage.section.simulations.header' %>
         <%- translate 'span', 'sciencePage.section.simulations.content' %>
       </div>
     </div>

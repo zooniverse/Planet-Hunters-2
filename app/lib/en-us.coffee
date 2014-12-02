@@ -128,7 +128,7 @@ module.exports =
       publications     : 'Discoveries &amp; Papers'
     section:
       mission:
-        header         : '<h1>Our Mission</h1>'
+        header         : 'Our Mission'
         content        : 
           '''
           <p>Welcome to Planet Hunters. With your help, we are looking for planets around other stars.</p>
@@ -137,7 +137,7 @@ module.exports =
           <p>It's just possible that you might be the first to know that a star somewhere out there in the Milky Way has a companion, just as our Sun does. Fancy giving it a try?</p>
           '''
       task:
-        header         : '<h1>Your Task</h1>'
+        header         : 'Your Task'
         content        :
           '''
           <h2>What am I looking for?</h2>
@@ -147,7 +147,7 @@ module.exports =
           <p>Automated routines have been very successful and many planets and planet candidates have been found, but not all. While we expect computer programs to robustly identify things that they are trained to find, we know there are surprises in the data that the computer algorithms will miss. It is impossible for a single person to review all of the Kepler observations, and  experiments have shown that when many people work together, the collective wisdom of the crowds can be better than an expert. With the Internet we can gather the help of hundreds of thousands of people to hunt for exoplanets. The original Planet Hunters proved that this citizen science approach to exoplanets works with over 30 planet candidates and several confirmed planet discoveries.</p>
           '''
       transits:
-        header         : '<h1>Transits</h1>'
+        header         : 'Transits'
         content        :
           '''
           <h2>The Transit Technique for Hunting Planets</h2>
@@ -193,7 +193,7 @@ module.exports =
           '''
 
       lightCurves:
-        header        : '<h1>Where do light curves come from?</h1>'
+        header        : 'Where do light curves come from?'
         content       :
           '''
           <p>The light curves, time series of brightness measurements, we ask you to inspect for planet transits come from the publicly released observations from NASA's <a href="http://kepler.nasa.gov/">Kepler mission</a>. On Planet Hunters, we show data obtained during two different phases of the Kepler mission:  </p>
@@ -214,7 +214,7 @@ module.exports =
           '''
 
       simulations:
-        header         : '<h1>Simulations</h1>'
+        header         : 'Simulations'
         content        :
           '''
           <p>One of the goals of Planet Hunters is to explore the diversity of the terrestrial and giant planet populations and begin to understand the spectrum of solar systems. With just the planet discoveries alone you can't answer these questions because you don't know how complete the sample is. In order to understand how well different kinds of transiting planets can be found with Planet Hunters, we also show light curves with simulated transits, spanning the range of exoplanet radii and orbits.</p>
@@ -225,7 +225,7 @@ module.exports =
           '''
 
       faq:
-        header         : '<h1>Frequently Asked Questions</h1>'
+        header         : 'Frequently Asked Questions'
         content        :
           '''
           <h2 class="faq link" target="faq-data">Where does the data come from?</h2>
@@ -483,10 +483,11 @@ module.exports =
     mainHeader         : 'Education'
     tabs:
       classroom        : 'Classroom'
+      calculator       : 'Calculator'
 
     section:
       classroom:
-        header         : '<h1>In the Classroom</h1>'
+        header         : 'In the Classroom'
         content        : 
           '''
           <h2>Can I use Planet Hunters 2 in the classroom?</h2>
@@ -548,6 +549,12 @@ module.exports =
             <h2>How can I keep up to date with education and Planet Hunters?</h2>
             <p>The Planet Hunters blog is a great place to keep up to date with the latests science result.  FInd the latest education resources and news on the <a href="http://education.zooniverse.org">Zooniverse Education Blog</a> as well as the <a href="https://twitter.com/ZooTeach">@ZooTeach</a> Twitter feed.</p>
           '''
+      # calculator:
+      #   header         : 'The Calculator'
+      #   content        : 
+      #     '''
+      #     <h1> This is the Planet Hunters Calculator.</h1>
+      #     '''
 
   # INITIAL TUTORIAL
   initialTutorial:

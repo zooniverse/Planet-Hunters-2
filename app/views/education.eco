@@ -14,7 +14,7 @@
   <div class="secondary-content">
     <div class="left-column">
       <div class="content sub-nav-education-classroom">
-        <%- translate 'span', 'educationPage.section.classroom.header' %>
+        <%- translate 'h1', 'educationPage.section.classroom.header' %>
         <%- translate 'span', 'educationPage.section.classroom.content' %>        
       </div>
       <!-- END CONTENT -->
