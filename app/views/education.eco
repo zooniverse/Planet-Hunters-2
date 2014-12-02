@@ -29,7 +29,7 @@
           <p>Been hunting for exo-planets? Found a transit in a light curve? Use the calculators below to find out what the exo-planet might be like.</p>
           
           <p>The following four exo-planet candidates have been found by volunteers on the <a href="http://www.planethunters.org">Planet Hunters</a> website. We refer to these as 'candidates' and not 'planets' as follow up observations need to be made to confirm their existence, but let's just say, so far it's looking good!</p> 
-          <table style="border:2px solid black;border-collapse:collapse;">
+          <table>
             <tr>
               <th>Planet Hunters ID</th>
               <th>Kepler ID</th>
@@ -115,7 +115,7 @@
             
         
           
-          <table style="margin-top:20px;">
+          <table>
             <tr>    
               <th>Radius</th>
               <th>Volume</th>
