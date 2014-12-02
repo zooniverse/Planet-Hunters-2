@@ -87,7 +87,7 @@ module.exports =
       shortPeriodTitle : 'Short Period Planet/Many Transits'
       shortPeriodInfo  : 'Many transist from the same planet visible'
       multiPlanetTitle : 'Multi-planet Systems'
-      multiTitleInfo   : 'Transits from more than one planet'
+      multiPlanetInfo  : 'Transits from more than one planet'
       moreExamples     : 'More Example Planet Transits'
       eclipsingTitle   : 'Eclipsing Binaries'
       eclipsingInfo    : 'Two stars transiting in front and behind each other'

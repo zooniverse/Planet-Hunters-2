@@ -1,34 +1,34 @@
 <% translate = require 't7e' %>
 <div id="spotters-guide">
   <div class="content">
+    <%- translate 'h1', 'spottersGuide.header', style: 'margin-bottom: 0px;' %>
+    <%- translate 'p', 'spottersGuide.clickToEnlarge', style: 'font-size: 10px; font-style: italic; margin: 0px;' %>
+    <%- translate 'h2', 'spottersGuide.transits.header', class: 'divider' %>    
+    <%- translate 'h3', 'spottersGuide.transits.longPeriodTitle', class: 'uppercase' %>
+    <%- translate 'h3', 'spottersGuide.transits.longPeriodInfo' %>
 
-    <h1 style="margin-bottom: 0px;">Spotter's Guide</h1>
-    <p style="font-size: 10px; font-style: italic; margin: 0px;">Click on image examples to enlarge</p>
-
-    <h2 class="divider">Transits</h2>
-    
-    <h3 class="uppercase">Long Period Planet/Single Transit</h3>
-    <h3>One transit visible in the light curve</h3>
     <div class="examples">
       <img class="example-image" src="images/guide/singletransit1.png" />
       <img class="example-image" src="images/guide/singletransit2.png" />
     </div>
 
-    <h3 class="uppercase">Short Period Planet/Many Transits</h3>
-    <h3>Many transits from the same planet visible</h3>
+    <%- translate 'h3', 'spottersGuide.transits.shortPeriodTitle', class: 'uppercase' %>
+    <%- translate 'h3', 'spottersGuide.transits.shortPeriodInfo' %>
+
     <div class="examples">
       <img class="example-image" src="images/guide/manytransits1.png" />
       <img class="example-image" src="images/guide/manytransits2.png" />
     </div>
-    <h3 class="uppercase">Multi-planet System</h3>
-    <h3>Transits from more than one planet visible</h3>
+
+    <%- translate 'h3', 'spottersGuide.transits.multiPlanetTitle', class: 'uppercase' %>
+    <%- translate 'h3', 'spottersGuide.transits.multiPlanetInfo' %>
     
     <div class="examples">
       <img class="example-image" src="images/guide/multitransits1.png" />
       <img class="example-image" src="images/guide/multitransits2.png" />
     </div>
 
-    <h3 class="uppercase">More Example Planet Transits</h3>
+    <%- translate 'h3', 'spottersGuide.transits.moreExamples', class: 'uppercase' %>
 
     <div class="examples">
       <img class="example-image" src="images/guide/more_examples1.png" />
@@ -37,8 +37,8 @@
       <img class="example-image" src="images/guide/more_examples4.png" />
     </div>
 
-    <h3 class="uppercase">Eclipsing Binaries</h3> 
-    <h3>Two stars transiting in front and behind each other</h3>
+    <%- translate 'h3', 'spottersGuide.transits.eclipsingTitle', class: 'uppercase' %>
+    <%- translate 'h3', 'spottersGuide.transits.eclipsingInfo' %>
    
     <div class="examples">
       <img class="example-image" src="images/guide/eb1.png" />
@@ -46,23 +46,26 @@
     </div>
 
 
-    <h2 class="divider">Non-Transits</h2>
+    <%- translate 'h2', 'spottersGuide.transits.nonTransitsTitle', class: 'divider' %>
 
-    <h3 class="uppercase">Gaps</h3>
+    <%- translate 'h3', 'spottersGuide.transits.gaps', class: 'uppercase' %>
+
 
     <div class="examples">
       <img class="example-image" src="images/guide/gaps1.png" />
       <img class="example-image" src="images/guide/gaps2.png" />
     </div>
 
-    <h3 class="uppercase">Pulsating Stars</h3>
+    <%- translate 'h3', 'spottersGuide.transits.pulsatingStars', class: 'uppercase' %>
+
 
     <div class="examples">
       <img class="example-image" src="images/guide/pulsator1.png" />
       <img class="example-image" src="images/guide/pulsator2.png" />
     </div>
 
-    <h3 class="uppercase">Starspots</h3>
+    <%- translate 'h3', 'spottersGuide.transits.starspots', class: 'uppercase' %>
+
 
     <div class="examples">
       <img class="example-image" src="images/guide/starspots1.png" />
