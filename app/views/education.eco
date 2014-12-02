@@ -24,7 +24,7 @@
 
         <!-- BEGIN CALCULATOR >>> -->
         <span>
-          <h2>planet hunter calculators</h2>
+          <h2>Planet Hunter Calculator</h2>
           
           <p>Been hunting for exo-planets? Found a transit in a light curve? Use the calculators below to find out what the exo-planet might be like.</p>
           
@@ -67,7 +67,7 @@
             </tr>
           </table>
           
-          <h2>star</h2>
+          <h2>Star</h2>
           <p>Let's begin by calculating the mass of the star that the exo-planet orbits around.        
             You will need to type in the stars magnitude, temperature and radius.</p>
           <FORM>
@@ -94,7 +94,7 @@
           </div>
 
           <div>    
-            <h2>exo-planet</h2>
+            <h2>Exo-planet</h2>
             <p>If you'd like to calculate the size of the exo-planet candidates, you will need to measure the drop in brightness that occurs when the exo-planet travels in front of it's star. You can do this on the <a href="http://www.planethunters.org">Planet Hunters</a> website, simply click on the Planet Hunters ID in the table above for the exo-planet you'd like to measure.</p>  
             <p>Measuring the period of the exo-planet will allow you calculate the distance from the star to the exo-planet. You don't need this if you'd just like to measure the radius of the exo-planet.</p>
           </div>  
@@ -146,7 +146,7 @@
 
           
           <div>
-          <h2>constants</h2>
+          <h2>Constants</h2>
             <ul>
               <li>R<sub>&odot;</sub>: Radius of the Sun =  695,500 km</li>
               <li>M<sub>&odot;</sub>: Mass of the Sun = 1.99 x 10<sup>30</sup> kg</li>
