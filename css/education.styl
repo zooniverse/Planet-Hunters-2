@@ -2,5 +2,31 @@
   color inherit
   
   .calculator
-    display block
+    table 
+      margin-left auto
+      margin-right auto
+      border-collapse collapse
+      
+    th 
+      border 2px solid black
+      padding 5px
+      
+    td 
+      border 2px solid black
+      padding 5px
+      text-align center    
+      height 20px
+    
+    .button_row 
+      border-bottom none
+      border-left none
+      border-right none
+      height 30px
+    
+    .button 
+      @extends #_STANDARD_BUTTON 
+    
+    li 
+      list-style none
+    
 
