@@ -10,4 +10,5 @@ class Education extends BaseController
   constructor: ->
     super
     activateSubNav = new SubNav("education")
+
 module.exports = Education
