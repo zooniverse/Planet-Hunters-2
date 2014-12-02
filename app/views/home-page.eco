@@ -2,7 +2,7 @@
 <div class="content-block">
   <div class="content-container">
     <div class="call-to-action">
-      <%- translate 'spanm', 'home.header.callToAction' %>
+      <%- translate 'span', 'home.header.callToAction' %>
     </div>
 
     <div class="description">

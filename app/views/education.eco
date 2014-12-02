@@ -1,15 +1,14 @@
 <% translate = require 't7e' %>
 <div class="secondary-header">
-  <h1>Education</h1>
+  <%- translate 'h1', 'educationPage.mainHeader' %>
 </div>
 
 <div class="secondary-white">
 
   <div class="secondary-content">
     <nav class="sub-nav-education">
-      <button name="classroom">Classroom</button>
-      <!-- <button name="resources">Resources</button> -->
-      </nav>
+      <%- translate 'button', 'educationPage.tabs.classroom', name: 'classroom' %>
+    </nav>
   </div>
 
   <div class="secondary-content">
