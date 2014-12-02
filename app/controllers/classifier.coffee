@@ -21,7 +21,9 @@ GuestObsContent            = require '../lib/guest_obs_content'
 
 $ = window.jQuery
 
-MAIN_SUBJECT_GROUP = "5417014a3ae7400bda000001"
+K1_SUBJECT_GROUP  = "5417014a3ae7400bda000001"
+K2_0_SUBJECT_GROUP = "5417014a3ae7400bda000001"
+MAIN_SUBJECT_GROUP = K2_0_SUBJECT_GROUP
 SIMULATION_GROUP   = "5417014b3ae7400bda000002"
 
 USERS_OPT_IN = ['a', 'b', 'c', 'g', 'h', 'i']
@@ -406,14 +408,24 @@ class Classifier extends BaseController
     ukirtUrl = "http://surveys.roe.ac.uk:8080/wsa/GetImage?ra=" + @ra + "&dec=" + @dec + "&database=wserv4v20101019&frameType=stack&obsType=object&programmeID=10209&mode=show&archive=%20wsa&project=wserv4"
 
     metadata = @Subject.current.metadata
+
     @el.find('#zooniverse-id').html @Subject.current.zooniverse_id
     @el.find('#kepler-id').html     metadata.kepler_id
     @el.find('#quarter').html @Subject.current.selected_light_curve.quarter
-    @el.find('#star-type').html     (metadata.spec_type || "Dwarf")
-    @el.find('#magnitude').html     metadata.magnitudes.kepler
-    @el.find('#temperature').html   metadata.teff.toString().concat("(K)")
-    @el.find('#radius').html        metadata.radius.toString().concat("x Sol")
-    @el.find('#ukirt-url').attr("href", ukirtUrl)
+
+    if MAIN_SUBJECT_GROUP == K1_SUBJECT_GROUP
+      @el.find('#star-type').html     (metadata.spec_type || "Dwarf")
+      @el.find('#magnitude').html     metadata.magnitudes.kepler
+      @el.find('#temperature').html   metadata.teff.toString().concat("(K)")
+      @el.find('#radius').html        metadata.radius.toString().concat("x Sol")
+      @el.find('#ukirt-url').attr("href", ukirtUrl)
+      @el.find(".K1").display("block")
+      @el.find(".K2").display("none")
+    else if
+      @el.find('#manitude').html   (metadata.magnitudes["kepler"])
+      @el.find(".K1").display("none")
+      @el.find(".K2").display("block")
+
 
   notify: (message) =>
     @course.hidePrompt(0) # get the prompt out of the way
@@ -542,11 +554,11 @@ class Classifier extends BaseController
 
     if Math.random() < @sim_rate
       # console.log "fetching sim subject..."
-      
+
       Subject.group = SIMULATION_GROUP
       Subject.fetch limit: 1, (subjects) ->
         Subject.current?.destroy()
-        
+
         # select sim subject
         unless subjects.length is 0
           subjects[0].select()
@@ -554,7 +566,7 @@ class Classifier extends BaseController
           # console.log 'no more sims; selecting next subject instead...'
           # if no sims, revert to regular subjects
           Subject.group = MAIN_SUBJECT_GROUP
-          @Subject.next() 
+          @Subject.next()
 
         Subject.group = MAIN_SUBJECT_GROUP # reset to regular subjects
 

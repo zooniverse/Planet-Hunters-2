@@ -172,22 +172,34 @@
     <div id="subject-metadata">
       <h4>Star Information</h4>
 
-      <div class="meta-field meta star-id">Zooniverse Id</div>
-      <div id="zooniverse-id" class="meta-value meta star-id">N/A</div>
+      <div class='common'>
+        <div class="meta-field meta star-id">Zooniverse Id</div>
+        <div id="zooniverse-id" class="meta-value meta star-id">N/A</div>
 
-      <div class="meta-field meta star-id">Kepler Id</div>
-      <div id="kepler-id" class="meta-value meta star-id">N/A</div>
+        <div class="meta-field meta star-id">Kepler Id</div>
+        <div id="kepler-id" class="meta-value meta star-id">N/A</div>
 
-      <div class="meta-field meta star-id">Quarter</div>
-      <div id="quarter" class="meta-value meta star-id">N/A</div>
-      <!-- <div id="zooniverse-id" class="meta"></div> -->
-      <div class='meta-field meta'>Type</div>       <div id="star-type"     class="meta-value meta">N/A</div>
-      <div class='meta-field meta'>Magnitude</div>  <div id="magnitude"     class="meta-value meta">N/A</div>
+        <div class="meta-field meta star-id">Quarter</div>
+        <div id="quarter" class="meta-value meta star-id">N/A</div>
+        <div class='meta-field meta'>Magnitude</div>  <div id="magnitude"     class="meta-value meta">N/A</div>
 
-      <div class="meta-field meta">Temp</div>
-      <div id="temperature" class="meta-value meta">N/A</div>
+      </div>
 
-      <div class='meta-field meta'>Radius</div>     <div id="radius"        class="meta-value meta">N/A</div>
+      <div class='K1'>
+        <!-- <div id="zooniverse-id" class="meta"></div> -->
+        <div class='meta-field meta'>Type</div>       <div id="star-type"     class="meta-value meta">N/A</div>
+        <div class="meta-field meta">Temp</div>
+        <div id="temperature" class="meta-value meta">N/A</div>
+        <div class='meta-field meta'>Radius</div>     <div id="radius"        class="meta-value meta">N/A</div>
+      </div>
+
+      <div class='K2'>
+        <div class='meta-field meta'>Type</div>       <div id="star-type"     class="meta-value meta">N/A</div>
+        <div class="meta-field meta">Temp</div>
+        <div id="temperature" class="meta-value meta">N/A</div>
+        <div class='meta-field meta'>Radius</div>     <div id="radius"        class="meta-value meta">N/A</div>
+
+      </div>
 
       <div id="button-container">
         <button class="std-btn marking-btn yellow" name="finished-marking">Finished</button>
