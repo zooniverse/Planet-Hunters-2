@@ -1,5 +1,4 @@
-module.exports = 
-  calulateStar = (form) ->    
+calculateStar = (form) ->    
     # The method  for calculating mass uses a curve-fit to published M* and R* values for candidate host stars derived by the Kepler team2 and is
     # M* = 0.4472 logeR* + 1  
     radS = parseFloat(form.radS)
@@ -22,36 +21,6 @@ module.exports =
     sp = document.getElementById("distS")
     sp.innerHTML = addCommas((distS / AUtoLY).toFixed(0)) + " LY"
     return
-
-# CONSTANTS
-TeffSol = 5780
-Rsol = 695500
-Rj = 71442
-Re = 6371
-Me = 5.97219 * Math.pow(10, 24)
-pi = 3.14159
-AUtoLY = 63240
-AUtoPS = 206265
-KMtoAU = 149598000
-
-addCommas = (nStr) ->
-  nStr += ""
-  x = nStr.split(".")
-  x1 = x[0]
-  x2 = (if x.length > 1 then "." + x[1] else "")
-  rgx = /(\d+)(\d{3})/
-  x1 = x1.replace(rgx, "$1" + "," + "$2")  while rgx.test(x1)
-  x1 + x2
-
-log10 = (arg) ->
-  Math.log(arg) / Math.LN10
-
-ResetOK = ->
-  resetyes = confirm("Are you sure that you want to reset the input fields?")
-  if resetyes
-    true
-  else
-    false
 
 calculatePlanetCharacteristics = (form) ->
   radS = parseFloat(form.radS)
@@ -117,9 +86,43 @@ calculatePlanetCharacteristics = (form) ->
   sp.innerHTML = tempP.toFixed(0) + "K"
   return
 
+# CONSTANTS
+TeffSol = 5780
+Rsol = 695500
+Rj = 71442
+Re = 6371
+Me = 5.97219 * Math.pow(10, 24)
+pi = 3.14159
+AUtoLY = 63240
+AUtoPS = 206265
+KMtoAU = 149598000
+
+addCommas = (nStr) ->
+  nStr += ""
+  x = nStr.split(".")
+  x1 = x[0]
+  x2 = (if x.length > 1 then "." + x[1] else "")
+  rgx = /(\d+)(\d{3})/
+  x1 = x1.replace(rgx, "$1" + "," + "$2")  while rgx.test(x1)
+  x1 + x2
+
+log10 = (arg) ->
+  Math.log(arg) / Math.LN10
+
+ResetOK = ->
+  resetyes = confirm("Are you sure that you want to reset the input fields?")
+  if resetyes
+    true
+  else
+    false
+
 Number::toFullString = ->
   isDecimal = /\-/.test(this)
   if isDecimal
     @toFixed @toString().split("-")[1]
   else
     this
+
+
+module.exports = calculateStar: calculateStar, calculatePlanetCharacteristics: calculatePlanetCharacteristics
+
