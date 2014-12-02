@@ -2,11 +2,11 @@
 <div class="content-block">
   <div class="content-container">
     <div class="call-to-action">
-      <%- translate 'home.header.callToAction' %>
+      <%- translate 'spanm', 'home.header.callToAction' %>
     </div>
 
     <div class="description">
-      <%- translate 'home.header.description' %>
+      <%- translate 'span', 'home.header.description' %>
       <%- translate 'a', 'home.header.beginClassifying', href: '#/classify', id: "begin-classifying" %>
     </div>
 

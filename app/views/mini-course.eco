@@ -2,7 +2,7 @@
 <div id="course-container">
   <div id="course-title"></div>
   <div class="course-close">
-    <%- translate 'course.closeButton' %>
+    <%- translate 'span', 'course.closeButton' %>
     <!-- <img src="./images/icons/marking-closex.png"> -->
     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="8px" height="8px">
       <defs></defs>
@@ -26,10 +26,10 @@
   <div style="float: left; padding: 20px;">
     <input class="mini-course-option" name="course-opt-out" type="checkbox"></input>
     <div style="float: left; font-style: italic; font-weight: 500; color: #fff;">
-      <%- translate 'course.doNotShow' %>
+      <%- translate 'span', 'course.doNotShow' %>
     </div>
   </div>
   <button name="course-close" class="course-close std-btn yellow">
-    <%- translate 'course.closeButton' %>
+    <%- translate 'span', 'course.closeButton' %>
   </button>
 </div>

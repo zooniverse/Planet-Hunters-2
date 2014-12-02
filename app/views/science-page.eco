@@ -1,68 +1,52 @@
 <% translate = require 't7e' %>
 <div class="secondary-header">
-  <h1>
-    <%- translate 'sciencePage.mainHeader' %>
-  </h1>
+  <%- translate 'h1', 'sciencePage.mainHeader' %>
 </div>
 
 <div class="secondary-white">
   <div class="secondary-content">
     <nav class="sub-nav-science">
-      <button name="mission">
-        <%- translate 'sciencePage.tabs.mission' %>
-      </button>
-      <button name="your-task">
-        <%- translate 'sciencePage.tabs.task' %>
-      </button>
-      <button name="transits">
-        <%- translate 'sciencePage.tabs.transits' %>
-      </button>
-      <button name="origin">
-        <%- translate 'sciencePage.tabs.lightCurves' %>
-      </button>
-      <button name="simulations">
-        <%- translate 'sciencePage.tabs.simulations' %>
-      </button>
-      <button name="faq">
-        <%- translate 'sciencePage.tabs.faq' %>
-      </button>
-      <button onclick="window.location='https://www.zooniverse.org/publications?project=planethunters'">
-        <%- translate 'sciencePage.tabs.publications' %>
-      </button>
+      <%- translate 'button', 'sciencePage.tabs.mission', name: 'mission' %>
+      <%- translate 'button', 'sciencePage.tabs.task', name: 'your-task' %>
+      <%- translate 'button', 'sciencePage.tabs.transits', name: 'transits' %>
+      <%- translate 'button', 'sciencePage.tabs.lightCurves', name: 'origin' %>
+      <%- translate 'button', 'sciencePage.tabs.simulations', name: 'simulations' %>
+      <%- translate 'button', 'sciencePage.tabs.faq', name: 'faq' %>
+      <%- translate 'button', 'sciencePage.tabs.publications', onclick: "window.location='https://www.zooniverse.org/publications?project=planethunters'"  %>
     </nav>
   </div>
   <div class="secondary-content">
     <div class="left-column">
       <div class="content sub-nav-science-mission">
-        <%- translate 'sciencePage.section.mission.header' %>
-        <%- translate 'sciencePage.section.mission.content' %>
+        <%- translate 'span', 'sciencePage.section.mission.header' %>
+        <%- translate 'span', 'sciencePage.section.mission.content' %>
       </div>
 
 
       <!-- FAQ -->
       <div class="content sub-nav-science-faq">
-        <%- translate 'sciencePage.section.faq.header' %>
-        <%- translate 'sciencePage.section.faq.content' %>
+        <%- translate 'span', 'sciencePage.section.faq.header' %>
+        <%- translate 'span', 'sciencePage.section.faq.content' %>
       </div>
 
       <div class="content sub-nav-science-transits">
-        <%- translate 'sciencePage.section.transits.header' %>
-        <%- translate 'sciencePage.section.transits.content' %>
+        <%- translate 'span', 'sciencePage.section.transits.header' %>
+        <%- translate 'span', 'sciencePage.section.transits.content' %>
       </div>
 
       <div class="content sub-nav-science-your-task">
-        <%- translate 'sciencePage.section.task.header' %>
-        <%- translate 'sciencePage.section.task.content' %>
+        <%- translate 'span','sciencePage.section.task.header' %>
+        <%- translate 'span', 'sciencePage.section.task.content' %>
       </div>
 
       <div class="content sub-nav-science-origin">
-        <%- translate 'sciencePage.section.lightCurves.header' %>
-        <%- translate 'sciencePage.section.lightCurves.content' %>
+        <%- translate 'span', 'sciencePage.section.lightCurves.header' %>
+        <%- translate 'span', 'sciencePage.section.lightCurves.content' %>
       </div>
 
       <div class="content sub-nav-science-simulations">
-        <%- translate 'sciencePage.section.simulations.header' %>
-        <%- translate 'sciencePage.section.simulations.content' %>
+        <%- translate 'span', 'sciencePage.section.simulations.header' %>
+        <%- translate 'span', 'sciencePage.section.simulations.content' %>
       </div>
     </div>
 
