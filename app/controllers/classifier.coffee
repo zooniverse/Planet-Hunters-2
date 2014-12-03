@@ -21,9 +21,9 @@ GuestObsContent            = require '../lib/guest_obs_content'
 
 $ = window.jQuery
 
-K1_SUBJECT_GROUP  = "5417014a3ae7400bda000001"
-K2_0_SUBJECT_GROUP = "5417014a3ae7400bda000001"
-MAIN_SUBJECT_GROUP = K2_0_SUBJECT_GROUP
+K1_SUBJECT_GROUP  =  "5417014a3ae7400bda000001"
+K2_0_SUBJECT_GROUP = "547d05ce415ac13139000001"
+MAIN_SUBJECT_GROUP = K1_SUBJECT_GROUP # use K1 for now
 SIMULATION_GROUP   = "5417014b3ae7400bda000002"
 
 USERS_OPT_IN = ['a', 'b', 'c', 'g', 'h', 'i']
