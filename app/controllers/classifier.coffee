@@ -421,7 +421,7 @@ class Classifier extends BaseController
       @el.find('#ukirt-url').attr("href", ukirtUrl)
       @el.find(".K1").display("block")
       @el.find(".K2").display("none")
-    else if
+    else
       @el.find('#manitude').html   (metadata.magnitudes["kepler"])
       @el.find(".K1").display("none")
       @el.find(".K2").display("block")
