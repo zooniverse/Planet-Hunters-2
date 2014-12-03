@@ -184,12 +184,16 @@
       -->
 
       <div class='common'>
+        
+        <!-- ZOONIVERSE ID -->
         <div class="meta-field meta star-id">
           <%- translate 'span', 'classify.starInformation.zooniverseId' %>
         </div>
         <div id="zooniverse-id" class="meta-value meta star-id">
           <%- translate 'span', 'classify.starInformation.notAvailable' %>
         </div>
+        
+        <!-- KEPLER ID -->
         <div class="meta-field meta star-id">
           <%- translate 'span', 'classify.starInformation.keplerId' %>
         </div>
@@ -197,61 +201,79 @@
           <%- translate 'span', 'classify.starInformation.notAvailable' %>
         </div>
 
+        <!-- QUARTER -->
         <div class="meta-field meta star-id">
           <%- translate 'span', 'classify.starInformation.quarter' %>
         </div>
         <div id="quarter" class="meta-value meta star-id">
           <%- translate 'span', 'classify.starInformation.notAvailable' %>
         </div>
+
+        <!-- MAGNITUDE -->
         <div class='meta-field meta'>
           <%- translate 'span', 'classify.starInformation.magnitude' %>
         </div>  
-        <div id="magnitude" ass="meta-value meta">
+        <div id="magnitude" class="meta-value meta">
           <%- translate 'span', 'classify.starInformation.notAvailable' %>
         </div>
+
       </div>
 
-      <div class='K1'>
+      <div class='k1-metadata'>
         <!-- <div id="zooniverse-id" class="meta"></div> -->
+
+        <!-- TYPE -->        
         <div class='meta-field meta'>
           <%- translate 'span', 'classify.starInformation.type' %>
         </div>       
         <div id="star-type" class="meta-value meta">
           <%- translate 'span', 'classify.starInformation.notAvailable' %>
         </div>
+        
+        <!-- TEMPERATURE -->
         <div class="meta-field meta">
           <%- translate 'span', 'classify.starInformation.temperature' %>
         </div>
         <div id="temperature" class="meta-value meta">
           <%- translate 'span', 'classify.starInformation.notAvailable' %>
         </div>
+
+        <!-- RADIUS -->
         <div class='meta-field meta'>
           <%- translate 'span', 'classify.starInformation.radius' %>
         </div>     
         <div id="radius" class="meta-value meta">
           <%- translate 'span', 'classify.starInformation.notAvailable' %>
         </div>
+
       </div>
 
-      <div class='K2'>
+      <div class='k2-metadata'>
+
+        <!-- TYPE -->
         <div class='meta-field meta'>
           <%- translate 'span', 'classify.starInformation.type' %>
         </div>      
         <div id="star-type" class="meta-value meta">
           <%- translate 'span', 'classify.starInformation.notAvailable' %>
         </div>
+
+        <!-- TEMPERATURE -->
         <div class="meta-field meta">
           <%- translate 'span', 'classify.starInformation.temperature' %>
         </div>
         <div id="temperature" class="meta-value meta">
           <%- translate 'span', 'classify.starInformation.notAvailable' %>
         </div>
+
+        <!-- RADIUS -->
         <div class='meta-field meta'>
           <%- translate 'span', 'classify.starInformation.radius' %>
         </div>     
         <div id="radius" class="meta-value meta">
           <%- translate 'span', 'classify.starInformation.notAvailable' %>
         </div>
+
       </div>
 
       <div id="button-container">

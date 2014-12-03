@@ -168,6 +168,10 @@ class Classifier extends BaseController
     # initialize buttons
     @continueButton.hide()
 
+    # hide metadata portion
+    @el.find('.k1-metadata').hide()
+    @el.find('.k2-metadata').hide()
+
   getParameterByName: (name) ->
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]")
     regex = new RegExp("[\\?&]" + name + "=([^&#]*)")
@@ -398,7 +402,6 @@ class Classifier extends BaseController
       @canvasGraph.zoomOut()
       return
 
-
     @insertMetadata()
 
   insertMetadata: ->
@@ -419,13 +422,12 @@ class Classifier extends BaseController
       @el.find('#temperature').html   metadata.teff.toString().concat("(K)")
       @el.find('#radius').html        metadata.radius.toString().concat("x Sol")
       @el.find('#ukirt-url').attr("href", ukirtUrl)
-      @el.find(".K1").display("block")
-      @el.find(".K2").display("none")
+      @el.find(".k1-metadata").fadeIn()
+      @el.find(".k2-metadata").hide()
     else
       @el.find('#manitude').html   (metadata.magnitudes["kepler"])
-      @el.find(".K1").display("none")
-      @el.find(".K2").display("block")
-
+      @el.find(".k1-metadata").hide()
+      @el.find(".k2-metadata").fadeIn()
 
   notify: (message) =>
     @course.hidePrompt(0) # get the prompt out of the way
