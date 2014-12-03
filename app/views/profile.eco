@@ -1,5 +1,6 @@
+<% translate = require 't7e' %>
 <div class="secondary-header">
-  <h1>Your Profile</h1>
+  <%- translate 'h1', 'profile.header' %>
 </div>
 
 <div id="secondary-white" class="secondary-white">

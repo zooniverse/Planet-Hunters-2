@@ -1,6 +1,20 @@
-<h1>Get Involved</h1>
-<p>Join us in finding the many worlds out there. Are you ready?</p>
-<a href="#/classify"><button class="std-btn big-btn yellow">Get Started</button></a>
+<% translate = require 't7e' %>
+<h1>
+  <%- translate 'getInvolved.header' %>
+</h1>
+<p>
+  <%- translate 'getInvolved.callToAction' %>
+</p>
+<a href="#/classify">
+  <button class="std-btn big-btn yellow">
+    <%- translate 'getInvolved.getStarted' %>
+  </button>
+</a>
 
-<h1>Connect</h1>
-<p>Follow the <a href="http://blog.planethunters.org">Planet Hunters Blog</a>, <a href="https://twitter.com/planethunters">@planethunters</a>, and the <a href="http://www.facebook.com/planethunters">Facebook Page</a> to keep current with the latest findings. Share and discuss your work with others with <a href="http://talk.planethunters.org">Planet Hunters Talk</a>.</p>
+<h1>
+  <%- translate 'getInvolved.connect' %>
+</h1>
+
+<p>
+  <%- translate 'getInvolved.socialMediaLinks' %>
+</p>

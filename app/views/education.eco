@@ -1,78 +1,174 @@
+<% translate = require 't7e' %>
 <div class="secondary-header">
-  <h1>Education</h1>
+  <%- translate 'h1', 'educationPage.mainHeader' %>
 </div>
 
 <div class="secondary-white">
 
   <div class="secondary-content">
     <nav class="sub-nav-education">
-      <button name="classroom">Classroom</button>
-      <!-- <button name="resources">Resources</button> -->
-      </nav>
+      <%- translate 'button', 'educationPage.tabs.classroom', name: 'classroom' %>
+      <%- translate 'button', 'educationPage.tabs.calculator', name: 'calculator' %>
+    </nav>
   </div>
 
   <div class="secondary-content">
     <div class="left-column">
       <div class="content sub-nav-education-classroom">
-        <h1>In the Classroom</h1>
-        <h2>Can I use Planet Hunters 2 in the classroom?</h2>
-        <p>Yes! Planet Hunters, like all the Zooniverse projects, offers students a unique opportunity to explore real scientific data while making a contribution to cutting edge research! We would like to stress that it's okay if students don't mark all the features correctly since each light curve is seen by multiple volunteers.  The task itself is simple enough that we believe most people can take part and make a worthwhile contribution regardless of age.</p>
-     
-      <!-- </div>
-      <div class="content sub-nav-education-resources">-->
-        <h1>Resources</h1>
+        <%- translate 'h1', 'educationPage.section.classroom.header' %>
+        <%- translate 'span', 'educationPage.section.classroom.content' %>        
+      </div>
 
-        <h2>How can you help scientists discover distant planets?</h2>
-        <p>Watch our step-by-step tour of Planet Hunters with this instructional video:</p>
-        <iframe src="//player.vimeo.com/video/110148951" width="640" height="480" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+      <div class="calculator content sub-nav-education-calculator">
+        <%- translate 'h1', 'educationPage.section.calculator.header' %>
 
-        <h2>What resources are available for the classroom?</h2>
+        <!-- BEGIN CALCULATOR >>> -->
+        <span>
+          <h2>Planet Hunter Calculator</h2>
+          
+          <p>Been hunting for exo-planets? Found a transit in a light curve? Use the calculators below to find out what the exo-planet might be like.</p>
+          
+          <p>The following four exo-planet candidates have been found by volunteers on the <a href="http://www.planethunters.org">Planet Hunters</a> website. We refer to these as 'candidates' and not 'planets' as follow up observations need to be made to confirm their existence, but let's just say, so far it's looking good!</p> 
+          <table>
+            <tr>
+              <th>Planet Hunters ID</th>
+              <th>Kepler ID</th>
+              <th>Radius of Star</th>
+              <th>Magnitude of Star</th>
+              <th>Temperature of Star (K)</th>
+            </tr>
+            <tr>
+              <td><a href="http://www.planethunters.org/sources/SPH10125117">SPH10125117</a></td>
+              <td><a href="http://exoplanet.eu/catalog/kic_10905746_b/">KIC 10905746</a></td>
+              <td>0.548 R<sub>&odot;</sub></td>
+              <td>13.0</td>
+              <td>4240</td>
+            </tr>    
+            <tr>
+              <td><a href="http://www.planethunters.org/sources/SPH10100751">SPH10100751</a></td>
+              <td><a href="http://exoplanet.eu/catalog/kic_6185331_b/">KIC 6185331</a></td>
+              <td>1.27 R<sub>&odot;</sub></td>
+              <td>15.64</td>
+              <td>5619</td>
+            </tr>
+            <tr>
+              <td><a href="http://www.planethunters.org/sources/SPH10119459">SPH10119459</a></td>
+              <td>KIC 4552729</td>
+              <td>0.977 R<sub>&odot;</sub></td>
+              <td>14.98</td>
+              <td>4620</td>
+            </tr>
+            <tr>
+              <td><a href="http://www.planethunters.org/sources/SPH10098510">SPH10098510</a></td>
+              <td>KIC 10005758</td>
+              <td>0.766 R<sub>&odot;</sub></td>
+              <td>13.9</td>
+              <td>6015</td>
+            </tr>
+          </table>
+          
+          <h2>Star</h2>
+          <p>Let's begin by calculating the mass of the star that the exo-planet orbits around.        
+            You will need to type in the stars magnitude, temperature and radius.</p>
+          <FORM>
+          <div>
+              <table>  
+                <tr>    
+                  <th>Apparent Magnitude</th>
+                  <th>Temperature</th>
+                  <th>Radius</th>
+                  <th>Mass</th>
+                  <th>Distance from Earth</th>
+                </tr>
+                <tr>  
+                  <td><input name="mag"  value="0" maxlength="12" size="4"></td>
+                  <td><input name="temp" value="0" maxlength="12" size="4">K</td>
+                  <td><input name="radS" value="0" maxlength="15" size="4">R<sub>&odot;</sub></td>
+                  <td><span id="massS"> </span></td>
+                  <td><span id="distS"> </span></td>  
+                </tr>          
+                </tr>
+                  <td class="button_row" colspan="5">
+                    <button name="calculate-star" class="button">
+                      Calculate
+                    </button>  
+                </tr>  
+              </table>
+          </div>
 
-        <p>
-          Here are some resources that can be great tools for introducing students to Planet Hunters. Here are a couple of our favorites:
-          <ul>
-            <li>
-              NASA Kepler Missions website: 
-              <a href="http://kepler.nasa.gov">http://kepler.nasa.gov</a>
-            </li>
-            <li>
-              NASA Planet Quest website: 
-              <a href="http://planetquest.jpl.nasa.gov">http://planetquest.jpl.nasa.gov</a>
-            </li>
-            <li>
-              <a href="http://astro.unl.edu/naap/esp/animations/transitSimulator.html">Exoplanet Transit Simulator</a> by The Astronomy Department at University of Nebraska
-            </li>
-            <li>
-              National Science Foundation's <a href="https://www.youtube.com/watch?v=0WatNUka7OA">Science Behind The News: Extrasolar Planets</a>, describes the Transit and Doppler methods.
-            </li>
-            <li>
-              NASA has also provided tools you can use in the classroom related to Exoplanets:
-              <a href="http://planetquest.jpl.nasa.gov/interactives">https://www.youtube.com/watch?v=0WatNUka7OA</a>
-            </li>
-          </ul>
-        </p>
+          <div>    
+            <h2>Exo-planet</h2>
+            <p>If you'd like to calculate the size of the exo-planet candidates, you will need to measure the drop in brightness that occurs when the exo-planet travels in front of it's star. You can do this on the <a href="http://www.planethunters.org">Planet Hunters</a> website, simply click on the Planet Hunters ID in the table above for the exo-planet you'd like to measure.</p>  
+            <p>Measuring the period of the exo-planet will allow you calculate the distance from the star to the exo-planet. You don't need this if you'd just like to measure the radius of the exo-planet.</p>
+          </div>  
+          
+          <table>
+            <tr>
+              <th>Estimated Brightness</th> 
+              <th>Actual Brightness</th> 
+              <th>Period of the exo-planet</th> 
+            </tr>  
+            <tr>
+              <td><INPUT NAME="estB" VALUE="0" MAXLENGTH="15" SIZE=10>%</td>
+              <td><INPUT NAME="actB" VALUE="0" MAXLENGTH="15" SIZE=10>%</td>
+              <td><INPUT NAME="period" VALUE="0" MAXLENGTH="15" SIZE=6> days</td>
+            </tr>
+          </table>        
 
-        <p>
-          Educators Guides, here are lessons that are focused on exoplanets:
-          <ul>
-            <li>
-              Coming Fall 2014, Planet Hunters Educators Guide! Zooniverse educators have developed lessons to show you how you can best utilize Planet Hunters in your classroom.
-            </li>
-            <li>
-              Educator Resource Guide provided by NASA: 
-              <a href="http://astrobiology.nasa.gov/media/medialibrary/2013/10/Astrobiology-Educator-Guide-2007.pdf">Astrobiology in Your Classroom, Life on Earth …and elsewhere?</a>
-            </li>
-            <li>
-              <a href="http://www.lpi.usra.edu/education/explore/our_place">Our Place in Space</a> 
-              activities produced by the Lunar and Planetary Institute
-            </li>
-          </ul>
-        </p>
+            
+        
+          
+          <table>
+            <tr>    
+              <th>Radius</th>
+              <th>Volume</th>
+              <th>Mass</th>
+              <th>Density</th>
+            </tr>
+            <tr>
+              <td><span id="radP"></span></td>
+              <td><span id="volP"></span></td>  
+              <td><span id="massP"></span></td>  
+              <td><span id="rhoP"></span></td>
+            </tr>
+            <tr>        
+              <th colspan="2">Time taken for the exo-planet to transit it's star.</th>
+              <th>Distance of exo-planet from it's star.</th>
+              <th>Temperature</th>
+            </tr>  
+            <tr>     
+              <td colspan="2"><span id="tdur"></span></td>
+              <td><span id="distP"></span></td>
+              <td><span id="tempP"></span></td>
+            </tr>
+            <tr>
+              <td class="button_row" colspan="4">
+                <button name="calculate-planet" class="button">
+                  Calculate
+                </button>
+                <button name="calculate-planet-reset" class="button">
+                  Reset
+                </button>
+              </td>
+            </tr>
+          </table>    
 
-        <p>The Zooniverse has launched <a href="http://www.zooteach.org">ZooTeach</a> where educators can find and share educational resources relating to Planet Hunters and the other Zooniverse citizen science projects. Check out resources created for Planet Hunters at <a href="http://www.zooteach.org/zoo/planet_hunters">http://www.zooteach.org/zoo/planet_hunters</a>. Have any ideas for how to use the project in the classroom? Please share your lesson ideas or resources on ZooTeach!</p>
-
-        <h2>How can I keep up to date with education and Planet Hunters?</h2>
-        <p>The Planet Hunters blog is a great place to keep up to date with the latests science result.  FInd the latest education resources and news on the <a href="http://education.zooniverse.org">Zooniverse Education Blog</a> as well as the <a href="https://twitter.com/ZooTeach">@ZooTeach</a> Twitter feed.</p>
+          
+          <div>
+          <h2>Constants</h2>
+            <ul>
+              <li>R<sub>&odot;</sub>: Radius of the Sun =  695,500 km</li>
+              <li>M<sub>&odot;</sub>: Mass of the Sun = 1.99 x 10<sup>30</sup> kg</li>
+              <li>R<sub>E</sub>: Radius of the Earth = 6,371 km</li>
+              <li>M<sub>E</sub>: Mass of the Earth = 5.97 x 10<sup>24</sup> kg</li>
+              <li>AU: Astronomical Units. 1AU is the distance from the earth to the sun. 1AU = 149,598,000 km</li>
+            </ul>  
+          </div>
+          
+          </FORM>
+          <p>Many thanks to the author of the original <a href="http://www.kianjin.com/pcalc.html">Planetary Calculator</a> for allowing us to produce a second simpler version. For a more details about how this calculator works, please visit the original <a href="http://www.kianjin.com/pcalc.html">site</a>.</p> 
+        </span>
+        <!-- <<< END CALCULATOR -->
 
       </div>
       <!-- END CONTENT -->

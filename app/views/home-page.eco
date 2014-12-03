@@ -2,13 +2,12 @@
 <div class="content-block">
   <div class="content-container">
     <div class="call-to-action">
-      <%- translate 'home.header.callToAction' %>
+      <%- translate 'span', 'home.header.callToAction' %>
     </div>
 
     <div class="description">
-      <%- translate 'home.header.description' %>
+      <%- translate 'span', 'home.header.description' %>
       <%- translate 'a', 'home.header.beginClassifying', href: '#/classify', id: "begin-classifying" %>
-      <!--<%- translate 'a', 'home.header.learnMore', href: '#/about', id: "learn-more" %>-->
     </div>
 
     <div id='social-media'>
