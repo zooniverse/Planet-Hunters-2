@@ -578,8 +578,7 @@ module.exports =
         header         : 'The Planet Hunters Calculator'
         content        :
           '''
-              <p>Been hunting for exo-planets? Found a transit in a light curve? Use the calculators below to find out what the exo-planet might be like.</p>
-              
+              <p>The following exo-planet has been found by volunteers on this Planet Hunters website, you can see more through <a href="http://talk.planethunters.org/#/collections/CPHS0000d9">this collection</a>.</p>
               <p>The following four exo-planet candidates have been found by volunteers on the <a href="http://www.planethunters.org">Planet Hunters</a> website. We refer to these as 'candidates' and not 'planets' as follow up observations need to be made to confirm their existence, but let's just say, so far it's looking good!</p> 
               <table>
                 <tr>
@@ -590,33 +589,13 @@ module.exports =
                   <th>Temperature of Star (K)</th>
                 </tr>
                 <tr>
-                  <td><a href="http://www.planethunters.org/sources/SPH10125117">SPH10125117</a></td>
-                  <td><a href="http://exoplanet.eu/catalog/kic_10905746_b/">KIC 10905746</a></td>
-                  <td>0.548 R<sub>&odot;</sub></td>
-                  <td>13.0</td>
+                  <td>APH00003T7</td>
+                  <td>5794240</td>
+                  <td>0.552 R<sub>&odot;</sub></td>
+                  <td>15.979</td>
                   <td>4240</td>
                 </tr>    
-                <tr>
-                  <td><a href="http://www.planethunters.org/sources/SPH10100751">SPH10100751</a></td>
-                  <td><a href="http://exoplanet.eu/catalog/kic_6185331_b/">KIC 6185331</a></td>
-                  <td>1.27 R<sub>&odot;</sub></td>
-                  <td>15.64</td>
-                  <td>5619</td>
-                </tr>
-                <tr>
-                  <td><a href="http://www.planethunters.org/sources/SPH10119459">SPH10119459</a></td>
-                  <td>KIC 4552729</td>
-                  <td>0.977 R<sub>&odot;</sub></td>
-                  <td>14.98</td>
-                  <td>4620</td>
-                </tr>
-                <tr>
-                  <td><a href="http://www.planethunters.org/sources/SPH10098510">SPH10098510</a></td>
-                  <td>KIC 10005758</td>
-                  <td>0.766 R<sub>&odot;</sub></td>
-                  <td>13.9</td>
-                  <td>6015</td>
-                </tr>
+
               </table>
               
               <h2>Star</h2>
@@ -649,7 +628,7 @@ module.exports =
 
               <div>    
                 <h2>Exo-planet</h2>
-                <p>If you'd like to calculate the size of the exo-planet candidates, you will need to measure the drop in brightness that occurs when the exo-planet travels in front of it's star. You can do this on the <a href="http://www.planethunters.org">Planet Hunters</a> website, simply click on the Planet Hunters ID in the table above for the exo-planet you'd like to measure.</p>  
+                <p>If you'd like to calculate the size of the exo-planet, you will need to measure the drop in brightness that occurs when the exo-planet travels in front of it's star. You can do this on the Planet Hunters website. Simply click on the Planet Hunters ID in the table above. When you move your cursor over the y-axis of the graph a red line should appear to guide your measurement.</p>  
                 <p>Measuring the period of the exo-planet will allow you calculate the distance from the star to the exo-planet. You don't need this if you'd just like to measure the radius of the exo-planet.</p>
               </div>  
               
