@@ -1,31 +1,22 @@
 <% translate = require 't7e' %>
 <div class="secondary-header">
-  <%- translate 'h1', 'educationPage.mainHeader' %>
+  <%- translate 'h1', 'calculatorPage.mainHeader' %>
 </div>
 
 <div class="secondary-white">
 
   <div class="secondary-content">
-    <nav class="sub-nav-education">
-      <%- translate 'button', 'educationPage.tabs.classroom', name: 'classroom' %>
-      <%- translate 'a', 'educationPage.tabs.calculator', name: 'calculator', href: "/#/calculator" %>
+    <nav class="sub-nav-calculator">
     </nav>
   </div>
 
   <div class="secondary-content">
     <div class="left-column">
-      <div class="content sub-nav-education-classroom">
-        <%- translate 'h1', 'educationPage.section.classroom.header' %>
-        <%- translate 'span', 'educationPage.section.classroom.content' %>        
-      </div>
-
-      <div class="calculator content sub-nav-education-calculator">
-        <%- translate 'h1', 'educationPage.section.calculator.header' %>
+      <div class="calculator content sub-nav-calculator">
+        <%- translate 'h1', 'calculatorPage.section.calculator.header' %>
 
         <!-- BEGIN CALCULATOR >>> -->
-        <span>
-          <h2>Planet Hunter Calculator</h2>
-          
+        <span>          
           <p>Been hunting for exo-planets? Found a transit in a light curve? Use the calculators below to find out what the exo-planet might be like.</p>
           
           <p>The following four exo-planet candidates have been found by volunteers on the <a href="http://www.planethunters.org">Planet Hunters</a> website. We refer to these as 'candidates' and not 'planets' as follow up observations need to be made to confirm their existence, but let's just say, so far it's looking good!</p> 

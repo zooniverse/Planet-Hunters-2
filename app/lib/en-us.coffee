@@ -571,6 +571,15 @@ module.exports =
           <h1> This is the Planet Hunters Calculator.</h1>
           '''
 
+  calculatorPage:
+    mainHeader         : 'The Calculator'
+    section:
+      calculator:
+        header         : 'The Planet Hunters Calculator'
+        content        :
+          '''
+          '''
+
   # INITIAL TUTORIAL
   initialTutorial:
     first:

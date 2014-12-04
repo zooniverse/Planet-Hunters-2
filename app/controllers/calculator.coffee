@@ -4,9 +4,9 @@ $ = window.jQuery
 
 SubNav = require "../lib/sub-nav"
 
-class Education extends BaseController
-  className: 'education'
-  template: require '../views/education'
+class Calculator extends BaseController
+  className: 'calculator'
+  template: require '../views/calculator'
 
   events:
     'click button[name="calculate-star"]'         : 'onClickCalculateStar'
@@ -15,7 +15,7 @@ class Education extends BaseController
 
   constructor: ->
     super
-    activateSubNav = new SubNav("education")
+    activateSubNav = new SubNav("calculator")
 
   onClickCalculateStar: (e) =>
     e.preventDefault()
@@ -46,4 +46,4 @@ class Education extends BaseController
     $('[name="estB"').val(0)
     $('[name="period"').val(0)
 
-module.exports = Education
+module.exports = Calculator
