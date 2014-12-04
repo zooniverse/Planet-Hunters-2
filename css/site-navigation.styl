@@ -10,6 +10,17 @@
 
   #current_dataset
     color: white
+    background-color:#2c789b
+    &.active
+      background-color:#2c789b
+      &:after
+        background darken(#2c789b, 20%)
+        top 100%
+        transition .2s
+    &:hover
+      &:after
+        background darken(#2c789b, 20%)
+
 
   .content-container
     width SITE_WIDTH
