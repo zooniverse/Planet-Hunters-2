@@ -18,6 +18,7 @@ class Calculator extends BaseController
     activateSubNav = new SubNav("calculator")
 
   onClickCalculateStar: (e) =>
+    console.log 'BLAH'
     e.preventDefault()
     data = 
       mag:  $('[name="mag"').val()

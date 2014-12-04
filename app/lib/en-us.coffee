@@ -622,7 +622,6 @@ module.exports =
               <h2>Star</h2>
               <p>Let's begin by calculating the mass of the star that the exo-planet orbits around.        
                 You will need to type in the stars magnitude, temperature and radius.</p>
-              <FORM>
               <div>
                   <table>  
                     <tr>    
@@ -713,7 +712,6 @@ module.exports =
                 </ul>  
               </div>
               
-              </FORM>
               <p>Many thanks to the author of the original <a href="http://www.kianjin.com/pcalc.html">Planetary Calculator</a> for allowing us to produce a second simpler version. For a more details about how this calculator works, please visit the original <a href="http://www.kianjin.com/pcalc.html">site</a>.</p> 
           '''
 
