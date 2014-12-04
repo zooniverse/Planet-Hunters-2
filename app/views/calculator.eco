@@ -1,0 +1,38 @@
+<% translate = require 't7e' %>
+<div class="secondary-header">
+  <%- translate 'h1', 'calculatorPage.mainHeader' %>
+</div>
+
+<div class="secondary-white">
+
+  <div class="secondary-content">
+    <nav class="sub-nav-education">
+    </nav>
+  </div>
+
+  <div class="secondary-content">
+    <div class="left-column">
+      <div class="content sub-nav-calculator">
+        <%- translate 'h1', 'calculatorPage.section.calculator.header' %>
+        <%- translate 'span', 'calculatorPage.section.calculator.content' %>        
+      </div>
+
+      <!-- END CONTENT -->
+
+    </div>
+    <div class="right-column">
+      <div class="content">
+        <%- require('./partials/right-column')(@) %>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- PLANET TIME -->
+<div class="bg-starfield-sun">
+  <div class="bg-planet-container">
+    <img class="bg-planet" src="./images/planet.png">
+  </div>
+</div>
+<div class="bg-overlay"></div>

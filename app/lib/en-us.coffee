@@ -571,6 +571,129 @@ module.exports =
           <h1> This is the Planet Hunters Calculator.</h1>
           '''
 
+  calculatorPage:
+    mainHeader         : 'The Calculator'
+    section:
+      calculator:
+        header         : 'The Planet Hunters Calculator'
+        content        :
+          '''
+              <p>The following exo-planet has been found by volunteers on this Planet Hunters website, you can see more through <a href="http://talk.planethunters.org/#/collections/CPHS0000d9">this collection</a>.</p>
+              <p>The following four exo-planet candidates have been found by volunteers on the <a href="http://www.planethunters.org">Planet Hunters</a> website. We refer to these as 'candidates' and not 'planets' as follow up observations need to be made to confirm their existence, but let's just say, so far it's looking good!</p> 
+              <table>
+                <tr>
+                  <th>Planet Hunters ID</th>
+                  <th>Kepler ID</th>
+                  <th>Radius of Star</th>
+                  <th>Magnitude of Star</th>
+                  <th>Temperature of Star (K)</th>
+                </tr>
+                <tr>
+                  <td>APH00003T7</td>
+                  <td>5794240</td>
+                  <td>0.552 R<sub>&odot;</sub></td>
+                  <td>15.979</td>
+                  <td>4240</td>
+                </tr>    
+
+              </table>
+              
+              <h2>Star</h2>
+              <p>Let's begin by calculating the mass of the star that the exo-planet orbits around.        
+                You will need to type in the stars magnitude, temperature and radius.</p>
+              <div>
+                  <table>  
+                    <tr>    
+                      <th>Apparent Magnitude</th>
+                      <th>Temperature</th>
+                      <th>Radius</th>
+                      <th>Mass</th>
+                      <th>Distance from Earth</th>
+                    </tr>
+                    <tr>  
+                      <td><input name="mag"  value="0" maxlength="12" size="4"></td>
+                      <td><input name="temp" value="0" maxlength="12" size="4">K</td>
+                      <td><input name="radS" value="0" maxlength="15" size="4">R<sub>&odot;</sub></td>
+                      <td><span id="massS"> </span></td>
+                      <td><span id="distS"> </span></td>  
+                    </tr>          
+                    </tr>
+                      <td class="button_row" colspan="5">
+                        <button name="calculate-star" class="button">
+                          Calculate
+                        </button>  
+                    </tr>  
+                  </table>
+              </div>
+
+              <div>    
+                <h2>Exo-planet</h2>
+                <p>If you'd like to calculate the size of the exo-planet, you will need to measure the drop in brightness that occurs when the exo-planet travels in front of it's star. You can do this on the Planet Hunters website. Simply click on the Planet Hunters ID in the table above. When you move your cursor over the y-axis of the graph a red line should appear to guide your measurement.</p>  
+                <p>Measuring the period of the exo-planet will allow you calculate the distance from the star to the exo-planet. You don't need this if you'd just like to measure the radius of the exo-planet.</p>
+              </div>  
+              
+              <table>
+                <tr>
+                  <th>Estimated Brightness</th> 
+                  <th>Actual Brightness</th> 
+                  <th>Period of the exo-planet</th> 
+                </tr>  
+                <tr>
+                  <td><INPUT NAME="estB" VALUE="0" MAXLENGTH="15" SIZE=10>%</td>
+                  <td><INPUT NAME="actB" VALUE="0" MAXLENGTH="15" SIZE=10>%</td>
+                  <td><INPUT NAME="period" VALUE="0" MAXLENGTH="15" SIZE=6> days</td>
+                </tr>
+              </table>        
+
+              <table>
+                <tr>    
+                  <th>Radius</th>
+                  <th>Volume</th>
+                  <th>Mass</th>
+                  <th>Density</th>
+                </tr>
+                <tr>
+                  <td><span id="radP"></span></td>
+                  <td><span id="volP"></span></td>  
+                  <td><span id="massP"></span></td>  
+                  <td><span id="rhoP"></span></td>
+                </tr>
+                <tr>        
+                  <th colspan="2">Time taken for the exo-planet to transit it's star.</th>
+                  <th>Distance of exo-planet from it's star.</th>
+                  <th>Temperature</th>
+                </tr>  
+                <tr>     
+                  <td colspan="2"><span id="tdur"></span></td>
+                  <td><span id="distP"></span></td>
+                  <td><span id="tempP"></span></td>
+                </tr>
+                <tr>
+                  <td class="button_row" colspan="4">
+                    <button name="calculate-planet" class="button">
+                      Calculate
+                    </button>
+                    <button name="calculate-planet-reset" class="button">
+                      Reset
+                    </button>
+                  </td>
+                </tr>
+              </table>    
+
+              <div>
+              <h2>Constants</h2>
+                <ul>
+                  <li>R<sub>&odot;</sub>: Radius of the Sun =  695,500 km</li>
+                  <li>M<sub>&odot;</sub>: Mass of the Sun = 1.99 x 10<sup>30</sup> kg</li>
+                  <li>R<sub>E</sub>: Radius of the Earth = 6,371 km</li>
+                  <li>M<sub>E</sub>: Mass of the Earth = 5.97 x 10<sup>24</sup> kg</li>
+                  <li>AU: Astronomical Units. 1AU is the distance from the earth to the sun. 1AU = 149,598,000 km</li>
+                </ul>  
+              </div>
+              
+              <p>Many thanks to the author of the original <a href="http://www.kianjin.com/pcalc.html">Planetary Calculator</a> for allowing us to produce a second simpler version. For a more details about how this calculator works, please visit the original <a href="http://www.kianjin.com/pcalc.html">site</a>.</p> 
+          '''
+
   # INITIAL TUTORIAL
   initialTutorial:
     first:
