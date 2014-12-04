@@ -8,6 +8,7 @@
   <div class="secondary-content">
     <nav class="sub-nav-education">
       <%- translate 'button', 'educationPage.tabs.classroom', name: 'classroom' %>
+      <%- translate 'a', 'educationPage.tabs.calculator', name: 'calculator', href: '/#/calculator' %>
     </nav>
   </div>
 
@@ -24,10 +25,9 @@
       <!-- END CONTENT -->
 
     </div>
-    <div class="right-column">
-      <div class="content">
-        <%- require('./partials/right-column')(@) %>
-      </div>
+    
+    <div class="content">
+      <%- require('./partials/right-column')(@) %>
     </div>
 
   </div>
