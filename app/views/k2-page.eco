@@ -1,0 +1,39 @@
+<% translate = require 't7e' %>
+<div class="secondary-header">
+  <%- translate 'h1', 'K2Page.K2' %>
+</div>
+
+<div class="secondary-white">
+  <div class="secondary-content">
+    <nav class="sub-nav-science">
+      <%- translate 'button', 'K2Page.K2', name: 'K2' %>
+
+    </nav>
+  </div>
+  <div class="secondary-content">
+    <div class="left-column">
+      <div class="content sub-nav-science-K2">
+        <%- translate 'h1', 'K2Page.K2' %>
+        <%- translate 'p', 'K2Page.p1' %>
+        <img src="images/K2_explanation.jpg" />
+        <%- translate 'p', 'K2Page.p2' %>
+        <%- translate 'p', 'K2Page.p3' %>
+        <%- translate 'p', 'K2Page.p4' %>
+      </div>
+    </div>
+
+    <div class="right-column">
+      <div class="content">
+        <%- require('./partials/right-column')(@) %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PLANET TIME -->
+<div class="bg-starfield-sun">
+  <div class="bg-planet-container">
+    <img class="bg-planet" src="./images/planet.png">
+  </div>
+</div>
+<div class="bg-overlay"></div>

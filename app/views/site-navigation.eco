@@ -56,5 +56,6 @@
     <%- translate 'a', 'siteNavigation.profile', href: '#/profile' %>
     <%- translate 'a', 'siteNavigation.talk', href: 'http://talk.planethunters.org' %>
     <%- translate 'a', 'siteNavigation.blog', href: 'http://blog.planethunters.org' %>
+    <%- translate 'a', 'siteNavigation.currentDataset', href:'#/survey', id:"current_dataset" %>
   </div>
 </div>

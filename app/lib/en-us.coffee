@@ -9,7 +9,7 @@ module.exports =
     education:   'Education'
     talk:        'Talk'
     blog:        'Blog'
-
+    currentDataset: "Classifying: K2-0"
   # Home Page
   home:
     header:
@@ -19,6 +19,8 @@ module.exports =
       callToAction     : 'Ready to discover new worlds?'
       description      : 'Join the search for exoplanets with Planet Hunters'
       beginClassifying : 'Start Classifying'
+      learnMore        : 'Learn More'
+
     whatDo:
       title            : ''
       content          : ''
@@ -54,7 +56,7 @@ module.exports =
         instructions   : 'While you are classifying keep an eye out for unusual lightcurves and tag them with a hash tag on talk!'
         hashtag        : 'Use the tag:'
         enlargeImage   : 'Click on image to enlarge'
-      discussion: 
+      discussion:
         header         : 'Discussions about this star'
         commentBox     : 'Make a comment, or mark with a hashtag...'
         submitComment  : 'Submit'
@@ -76,6 +78,13 @@ module.exports =
   profile:
     header             : 'Your Profile'
     launchMiniCourse   : 'Launch Mini Course'
+
+  K2Page:
+    K2: "Kepler 2"
+    p1:"In May of 2013, the Kepler spacecraft suffered its second reaction wheel failure. This malfunction left only two working reaction wheels to keep Kepler's gaze steady toward its target field; unfortunately, three wheels are needed to stabilize a spacecraft in three dimensions. For a time, this malfunction seemed to spell the end for Kepler’s mission. Luckily, scientists and engineers devised an ingenious method to allow Kepler to continue its search for exoplanets, and they dubbed their proposal the “K2” mission."
+    p2:"The key to Kepler revitalization lies in its shape. By facing one of Kepler’s six hexagonal edges towards the Sun, the pressure exerted by the sunlight will push on the spacecraft’s body. If Kepler starts to roll slightly in one direction, the light pressure will be become unbalanced, and the spacecraft will be pushed back toward a balanced position. In other words, the sunlight can act as a replacement for Kepler's third reaction wheel!"
+    p3:"The K2 mission has been approved and is now underway. Over the next two to three years, Kepler will observe target stars in a number of fields, spread across the plane of the Earth’s orbit. To keep the craft stable and to avoid looking too close to the Sun, each field can only be observed for about 75 days before the spacecraft must turn to the next field. Tens of thousands of stars will be observed in each field."
+    p4:"Data from each field will be released to the astronomical community and the public soon after they are processed. Planet Hunters now allows you to search for transits in this brand new data set, in addition to the classic Kepler-field data. You will be among the first to look closely at these light curves. Happy hunting!"
 
   spottersGuide:
     header             : 'Spotter\'s Guide'
@@ -129,7 +138,7 @@ module.exports =
     section:
       mission:
         header         : 'Our Mission'
-        content        : 
+        content        :
           '''
           <p>Welcome to Planet Hunters. With your help, we are looking for planets around other stars.</p>
           <p>NASA's Kepler spacecraft is one of the most powerful tools in the search for extrasolar planets (exoplanets), planets orbiting stars outside of our own Solar System, and its discoveries continue to revolutionize our understanding of how planetary systems grow and evolve. Approximately every 30 minutes, Kepler monitors the brightness of many thousands of stars simultaneously for the signature of exoplanets via the transit technique. When an exoplanet passes or transits in front of its parent star, the star momentarily dims. This decrease in brightness is detectable by Kepler and lasts for a few hours or more and repeats once per orbit of the planet.</p>
@@ -245,43 +254,43 @@ module.exports =
 
           <h2 id="faq-data">Where does the data come from?<img class="faq up-image link" target="faq-top" src="images/icons/faq-up.png"/></h2>
           <p>The observations we show on Planet Hunters come from the NASA Kepler spacecraft. They are brightness measurements of stars in the Kepler field during the main Kepler mission and from fields observed in the K2 phase. You can learn more about the Kepler field and K2 on the science page. NASA is archiving the Kepler data products and resulting catalogs at the <a href="http://archive.stsci.edu/kepler">Mikulski Archive for Space Telescopes (MAST)</a> and the <a href="http://exoplanetarchive.ipac.caltech.edu/docs/KeplerMission.html">NASA Exoplanet Archive</a></p>
-          
+
           <h2 id="faq-talk">I have a question or I found something interesting, who should I talk to?<img class="faq up-image link" target="faq-top" src="images/icons/faq-up.png"/></h2>
           <p>You can go to the star's Planet Hunters Talk page and make a 140 character comment, label the star with a hashtag, start a side discussion, or post a new thread in Talk's message board forum. On Talk you can discuss and further analyze the available data for the star as well as interact with the rest the Planet Hunters community including members of the science team. You can directly access Talk after classifying a star's light curve or at <a href="http://talk.planethunters.org">http://talk.planethunters.org</a></p>
-          
+
           <h2 id="faq-classification">What happens to my classification after I submit it?<img class="faq up-image link" target="faq-top" src="images/icons/faq-up.png"/></h2>
           <p>It is stored in the Zooniverse's database with everyone else’s classifications from Planet Hunters. The Planet Hunters science team then will combine and analyze the results to identify planet candidates and estimate the occurrence of different types and kinds of planets and solar systems. Keep an eye on the <a href="http://blog.planethunters.org">Planet Hunters blog</a> for updates.</p>
-          
+
           <h2 id="faq-mistake">I made a mistake, can I got back and edit my classification?<img class="faq up-image link" target="faq-top" src="images/icons/faq-up.png"/></h2>
           <p>Once you've finished reviewing a specific light curve and your classification has been submitted to our database, you can’t go back and change it. Don't worry too much. Just try to do your best when reviewing the light curves. We combine the assessments from multiple volunteers to identify transits, so chances are if one person missed a transit by mistake the other classifiers will likely have marked it.</p>
-          
+
           <h2 id="faq-correct">How do I know if I'm doing this right?<img class="faq up-image link" target="faq-top" src="images/icons/faq-up.png"/></h2>
           <p>We don't know where all the planet transits are, otherwise we wouldn't be asking for your help. Several Planet Hunters volunteers review each light curve and the results are then combined to identify transits. Chances are if you think a feature in a light curve is a transit and it is real, the other volunteers will have marked it too. You may come across a light curve with known planet candidates in it or a simulation. You can check if you identify those transits, but don't worry too much. Just use your best judgment when classifying.</p>
-          
+
           <h2 id="faq-discoveries">Do I get credit for my discoveries?<img class="faq up-image link" target="faq-top" src="images/icons/faq-up.png"/></h2>
           <p>Yes, everyone who contributed to discovering an exoplanet is acknowledged in some way. If you are the first person to flag a particular transit as a potential exoplanet, and we can confirm that it is real or it is a focus of a paper, then we will offer to make you a co-author of the discovery paper. All others after the first will be acknowledged for their contribution on the website and in the paper.</p>
-          
+
           <h2 id="faq-login">Do I have to log in to get credit for my discoveries?<img class="faq up-image link" target="faq-top" src="images/icons/faq-up.png"/></h2>
           <p>Yes, you do need to register and log in when classifying to get credit for your discoveries. It's the only way we know for sure that you were the one that marked the transit and will be able to contact you about the discovery.</p>
-          
+
           <h2 id="faq-name">Do I get to name the exoplanet I found?<img class="faq up-image link" target="faq-top" src="images/icons/faq-up.png"/></h2>
           <p>Not yet, but maybe one day in the future you will be able help name your discovery. The International Astronomical Union (IAU) has enacted a plan for the public naming of extrasolar planets (exoplanets). The first set of exoplanets will be officially bestowed names in August 2015. You can find out more about the IAU's naming process at the <a href="http://nameexoworlds.org">Name ExoWorlds</a> website.</p>
-          
+
           <h2 id="faq-candidate">Why can't you say the transits I spotted are a bonafied planet? What is a planet candidate?<img class="faq up-image link" target="faq-top" src="images/icons/faq-up.png"/></h2>
           <p>With the Kepler light curve alone, we can't be 100% certain that a transit-like feature is produced by an orbiting planet. There are many astrophysical false positives that can mimic a transit signature. Therefore we call discoveries planet candidates. A lot of effort and follow-up is required to confirm a planet candidate. To validate a planet candidate as a true planet, an estimate of the mass of the transiting body is needed. The transit method only gives an estimate of the size of the body, not its mass. Through statistical means or if a mass measurement is obtained and confirmed to be planetary, then the planet candidate gets promoted to a confirmed planet. To measure the mass typically radial velocity observations are used, where you measure the wobble of the star due to the slight gravitational tug due of the orbiting body. Most of the stars Kepler observes are either too faint or the planet orbiting is too small to have a radial velocity signal detectable by today's best ground-based telescopes and instruments. The majority of planet candidates found in the Kepler data will remain candidates.</p>
-          
+
           <h2 id="faq-known">Why do some light curves already have known planet candidates?<img class="faq up-image link" target="faq-top" src="images/icons/faq-up.png"/></h2>
           <p>The Kepler team, other astronomers, and the original Planet Hunters project have been searching the Kepler field data for several years. There are many known transiting planet candidates discovered during this period. We highlight the known planet candidates in the Kepler field data after you finish your classification, so you know if you are finding a new discovery. Even if there is a known planet candidate found by others, we need to know if Planet Hunters can find it in order to be able to do accurate planet frequencies, so your clicks on these stars are just as useful as on stars without known planets. Even though a light curve may contain the transits of a known planet candidate, there might also be transits from an additional previously undetected planet.</p>
-          
+
           <h2 id="faq-gaps">Why are there gaps in the light curves?<img class="faq up-image link" target="faq-top" src="images/icons/faq-up.png"/></h2>
           <p>The gaps in the data are typically due to the Kepler spacecraft not observing or the data quality is bad typically such as a cosmic ray hitting the detector.</p>
-          
+
           <h2 id="faq-simulations">Why are there simulated transits?<img class="faq up-image link" target="faq-top" src="images/icons/faq-up.png"/></h2>
           <p>The simulated transits will enable the science team to understand exactly what kinds of planets the project can find and which ones are difficult for humans to spot by eye in the light curves. We will use this information to estimate the abundance of planets in our Galaxy. You can learn more about the simulations on the Science Page.</p>
-          
+
           <h2 id="faq-news">How do I keep up to date on the latest Planet Hunters news?<img class="faq up-image link" target="faq-top" src="images/icons/faq-up.png"/></h2>
           <p>Keep an eye on the <a href="http://blog.planethunters.org">Planet Hunters blog</a>. We frequently post science results and site news there as well have posts discussing the science behind the project. You can also receive updates on Planet Hunters through the project's <a href="https://plus.google.com/109754226869605076230/posts">Twitter</a>, and <a href="https://plus.google.com/109754226869605076230/posts">Google+</a> accounts.</p>
-          
+
           <p><strong>Didn't find an answer to your question? Visit <a href="http://talk.planethunters.org">Planet Hunters Talk</a> and ask the Planet Hunters community.</strong></p>
           '''
 
@@ -294,7 +303,7 @@ module.exports =
       section:
         about:
           header         : 'The Story So Far...'
-          content        : 
+          content        :
             '''
             <p>On December 16, 2010, the <a href="http://www.zooniverse.org">Zooniverse</a> launched the original Planet Hunters to enlist the public's help to search data from the NASA's <a href="http://kepler.nasa.gov">Kepler</a> spacecraft for the characteristic drop in light due to an orbiting extrasolar planets (exoplanets) crossing in front of their parent stars.</p>
 
@@ -309,7 +318,7 @@ module.exports =
 
         teams:
           header         : 'Teams'
-          content        : 
+          content        :
             '''
             <h2>Science Team</h2>
               <div class="team-members">
@@ -384,7 +393,7 @@ module.exports =
                   <div class="bio">Jo has been a member of the Zooniverse since 2009 and is also a Merger Zoo moderator over on the Galaxy Zoo forum. Completing a 1st class degree in fine art is currently exploring how art and science can fuse together with Enjoy Chaos.</div>
                 </div>
               </div>
-            
+
               <h2>Development Team</h2>
               <div class="team-members">
                <div class="team-member">
@@ -459,7 +468,7 @@ module.exports =
 
         organizations:
           header         : 'Organizations'
-          content        : 
+          content        :
             '''
             <div class="organization">
               <h2>The Adler Planetarium</h2>
@@ -494,11 +503,11 @@ module.exports =
     section:
       classroom:
         header         : 'In the Classroom'
-        content        : 
+        content        :
           '''
           <h2>Can I use Planet Hunters 2 in the classroom?</h2>
             <p>Yes! Planet Hunters, like all the Zooniverse projects, offers students a unique opportunity to explore real scientific data while making a contribution to cutting edge research! We would like to stress that it's okay if students don't mark all the features correctly since each light curve is seen by multiple volunteers.  The task itself is simple enough that we believe most people can take part and make a worthwhile contribution regardless of age.</p>
-         
+
           <!-- </div>
           <div class="content sub-nav-education-resources">-->
             <h1>Resources</h1>
@@ -513,11 +522,11 @@ module.exports =
               Here are some resources that can be great tools for introducing students to Planet Hunters. Here are a couple of our favorites:
               <ul>
                 <li>
-                  NASA Kepler Missions website: 
+                  NASA Kepler Missions website:
                   <a href="http://kepler.nasa.gov">http://kepler.nasa.gov</a>
                 </li>
                 <li>
-                  NASA Planet Quest website: 
+                  NASA Planet Quest website:
                   <a href="http://planetquest.jpl.nasa.gov">http://planetquest.jpl.nasa.gov</a>
                 </li>
                 <li>
@@ -540,11 +549,11 @@ module.exports =
                   Coming Fall 2014, Planet Hunters Educators Guide! Zooniverse educators have developed lessons to show you how you can best utilize Planet Hunters in your classroom.
                 </li>
                 <li>
-                  Educator Resource Guide provided by NASA: 
+                  Educator Resource Guide provided by NASA:
                   <a href="http://astrobiology.nasa.gov/media/medialibrary/2013/10/Astrobiology-Educator-Guide-2007.pdf">Astrobiology in Your Classroom, Life on Earth …and elsewhere?</a>
                 </li>
                 <li>
-                  <a href="http://www.lpi.usra.edu/education/explore/our_place">Our Place in Space</a> 
+                  <a href="http://www.lpi.usra.edu/education/explore/our_place">Our Place in Space</a>
                   activities produced by the Lunar and Planetary Institute
                 </li>
               </ul>
@@ -557,7 +566,7 @@ module.exports =
           '''
       calculator:
         header         : 'The Calculator'
-        content        : 
+        content        :
           '''
           <h1> This is the Planet Hunters Calculator.</h1>
           '''
@@ -570,7 +579,7 @@ module.exports =
 
     theData:
       header: 'The Data'
-      content:  'Each point on the light curve represents one measurement of a star\'s brightness taken by NASA’s Kepler Space Telescope. These measurements are taken approximately every 30 minutes. The higher the dot, the brighter the star appears.' 
+      content:  'Each point on the light curve represents one measurement of a star\'s brightness taken by NASA’s Kepler Space Telescope. These measurements are taken approximately every 30 minutes. The higher the dot, the brighter the star appears.'
 
     xAxis:
       header: 'The Data'
@@ -592,7 +601,7 @@ module.exports =
     spotTransits:
       header: 'Can you spot the transits?'
       content: 'Depending on how far the planet is from the star, you may see one or many dips in the light curve. Most transits that you’ll typically see span a few hours to a day. Try marking the remaining transits in this example light curve.'
-    
+
     showTransits:
       header: 'Did you spot them?'
       content: 'The remaining transits have been highlighted in red. Each light curve is reviewed by several volunteers so don\'t be discouraged if you missed a hard to spot transit. Transit hunting can be tricky and requires practice. Just do your best.'
@@ -600,7 +609,7 @@ module.exports =
     zooming:
       header: 'Zoom'
       content: 'You can use the zoom tool to look at the light curve in more detail. When zoomed in, you can use the slider along the bottom of the light curve to scroll through. You can toggle the scale of the zoom by clicking the magnifying glass here.'
-    
+
     talk:
       header: 'Talk'
       content: 'Sometimes you might see something interesting or have a question. TALK is a tool where you can join Planet Hunters project scientists and volunteers to observe, collect, share, and discuss Planet Hunters data.'
@@ -618,8 +627,8 @@ module.exports =
     talk:
       header: 'Discuss your work with Talk'
       content: 'Sometimes you might see something interesting or have a question. TALK is a tool where you can join Planet Hunters project scientists and volunteers to observe, collect, share, and discuss Planet Hunters data.'
-      
-    dataGaps: 
+
+    dataGaps:
       header: 'Gaps in the Data'
       content: 'Sometimes you might see gaps in the data. This means that Kepler was either turned off or not pointing at the star.'
 
