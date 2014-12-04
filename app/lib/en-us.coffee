@@ -589,11 +589,11 @@ module.exports =
                   <th>Temperature of Star (K)</th>
                 </tr>
                 <tr>
-                  <td>APH00003T7</td>
-                  <td>5794240</td>
+                  <td><a href="http://talk.planethunters.org/#/subjects/APH00003t7">APH00003T7</a></td>
+                  <td><a href="http://archive.stsci.edu/kepler/data_search/search.php?action=Search&ktc_kepler_id=5794240">5794240</a></td>
                   <td>0.552 R<sub>&odot;</sub></td>
                   <td>15.979</td>
-                  <td>4240</td>
+                  <td>3948</td>
                 </tr>    
 
               </table>
