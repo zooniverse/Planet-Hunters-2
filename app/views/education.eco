@@ -8,7 +8,7 @@
   <div class="secondary-content">
     <nav class="sub-nav-education">
       <%- translate 'button', 'educationPage.tabs.classroom', name: 'classroom' %>
-      <%- translate 'button', 'educationPage.tabs.calculator', name: 'calculator' %>
+      <%- translate 'a', 'educationPage.tabs.calculator', name: 'calculator', href: "/#/calculator" %>
     </nav>
   </div>
 
