@@ -864,6 +864,7 @@ class Classifier extends BaseController
     @joinConvoBtn.hide().siblings().show()
 
   onClickSubmitTalk: =>
+    console.log("triggering")
     return if @talkComment.val() is "" # reject empty comments
 
     @appendComment(@talkComment, @commentsContainer)
