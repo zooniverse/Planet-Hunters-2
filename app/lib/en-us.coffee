@@ -120,7 +120,7 @@ module.exports =
       yes              : 'Yes'
       no               : 'No'
       never            : 'Never'
-      doNotShow        : 'Do not show mini-course in the future.'
+    doNotShow          : 'Do not show mini-course in the future.'
     closeButton        : 'Close'
 
 
