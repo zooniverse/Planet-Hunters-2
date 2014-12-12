@@ -7,8 +7,8 @@
   <div id="subject-container">
     <div class="subject-header">
       <div class="do-you-see-a-transit">
-        <p>Planet Hunters is currently experiencing technical difficulties.</p>
-        <p>Please check back soon as we are working to resolve these problems.</p>
+        <p>Congratulations! We have classified all of the current K2 data! Don't worry there will be more soon.</p>
+        <p>Until then there is still a lot of K1 data we need your help with!</p>
         <p>Thank you!</p>
         <%# translate 'h3', 'classify.instructionHeader' %>
         <%# translate 'p', 'classify.instruction' %>
