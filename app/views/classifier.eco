@@ -7,8 +7,11 @@
   <div id="subject-container">
     <div class="subject-header">
       <div class="do-you-see-a-transit">
-        <%- translate 'h3', 'classify.instructionHeader' %>
-        <%- translate 'p', 'classify.instruction' %>
+        <p>Planet Hunters is currently experiencing technical difficulties.</p>
+        <p>Please check back soon as we are working to resolve these problems.</p>
+        <p>Thank you!</p>
+        <%# translate 'h3', 'classify.instructionHeader' %>
+        <%# translate 'p', 'classify.instruction' %>
       </div>
       <div id="notification">
         <div id="notification-message"></div>
@@ -75,10 +78,10 @@
             </div>
 
             <p class="talk-pill-nologin" style="margin: 10px; color: #fc4541; font-size: 14px; font-style=italic;">
-              Please 
+              Please
               <button style="text-decoration: underline" class="sign-in">
               sign in
-              </button> 
+              </button>
               to discuss.
             </p>
 
@@ -94,7 +97,7 @@
           <div class="content">
             <%- translate 'h2', 'classify.summaryScreen.talk.header' %>
             <%- translate 'p', 'classify.summaryScreen.talk.instruction', class: 'align-left' %>
-            
+
             <!-- <div id=".ukirt">
               Additional light curve information: <br>
               <ul>
@@ -173,18 +176,18 @@
 
     <div id="subject-metadata">
       <%- translate 'h4', 'classify.starInformation.header' %>
-  
+
       <!--
       <div class="meta-field meta star-id">
         <%- translate 'span', 'classify.starInformation.zooniverseId' %>
       </div>
       <div id="zooniverse-id" class="meta-value meta star-id">
         <%- translate 'span', 'classify.starInformation.notAvailable' %>
-      </div> 
+      </div>
       -->
 
       <div class='common'>
-        
+
         <!-- ZOONIVERSE ID -->
         <div class="meta-field meta star-id">
           <%- translate 'span', 'classify.starInformation.zooniverseId' %>
@@ -192,7 +195,7 @@
         <div id="zooniverse-id" class="meta-value meta star-id">
           <%- translate 'span', 'classify.starInformation.notAvailable' %>
         </div>
-        
+
         <!-- KEPLER ID -->
         <div class="meta-field meta star-id">
           <%- translate 'span', 'classify.starInformation.keplerId' %>
@@ -212,7 +215,7 @@
         <!-- MAGNITUDE -->
         <div class='meta-field meta'>
           <%- translate 'span', 'classify.starInformation.magnitude' %>
-        </div>  
+        </div>
         <div id="magnitude" class="meta-value meta">
           <%- translate 'span', 'classify.starInformation.notAvailable' %>
         </div>
@@ -222,14 +225,14 @@
       <div class='k1-metadata'>
         <!-- <div id="zooniverse-id" class="meta"></div> -->
 
-        <!-- TYPE -->        
+        <!-- TYPE -->
         <div class='meta-field meta'>
           <%- translate 'span', 'classify.starInformation.type' %>
-        </div>       
+        </div>
         <div id="star-type" class="meta-value meta">
           <%- translate 'span', 'classify.starInformation.notAvailable' %>
         </div>
-        
+
         <!-- TEMPERATURE -->
         <div class="meta-field meta">
           <%- translate 'span', 'classify.starInformation.temperature' %>
@@ -241,7 +244,7 @@
         <!-- RADIUS -->
         <div class='meta-field meta'>
           <%- translate 'span', 'classify.starInformation.radius' %>
-        </div>     
+        </div>
         <div id="radius" class="meta-value meta">
           <%- translate 'span', 'classify.starInformation.notAvailable' %>
         </div>
@@ -253,7 +256,7 @@
         <!-- TYPE -->
         <div class='meta-field meta'>
           <%- translate 'span', 'classify.starInformation.type' %>
-        </div>      
+        </div>
         <div id="star-type" class="meta-value meta">
           <%- translate 'span', 'classify.starInformation.notAvailable' %>
         </div>
@@ -269,7 +272,7 @@
         <!-- RADIUS -->
         <div class='meta-field meta'>
           <%- translate 'span', 'classify.starInformation.radius' %>
-        </div>     
+        </div>
         <div id="radius" class="meta-value meta">
           <%- translate 'span', 'classify.starInformation.notAvailable' %>
         </div>
@@ -278,7 +281,7 @@
 
       <div id="button-container">
         <button class="std-btn marking-btn yellow" name="finished-marking">
-          <%- translate 'span', 'classify.buttons.finished' %>        
+          <%- translate 'span', 'classify.buttons.finished' %>
         </button>
         <button class="std-btn marking-btn yellow" name="continue-button">
           <%- translate 'span', 'classify.buttons.continue' %>

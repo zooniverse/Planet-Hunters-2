@@ -7,12 +7,14 @@
     "stack-of-pages": "0.0.11",
     "t7e": "~0.2.3",
     "zooniverse": "~0.7.1",
-    "zootorial": "~0.4.12"
+    "zootorial": "~0.4.12",
+    "translator-seed": "^0.1.2"
   },
   "scripts": {
     "start": "haw serve --port 3416",
     "deploy-to-staging": "haw build && publisssh ./build zooniverse-demo/planethunters/dev && rm -rf ./build",
     "deploy-to-demo": "haw build && publisssh ./build zooniverse-demo/planethunters && rm -rf ./build",
-    "deploy": "haw build && publisssh ./build zooniverse-static/www.planethunters.org && rm -rf ./build"
+    "deploy": "haw build && publisssh ./build zooniverse-static/www.planethunters.org && rm -rf ./build",
+    "deploy-locale": "seed-translation --project planet_hunter --env production"
   }
 }

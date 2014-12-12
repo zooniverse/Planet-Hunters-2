@@ -6,8 +6,11 @@
     </div>
 
     <div class="description">
-      <%- translate 'span', 'home.header.description' %>
-      <%- translate 'a', 'home.header.beginClassifying', href: '#/classify', id: "begin-classifying" %>
+      <%# translate 'span', 'home.header.description' %>
+      <%# translate 'a', 'home.header.beginClassifying', href: '#/classify', id: "begin-classifying" %>
+      <p>Planet Hunters is currently experiencing technical difficulties.</p>
+      <p>Please check back soon as we are working to resolve these problems.</p>
+      <p>Thank you!</p>
     </div>
 
     <div id='social-media'>
