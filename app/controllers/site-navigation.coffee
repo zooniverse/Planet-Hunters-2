@@ -1,4 +1,5 @@
 BaseController = require 'zooniverse/controllers/base-controller'
+User = require 'zooniverse/models/user'
 $ = window.jQuery
 
 class SiteNavigation extends BaseController
@@ -28,6 +29,11 @@ class SiteNavigation extends BaseController
     addEventListener 'hashchange', @onHashChange, false
     @onHashChange()
     window.onresize = => @onWindowResize()
+
+    User.on 'change', (e, user) =>
+      console.log user, +user?.project?.classification_count
+      if +user?.project?.classification_count > 0
+        @navLinks.removeClass 'hide-by-default'
 
   onHashChange: =>
     @navLinks.removeClass @activeClass
