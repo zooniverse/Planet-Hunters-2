@@ -5,7 +5,4 @@ class VotePage extends BaseController
   className: 'vote-page'
   template: require '../views/vote-page'
 
-  constructor: ->
-    super
-
 module.exports = VotePage

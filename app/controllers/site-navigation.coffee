@@ -31,7 +31,6 @@ class SiteNavigation extends BaseController
     window.onresize = => @onWindowResize()
 
     User.on 'change', (e, user) =>
-      console.log user, +user?.project?.classification_count
       if +user?.project?.classification_count > 0
         @navLinks.removeClass 'hide-by-default'
 
