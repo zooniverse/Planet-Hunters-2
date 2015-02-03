@@ -492,7 +492,7 @@ module.exports =
             </div>
 
             <h2>Zooniverse</h2>
-            <p><img src="./images/logos/zooniverse.png" class="logo"><a href="http://www.zooniverse.org/">The Zooniverse</a> is home to the internet’s largest, most popular and most successful citizen science projects. The Zooniverse and the suite of projects it contains is produced, maintained and developed by the Citizen Science Alliance. The member institutions of the CSA work with many academic and other partners around the world to produce projects that use the efforts and ability of volunteers to help scientists and researchers.</p>
+            <p><img style="padding-bottom: 100px;" src="./images/logos/zooniverse.png" class="logo"><a href="http://www.zooniverse.org/">The Zooniverse</a> is home to the internet’s largest, most popular and most successful citizen science projects. The Zooniverse and the suite of projects it contains is produced, maintained and developed by the Citizen Science Alliance. The member institutions of the CSA work with many academic and other partners around the world to produce projects that use the efforts and ability of volunteers to help scientists and researchers.</p>
             '''
 
   educationPage:
