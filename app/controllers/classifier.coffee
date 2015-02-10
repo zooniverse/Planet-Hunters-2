@@ -115,8 +115,10 @@ class Classifier extends BaseController
 
 
     User.on 'change', @onUserChange
+    Subject.on 'no-more', @onNoMoreSubjects
     Subject.on 'fetch', @onSubjectFetch
     Subject.on 'select', @onSubjectSelect
+
     @Subject = Subject
 
     $(document).on 'mark-change', =>
@@ -278,6 +280,9 @@ class Classifier extends BaseController
       @launchTutorial()
     else
       Subject.next() unless classification?
+
+  onNoMoreSubjects: ->
+    $('#all-done-message').html 'Wow! It appears you\'ve done all there is to do for now. Thanks for your work and check back later.'
 
   initializeMiniCourse: ->
     return unless User.current?
