@@ -282,7 +282,7 @@ class Classifier extends BaseController
       Subject.next() unless classification?
 
   onNoMoreSubjects: ->
-    $('#all-done-message').html 'Wow! It appears you\'ve done all there is to do for now. Thanks for your work and check back later.'
+    $('#all-done-message').html 'Wow! It appears you\'ve done all there is to do for now. Thanks for your work and check back soon.'
 
   initializeMiniCourse: ->
     return unless User.current?
