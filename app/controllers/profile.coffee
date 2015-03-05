@@ -20,7 +20,7 @@ Paginator::addItemToContainer = (item) ->
   location = subjects[0].selected_light_curve?.location
   location ?= subjects[0].location
 
-  if window.location.origin != "http://planethunters.org"
+  if window.location.origin != "http://planethunters.org"  and window.location.origin != "http://www.planethunters.org"
     location = location.replace("http://www.planethunters.org/", "https://s3.amazonaws.com/zooniverse-static/planethunters.org/")
 
   itemEl.data "location", location

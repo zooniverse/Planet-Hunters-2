@@ -352,7 +352,7 @@ class Classifier extends BaseController
     # reset fav
     @el.find(".toggle-fav").removeClass("toggled")
 
-    if window.location.origin != "http://planethunters.org"
+    if window.location.origin != "http://planethunters.org"  and window.location.origin != "http://www.planethunters.org"
       jsonFile = @subject.selected_light_curve.location.replace("http://www.planethunters.org/", "https://s3.amazonaws.com/zooniverse-static/planethunters.org/")
     else
       jsonFile = @subject.selected_light_curve.location
