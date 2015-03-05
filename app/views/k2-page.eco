@@ -18,7 +18,7 @@
         <img src="images/K2_explanation.jpg" />
         <%- translate 'p', 'K2Page.p2' %>
         <%- translate 'p', 'K2Page.p3' %>
-        <%- translate 'p', 'K2Page.p4' %>
+        
       </div>
     </div>
 
