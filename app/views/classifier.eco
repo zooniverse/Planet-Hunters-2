@@ -14,12 +14,12 @@
   <div class="do-you-see-a-transit">
     <%- translate 'h3', 'classify.instructionHeader' %>
     <%- translate 'p', 'classify.instruction' %>  </div>
-      
+
   <div style="margin-left: 514px; margin-top: 25px;">
     <p id="all-done-message">
-      Congratulations! We have classified all of the current K2 data! Don't worry, there will be more soon. Until then, there is still a lot of K1 data we need your help with! Thank you!
+      We have new K2 data! Help us classify it all
     </p>
-  </div> 
+  </div>
 
       <div id="notification">
         <div id="notification-message"></div>
