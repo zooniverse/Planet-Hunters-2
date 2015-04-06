@@ -354,8 +354,9 @@ class Classifier extends BaseController
 
     if window.location.origin != "http://planethunters.org"  and window.location.origin != "http://www.planethunters.org"
       jsonFile = @subject.selected_light_curve.location.replace("http://www.planethunters.org/", "https://s3.amazonaws.com/zooniverse-static/planethunters.org/")
-    else if @subject.simulationsPresent()
-      jsonFile = @jsonFile.replace("http://www.planethunters.org/", "https://s3.amazonaws.com/zooniverse-static/planethunters.org/")
+    else if @subject.selected_light_curve.location.indexOf("synth") > 0
+      jsonFile = @subject.selected_light_curve.location.replace("http://www.planethunters.org/", "https://s3.amazonaws.com/zooniverse-static/planethunters.org/")
+    else
       jsonFile = @subject.selected_light_curve.location
 
     # handle ui elements
@@ -376,7 +377,7 @@ class Classifier extends BaseController
     $.getJSON jsonFile, (data) =>
 
       if data.metadata.known_transits
-        @known_transits = data.metadata.known_transits
+        @known_transits = data.metadata.known_transits || @subject.metadata.known_transits
         @planet_rad    = data.metadata.planet_rad
         @planet_period = data.metadata.planet_period
         @start_time     = data.x[0]
