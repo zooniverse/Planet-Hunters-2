@@ -44,7 +44,10 @@ class LightcurveViewer extends BaseController
     @canvas.height = 420
 
 
-    if window.location.origin != "http://planethunters.org" and window.location.orgigin != "http://www.planethunters.org" and !@subject.simulationsPresent()
+    if window.location.origin != "http://planethunters.org" and window.location.orgigin != "http://www.planethunters.org"
+      @jsonFile = @jsonFile.replace("http://www.planethunters.org/", "https://s3.amazonaws.com/zooniverse-static/planethunters.org/")
+
+    if @subject.simulationsPresent()
       @jsonFile = @jsonFile.replace("http://www.planethunters.org/", "https://s3.amazonaws.com/zooniverse-static/planethunters.org/")
 
 
