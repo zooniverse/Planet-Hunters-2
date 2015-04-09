@@ -114,7 +114,7 @@ class Classifier extends BaseController
     # @hideMarkingButtons()
     @noTransitsButton.attr 'disabled', true
 
-    $(".links a").onClick (el)=>
+    $(".links a").on "click",(el)=>
       clickEvent = { event: 'top-bar-pressed', link: $(el).attr("href"), timestamp: (new Date).toUTCString() }
       @recordedClickEvents.push clickEvent
 
