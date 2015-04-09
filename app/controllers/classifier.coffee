@@ -114,6 +114,10 @@ class Classifier extends BaseController
     # @hideMarkingButtons()
     @noTransitsButton.attr 'disabled', true
 
+    $(".links a").onClick (el)=>
+      clickEvent = { event: 'top-bar-pressed', link: $(el).attr("href"), timestamp: (new Date).toUTCString() }
+      @recordedClickEvents.push clickEvent
+
 
     User.on 'change', @onUserChange
     Subject.on 'no-more', @onNoMoreSubjects
@@ -456,6 +460,8 @@ class Classifier extends BaseController
       @notify('Added to Favorites.')
 
   onClickTalkButton: ->
+    clickEvent = { event: 'clicked-talk-button-in-summary', timestamp: (new Date).toUTCString() }
+    @recordedClickEvents.push clickEvent
     window.open "http://talk.planethunters.org/#/subjects/#{Subject.current?.zooniverse_id}?quarter=#{@Subject.current.selected_light_curve.quarter}", '_blank'
 
   onClickHelp: ->
@@ -532,6 +538,7 @@ class Classifier extends BaseController
     @course.prompt_el.hide()
     @classifySummary.fadeOut(150)
 
+    @recordedClickEvents.push { event: 'next-subject', timestamp: (new Date).toUTCString() }
     # # switch to verify mode
     # if @course.count % @verifyRate is 0
     #   location.hash = "#/verify"
@@ -603,6 +610,9 @@ class Classifier extends BaseController
   showSummaryScreen: ->
     @el.find('.too-long-warning').html("140 left") # reset char count
     @el.find('.star-id').fadeIn() # reveal ids
+
+    @recordedClickEvents.push { event: 'summary-screen-shown', timestamp: (new Date).toUTCString() }
+
 
     if @classification.subject.id is 'TUTORIAL_SUBJECT'
       # console.log 'TUTORIAL SUBJECT'
@@ -874,6 +884,9 @@ class Classifier extends BaseController
   onClickSubmitTalk: =>
     console.log("triggering")
     return if @talkComment.val() is "" # reject empty comments
+
+    clickEvent = { event: 'commented-on-ph', timestamp: (new Date).toUTCString() }
+    @recordedClickEvents.push clickEvent
 
     @appendComment(@talkComment, @commentsContainer)
     @submitComment()
