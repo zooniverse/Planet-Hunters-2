@@ -569,7 +569,8 @@ class Classifier extends BaseController
     sim_roll = Math.random()
     # console.log "sim roll #{sim_roll} rate #{@sim_rate}"
 
-    if Math.random() < @sim_rate
+    # TODO: Simulation JSONS don't exist!!!! FIX!!!
+    if false #Math.random() < @sim_rate
       # console.log "fetching sim subject..."
 
       Subject.group = SIMULATION_GROUP
