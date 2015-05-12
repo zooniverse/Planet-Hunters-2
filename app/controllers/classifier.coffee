@@ -236,12 +236,9 @@ class Classifier extends BaseController
     @recordedClickEvents.push clickEvent
     console.log '  course-enabled: ', @courseEnabled
 
-
   onKeyupTalkComment:(e)->
     characters = @talkComment.val().length
     $(".too-long-warning").html( "#{ 140 - characters} left" )
-
-
 
   onChangeCourseIntervalViaSupTut: ->
     defaultValue = 5
@@ -356,12 +353,15 @@ class Classifier extends BaseController
     # reset fav
     @el.find(".toggle-fav").removeClass("toggled")
 
-    if window.location.origin != "http://planethunters.org"  and window.location.origin != "http://www.planethunters.org"
-      jsonFile = @subject.selected_light_curve.location.replace("http://www.planethunters.org/", "https://s3.amazonaws.com/zooniverse-static/planethunters.org/")
-    else if @subject.selected_light_curve.location.indexOf("synth") > 0
-      jsonFile = @subject.selected_light_curve.location.replace("http://www.planethunters.org/", "https://s3.amazonaws.com/zooniverse-static/planethunters.org/")
-    else
-      jsonFile = @subject.selected_light_curve.location
+    # if window.location.origin != "http://planethunters.org" and window.location.origin != "http://www.planethunters.org"
+    #   jsonFile = @subject.selected_light_curve.location.replace("http://www.planethunters.org/", "https://s3.amazonaws.com/zooniverse-static/planethunters.org/")
+    # else if @subject.selected_light_curve.location.indexOf("synth") > 0
+    #   jsonFile = @subject.selected_light_curve.location.replace("http://www.planethunters.org/", "https://s3.amazonaws.com/zooniverse-static/planethunters.org/")
+    # else
+    #   jsonFile = @subject.selected_light_curve.location
+
+    # NOTE: some light curves were uploaded to the wrong bucket
+    jsonFile = @subject.selected_light_curve.location.replace("http://www.planethunters.org/", "https://s3.amazonaws.com/zooniverse-static/planethunters.org/")
 
     # handle ui elements
     $('#graph-container').addClass 'loading-lightcurve'
@@ -376,6 +376,8 @@ class Classifier extends BaseController
     @canvas.id = 'graph'
     @canvas.width = 1024
     @canvas.height = 420
+
+    console.log 'JSON FILE: ', jsonFile
 
     # read json data
     $.getJSON jsonFile, (data) =>
@@ -408,7 +410,6 @@ class Classifier extends BaseController
           min: @canvasGraph.smallestX
           max: @canvasGraph.largestX
       , true
-
 
       # @el.find(".noUi-handle").hide()
       @canvasGraph.zoomOut()
