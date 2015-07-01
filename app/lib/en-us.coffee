@@ -503,10 +503,26 @@ module.exports =
   educationPage:
     mainHeader         : 'Education'
     tabs:
+      educatorGuide    : 'Educator Guide'
       classroom        : 'Classroom'
       calculator       : 'Calculator'
 
     section:
+      educatorGuide:
+        header: 'Planet Hunters Educator Guide'
+        content:
+          '''
+          <p>
+            The Planet Hunters Educators Guide was developed by Zooniverse educators in conjunction with NASA/JPL to introduce 6th-8th grade students to the major concepts involved in finding exoplanets and determining their habitability with the use of models. The models aid in representing how other stellar systems with exoplanets of varying distances, sizes, and physical properties look to an outside observer. These models also aid in demonstrating how transits appear in data. These activities can easily be adapted for high school and informal education settings.
+          </p>
+
+          <p>
+            <a href=\"https://s3.amazonaws.com/zooniverse-resources/zoo-teach/production/uploads/resource/attachment/122/Planet_Hunters_Educator_Guide.pdf\">
+              Link to Guide
+            </a>
+          </p>
+          '''
+
       classroom:
         header         : 'In the Classroom'
         content        :
