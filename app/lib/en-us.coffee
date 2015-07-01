@@ -503,10 +503,27 @@ module.exports =
   educationPage:
     mainHeader         : 'Education'
     tabs:
-      classroom        : 'Classroom'
+      educatorGuide    : 'Educator Guide'
+      classroom        : 'Other Classroom Resources'
       calculator       : 'Calculator'
 
     section:
+      educatorGuide:
+        header: 'Planet Hunters Educator Guide'
+        content:
+          '''
+          <p>
+            The Planet Hunters Educators Guide was developed by Zooniverse educators in conjunction with NASA/JPL to introduce 6th-8th grade students to the major concepts involved in finding exoplanets and determining their habitability with the use of models. The models aid in representing how other stellar systems with exoplanets of varying distances, sizes, and physical properties look to an outside observer. These models also aid in demonstrating how transits appear in data. These activities can easily be adapted for high school and informal education settings.
+          </p>
+
+          <p>
+            <a href=\"https://s3.amazonaws.com/zooniverse-resources/zoo-teach/production/uploads/resource/attachment/122/Planet_Hunters_Educator_Guide.pdf\">
+              Link to Guide
+              <img class="thumbnail" src=\"images/ph2-educator-guide-thumbnail.png\"/>
+            </a>
+          </p>
+          '''
+
       classroom:
         header         : 'In the Classroom'
         content        :
@@ -525,7 +542,7 @@ module.exports =
             <h2>What resources are available for the classroom?</h2>
 
             <p>
-              Here are some resources that can be great tools for introducing students to Planet Hunters. Here are a couple of our favorites:
+              Here are some resources that can be great tools for introducing students to Planet Hunters.
               <ul>
                 <li>
                   NASA Kepler Missions website:
@@ -540,19 +557,6 @@ module.exports =
                 </li>
                 <li>
                   National Science Foundation's <a href="https://www.youtube.com/watch?v=0WatNUka7OA">Science Behind The News: Extrasolar Planets</a>, describes the Transit and Doppler methods.
-                </li>
-                <li>
-                  NASA has also provided tools you can use in the classroom related to Exoplanets:
-                  <a href="http://planetquest.jpl.nasa.gov/interactives">https://www.youtube.com/watch?v=0WatNUka7OA</a>
-                </li>
-              </ul>
-            </p>
-
-            <p>
-              Educators Guides, here are lessons that are focused on exoplanets:
-              <ul>
-                <li>
-                  Coming Fall 2014, Planet Hunters Educators Guide! Zooniverse educators have developed lessons to show you how you can best utilize Planet Hunters in your classroom.
                 </li>
                 <li>
                   Educator Resource Guide provided by NASA:
