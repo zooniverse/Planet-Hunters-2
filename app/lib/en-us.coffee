@@ -519,6 +519,7 @@ module.exports =
           <p>
             <a href=\"https://s3.amazonaws.com/zooniverse-resources/zoo-teach/production/uploads/resource/attachment/122/Planet_Hunters_Educator_Guide.pdf\">
               Link to Guide
+              <img src=\"images/ph2-educator-guide-thumbnail.png\"/>
             </a>
           </p>
           '''
