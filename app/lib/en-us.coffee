@@ -504,7 +504,7 @@ module.exports =
     mainHeader         : 'Education'
     tabs:
       educatorGuide    : 'Educator Guide'
-      classroom        : 'Classroom'
+      classroom        : 'Other Classroom Resources'
       calculator       : 'Calculator'
 
     section:
@@ -541,7 +541,7 @@ module.exports =
             <h2>What resources are available for the classroom?</h2>
 
             <p>
-              Here are some resources that can be great tools for introducing students to Planet Hunters. Here are a couple of our favorites:
+              Here are some resources that can be great tools for introducing students to Planet Hunters.
               <ul>
                 <li>
                   NASA Kepler Missions website:
@@ -556,19 +556,6 @@ module.exports =
                 </li>
                 <li>
                   National Science Foundation's <a href="https://www.youtube.com/watch?v=0WatNUka7OA">Science Behind The News: Extrasolar Planets</a>, describes the Transit and Doppler methods.
-                </li>
-                <li>
-                  NASA has also provided tools you can use in the classroom related to Exoplanets:
-                  <a href="http://planetquest.jpl.nasa.gov/interactives">https://www.youtube.com/watch?v=0WatNUka7OA</a>
-                </li>
-              </ul>
-            </p>
-
-            <p>
-              Educators Guides, here are lessons that are focused on exoplanets:
-              <ul>
-                <li>
-                  Coming Fall 2014, Planet Hunters Educators Guide! Zooniverse educators have developed lessons to show you how you can best utilize Planet Hunters in your classroom.
                 </li>
                 <li>
                   Educator Resource Guide provided by NASA:
