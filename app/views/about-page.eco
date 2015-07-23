@@ -7,8 +7,9 @@
   <div class="secondary-content">
     <nav class="sub-nav-about">
       <%- translate 'button', 'aboutPage.tabs.about', name: 'about' %>
-      <%- translate 'button', 'aboutPage.tabs.teams', name: 'teams' %>      
+      <%- translate 'button', 'aboutPage.tabs.teams', name: 'teams' %>
       <%- translate 'button', 'aboutPage.tabs.organizations', name: 'organizations' %>
+      <button onclick="window.location.hash='#/acknowledgements'">Acknowledgements</button>
     </nav>
   </div>
   <div class="secondary-content">

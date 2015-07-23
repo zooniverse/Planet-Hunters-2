@@ -1,0 +1,34 @@
+<div class="secondary-header">
+  <h1>Acknowledgements</h1>
+</div>
+
+<div class="secondary-white">
+  <div class="secondary-content">
+    <h2>Acknowledgements For the PH-VIII Paper: Characterization of 42 Long-Period Exoplanet Candidates from the Kepler Archival Data</h2>
+    <br>
+    <div class="content">
+      <table>
+        <thead>
+          <tr>
+            <th><b>KIC</b></th>
+            <th>Link</th>
+            <th>First User</th>
+            <th>Contributing Users</th>
+          </tr>
+        </thead>
+        <tbody id="contributors-kic"></tbody>
+      </table>
+
+      <h2>Additional Contributions</h2>
+      <table>
+        <thead>
+          <tr>
+            <th width="150"><b>Username</b></th>
+            <th><b>Reason</b></th>
+          </tr>
+        </thead>
+        <tbody id="contributors-additional"></tbody>
+      </table>
+    </div>
+  </div>
+</div>

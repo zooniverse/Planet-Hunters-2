@@ -1,0 +1,6 @@
+<tr>
+  <td><%- @gsx$kic.$t %></td>
+  <td><a href="<%- @gsx$link1?.$t %>"><%- @gsx$link1?.$t %></a></td>
+  <td><%- @gsx$firstuser?.$t %></td>
+  <td><%- @gsx$contributingusers?.$t %></td>
+</tr>

@@ -1,0 +1,4 @@
+<tr>
+  <td><%- @gsx$username?.$t %></td>
+  <td><%- @gsx$reason?.$t %></td>
+</tr>
