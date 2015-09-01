@@ -17,8 +17,8 @@
 
   <div style="margin-left: 514px; margin-top: 25px;">
     <p id="all-done-message">
-      Currently classifying K1 data.
-      <% #Wow! It appears you\'ve done all there is to do for now. Thanks for your work and check back soon. %>      
+      Currently classifying K2 data.
+      <% #Wow! It appears you\'ve done all there is to do for now. Thanks for your work and check back soon. %>
       <% #We have new <a href='/#/survey'>K2 data</a>! Help us classify it all. %>
     </p>
   </div>

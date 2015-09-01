@@ -24,7 +24,8 @@ $ = window.jQuery
 K1_SUBJECT_GROUP   = "5417014a3ae7400bda000001"
 K2_0_SUBJECT_GROUP = "547d05ce415ac13139000001"
 K2_1_SUBJECT_GROUP = "54f4c5ab8f165b6e85000001"
-MAIN_SUBJECT_GROUP = K1_SUBJECT_GROUP
+K2_2_SUBJECT_GROUP = "55db0eca05cd210084000001"
+MAIN_SUBJECT_GROUP = K2_2_SUBJECT_GROUP
 SIMULATION_GROUP   = "5417014b3ae7400bda000002"
 
 USERS_OPT_IN = ['a', 'b', 'c', 'g', 'h', 'i']
@@ -358,10 +359,10 @@ class Classifier extends BaseController
     # else if @subject.selected_light_curve.location.indexOf("synth") > 0
     #   jsonFile = @subject.selected_light_curve.location.replace("http://www.planethunters.org/", "https://s3.amazonaws.com/zooniverse-static/planethunters.org/")
     # else
-    #   jsonFile = @subject.selected_light_curve.location
+    jsonFile = @subject.selected_light_curve.location
 
     # NOTE: some light curves were uploaded to the wrong bucket
-    jsonFile = @subject.selected_light_curve.location.replace("http://www.planethunters.org/", "https://s3.amazonaws.com/zooniverse-static/planethunters.org/")
+    # jsonFile = @subject.selected_light_curve.location.replace("http://www.planethunters.org/", "https://s3.amazonaws.com/zooniverse-static/planethunters.org/")
 
     # handle ui elements
     $('#graph-container').addClass 'loading-lightcurve'
