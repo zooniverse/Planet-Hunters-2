@@ -439,7 +439,7 @@ class Classifier extends BaseController
       @el.find(".k1-metadata").fadeIn()
       @el.find(".k2-metadata").hide()
     else
-      @el.find('#manitude').html   (metadata.magnitudes["kepler"])
+      @el.find('#magnitude').html   (metadata.magnitudes["kepler"])
       @el.find(".k1-metadata").hide()
       @el.find(".k2-metadata").fadeIn()
 
