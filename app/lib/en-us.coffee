@@ -10,7 +10,7 @@ module.exports =
     talk:        'Talk'
     blog:        'Blog'
     currentDataset: "Classifying: K1"
-    vote: 'Vote'
+
   # Home Page
   home:
     header:

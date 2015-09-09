@@ -7,9 +7,6 @@
 
     <div class="description">
       <%# translate 'span', 'home.header.description' %>
-      <p>Congratulations! We have classified all of the current K2 data! Don't worry there will be more soon.</p>
-      <p>Until then there is still a lot of K1 data we need your help with!</p>
-      <p>Thank you!</p>
       <%- translate 'a', 'home.header.beginClassifying', href: '#/classify', id: "begin-classifying" %>
     </div>
 

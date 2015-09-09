@@ -57,6 +57,5 @@
     <%- translate 'a', 'siteNavigation.profile', href: '#/profile' %>
     <%- translate 'a', 'siteNavigation.talk', href: 'http://talk.planethunters.org' %>
     <%- translate 'a', 'siteNavigation.blog', href: 'http://blog.planethunters.org' %>
-    <%- translate 'a.hide-by-default', 'siteNavigation.vote', href: '#/vote' %>
   </div>
 </div>

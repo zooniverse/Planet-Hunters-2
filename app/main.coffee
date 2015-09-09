@@ -37,7 +37,6 @@ stack = new StackOfPages
   "#/verify"     : require './controllers/verification'
   "#/viewer"     : require './controllers/view-lightcurve'
   "#/survey"     : require './controllers/k2-page'
-  '#/vote'       : require './controllers/vote-page'
   '#/acknowledgements': require './controllers/acknowledgements'
   NOT_FOUND: '<div class="content-block"><div class="content-container"><h1>Page not found!</h1></div></div>'
   ERROR: '<div class="content-block"><div class="content-container"><h1>There was an error!</h1></div></div>'
