@@ -17,7 +17,10 @@ languageManager.on 'change-language', (e, code, strings) ->
 
 # api
 Api = require 'zooniverse/lib/api'
-api = new Api project: 'planet_hunter'
+api = if window.location.hostname is 'www.planethunters.org'
+  new Api project: 'planet_hunter', host: 'http://www.planethunters.org', path: '/_ouroboros_api/proxy'
+else
+  new Api project: 'planet_hunter'
 
 # site navigation
 SiteNavigation = require './controllers/site-navigation'
