@@ -26,8 +26,10 @@ K2_0_SUBJECT_GROUP = "547d05ce415ac13139000001"
 K2_1_SUBJECT_GROUP = "54f4c5ab8f165b6e85000001"
 K2_2_SUBJECT_GROUP = "55db0eca05cd210084000001"
 K2_4_SUBJECT_GROUP = "5628a593eaad4a0122000001"
-MAIN_SUBJECT_GROUP = K2_4_SUBJECT_GROUP
-SIMULATION_GROUP   = "5417014b3ae7400bda000002"
+KDWARF_1_SUBJECT_GROUP = "566e95bc7af859004e000001"
+KDWARF_1_SIMULATION_GROUP = "566ecd4edeb24f0539000001"
+MAIN_SUBJECT_GROUP = KDWARF_1_SUBJECT_GROUP
+SIMULATION_GROUP   = KDWARF_1_SIMULATION_GROUP
 
 USERS_OPT_IN = ['a', 'b', 'c', 'g', 'h', 'i']
 USERS_OPT_OUT = ['d', 'e', 'f', 'j', 'k', 'l']
@@ -383,11 +385,10 @@ class Classifier extends BaseController
 
     # read json data
     $.getJSON jsonFile, (data) =>
-
       if data.metadata.known_transits
         @known_transits = data.metadata.known_transits || @subject.metadata.known_transits
-        @planet_rad    = data.metadata.planet_rad
-        @planet_period = data.metadata.planet_period
+        @planet_rad    = data.metadata.planet_rad || data.metadata.prad
+        @planet_period = data.metadata.planet_period || data.metadata.period
         @start_time     = data.x[0]
       else
         @known_transits = ''
@@ -428,21 +429,29 @@ class Classifier extends BaseController
     metadata = @Subject.current.metadata
 
     @el.find('#zooniverse-id').html @Subject.current.zooniverse_id
-    @el.find('#kepler-id').html     metadata.kepler_id
+    @el.find('#kepler-id').html     (metadata.kepler_id || metadata.kepid)
     @el.find('#quarter').html @Subject.current.selected_light_curve.quarter
 
-    if MAIN_SUBJECT_GROUP == K1_SUBJECT_GROUP
-      @el.find('#star-type').html     (metadata.spec_type || "Dwarf")
-      @el.find('#magnitude').html     metadata.magnitudes.kepler
-      @el.find('#temperature').html   metadata.teff.toString().concat("(K)")
-      @el.find('#radius').html        metadata.radius.toString().concat("x Sol")
-      @el.find('#ukirt-url').attr("href", ukirtUrl)
-      @el.find(".k1-metadata").fadeIn()
-      @el.find(".k2-metadata").hide()
-    else
-      @el.find('#magnitude').html   (metadata.magnitudes["kepler"])
-      @el.find(".k1-metadata").hide()
-      @el.find(".k2-metadata").fadeIn()
+    switch MAIN_SUBJECT_GROUP
+      when K1_SUBJECT_GROUP
+        @el.find('#star-type').html     (metadata.spec_type || "Dwarf")
+        @el.find('#magnitude').html     metadata.magnitudes.kepler
+        @el.find('#temperature').html   metadata.teff.toString().concat("(K)")
+        @el.find('#radius').html        metadata.radius.toString().concat("x Sol")
+        @el.find('#ukirt-url').attr("href", ukirtUrl)
+        @el.find(".k1-metadata").fadeIn()
+        @el.find(".k2-metadata").hide()
+      when KDWARF_1_SUBJECT_GROUP, KDWARF_1_SIMULATION_GROUP
+        @el.find('#magnitude').html   (metadata.kepmag)
+        @el.find('#radius').html        (metadata.radius || metadata.srad || "N/A")
+        @el.find('#star-type').html     ("K-Dwarf")
+        @el.find('#temperature').html   (metadata.teff || "N/A")
+        @el.find(".k1-metadata").fadeIn()
+        @el.find(".k2-metadata").hide()
+      else
+        @el.find('#magnitude').html   (metadata.magnitudes["kepler"])
+        @el.find(".k1-metadata").hide()
+        @el.find(".k2-metadata").fadeIn()
 
   notify: (message) =>
     @course.hidePrompt(0) # get the prompt out of the way
@@ -566,40 +575,32 @@ class Classifier extends BaseController
     @sim_count ||= 0
     @sim_count +=1
 
-
     @sim_rate = 0.125
 
     sim_roll = Math.random()
-    # console.log "sim roll #{sim_roll} rate #{@sim_rate}"
+    #console.log "sim roll #{sim_roll} rate #{@sim_rate}"
 
-    # TODO: Simulation JSONS don't exist!!!! FIX!!!
-    if false #Math.random() < @sim_rate
-      # console.log "fetching sim subject..."
+    if sim_roll < @sim_rate
+      #console.log "fetching sim subject..."
 
       Subject.group = SIMULATION_GROUP
       Subject.fetch limit: 1, (subjects) ->
         Subject.current?.destroy()
 
         # select sim subject
+        #console.log "Sim subjects: #{subjects.length}"
         unless subjects.length is 0
           subjects[0].select()
         else
-          # console.log 'no more sims; selecting next subject instead...'
+          #console.log 'no more sims; selecting next subject instead...'
           # if no sims, revert to regular subjects
           Subject.group = MAIN_SUBJECT_GROUP
-          @Subject.next()
+          Subject.next()
 
         Subject.group = MAIN_SUBJECT_GROUP # reset to regular subjects
 
     else
       @Subject.next()
-
-    # # DEBUG CODE
-    # @Subject.current?.destroy()
-    # test_subject = createKnownPlanetSubject()
-    # test_subject.select()
-
-    # @noTransitsButton.show()
 
   #
   # END MARKING TRANSITIONS

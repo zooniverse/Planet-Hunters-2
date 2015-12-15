@@ -125,7 +125,10 @@
             <div class='known_details'>
               <div class='sim_details'>
                 <%- translate 'h2', 'classify.summaryScreen.simulation.header' %>
-                <%- translate 'p', 'classify.summaryScreen.simulation.radius', class: 'align-left' %>
+                <p class='align-left'>
+                  <%- translate 'span', 'classify.summaryScreen.simulation.radius' %>
+                  <span class='planet-rad'></span>
+                </p>
                 <p class='align-left'>
                   <%- translate 'span', 'classify.summaryScreen.simulation.period' %>
                   <span class='planet-period'></span>
