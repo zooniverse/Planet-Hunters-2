@@ -18,7 +18,7 @@ languageManager.on 'change-language', (e, code, strings) ->
 # api
 Api = require 'zooniverse/lib/api'
 api = if window.location.hostname is 'www.planethunters.org'
-  new Api project: 'planet_hunter', host: 'https://www.planethunters.org', path: '/_ouroboros_api/proxy'
+  new Api project: 'planet_hunter', host: 'http://www.planethunters.org', path: '/_ouroboros_api/proxy'
 else
   new Api project: 'planet_hunter'
 
