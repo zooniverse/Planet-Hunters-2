@@ -362,7 +362,7 @@ class Classifier extends BaseController
     # else if @subject.selected_light_curve.location.indexOf("synth") > 0
     #   jsonFile = @subject.selected_light_curve.location.replace("http://www.planethunters.org/", "https://s3.amazonaws.com/zooniverse-static/planethunters.org/")
     # else
-    jsonFile = @subject.selected_light_curve.location
+    jsonFile = @subject.selected_light_curve.location.replace("http://www.planethunters.org/", "https://www.planethunters.org/")
 
     # NOTE: some light curves were uploaded to the wrong bucket
     # jsonFile = @subject.selected_light_curve.location.replace("http://www.planethunters.org/", "https://s3.amazonaws.com/zooniverse-static/planethunters.org/")

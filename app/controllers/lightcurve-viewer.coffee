@@ -44,12 +44,13 @@ class LightcurveViewer extends BaseController
     @canvas.height = 420
 
 
-    if window.location.origin != "http://planethunters.org" and window.location.orgigin != "http://www.planethunters.org"
+    if window.location.origin != "http://planethunters.org" and window.location.orgigin != "http://www.planethunters.org" and window.location.origin != "https://www.planethuners.org"
       @jsonFile = @jsonFile.replace("http://www.planethunters.org/", "https://s3.amazonaws.com/zooniverse-static/planethunters.org/")
 
     if @subject.simulationsPresent()
       @jsonFile = @jsonFile.replace("http://www.planethunters.org/", "https://s3.amazonaws.com/zooniverse-static/planethunters.org/")
 
+    @jsonFile = @jsonFile.replace("http://www.planethunters.org/", "https://www.planethunters.org/")
 
     # read json data
     $.getJSON @jsonFile, (data) =>

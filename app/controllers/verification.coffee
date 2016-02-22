@@ -74,7 +74,7 @@ class Verification extends BaseController
 
     jsonFile = @subject.location['14-1'] # read actual subject
 
-    if window.location.origin != "http://planethunters.org"  and window.location.origin != "http://www.planethunters.org"
+    if window.location.origin != "http://planethunters.org"  and window.location.origin != "http://www.planethunters.org" and window.location.origin != "https://www.planethunters.org"
       jsonFile = jsonFile.replace("http://www.planethunters.org/", "https://s3.amazonaws.com/zooniverse-static/planethunters.org/")
 
     $.getJSON jsonFile, (data) =>
@@ -86,7 +86,7 @@ class Verification extends BaseController
 
     jsonFile = @subject.location['14-2'] # read actual subject
 
-    if window.location.origin != "http://planethunters.org"  and window.location.origin != "http://www.planethunters.org"
+    if window.location.origin != "http://planethunters.org"  and window.location.origin != "http://www.planethunters.org" and window.location.origin != "https://www.planethunters.org"
       jsonFile = jsonFile.replace("http://www.planethunters.org/", "https://s3.amazonaws.com/zooniverse-static/planethunters.org/")
 
     $.getJSON jsonFile, (data) =>
