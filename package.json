@@ -2,11 +2,11 @@
   "name": "planet-hunters",
   "version": "0.0.1",
   "engines": {
-      "node": "0.10.x"
+      "node": "0.12.x"
   },
   "dependencies": {
     "haw": "0.5.1",
-    "publisssh": "0.2.1",
+    "publisssh": "~1.1.0",
     "stack-of-pages": "0.0.11",
     "t7e": "~0.4.0",
     "translator-seed": "0.1.2",
