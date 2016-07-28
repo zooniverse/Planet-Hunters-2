@@ -442,7 +442,7 @@ class Classifier extends BaseController
         @el.find('#ukirt-url').attr("href", ukirtUrl)
         @el.find(".k1-metadata").fadeIn()
         @el.find(".k2-metadata").hide()
-      when KDWARF_1_SUBJECT_GROUP, KDWARF_1_SIMULATION_GROUP
+      when KDWARF_1_SUBJECT_GROUP, KDWARF_1_SIMULATION_GROUP, KDWARF_2_SUBJECT_GROUP
         @el.find('#magnitude').html   (metadata.kepmag)
         @el.find('#radius').html        (metadata.radius || metadata.srad || "N/A")
         @el.find('#star-type').html     ("K-Dwarf")
@@ -598,8 +598,7 @@ class Classifier extends BaseController
           Subject.group = MAIN_SUBJECT_GROUP
           Subject.next()
 
-        Subject.group = MAIN_SUBJECT_GROUP # reset to regular subjects
-
+      Subject.group = MAIN_SUBJECT_GROUP # reset to regular subjects
     else
       @Subject.next()
 
