@@ -16,7 +16,7 @@
   "scripts": {
     "start": "haw serve --port 3416",
     "deploy-to-staging": "haw build && publisssh ./build demo.zooniverse.org/planethunters && rm -rf ./build",
-    "deploy": "haw build && publisssh ./build zooniverse-static/www.planethunters.org/ && rm -rf ./build",
+    "deploy": "haw build && publisssh ./build zooniverse-static/www.planethunters.org/ --force && rm -rf ./build",
     "deploy-locale": "seed-translation --project planet_hunter --env production"
   }
 }
