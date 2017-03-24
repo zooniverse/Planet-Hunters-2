@@ -21,6 +21,7 @@ module.exports =
       description      : 'Join the search for exoplanets with Planet Hunters'
       beginClassifying : 'Start Classifying'
       learnMore        : 'Learn More'
+      placeholder      : '''Thanks to the amazing work of our volunteers, all the data on Planet Hunters has been completed. The project will be back with more data for you to search through in the near future, but in the meantime we'd be delighted if you could help out on one of our other projects at <a class="standard-link" href="https://www.zooniverse.org/projects">www.zooniverse.org/projects</a>.'''
 
     whatDo:
       title            : ''

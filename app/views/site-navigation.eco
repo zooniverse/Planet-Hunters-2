@@ -50,7 +50,7 @@
   <img id="user-icon" src="./images/mobile-icons/user-icon.svg">
 
   <div class="links">
-    <%- translate 'a', 'siteNavigation.classify', href: '#/classify' %>
+    <%# translate 'a', 'siteNavigation.classify', href: '#/classify' %>
     <%- translate 'a', 'siteNavigation.science', href: '#/science'%>
     <%- translate 'a', 'siteNavigation.about', href: '#/about' %>
     <%- translate 'a', 'siteNavigation.education', href: '#/education' %>
