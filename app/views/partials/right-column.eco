@@ -1,15 +1,15 @@
 <% translate = require 't7e' %>
-<h1>
-  <%- translate 'getInvolved.header' %>
-</h1>
-<p>
-  <%- translate 'getInvolved.callToAction' %>
+<!-- <h1>
+  <%# translate 'getInvolved.header' %>
+</h1> -->
+<!-- <p>
+  <%# translate 'getInvolved.callToAction' %>
 </p>
 <a href="#/classify">
   <button class="std-btn big-btn yellow">
-    <%- translate 'getInvolved.getStarted' %>
+    <%# translate 'getInvolved.getStarted' %>
   </button>
-</a>
+</a> -->
 
 <h1>
   <%- translate 'getInvolved.connect' %>
