@@ -2,10 +2,10 @@
   "name": "planet-hunters",
   "version": "0.0.1",
   "engines": {
-      "node": "0.12.x"
+      "node": "6.9.x"
   },
   "dependencies": {
-    "haw": "0.5.1",
+    "haw": "0.6.0",
     "publisssh": "~1.1.0",
     "stack-of-pages": "0.0.11",
     "t7e": "~0.4.0",
@@ -15,7 +15,7 @@
   },
   "scripts": {
     "start": "haw serve --port 3416",
-    "deploy-to-staging": "haw build && publisssh ./build demo.zooniverse.org/planethunters && rm -rf ./build",
+    "deploy-to-staging": "haw build && publisssh ./build demo.zooniverse.org/planethunters --force && rm -rf ./build",
     "deploy": "haw build && publisssh ./build zooniverse-static/www.planethunters.org/ --force && rm -rf ./build",
     "deploy-locale": "seed-translation --project planet_hunter --env production"
   }
