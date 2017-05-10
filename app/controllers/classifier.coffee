@@ -29,7 +29,8 @@ K2_4_SUBJECT_GROUP = "5628a593eaad4a0122000001"
 KDWARF_1_SUBJECT_GROUP = "566e95bc7af859004e000001"
 KDWARF_1_SIMULATION_GROUP = "566ecd4edeb24f0539000001"
 KDWARF_2_SUBJECT_GROUP = "5756cc44c832d90038000001"
-MAIN_SUBJECT_GROUP = KDWARF_2_SUBJECT_GROUP
+KDWARF_3_SUBJECT_GROUP = "5912ef739460a21521000001"
+MAIN_SUBJECT_GROUP = KDWARF_3_SUBJECT_GROUP
 SIMULATION_GROUP   = KDWARF_1_SIMULATION_GROUP
 
 USERS_OPT_IN = ['a', 'b', 'c', 'g', 'h', 'i']
@@ -442,7 +443,7 @@ class Classifier extends BaseController
         @el.find('#ukirt-url').attr("href", ukirtUrl)
         @el.find(".k1-metadata").fadeIn()
         @el.find(".k2-metadata").hide()
-      when KDWARF_1_SUBJECT_GROUP, KDWARF_1_SIMULATION_GROUP, KDWARF_2_SUBJECT_GROUP
+      when KDWARF_1_SUBJECT_GROUP, KDWARF_1_SIMULATION_GROUP, KDWARF_2_SUBJECT_GROUP, KDWARF_3_SUBJECT_GROUP
         @el.find('#magnitude').html   (metadata.kepmag)
         @el.find('#radius').html        (metadata.radius || metadata.srad || "N/A")
         @el.find('#star-type').html     ("K-Dwarf")
