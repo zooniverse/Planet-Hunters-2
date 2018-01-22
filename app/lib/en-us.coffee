@@ -306,6 +306,7 @@ module.exports =
         about            : 'About'
         teams            : 'Teams'
         organizations    : 'Organizations'
+        acknowledgements : 'Acknowledgements'
       section:
         about:
           header         : 'The Story So Far...'

@@ -9,7 +9,9 @@
       <%- translate 'button', 'aboutPage.tabs.about', name: 'about' %>
       <%- translate 'button', 'aboutPage.tabs.teams', name: 'teams' %>
       <%- translate 'button', 'aboutPage.tabs.organizations', name: 'organizations' %>
-      <button onclick="window.location.hash='#/acknowledgements'">Acknowledgements</button>
+      <button onclick="window.location.hash='#/acknowledgements'" name="acknowledgements">
+        <%- translate 'span', 'aboutPage.tabs.acknowledgements' %>
+      </button>
     </nav>
   </div>
   <div class="secondary-content">
